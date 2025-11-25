@@ -11,30 +11,42 @@ interface CardProps {
     className?: string;
 }
 
-const TAG_COLORS: Record<string, string> = {
-    "Email Marketing": "bg-purple-500/90",
-    "Web Design": "bg-blue-500/90",
-    "Development": "bg-green-500/90",
-    "UI/UX": "bg-pink-500/90",
-    "React": "bg-cyan-500/90",
-    "Animation": "bg-orange-500/90",
-    "Design": "bg-indigo-500/90",
-    "3D": "bg-red-500/90",
-    "Webflow": "bg-teal-500/90",
-    "Interaction": "bg-yellow-500/90",
-    "JavaScript": "bg-amber-500/90",
+interface TagStyle {
+    bg: string;
+    text: string;
+    border: string;
+}
+
+const TAG_STYLES: Record<string, TagStyle> = {
+    "Web Design": {
+        bg: "#FFE4F2",
+        text: "#B83280",
+        border: "#B8328078",
+    },
+    "Web Dev": {
+        bg: "#E5EDFF",
+        text: "#2B4FFF",
+        border: "#2B4FFF80",
+    },
+    "default": {
+        bg: "#2A2A2A",
+        text: "#E0E0E0",
+        border: "#404040",
+    }
 };
 
 export function Card({ title, tags, imageSrc, className }: CardProps) {
     return (
         <div
             className={cn(
-                "relative flex flex-col overflow-hidden rounded-2xl bg-[#1a1a1a] shadow-2xl transition-transform hover:scale-105",
+                "relative flex flex-col overflow-hidden rounded-xl bg-[#121212] text-white shadow-xl transition-transform hover:scale-105",
                 className
             )}
-            style={{ width: "280px", height: "360px", padding: "15px" }}
+            // EDIT: Increased width to 320px ("Slightly Wider")
+            style={{ width: "320px", height: "280px", padding: "0" }}
         >
-            <div className="relative h-52 w-full overflow-hidden rounded-xl bg-secondary/50">
+            {/* Image Container */}
+            <div className="relative h-[180px] w-[calc(100%-10px)] mx-auto mt-[5px] overflow-hidden rounded-lg bg-gray-800 shrink-0">
                 <Image
                     src={imageSrc}
                     alt={title}
@@ -42,23 +54,44 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
                     className="object-cover transition-transform duration-500 hover:scale-110"
                 />
             </div>
-            <div className="flex flex-1 flex-col justify-between pt-4">
-                <div>
-                    <h3 className="mb-3 text-lg font-bold text-white">{title}</h3>
-                    <div className="flex flex-wrap gap-2">
-                        {tags.map((tag) => (
+
+            {/* Content Container */}
+            {/* EDIT: 
+                - pt-[20px]: 20px space between Image bottom and Tags top
+                - pb-[20px]: 20px space between Title bottom and Card bottom
+                - gap-[10px]: Space between Tags and Title
+                This ensures the top and bottom spacing is EQUAL.
+            */}
+            <div className="flex flex-1 flex-col px-5 pt-[20px] pb-[20px] gap-[10px]">
+
+                {/* 1. TAGS (Top) */}
+                <div className="flex flex-wrap justify-start gap-2">
+                    {tags.map((tag) => {
+                        const style = TAG_STYLES[tag] || TAG_STYLES["default"];
+
+                        return (
                             <span
                                 key={tag}
-                                className={cn(
-                                    "rounded-full px-3 py-1 text-xs font-medium text-white",
-                                    TAG_COLORS[tag] || "bg-gray-500/90"
-                                )}
+                                className="inline-block font-sans text-[14px] font-normal capitalize border leading-none"
+                                style={{
+                                    backgroundColor: style.bg,
+                                    color: style.text,
+                                    borderColor: style.border,
+                                    padding: "4px 10px",
+                                    borderRadius: "30px",
+                                    borderWidth: "1px"
+                                }}
                             >
                                 {tag}
                             </span>
-                        ))}
-                    </div>
+                        );
+                    })}
                 </div>
+
+                {/* 2. TITLE (Bottom) */}
+                <h3 className="text-left text-[20px] font-sans font-normal text-white leading-none m-0">
+                    {title}
+                </h3>
             </div>
         </div>
     );

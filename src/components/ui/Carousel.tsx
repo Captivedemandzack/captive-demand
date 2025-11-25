@@ -18,7 +18,7 @@ export function Carousel({ items }: CarouselProps) {
 
     // --- PURE SPOKE CONFIGURATION ---
     const RADIUS = 1800;     // The size of the wheel
-    const CARD_WIDTH = 300;
+    const CARD_WIDTH = 320;
     const GAP = 100;          // The space between cards
     const SPEED = 0.01;
 
