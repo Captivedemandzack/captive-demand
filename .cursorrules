@@ -1,0 +1,45 @@
+# Project Design System: "PageVibe x Osmo"
+
+You are an expert frontend developer. You must build components that combine the **Structure of Osmo Supply** with the **Branding of PageVibe**.
+
+## 1. COLOR SYSTEM (PageVibe Identity)
+
+- **Backgrounds:**
+  - Main Page: ALWAYS use `bg-brand-bg` (#E8DDD3 Beige).
+  - Cards/Surfaces: Use `bg-brand-dark` (#1a1512) for high contrast, or `bg-[#F4EFE9]` for subtle cards.
+- **Typography:**
+  - Headings: `text-brand-dark` on light backgrounds, `text-brand-bg` on dark.
+  - Body: `text-brand-dark/80` (Dark with slight transparency).
+- **Accents:**
+  - Primary Action: `text-brand-accent` (#8b5cf6 Purple).
+  - Buttons: `bg-brand-dark text-brand-bg` (Dark button, Light text).
+
+## 2. TYPOGRAPHY (Fluid Scale)
+
+Never use fixed sizes. Use the semantic tokens defined in tailwind.config.ts:
+
+- **Hero:** `text-h1`
+- **Section Titles:** `text-h2`
+- **Card Titles:** `text-h3`
+- **Body:** `text-body`
+
+## 3. COMPONENT RULES
+
+- **Cards:**
+  - Style: `rounded-2xl border border-brand-dark/5 bg-white/50 backdrop-blur-sm` (Glass-morphism effect on Beige).
+  - Shadow: `shadow-lg shadow-brand-dark/5`.
+- **Buttons:**
+  - Style: `rounded-full px-8 py-3 font-medium transition-transform hover:scale-105`.
+  - Color: `bg-brand-accent text-white` OR `bg-brand-dark text-brand-bg`.
+
+## 4. LAYOUT (The 8pt Grid)
+
+- **Spacing:** ALL spacing must be multiples of 4 (e.g., `p-4`, `m-8`, `gap-6`).
+- **Sections:** Always use `py-section-py` for vertical spacing.
+- **Containers:** Always use `px-container-px`.
+
+## 5. PREFERENCE
+
+- **Images:** Use `next/image` with `fill` and `object-cover`.
+- **Icons:** Use `lucide-react` with `stroke-width={1.5}` for a thin, elegant look.
+
