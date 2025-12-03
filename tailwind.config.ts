@@ -13,6 +13,8 @@ const config: Config = {
             fontFamily: {
                 sans: ["var(--font-sans)", "sans-serif"],
                 mono: ["var(--font-mono)", "monospace"],
+                "syne": ["var(--font-syne)", "sans-serif"],
+                "nohemi": ["var(--font-nohemi)", "sans-serif"],
             },
 
             // 2. OSMO STRUCTURE (Fluid Typography)

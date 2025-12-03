@@ -19,19 +19,34 @@ interface TagStyle {
 
 const TAG_STYLES: Record<string, TagStyle> = {
     "Web Design": {
-        bg: "#FFE4F2",
-        text: "#B83280",
-        border: "#B8328078",
+        bg: "#FFF0E6",
+        text: "#FF5500",
+        border: "#FF5500",
     },
     "Web Dev": {
-        bg: "#E5EDFF",
-        text: "#2B4FFF",
-        border: "#2B4FFF80",
+        bg: "#E0F2F2",
+        text: "#008080",
+        border: "#008080",
+    },
+    "Software": {
+        bg: "#FFF5D1",
+        text: "#CCA000AD",
+        border: "#CCA000AD",
+    },
+    "SEO": {
+        bg: "#DCE4F2",
+        text: "#293445",
+        border: "#293445",
+    },
+    "Email Marketing": {
+        bg: "#ECEEF6",
+        text: "#5C6BC0",
+        border: "#5C6BC0",
     },
     "default": {
-        bg: "#2A2A2A",
-        text: "#E0E0E0",
-        border: "#404040",
+        bg: "#F2F2F2",
+        text: "#505050",
+        border: "#505050",
     }
 };
 
@@ -39,19 +54,19 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
     return (
         <div
             className={cn(
-                "relative flex flex-col overflow-hidden rounded-xl bg-[#121212] text-white shadow-xl transition-transform hover:scale-105",
+                "relative flex flex-col overflow-hidden rounded-xl bg-[#f3f4f6] text-[#121212] transition-transform hover:scale-105",
                 className
             )}
-            // EDIT: Increased width to 320px ("Slightly Wider")
-            style={{ width: "320px", height: "280px", padding: "0" }}
+            // Increased width to 360px for more inline space
+            style={{ width: "360px", height: "280px", padding: "0" }}
         >
             {/* Image Container */}
-            <div className="relative h-[180px] w-[calc(100%-10px)] mx-auto mt-[5px] overflow-hidden rounded-lg bg-gray-800 shrink-0">
+            <div className="relative h-[180px] w-[calc(100%-10px)] mx-auto mt-[5px] overflow-hidden rounded-lg bg-gray-200 shrink-0">
                 <Image
                     src={imageSrc}
                     alt={title}
                     fill
-                    className="object-cover transition-transform duration-500 hover:scale-110"
+                    className="object-cover object-top transition-transform duration-500 hover:scale-110"
                 />
             </div>
 
@@ -72,7 +87,7 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
                         return (
                             <span
                                 key={tag}
-                                className="inline-block font-sans text-[14px] font-normal capitalize border leading-none"
+                                className="inline-block font-mono text-[11px] font-normal uppercase border leading-none"
                                 style={{
                                     backgroundColor: style.bg,
                                     color: style.text,
@@ -89,7 +104,7 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
                 </div>
 
                 {/* 2. TITLE (Bottom) */}
-                <h3 className="text-left text-[20px] font-sans font-normal text-white leading-none m-0">
+                <h3 className="text-left text-[16px] font-normal text-[#121212] leading-none m-0 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
                     {title}
                 </h3>
             </div>
