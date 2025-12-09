@@ -5,73 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image'; // optimized image component
 
 gsap.registerPlugin(ScrollTrigger);
 
-// 1. Define the path centrally. 
-// This is the path from your CornerShape, cleaned up to be reusable.
-const SHAPE_PATH_D = "M0 0h5.63c7.808 0 13.536 7.337 11.642 14.91l-6.09 24.359A11.527 11.527 0 0 1 0 48V0Z";
-const SHAPE_VIEWBOX = "0 0 18 48";
-
-// 2. The Fluid Shape Component
-const FluidShape = ({ 
-    type = 'background',
-    className,
-    color,
-    imgSrc,
-    id
-  }: { 
-    type: 'background' | 'image';
-    className?: string;
-    color?: string;
-    imgSrc?: string;
-    id?: string;
-  }) => {
-    return (
-      <div className={`relative w-full h-full ${className}`}>
-        <svg 
-          viewBox={SHAPE_VIEWBOX} 
-          className="w-full h-full block" 
-          preserveAspectRatio="none"
-        >
-          {type === 'background' ? (
-            <path 
-              d={SHAPE_PATH_D} 
-              fill={color} 
-              className="transition-all duration-300" 
-            />
-          ) : (
-            <>
-              <defs>
-                <clipPath id={`clip-${id}`}>
-                  <path d={SHAPE_PATH_D} />
-                </clipPath>
-              </defs>
-              <image 
-                href={imgSrc} 
-                x="0" 
-                y="0" 
-                width="18" 
-                height="48" 
-                clipPath={`url(#clip-${id})`}
-                preserveAspectRatio="xMidYMid slice"
-              />
-            </>
-          )}
-        </svg>
-      </div>
-    );
-  };
-// Helper Shapes
-const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
-  <div className="flex items-end w-full">
-    <svg viewBox="0 0 80 8" className="w-20 h-2 flex-shrink-0" preserveAspectRatio="none">
-      <path d="M0 8 L0 0 L68 0 L80 8 Z" fill={shapeColor} />
-    </svg>
-    <div className="flex-1 h-[1px] self-end" style={{ backgroundColor: lineColor }} />
-  </div>
-);
-
+// Data remains the same
 interface FAQItem {
   question: string;
   answer: string;
@@ -106,7 +44,17 @@ const faqData: FAQItem[] = [
   }
 ];
 
-// Refactored FAQ Item
+// Helper: The decorative line above the section
+const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
+  <div className="flex items-end w-full">
+    <svg viewBox="0 0 80 8" className="w-20 h-2 flex-shrink-0" preserveAspectRatio="none">
+      <path d="M0 8 L0 0 L68 0 L80 8 Z" fill={shapeColor} />
+    </svg>
+    <div className="flex-1 h-[1px] self-end" style={{ backgroundColor: lineColor }} />
+  </div>
+);
+
+// REFACTORED: Cleaner FAQ Item using CSS shapes (rounded-[2rem]) to match Screenshot 2
 const FAQAccordionItem = ({ 
   item, 
   isOpen, 
@@ -125,30 +73,18 @@ const FAQAccordionItem = ({
     viewport={{ once: true }}
     className="group w-full"
   >
-    <button
-      onClick={onClick}
-      className="w-full relative flex items-stretch min-h-[84px]"
+    <div 
+      className={`
+        relative w-full overflow-hidden transition-all duration-300
+        ${isOpen ? 'bg-[#1a1512]' : 'bg-[#f3f4f6] hover:bg-[#e8e8e8]'}
+        rounded-[2rem] /* Matches the button shape in Screenshot 2 */
+      `}
     >
-      {/* FLUID BACKGROUND:
-        The SVG is absolutely positioned to fill the button.
-        It stretches automatically based on the height of the text content.
-      */}
-      <div className="absolute inset-0 w-full h-full">
-         <FluidShape 
-            type="background" 
-            color={isOpen ? '#1a1512' : '#f3f4f6'}
-            className={`transition-colors duration-300 ${!isOpen && 'group-hover:text-[#e8e8e8]'}`} 
-         />
-         {/* Simple color override for hover since we can't easily animate fill inside the component without prop drilling */}
-         <div className={`absolute inset-0 -z-10 transition-colors duration-300 ${isOpen ? 'bg-[#1a1512]' : 'bg-[#f3f4f6] group-hover:bg-[#e8e8e8]'}`} 
-              style={{ clipPath: `path('${SHAPE_PATH_D}')` }} /> 
-              {/* Note: The clipPath above is a fallback/hack for hover states if you want pure CSS hover. 
-                  Ideally, pass the color prop dynamically as done above. */}
-      </div>
-
-      {/* Content sits on top of the fluid background */}
-      <div className="relative z-10 flex-1 flex items-center justify-between p-5 md:p-6 pr-12">
-        <div className="flex flex-col items-start gap-1.5 text-left">
+      <button
+        onClick={onClick}
+        className="w-full relative flex items-center justify-between p-6 pr-8 min-h-[84px] text-left"
+      >
+        <div className="flex flex-col items-start gap-2">
           <span 
             className={`text-lg md:text-xl transition-colors ${
               isOpen ? 'text-white' : 'text-[#1a1512]'
@@ -157,7 +93,8 @@ const FAQAccordionItem = ({
           >
             {item.question}
           </span>
-          {/* Microcopy tags */}
+          
+          {/* Tags */}
           <div className="flex gap-2">
             {item.tags.map((tag, i) => (
               <span 
@@ -174,7 +111,8 @@ const FAQAccordionItem = ({
           </div>
         </div>
         
-        <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
+        {/* Icon */}
+        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-colors ml-4 ${
           isOpen ? 'bg-white/10' : 'bg-[#e8e8e8] group-hover:bg-[#d5d5d5]'
         }`}>
           <Plus 
@@ -185,29 +123,26 @@ const FAQAccordionItem = ({
             strokeWidth={1.5}
           />
         </div>
-      </div>
-    </button>
-    
-    <AnimatePresence initial={false}>
-      {isOpen && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="overflow-hidden"
-        >
-          {/* Note: The bottom content doesn't use the shape, 
-            it hangs below. We adjust margin to align with the visual flow. 
-          */}
-          <div className="pt-2 pb-6 px-5 md:px-6 bg-[#1a1512] rounded-b-xl mr-[18px] md:mr-[24px]">
-            <p className="font-mono text-sm text-white/60 leading-relaxed">
-              {item.answer}
-            </p>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      </button>
+
+      {/* Accordion Content */}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <div className="px-6 pb-8 pt-0 max-w-2xl">
+              <p className="font-mono text-sm text-white/60 leading-relaxed">
+                {item.answer}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   </motion.div>
 );
 
@@ -215,6 +150,7 @@ export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const labelRef = useRef<HTMLSpanElement>(null);
 
+  // Keep GSAP Text Scramble Effect
   useLayoutEffect(() => {
     if (labelRef.current) {
       const originalText = "FAQ";
@@ -258,7 +194,7 @@ export function FAQSection() {
   };
 
   return (
-    <section className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden">
+    <section className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden" id="faq">
       <div className="max-w-7xl mx-auto">
         
         {/* Decorative line */}
@@ -266,12 +202,11 @@ export function FAQSection() {
           <DecorativeShapeWithLine shapeColor="#d5d5d5" lineColor="#e5e5e5" />
         </div>
 
-        {/* Two Column Layout */}
+        {/* Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           
-          {/* Left Column - Header */}
+          {/* Left Column */}
           <div className="flex flex-col">
-            {/* Label */}
             <span 
               ref={labelRef}
               className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-6"
@@ -279,7 +214,6 @@ export function FAQSection() {
               / FAQ
             </span>
 
-            {/* Main Heading */}
             <h2 
               className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512] mb-6"
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
@@ -287,7 +221,6 @@ export function FAQSection() {
               Commonly given<br />answers
             </h2>
 
-            {/* Subtext with link */}
             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed mb-8 max-w-sm">
               Don't find what you are looking for?{' '}
               <a 
@@ -298,16 +231,18 @@ export function FAQSection() {
               </a>
             </p>
 
-            {/* FLUID IMAGE:
-              This replaces the previous side-by-side div setup.
-              The image itself is now clipped by the shape. 
-            */}
-            <div className="hidden lg:block mt-auto w-full h-72">
-              <FluidShape 
-                type="image" 
-                imgSrc="/ff.png" 
-                id="faq-main-image"
-              />
+            {/* REFACTORED: Image now matches the button shape (rounded-[2rem]) */}
+            <div className="hidden lg:block mt-auto w-full relative h-80 rounded-[2rem] overflow-hidden bg-gray-200">
+               {/* Replace src with your actual image path */}
+               <Image 
+                 src="/ff.png" 
+                 alt="FAQ Illustration"
+                 fill
+                 className="object-cover"
+                 sizes="(max-width: 768px) 100vw, 50vw"
+               />
+               {/* Optional overlay if needed for contrast */}
+               <div className="absolute inset-0 bg-black/10" />
             </div>
           </div>
 
@@ -325,7 +260,6 @@ export function FAQSection() {
           </div>
 
         </div>
-
       </div>
     </section>
   );
