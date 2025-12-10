@@ -23,13 +23,27 @@ export function Carousel({ items }: CarouselProps) {
         gap: 100
     });
 
-    // 16x Duplication for infinite buffer
-    const extendedItems = [...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items];
+    // State for duplication count (16x for desktop, 3x for mobile)
+    const [duplicationCount, setDuplicationCount] = useState(16);
+
+    // Dynamic duplication based on state
+    const extendedItems = React.useMemo(() => {
+        return Array(duplicationCount).fill(items).flat();
+    }, [items, duplicationCount]);
 
     useLayoutEffect(() => {
         const updateConfig = () => {
-            // Using 1024px (Tablet Landscape) as the breakpoint
-            if (window.innerWidth < 1024) {
+            const isMobile = window.innerWidth < 768;
+            const isTablet = window.innerWidth < 1024;
+
+            // CRITICAL OPTIMIZATION: Reduce DOM nodes on mobile
+            if (isMobile) {
+                setDuplicationCount(3); // ~69 nodes instead of ~368
+            } else {
+                setDuplicationCount(16); // Full infinite scroll for desktop
+            }
+
+            if (isTablet) {
                 // TABLET & MOBILE:
                 // - Smaller cards (280px)
                 // - Wider gap (80px) to give that "spaced out" look you wanted
@@ -79,8 +93,11 @@ export function Carousel({ items }: CarouselProps) {
             const animate = () => {
                 globalRotation -= progress.speed;
 
-                if (containerRef.current) {
+                // CRITICAL OPTIMIZATION: Disable blur filter on mobile
+                if (containerRef.current && window.innerWidth >= 768) {
                     containerRef.current.style.filter = `blur(${progress.blur}px)`;
+                } else if (containerRef.current) {
+                    containerRef.current.style.filter = 'none';
                 }
 
                 cards.forEach((card, index) => {

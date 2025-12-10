@@ -6,6 +6,54 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { AnimatedCTAButton } from '../sections/Hero';
 
+// Optimized Video Component for Footer Marquee
+const FooterVideo = () => {
+    const videoRef = React.useRef<HTMLVideoElement>(null);
+
+    React.useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        // Desktop: Always play
+        if (window.matchMedia("(min-width: 768px)").matches) {
+            video.play().catch(() => { });
+            return;
+        }
+
+        // Mobile: Only play when visible to save GPU/Memory
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        video.play().catch(() => { });
+                    } else {
+                        video.pause();
+                    }
+                });
+            },
+            { threshold: 0.1 } // Play when 10% visible
+        );
+
+        observer.observe(video);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
+
+    return (
+        <video
+            ref={videoRef}
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+        >
+            <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps.mp4" type="video/mp4" />
+        </video>
+    );
+};
+
 export default function Footer() {
     return (
         <>
@@ -70,15 +118,7 @@ export default function Footer() {
                                 </span>
 
                                 <div className="relative w-[10vw] h-[10vw] md:w-[7vw] md:h-[7vw] rounded-full overflow-hidden shrink-0">
-                                    <video
-                                        autoPlay
-                                        loop
-                                        muted
-                                        playsInline
-                                        className="w-full h-full object-cover"
-                                    >
-                                        <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps.mp4" type="video/mp4" />
-                                    </video>
+                                    <FooterVideo />
                                 </div>
                             </div>
                         ))}

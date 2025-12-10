@@ -124,7 +124,9 @@ export function Hero() {
         const videoState = { rate: 8, blur: 10 };
 
         video.playbackRate = videoState.rate;
-        video.style.filter = `blur(${videoState.blur}px)`;
+        if (!window.matchMedia("(max-width: 768px)").matches) {
+            video.style.filter = `blur(${videoState.blur}px)`;
+        }
 
         gsap.to(videoState, {
             rate: 1,
@@ -134,7 +136,10 @@ export function Hero() {
             onUpdate: () => {
                 if (videoRef.current) {
                     videoRef.current.playbackRate = videoState.rate;
-                    videoRef.current.style.filter = `blur(${videoState.blur}px)`;
+                    // CRITICAL OPTIMIZATION: Skip blur filter on mobile to prevent crash
+                    if (!window.matchMedia("(max-width: 768px)").matches) {
+                        videoRef.current.style.filter = `blur(${videoState.blur}px)`;
+                    }
                 }
             },
         });
