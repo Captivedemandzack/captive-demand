@@ -3,10 +3,11 @@ import { Inter, Syne, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
-const inter = Inter({ 
+const inter = Inter({
     subsets: ["latin"],
-    variable: "--font-sans", 
+    variable: "--font-sans",
 });
 
 const syne = Syne({
@@ -41,7 +42,10 @@ export default function RootLayout({
         <html lang="en" className="h-full">
             <body className={`${inter.variable} ${syne.variable} ${jetBrainsMono.variable} ${nohemi.variable} antialiased h-full relative`}>
                 <Navbar />
-                <main>{children}</main>
+                <main className="relative z-10 bg-[#fafafa] w-full overflow-x-hidden">
+                    {children}
+                </main>
+                <Footer />
             </body>
         </html>
     );

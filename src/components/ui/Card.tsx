@@ -57,8 +57,8 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
                 "relative flex flex-col overflow-hidden rounded-xl bg-[#f3f4f6] text-[#121212] transition-transform hover:scale-105",
                 className
             )}
-            // Increased width to 360px for more inline space
-            style={{ width: "360px", height: "280px", padding: "0" }}
+            // EDIT: Unlocked width/height so parent Carousel controls size
+            style={{ width: "100%", height: "100%", padding: "0" }}
         >
             {/* Image Container */}
             <div className="relative h-[180px] w-[calc(100%-10px)] mx-auto mt-[5px] overflow-hidden rounded-lg bg-gray-200 shrink-0">
@@ -71,12 +71,6 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
             </div>
 
             {/* Content Container */}
-            {/* EDIT: 
-                - pt-[20px]: 20px space between Image bottom and Tags top
-                - pb-[20px]: 20px space between Title bottom and Card bottom
-                - gap-[10px]: Space between Tags and Title
-                This ensures the top and bottom spacing is EQUAL.
-            */}
             <div className="flex flex-1 flex-col px-5 pt-[20px] pb-[20px] gap-[10px]">
 
                 {/* 1. TAGS (Top) */}

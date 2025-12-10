@@ -38,22 +38,32 @@ const ArrowIcon = ({ color = "currentColor", className = "" }: { color?: string;
   </svg>
 );
 
-// Hero-style Animated CTA Button - Light mode for orange card background
-const BookCallButton = () => (
+// --- UPDATED BUTTON COMPONENT ---
+// 1. Normal State: White Label, Black Box, White Arrow
+// 2. Hover State: White Label, WHITE Box (Matches body), BLACK Arrow
+const BookCallButton = ({ onOrange = false }: { onOrange?: boolean }) => (
   <a href="#" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Book a Call">
-    {/* Label Container - Light background, dark text */}
-    <span className="
+
+    {/* Label Container */}
+    <span className={`
         relative flex items-center h-12 pl-5 pr-2 mr-4
-        bg-[#1a1512] text-white
-        rounded-l-xl
-        font-mono text-sm uppercase tracking-normal
+        rounded-l-xl font-mono text-sm uppercase tracking-normal
         transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        group-hover:bg-white group-hover:text-[#1a1512]
-      ">
+        ${onOrange
+        ? 'bg-white text-[#1a1512]' // REVERSE: White bg, Black text (Stays white on hover per request)
+        : 'bg-[#1a1512] text-white group-hover:bg-[#332D2A]' // DEFAULT: Black -> Dark Gray
+      }
+      `}>
       <span className="z-10 relative">Book an intro call</span>
 
-      {/* Decorative Corner that connects label to icon */}
-      <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 text-[#1a1512] group-hover:text-white transition-colors duration-300">
+      {/* Decorative Corner - Matches Label Background */}
+      <div className={`
+        absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 transition-colors duration-300
+        ${onOrange
+          ? 'text-white' // REVERSE: Stays white to match body
+          : 'text-[#1a1512] group-hover:text-[#332D2A]'
+        }
+      `}>
         <CornerShape className="w-full h-full" />
       </div>
     </span>
@@ -64,40 +74,47 @@ const BookCallButton = () => (
         transform-gpu
         transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
       ">
-      {/* Blob Shape Background - Light on normal, orange on hover */}
-      <div className="absolute inset-0 z-0 text-white group-hover:text-[#ff5501] transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
+      {/* Blob Shape Background */}
+      <div className={`
+        absolute inset-0 z-0 transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
+        ${onOrange
+          ? 'text-[#1a1512] group-hover:text-white' // REVERSE: Black -> WHITE on Hover
+          : 'text-[#f3f4f6] group-hover:text-[#1a1512]' // DEFAULT: Light Gray -> Black on hover
+        }
+      `}>
         <IconBlobShape className="w-full h-full" />
       </div>
 
       {/* The Sliding Arrows Container */}
       <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
-        {/* Default Dark Arrow (Visible initially) */}
+        {/* Arrow 1: Visible initially (Slides Out) */}
         <span className="
             absolute flex items-center justify-center w-full h-full
             transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
             translate-x-0 group-hover:translate-x-[150%]
           ">
-          <ArrowIcon color="#1a1512" className="w-5 h-5" />
+          {/* OnOrange: Starts White (on Black box) */}
+          <ArrowIcon color={onOrange ? "#FFFFFF" : "#1a1512"} className="w-5 h-5" />
         </span>
- 
-        {/* Hover White Arrow (Coming from left) */}
+
+        {/* Arrow 2: Enters on Hover (Slides In) */}
         <span className="
             absolute flex items-center justify-center w-full h-full
             transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
             -translate-x-[150%] group-hover:translate-x-0
           ">
-          <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
+          {/* OnOrange: Becomes BLACK (on White box). Default: Becomes White (on Black box) */}
+          <ArrowIcon color={onOrange ? "#1a1512" : "#FFFFFF"} className="w-5 h-5" />
         </span>
       </span>
     </i>
   </a>
 );
 
-// Website Wireframe UI - Far right and bottom edge
+// Website Wireframe UI
 const WebsiteWireframe = () => (
   <div className="absolute bottom-0 right-0 w-full h-60 overflow-hidden pointer-events-none">
     <div className="absolute -right-4 -bottom-12 w-[320px] bg-white rounded-xl border border-[#1a1512]/10 overflow-hidden shadow-lg">
-      {/* Browser bar */}
       <div className="bg-[#f5f5f5] px-3 py-2 flex items-center gap-2 border-b border-[#1a1512]/5">
         <div className="flex gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full bg-[#1a1512]/10" />
@@ -106,9 +123,7 @@ const WebsiteWireframe = () => (
         </div>
         <div className="flex-1 h-4 bg-[#1a1512]/5 rounded mx-4" />
       </div>
-      {/* Content */}
       <div className="p-4 space-y-3">
-        {/* Nav */}
         <div className="flex items-center justify-between mb-4">
           <div className="w-16 h-3 bg-[#1a1512]/10 rounded" />
           <div className="flex gap-3">
@@ -117,7 +132,6 @@ const WebsiteWireframe = () => (
             <div className="w-8 h-2 bg-[#1a1512]/5 rounded" />
           </div>
         </div>
-        {/* Hero section */}
         <div className="flex gap-4">
           <div className="flex-1 space-y-2">
             <div className="w-3/4 h-4 bg-[#1a1512]/15 rounded" />
@@ -127,7 +141,6 @@ const WebsiteWireframe = () => (
           </div>
           <div className="w-24 h-20 bg-[#1a1512]/5 rounded" />
         </div>
-        {/* Features */}
         <div className="grid grid-cols-3 gap-2 mt-4">
           <div className="h-12 bg-[#1a1512]/5 rounded" />
           <div className="h-12 bg-[#1a1512]/5 rounded" />
@@ -138,11 +151,10 @@ const WebsiteWireframe = () => (
   </div>
 );
 
-// Proposal Wireframe UI - Far right and bottom edge
+// Proposal Wireframe UI
 const ProposalWireframe = () => (
   <div className="absolute bottom-0 right-0 w-full h-60 overflow-hidden pointer-events-none">
     <div className="absolute -right-2 -bottom-16 w-[300px] bg-white rounded-xl border border-[#1a1512]/10 overflow-hidden shadow-lg">
-      {/* Header */}
       <div className="bg-[#1a1512] px-4 py-3 flex items-center justify-between">
         <div className="w-20 h-3 bg-white/30 rounded" />
         <div className="flex gap-2">
@@ -151,14 +163,11 @@ const ProposalWireframe = () => (
           <div className="w-2 h-2 rounded-full bg-white/20" />
         </div>
       </div>
-      {/* Content */}
       <div className="p-4 space-y-3">
-        {/* Title */}
         <div className="space-y-2 mb-4">
           <div className="w-1/2 h-4 bg-[#1a1512]/15 rounded" />
           <div className="w-3/4 h-2 bg-[#1a1512]/5 rounded" />
         </div>
-        {/* Timeline */}
         <div className="flex items-center gap-2 mb-3">
           <div className="w-3 h-3 rounded-full bg-[#ff5501]/40" />
           <div className="flex-1 h-1 bg-[#1a1512]/10 rounded" />
@@ -166,7 +175,6 @@ const ProposalWireframe = () => (
           <div className="flex-1 h-1 bg-[#1a1512]/10 rounded" />
           <div className="w-3 h-3 rounded-full bg-[#1a1512]/10" />
         </div>
-        {/* Deliverables list */}
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Check size={12} className="text-[#ff5501]/60" />
@@ -181,7 +189,6 @@ const ProposalWireframe = () => (
             <div className="flex-1 h-2 bg-[#1a1512]/10 rounded" />
           </div>
         </div>
-        {/* Price */}
         <div className="flex items-center justify-between mt-4 pt-3 border-t border-[#1a1512]/5">
           <div className="w-12 h-3 bg-[#1a1512]/10 rounded" />
           <div className="w-16 h-4 bg-[#1a1512]/20 rounded" />
@@ -192,17 +199,17 @@ const ProposalWireframe = () => (
 );
 
 // Process Step Card
-const ProcessCard = ({ 
-  timeline, 
-  title, 
-  description, 
+const ProcessCard = ({
+  timeline,
+  title,
+  description,
   icon,
   hasButton,
   isOrange,
   wireframe,
   headshot,
-  delay 
-}: { 
+  delay
+}: {
   timeline: string;
   title: string;
   description: string;
@@ -218,26 +225,24 @@ const ProcessCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay }}
     viewport={{ once: true }}
-    className={`relative rounded-2xl p-6 md:p-8 border flex flex-col min-h-[420px] overflow-hidden ${
-      isOrange 
-        ? 'bg-[#ff5501] border-[#ff5501] text-white' 
-        : 'bg-[#f6f5f6] border-[#1a1512]/5'
-    }`}
+    className={`relative rounded-2xl p-6 md:p-8 border flex flex-col min-h-[420px] overflow-hidden ${isOrange
+      ? 'bg-[#ff5501] border-[#ff5501] text-white'
+      : 'bg-[#f6f5f6] border-[#1a1512]/5'
+      }`}
   >
     {/* Timeline Badge + Headshot */}
     <div className="flex items-start justify-between mb-6">
-      <span className={`font-mono text-xs uppercase tracking-wider ${
-        isOrange ? 'text-white/70' : 'text-[#1a1512]/50'
-      }`}>
+      <span className={`font-mono text-xs uppercase tracking-wider ${isOrange ? 'text-white/70' : 'text-[#1a1512]/50'
+        }`}>
         {timeline}
       </span>
       {headshot && (
-        <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden shadow-lg border-2 border-white/20">
-          <Image 
-            src={headshot} 
-            alt="Team member" 
-            width={80} 
-            height={80} 
+        <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden shadow-lg border border-[#fafafa]">
+          <Image
+            src={headshot}
+            alt="Team member"
+            width={80}
+            height={80}
             className="w-full h-full object-cover"
           />
         </div>
@@ -250,7 +255,7 @@ const ProcessCard = ({
     </div>
 
     {/* Title */}
-    <h3 
+    <h3
       className={`text-xl md:text-2xl mb-4 ${isOrange ? 'text-white' : 'text-[#1a1512]'}`}
       style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
     >
@@ -258,23 +263,22 @@ const ProcessCard = ({
     </h3>
 
     {/* Description */}
-    <p className={`font-mono text-sm leading-relaxed mb-6 ${
-      isOrange ? 'text-white/80' : 'text-[#1a1512]/60'
-    }`}>
+    <p className={`font-mono text-sm leading-relaxed mb-6 ${isOrange ? 'text-white/80' : 'text-[#1a1512]/60'
+      }`}>
       {description}
     </p>
 
-    {/* CTA Button (only on first card) */}
+    {/* CTA Button */}
     {hasButton && (
       <div className="mt-auto relative z-10">
-        <BookCallButton />
+        <BookCallButton onOrange={isOrange} />
         <p className={`font-mono text-xs mt-4 ${isOrange ? 'text-white/60' : 'text-[#1a1512]/40'}`}>
           Only 20-30min. Friendly chat, no pressure.
         </p>
       </div>
     )}
 
-    {/* Wireframe graphics - positioned at bottom right edge */}
+    {/* Wireframes */}
     {wireframe === 'proposal' && <ProposalWireframe />}
     {wireframe === 'website' && <WebsiteWireframe />}
   </motion.div>
@@ -288,7 +292,7 @@ export function ProcessSection() {
     if (labelRef.current) {
       const originalText = "OUR PROCESS";
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      
+
       gsap.to({}, {
         duration: 1.2,
         ease: "expo.out",
@@ -297,7 +301,7 @@ export function ProcessSection() {
           start: "top 90%",
           toggleActions: "play none none none"
         },
-        onUpdate: function() {
+        onUpdate: function () {
           const progress = this.progress();
           let result = "";
           for (let i = 0; i < originalText.length; i++) {
@@ -313,7 +317,7 @@ export function ProcessSection() {
             labelRef.current.textContent = "/ " + result;
           }
         },
-        onComplete: function() {
+        onComplete: function () {
           if (labelRef.current) {
             labelRef.current.textContent = "/ OUR PROCESS";
           }
@@ -329,7 +333,7 @@ export function ProcessSection() {
       description: "We'll talk through your goals, blockers, and what you actually need. No fluff. No 10-page briefs.",
       hasButton: true,
       isOrange: true,
-      headshot: "/jordan.jpeg"
+      headshot: "/spencer-donaldson.jpg"
     },
     {
       timeline: "1-2 DAYS",
@@ -349,26 +353,22 @@ export function ProcessSection() {
   return (
     <section className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        
+
         {/* Header */}
         <div className="mb-16 md:mb-24">
-          {/* Decorative shape with extending line - full width */}
           <div className="mb-6 w-full">
             <DecorativeShapeWithLine shapeColor="#d5d5d5" lineColor="#e5e5e5" />
           </div>
-          
+
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
             <div>
-              {/* Label */}
-              <span 
+              <span
                 ref={labelRef}
                 className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
               >
                 / OUR PROCESS
               </span>
-              
-              {/* Main Heading */}
-              <h2 
+              <h2
                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]"
                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
               >
@@ -377,7 +377,6 @@ export function ProcessSection() {
               </h2>
             </div>
 
-            {/* Subtext - Right aligned */}
             <div className="md:max-w-md md:text-right">
               <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
                 We're on a mission to help local businesses dominate their digital presence...{' '}
@@ -392,7 +391,7 @@ export function ProcessSection() {
         {/* Process Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {processSteps.map((step, index) => (
-            <ProcessCard 
+            <ProcessCard
               key={index}
               timeline={step.timeline}
               title={step.title}

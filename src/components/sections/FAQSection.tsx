@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image'; // optimized image component
+import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Data remains the same
+// Data
 interface FAQItem {
   question: string;
   answer: string;
@@ -44,7 +44,7 @@ const faqData: FAQItem[] = [
   }
 ];
 
-// Helper: The decorative line above the section
+// Helper: Decorative Line
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
   <div className="flex items-end w-full">
     <svg viewBox="0 0 80 8" className="w-20 h-2 flex-shrink-0" preserveAspectRatio="none">
@@ -54,15 +54,16 @@ const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5"
   </div>
 );
 
-// REFACTORED: Cleaner FAQ Item using CSS shapes (rounded-[2rem]) to match Screenshot 2
-const FAQAccordionItem = ({ 
-  item, 
-  isOpen, 
+// FAQ Accordion Item Component
+// UPDATED: Border radius reduced to 'rounded-3xl' (approx 24px) to match screenshots better.
+const FAQAccordionItem = ({
+  item,
+  isOpen,
   onClick,
   delay
-}: { 
-  item: FAQItem; 
-  isOpen: boolean; 
+}: {
+  item: FAQItem;
+  isOpen: boolean;
   onClick: () => void;
   delay: number;
 }) => (
@@ -73,11 +74,11 @@ const FAQAccordionItem = ({
     viewport={{ once: true }}
     className="group w-full"
   >
-    <div 
+    <div
       className={`
         relative w-full overflow-hidden transition-all duration-300
         ${isOpen ? 'bg-[#1a1512]' : 'bg-[#f3f4f6] hover:bg-[#e8e8e8]'}
-        rounded-[2rem] /* Matches the button shape in Screenshot 2 */
+        rounded-3xl /* UPDATED: Reduced radius from 2rem to 3xl (1.5rem/24px) */
       `}
     >
       <button
@@ -85,41 +86,37 @@ const FAQAccordionItem = ({
         className="w-full relative flex items-center justify-between p-6 pr-8 min-h-[84px] text-left"
       >
         <div className="flex flex-col items-start gap-2">
-          <span 
-            className={`text-lg md:text-xl transition-colors ${
-              isOpen ? 'text-white' : 'text-[#1a1512]'
-            }`}
+          <span
+            className={`text-lg md:text-xl transition-colors ${isOpen ? 'text-white' : 'text-[#1a1512]'
+              }`}
             style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 400 }}
           >
             {item.question}
           </span>
-          
+
           {/* Tags */}
           <div className="flex gap-2">
             {item.tags.map((tag, i) => (
-              <span 
-                key={i} 
-                className={`text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider transition-colors ${
-                  isOpen 
-                    ? 'bg-white/10 text-white/60' 
+              <span
+                key={i}
+                className={`text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider transition-colors ${isOpen
+                    ? 'bg-white/10 text-white/60'
                     : 'bg-[#1a1512]/5 text-[#1a1512]/40'
-                }`}
+                  }`}
               >
                 {tag}
               </span>
             ))}
           </div>
         </div>
-        
+
         {/* Icon */}
-        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-colors ml-4 ${
-          isOpen ? 'bg-white/10' : 'bg-[#e8e8e8] group-hover:bg-[#d5d5d5]'
-        }`}>
-          <Plus 
-            size={20} 
-            className={`transition-all duration-300 ${
-              isOpen ? 'rotate-45 text-white' : 'text-[#1a1512]/40'
-            }`} 
+        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-colors ml-4 ${isOpen ? 'bg-white/10' : 'bg-[#e8e8e8] group-hover:bg-[#d5d5d5]'
+          }`}>
+          <Plus
+            size={20}
+            className={`transition-all duration-300 ${isOpen ? 'rotate-45 text-white' : 'text-[#1a1512]/40'
+              }`}
             strokeWidth={1.5}
           />
         </div>
@@ -150,12 +147,11 @@ export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const labelRef = useRef<HTMLSpanElement>(null);
 
-  // Keep GSAP Text Scramble Effect
   useLayoutEffect(() => {
     if (labelRef.current) {
       const originalText = "FAQ";
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      
+
       gsap.to({}, {
         duration: 1.2,
         ease: "expo.out",
@@ -164,7 +160,7 @@ export function FAQSection() {
           start: "top 90%",
           toggleActions: "play none none none"
         },
-        onUpdate: function() {
+        onUpdate: function () {
           const progress = this.progress();
           let result = "";
           for (let i = 0; i < originalText.length; i++) {
@@ -180,7 +176,7 @@ export function FAQSection() {
             labelRef.current.textContent = "/ " + result;
           }
         },
-        onComplete: function() {
+        onComplete: function () {
           if (labelRef.current) {
             labelRef.current.textContent = "/ FAQ";
           }
@@ -196,7 +192,7 @@ export function FAQSection() {
   return (
     <section className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden" id="faq">
       <div className="max-w-7xl mx-auto">
-        
+
         {/* Decorative line */}
         <div className="mb-6 w-full">
           <DecorativeShapeWithLine shapeColor="#d5d5d5" lineColor="#e5e5e5" />
@@ -204,17 +200,17 @@ export function FAQSection() {
 
         {/* Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          
+
           {/* Left Column */}
           <div className="flex flex-col">
-            <span 
+            <span
               ref={labelRef}
               className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-6"
             >
               / FAQ
             </span>
 
-            <h2 
+            <h2
               className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512] mb-6"
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
             >
@@ -223,26 +219,24 @@ export function FAQSection() {
 
             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed mb-8 max-w-sm">
               Don't find what you are looking for?{' '}
-              <a 
-                href="#contact" 
+              <a
+                href="#contact"
                 className="text-[#1a1512] underline underline-offset-2 hover:text-[#ff5501] transition-colors"
               >
                 Send us a message.
               </a>
             </p>
 
-            {/* REFACTORED: Image now matches the button shape (rounded-[2rem]) */}
-            <div className="hidden lg:block mt-auto w-full relative h-80 rounded-[2rem] overflow-hidden bg-gray-200">
-               {/* Replace src with your actual image path */}
-               <Image 
-                 src="/ff.png" 
-                 alt="FAQ Illustration"
-                 fill
-                 className="object-cover"
-                 sizes="(max-width: 768px) 100vw, 50vw"
-               />
-               {/* Optional overlay if needed for contrast */}
-               <div className="absolute inset-0 bg-black/10" />
+            {/* UPDATED IMAGE CONTAINER: Matches the rounded-3xl radius */}
+            <div className="hidden lg:block mt-auto w-full relative h-80 rounded-3xl overflow-hidden bg-gray-200">
+              <Image
+                src="/ff.png"
+                alt="FAQ Illustration"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-black/10" />
             </div>
           </div>
 

@@ -32,7 +32,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 2,
-    text: "I've been working in SEO for about a decade now. I've always built my teams in-house because agencies always tend to be too expensive or terrible quality. Captive had very fair prices and followed a process nearly identical to the one I was used to running with my in-house teams, so I knew the quality would be excellent. They're the only SEO agency I've collaborated with that knows what they're doing and doesn't charge an absurd price!",
+    text: "I've been working in SEO for about a decade now. I've always built my teams in-house because agencies always tend to be too expensive or terrible quality. Captive had very fair prices and followed a process nearly identical to the one I was used to running with my in-house teams, so I knew the quality would be excellent.",
     author: "Jordan Schneider",
     role: "Head of Marketing",
     company: "Boombox",
@@ -40,7 +40,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 3,
-    text: "Our business went from only referral-based clients to having an entire authoritative online presence that allowed us to grow by over 1,000% in our first true year of business. It opened doors to partnerships that we did not believe were possible as well as avenues to get listed on other popular blogs, websites, and apps in our same target market.",
+    text: "Our business went from only referral-based clients to having an entire authoritative online presence that allowed us to grow by over 1,000% in our first true year of business. It opened doors to partnerships that we did not believe were possible.",
     author: "Matthew Ford",
     role: "Founder",
     company: "BachBar",
@@ -56,7 +56,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 5,
-    text: "Captive Demand is different than any other agency we have worked with. They take a genuine interest in your success and back up their promises with results. Our website is everything we wanted and more, and the marketing efforts are delivering us more business than we could have imagined.",
+    text: "Captive Demand is different than any other agency we have worked with. They take a genuine interest in your success and back up their promises with results. Our website is everything we wanted and more.",
     author: "Ben Elizer",
     role: "CEO",
     company: "Velocity International",
@@ -72,7 +72,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 7,
-    text: "I cannot say enough amazing things about this team and the work they deliver. I worked with Zachary and Spencer to build my dream Wordpress website plus a custom-built, member-only dashboard that exceeded my expectations and brought my vision to life. They're easy to communicate with, pricing is fair, they have great ideas and solutions, and delivered everything on time. I'm so thankful for a web development team that was just as excited about the project as I was and contributed to the creative process. Highly recommend!",
+    text: "I cannot say enough amazing things about this team and the work they deliver. I worked with Zachary and Spencer to build my dream Wordpress website plus a custom-built, member-only dashboard that exceeded my expectations.",
     author: "Amy Schols",
     role: "CEO",
     company: "Modern Mentor",
@@ -151,18 +151,19 @@ export function TestimonialsSection() {
   };
 
   return (
-    <section className="w-full min-h-screen bg-[#FAFAFA] text-black flex flex-col items-center justify-center py-20 md:py-32 px-4 overflow-hidden font-sans relative">
-      
-      {/* Background Logo Carousel - Behind everything */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden flex items-center justify-center z-0">
+    <section className="w-full min-h-0 md:min-h-screen bg-[#FAFAFA] text-black flex flex-col items-center justify-center py-20 md:py-32 px-4 overflow-hidden font-sans relative">
+
+      {/* 1. BACKGROUND LOGOS (DESKTOP ONLY) */}
+      {/* EDIT: Added 'hidden lg:flex' to hide this absolute layer on mobile */}
+      <div className="hidden lg:flex absolute inset-0 w-full h-full overflow-hidden items-center justify-center z-0">
         {/* Gradient Masks for fading edges */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#FAFAFA] to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#FAFAFA] to-transparent z-10 pointer-events-none" />
-        
+
         <div className="flex items-center justify-center w-full">
-          <motion.div 
-            className="flex gap-16 items-center" 
-            animate={{ x: [0, -1500] }} 
+          <motion.div
+            className="flex gap-16 items-center"
+            animate={{ x: [0, -1500] }}
             transition={{
               x: {
                 repeat: Infinity,
@@ -174,12 +175,12 @@ export function TestimonialsSection() {
           >
             {[...logos, ...logos, ...logos].map((logo, index) => (
               <div key={`${logo.id}-${index}`} className="flex-shrink-0 opacity-30" style={{ filter: 'grayscale(100%) brightness(0.4)' }}>
-                <Image 
-                  src={logo.src} 
-                  alt={logo.name} 
+                <Image
+                  src={logo.src}
+                  alt={logo.name}
                   width={120}
                   height={48}
-                  className="h-10 md:h-12 w-auto object-contain" 
+                  className="h-10 md:h-12 w-auto object-contain"
                 />
               </div>
             ))}
@@ -188,9 +189,9 @@ export function TestimonialsSection() {
       </div>
 
       <div className="max-w-7xl w-full flex flex-col items-center z-10 relative">
-        
+
         {/* Header Section */}
-        <div className="mb-16 md:mb-24 text-center max-w-4xl mx-auto">
+        <div className="mb-12 md:mb-24 text-center max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-wide" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300, letterSpacing: '0.05em' }}>
             <span className="text-[#d3d4d9]">Trusted to drive revenue</span>
             <br />
@@ -199,52 +200,55 @@ export function TestimonialsSection() {
         </div>
 
         {/* Testimonial Card Stack - Centered */}
-        <div className="relative w-full max-w-[540px] h-[480px] mx-auto flex flex-col justify-center">
-          
-          {/* Background Decoration Card - Orange gradient on the left */}
-          <div 
-            className="absolute top-0 left-0 w-full h-[400px] rounded-2xl z-0 transform -translate-x-12 translate-y-1 -rotate-3" 
+        {/* EDIT: Constrained width on mobile (340px) to prevent overflow */}
+        <div className="relative w-full max-w-[340px] md:max-w-[540px] h-[400px] md:h-[480px] mx-auto flex flex-col justify-center">
+
+          {/* Background Decoration Card - Orange gradient */}
+          {/* EDIT: Adjusted transform for mobile (-translate-x-3) to fit screen */}
+          <div
+            className="absolute top-0 left-0 w-full h-[320px] md:h-[400px] rounded-2xl z-0 transform -translate-x-3 md:-translate-x-12 translate-y-1 -rotate-3"
             style={{
               background: 'linear-gradient(272deg, #ff3407 -16.91%, #ff3407 -.51%, #fc964c 12.46%, #fc964c 22.5%, #f62f03 46.54%, #f62f03 71.84%, #fd7c34 112.33%)',
               boxShadow: '0 25px 50px -12px rgba(209, 122, 74, 0.3)'
-            }} 
+            }}
           />
-          
-          {/* Background Decoration Card - Grey on the right */}
-          <div 
-            className="absolute top-0 left-0 w-full h-[400px] bg-[#f6f5f6] rounded-2xl border border-black/5 z-0 transform translate-x-12 translate-y-2 rotate-3" 
+
+          {/* Background Decoration Card - Grey */}
+          {/* EDIT: Adjusted transform for mobile (translate-x-3) to fit screen */}
+          <div
+            className="absolute top-0 left-0 w-full h-[320px] md:h-[400px] bg-[#f6f5f6] rounded-2xl border border-black/5 z-0 transform translate-x-3 md:translate-x-12 translate-y-2 rotate-3"
             style={{
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)'
-            }} 
+            }}
           />
 
           {/* Active Card Container */}
-          <div className="relative w-full h-[400px] z-10">
+          <div className="relative w-full h-[320px] md:h-[400px] z-10">
             <div className="relative w-full h-full bg-[#f6f5f6] rounded-2xl border border-black/5 p-6 md:p-8 flex flex-col shadow-2xl overflow-hidden group">
               {/* Subtle Gradient Glow inside card */}
               <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-orange-500/5 to-transparent opacity-50 pointer-events-none" />
-              
+
               <CardBorder />
               <GradientQuoteIcon />
 
               <div className="flex-1 relative overflow-hidden">
                 <AnimatePresence mode="wait">
-                  <motion.div 
-                    key={activeIndex} 
-                    initial={{ opacity: 0, y: 10 }} 
-                    animate={{ opacity: 1, y: 0 }} 
-                    exit={{ opacity: 0, y: -10 }} 
-                    transition={{ duration: 0.4, ease: "easeOut" }} 
+                  <motion.div
+                    key={activeIndex}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
                     className="h-full flex flex-col"
                   >
-                    {/* Quote Text - font-mono style */}
+                    {/* Quote Text */}
                     <p className="font-mono text-xs md:text-sm text-[#1a1512]/70 leading-relaxed uppercase tracking-wide mb-4 flex-1 overflow-y-auto">
                       &ldquo;{testimonials[activeIndex].text}&rdquo;
                     </p>
-                    
-                    {/* Author Info with Image */}
+
+                    {/* Author Info */}
                     <div className="flex items-center gap-4 mt-auto pt-4 border-t border-black/5">
-                      <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2 border-white shadow-md">
+                      <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden flex-shrink-0 border-2 border-white shadow-md">
                         <Image
                           src={testimonials[activeIndex].image}
                           alt={testimonials[activeIndex].author}
@@ -265,34 +269,31 @@ export function TestimonialsSection() {
                 </AnimatePresence>
               </div>
 
-              {/* Progress Bar & Pagination - Inside Card */}
+              {/* Progress Bar & Pagination */}
               <div className="relative w-full mt-4 pt-4">
-                {/* Progress Line */}
                 <div className="relative w-full h-[2px] bg-black/10 rounded-full overflow-hidden mb-4">
-                  <motion.div 
-                    key={progressKey} 
-                    initial={{ width: "0%" }} 
-                    animate={{ width: "100%" }} 
+                  <motion.div
+                    key={progressKey}
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%" }}
                     transition={{
                       duration: autoplayDuration / 1000,
                       ease: "linear"
-                    }} 
-                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#FF3407] via-[#FC964C] to-[#FD7C34]" 
+                    }}
+                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#FF3407] via-[#FC964C] to-[#FD7C34]"
                   />
                 </div>
 
-                {/* Dots */}
                 <div className="flex justify-center gap-2">
                   {testimonials.map((_, idx) => (
-                    <button 
-                      key={idx} 
-                      onClick={() => handleManualChange(idx)} 
-                      className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                        idx === activeIndex 
-                          ? 'bg-black/30' 
+                    <button
+                      key={idx}
+                      onClick={() => handleManualChange(idx)}
+                      className={`w-2 h-2 rounded-full transition-colors duration-300 ${idx === activeIndex
+                          ? 'bg-black/30'
                           : 'bg-black/10 hover:bg-black/20'
-                      }`} 
-                      aria-label={`Go to slide ${idx + 1}`} 
+                        }`}
+                      aria-label={`Go to slide ${idx + 1}`}
                     />
                   ))}
                 </div>
@@ -301,8 +302,43 @@ export function TestimonialsSection() {
           </div>
         </div>
 
+        {/* 2. MOBILE LOGO MARQUEE (BELOW CARDS) */}
+        {/* EDIT: Added this section to show logos below the cards on mobile/tablet only */}
+        <div className="lg:hidden w-full mt-16 overflow-hidden relative">
+          {/* Gradient Masks */}
+          <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#FAFAFA] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#FAFAFA] to-transparent z-10 pointer-events-none" />
+
+          <div className="flex items-center justify-center w-full">
+            <motion.div
+              className="flex gap-12 items-center"
+              animate={{ x: [0, -1500] }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 40,
+                  ease: "linear"
+                }
+              }}
+            >
+              {[...logos, ...logos, ...logos].map((logo, index) => (
+                <div key={`${logo.id}-${index}`} className="flex-shrink-0 opacity-40" style={{ filter: 'grayscale(100%) brightness(0.4)' }}>
+                  <Image
+                    src={logo.src}
+                    alt={logo.name}
+                    width={100}
+                    height={40}
+                    className="h-8 w-auto object-contain"
+                  />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+
       </div>
-      
+
       {/* Background radial gradient for subtle ambience */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[1200px] pointer-events-none z-0">
         <div className="absolute inset-0 bg-gradient-radial from-black/5 to-transparent opacity-20" />

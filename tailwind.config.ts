@@ -38,6 +38,7 @@ const config: Config = {
                     bg: "#E8DDD3",      // Your Beige Background
                     dark: "#1a1512",    // Your Dark Text/Foreground
                     accent: "#8b5cf6",  // Your Purple Accent
+                    orange: "#FF5500",  // Brand Orange
                     secondary: "#2d2621", // Dark Brown/Secondary
                 },
                 // Utility mappings for ease of use

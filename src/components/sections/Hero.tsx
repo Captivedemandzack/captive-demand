@@ -4,83 +4,70 @@ import React, { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { Carousel } from "../ui/Carousel";
-// Note: Removed ArrowRight import as the new button uses its own SVG
 
 // --- MAGIC PATH COMPONENTS START ---
 
-// 1. Helper Shapes
 const CornerShape = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 48" className={className} style={{ display: 'block' }}>
-    <path d="M0 0h5.63c7.808 0 13.536 7.337 11.642 14.91l-6.09 24.359A11.527 11.527 0 0 1 0 48V0Z" fill="currentColor" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 48" className={className} style={{ display: 'block' }}>
+        <path d="M0 0h5.63c7.808 0 13.536 7.337 11.642 14.91l-6.09 24.359A11.527 11.527 0 0 1 0 48V0Z" fill="currentColor" />
+    </svg>
 );
 
 const IconBlobShape = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48" className={className} style={{ display: 'block' }}>
-    <path fill="currentColor" d="M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48" className={className} style={{ display: 'block' }}>
+        <path fill="currentColor" d="M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z" />
+    </svg>
 );
 
 const ArrowIcon = ({ color = 'currentColor', className }: { color?: string; className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none" className={className}>
-    <path fill={color} d="M7.703 5.8H.398V4.6h7.305l-3.36-3.36.855-.84 4.8 4.8-4.8 4.8-.855-.84 3.36-3.36Z" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none" className={className}>
+        <path fill={color} d="M7.703 5.8H.398V4.6h7.305l-3.36-3.36.855-.84 4.8 4.8-4.8 4.8-.855-.84 3.36-3.36Z" />
+    </svg>
 );
 
-// 2. The Main Button Component
- export const AnimatedCTAButton = () => {
-   return (
-     <a href="#" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Start Your Build">
-       {/* Label Container */}
-       <span className="
-           relative flex items-center h-12 pl-5 pr-2 mr-4
-           bg-[#f3f4f6] text-[#121212]
-           rounded-l-xl
-           font-mono text-sm uppercase tracking-normal
-           transition-all duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]
-         ">
-         <span className="z-10 relative">Start Your Build</span>
+export const AnimatedCTAButton = () => {
+    return (
+        <a href="#" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Start Your Build">
+            <span className="
+            relative flex items-center h-12 pl-5 pr-2 mr-4
+            bg-[#f3f4f6] text-[#121212]
+            rounded-l-xl
+            font-mono text-sm uppercase tracking-normal
+            transition-all duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]
+          ">
+                <span className="z-10 relative">Start Your Build</span>
+                <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 text-[#f3f4f6]">
+                    <CornerShape className="w-full h-full transition-colors duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]" />
+                </div>
+            </span>
 
-         {/* Decorative Corner that connects label to icon */}
-         <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 text-[#f3f4f6]">
-           <CornerShape className="w-full h-full transition-colors duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]" />
-         </div>
-       </span>
-
-       {/* Icon Container */}
-       <i className="
-           relative block w-[51px] h-12 
-           transform-gpu
-           transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-         ">
-         {/* Blob Shape Background */}
-         <div className="absolute inset-0 z-0 text-[#ff5501] group-hover:text-[#f3f4f6] transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
-           <IconBlobShape className="w-full h-full" />
-         </div>
-
-         {/* The Sliding Arrows Container */}
-         <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
-           {/* Default White Arrow (Visible initially) */}
-           <span className="
-               absolute flex items-center justify-center w-full h-full
-               transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-               translate-x-0 group-hover:translate-x-[150%]
-             ">
-             <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
-           </span>
- 
-           {/* Hover Dark Arrow (Coming from left) */}
-           <span className="
-               absolute flex items-center justify-center w-full h-full
-               transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-               -translate-x-[150%] group-hover:translate-x-0
-             ">
-             <ArrowIcon color="#1a1512" className="w-5 h-5" />
-           </span>
-         </span>
-       </i>
-    </a>
-  );
+            <i className="
+            relative block w-[51px] h-12 
+            transform-gpu
+            transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
+          ">
+                <div className="absolute inset-0 z-0 text-[#ff5501] group-hover:text-[#f3f4f6] transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                    <IconBlobShape className="w-full h-full" />
+                </div>
+                <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
+                    <span className="
+                absolute flex items-center justify-center w-full h-full
+                transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
+                translate-x-0 group-hover:translate-x-[150%]
+              ">
+                        <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
+                    </span>
+                    <span className="
+                absolute flex items-center justify-center w-full h-full
+                transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
+                -translate-x-[150%] group-hover:translate-x-0
+              ">
+                        <ArrowIcon color="#1a1512" className="w-5 h-5" />
+                    </span>
+                </span>
+            </i>
+        </a>
+    );
 };
 
 // --- MAGIC PATH COMPONENTS END ---
@@ -112,11 +99,10 @@ const PROJECT_ITEMS = [
     { title: "Big Old Pup", tags: ["Web Design", "Web Dev"], imageSrc: "/bigoldpup.png" },
 ];
 
-// Helper function to split text into word spans
 const splitIntoWords = (text: string) => {
     return text.split(' ').map((word, index) => (
-        <span 
-            key={index} 
+        <span
+            key={index}
             className="word inline-block mr-[0.3em]"
         >
             {word}
@@ -153,22 +139,18 @@ export function Hero() {
             },
         });
 
-        // Get all animated elements
         const partnerPills = partnersRef.current.querySelectorAll('.partner-pill');
         const headlineWords = headlineRef.current.querySelectorAll('.word, .video-word');
         const subtextWords = subtextRef.current.querySelectorAll('.word');
 
-        // Set initial state
         gsap.set([...partnerPills, ...headlineWords, ...subtextWords], {
             opacity: 0,
             filter: 'blur(12px)',
             y: 20,
         });
 
-        // Create master timeline
         const masterTl = gsap.timeline();
 
-        // Animate partner pills first
         masterTl.to(partnerPills, {
             opacity: 1,
             filter: 'blur(0px)',
@@ -178,7 +160,6 @@ export function Hero() {
             stagger: 0.1,
         });
 
-        // Animate headline words (starts 0.3s after partners begin)
         masterTl.to(headlineWords, {
             opacity: 1,
             filter: 'blur(0px)',
@@ -188,7 +169,6 @@ export function Hero() {
             stagger: 0.04,
         }, '-=0.5');
 
-        // Animate subtext with overlap (starts 0.5s before headline finishes)
         masterTl.to(subtextWords, {
             opacity: 1,
             filter: 'blur(0px)',
@@ -201,65 +181,51 @@ export function Hero() {
     }, []);
 
     return (
+        // EDIT: Increased pt-20 to pt-32 to create more space between Nav and Hero text
         <section className="relative flex flex-col items-center justify-start overflow-hidden bg-[#FAFAFA] pt-32 md:pt-48 pb-20 md:pb-32 text-center">
             <div className="container relative z-10 mx-auto px-4 max-w-full">
 
                 {/* --- 1. PARTNER PILLS --- */}
-                <div ref={partnersRef} className="mb-8 flex flex-wrap items-center justify-center gap-3">
+                <div ref={partnersRef} className="mb-8 hidden md:flex flex-wrap items-center justify-center gap-3">
                     <div className="partner-pill flex items-center gap-2 rounded-full border border-[#f3f4f6] bg-white px-4 py-1.5 font-mono uppercase text-[11px] tracking-[0.2em] text-[#121212]/80">
                         <div className="relative h-3.5 w-3.5">
-                            <Image 
-                                src="/Elementor-Logo-Symbol-Red (1).svg" 
-                                alt="Elementor" 
-                                fill 
-                                className="object-contain"
-                            />
+                            <Image src="/Elementor-Logo-Symbol-Red (1).svg" alt="Elementor" fill className="object-contain" />
                         </div>
                         <span>Elementor Agency Partner</span>
                     </div>
                     <div className="partner-pill flex items-center gap-2 rounded-full border border-[#f3f4f6] bg-white px-4 py-1.5 font-mono uppercase text-[11px] tracking-[0.2em] text-[#121212]/80">
                         <div className="relative h-3.5 w-3.5">
-                            <Image 
-                                src="/shopify_glyph.svg" 
-                                alt="Shopify" 
-                                fill 
-                                className="object-contain"
-                            />
+                            <Image src="/shopify_glyph.svg" alt="Shopify" fill className="object-contain" />
                         </div>
                         <span>Shopify Partner</span>
                     </div>
                     <div className="partner-pill flex items-center gap-2 rounded-full border border-[#f3f4f6] bg-white px-4 py-1.5 font-mono uppercase text-[11px] tracking-[0.2em] text-[#121212]/80">
                         <div className="relative h-3.5 w-3.5">
-                            <Image 
-                                src="/CUBE_2D_LIGHT.svg" 
-                                alt="Cursor" 
-                                fill 
-                                className="object-contain"
-                            />
+                            <Image src="/CUBE_2D_LIGHT.svg" alt="Cursor" fill className="object-contain" />
                         </div>
                         <span>Cursor Experts</span>
                     </div>
                 </div>
 
-                 {/* --- 2. HEADLINE --- */}
-                 <div className="mb-[clamp(1rem,2vw,1.5rem)] flex flex-col items-center justify-center px-4 w-full overflow-hidden">
-                     <h1 
+                {/* --- 2. HEADLINE --- */}
+                <div className="mb-[clamp(1rem,2vw,1.5rem)] flex flex-col items-center justify-center px-4 w-full overflow-hidden">
+                    <h1
                         ref={headlineRef}
-                        className="flex w-full flex-col sm:flex-row sm:flex-nowrap items-center justify-center gap-0 sm:gap-[1.5vw] text-[#1a1512] tracking-tighter" 
+                        className="flex w-full flex-col sm:flex-row sm:flex-nowrap items-center justify-center gap-0 sm:gap-[1.5vw] text-[#1a1512] tracking-tighter"
                         style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
-                     >
+                    >
                         <span className="w-full text-center sm:w-auto text-[clamp(3.5rem,13vw,7.5rem)] sm:text-[clamp(2.5rem,5.5vw,8rem)] leading-[0.9] sm:whitespace-nowrap">
-                            {splitIntoWords('Fast Builds')}
+                            Fast Builds
                         </span>
                         <span className="w-full text-center sm:w-auto text-[clamp(3.5rem,13vw,7.5rem)] sm:text-[clamp(2.5rem,5.5vw,8rem)] leading-[0.9] sm:whitespace-nowrap sm:order-3">
-                            {splitIntoWords('Real Results')}
+                            Real Results
                         </span>
                         <span className="video-word block sm:order-2 relative my-2 sm:my-0 translate-y-0 sm:translate-y-[0.20em]">
-                            <video 
+                            <video
                                 ref={videoRef}
-                                autoPlay 
-                                loop 
-                                muted 
+                                autoPlay
+                                loop
+                                muted
                                 playsInline
                                 className="w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] object-cover rounded-full"
                             >
@@ -271,7 +237,7 @@ export function Hero() {
 
                 {/* --- 3. SUBTEXT --- */}
                 <div className="mx-auto mb-12 max-w-3xl">
-                    <p 
+                    <p
                         ref={subtextRef}
                         className="font-mono font-medium text-[16px] sm:text-[18px] leading-loose text-gray-600"
                     >
@@ -300,7 +266,7 @@ export function Hero() {
                     <Carousel items={PROJECT_ITEMS} />
                 </div>
 
-                {/* --- 5. CTA BUTTON (UPDATED) --- */}
+                {/* --- 5. CTA BUTTON --- */}
                 <div className="relative z-30 -mt-[200px] md:-mt-[220px] flex justify-center pb-8 md:pb-12">
                     <AnimatedCTAButton />
                 </div>

@@ -1,87 +1,160 @@
-import Link from "next/link";
-import { Github, Linkedin, Twitter } from "lucide-react";
+'use client';
 
-const quickLinks = ["Home", "Services", "Case Studies", "About"];
-const services = ["Product Strategy", "Brand Systems", "Experience Design", "Growth Funnels"];
-const socials = [
-    { href: "https://twitter.com", label: "Twitter", icon: Twitter },
-    { href: "https://www.linkedin.com", label: "LinkedIn", icon: Linkedin },
-    { href: "https://github.com", label: "GitHub", icon: Github },
-];
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { AnimatedCTAButton } from '../sections/Hero';
 
 export default function Footer() {
     return (
-        <footer className="bg-brand-dark text-white">
-            <div className="px-container-px py-section-py">
-                <div className="grid gap-12 md:grid-cols-4">
-                    <div className="space-y-4">
-                        <p className="text-h3 font-bold text-white">PageVibe</p>
-                        <p className="text-body text-white/70">
-                            Crafting immersive demand gen experiences powered by Osmo-grade systems and PageVibe flair.
-                        </p>
-                    </div>
+        <>
+            {/* INJECTED STYLES */}
+            <style jsx global>{`
+                /* CRITICAL FIX: Forces body to be transparent so the footer (at z-index -10) is visible */
+                body, html {
+                    background-color: transparent !important;
+                }
+                
+                @font-face {
+                    font-family: 'Nohemi';
+                    src: url('/fonts/Nohemi-Light.ttf') format('truetype');
+                    font-weight: 300;
+                    font-style: normal;
+                }
+                @font-face {
+                    font-family: 'Nohemi';
+                    src: url('/fonts/Nohemi-Regular.ttf') format('truetype');
+                    font-weight: 400;
+                    font-style: normal;
+                }
+                @font-face {
+                    font-family: 'Nohemi';
+                    src: url('/fonts/Nohemi-SemiBold.ttf') format('truetype');
+                    font-weight: 600;
+                    font-style: normal;
+                }
+                .font-nohemi-custom {
+                    font-family: 'Nohemi', sans-serif !important;
+                }
+            `}</style>
 
-                    <div>
-                        <p className="text-h3 font-semibold text-white">Quick Links</p>
-                        <ul className="mt-4 space-y-2 text-body text-white/70">
-                            {quickLinks.map((item) => (
-                                <li key={item}>
-                                    <Link href={`#${item.toLowerCase().replace(" ", "-")}`} className="transition hover:text-white">
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+            {/* 1. THE SPACER:
+               This invisible div sits in the normal document flow at the bottom.
+               It acts as a "window" that you scroll into to see the fixed footer behind.
+            */}
+            <div className="relative w-full h-screen bg-transparent pointer-events-none" />
 
-                    <div>
-                        <p className="text-h3 font-semibold text-white">Services</p>
-                        <ul className="mt-4 space-y-2 text-body text-white/70">
-                            {services.map((service) => (
-                                <li key={service}>{service}</li>
-                            ))}
-                        </ul>
-                    </div>
+            {/* 2. THE REVEAL FOOTER:
+               - fixed: Locks it to the viewport.
+               - bottom-0: Sticks to the bottom.
+               - -z-10: Puts it BEHIND the rest of your content (Hero, About, etc).
+            */}
+            <footer className="fixed bottom-0 left-0 w-full h-screen bg-[#fafafa] text-brand-dark flex flex-col -z-10 pt-24 md:pt-32 font-nohemi-custom overflow-y-auto overflow-x-hidden">
 
-                    <div>
-                        <p className="text-h3 font-semibold text-white">Newsletter</p>
-                        <p className="mt-4 text-body text-white/70">Monthly drops on experiments, playbooks, and tactile UI systems.</p>
-                        <form className="mt-6 space-y-4">
-                            <input
-                                type="email"
-                                required
-                                placeholder="you@company.com"
-                                className="w-full rounded-full bg-white/10 px-6 py-3 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-brand-accent"
-                            />
-                            <button
-                                type="submit"
-                                className="w-full rounded-full bg-brand-accent px-8 py-3 text-body font-medium text-white transition-transform hover:scale-105"
-                            >
-                                Join The Drop
-                            </button>
-                        </form>
+                {/* 1. Marquee Section */}
+                <div className="w-full py-4 relative z-20 shrink-0">
+                    <motion.div
+                        className="flex whitespace-nowrap items-center"
+                        animate={{ x: [0, -1000] }}
+                        transition={{
+                            repeat: Infinity,
+                            ease: "linear",
+                            duration: 30,
+                        }}
+                    >
+                        {[...Array(6)].map((_, i) => (
+                            <div key={i} className="flex items-center gap-6 md:gap-12 pr-6 md:pr-12">
+                                <span className="text-[14vw] md:text-[11vw] font-[600] leading-none tracking-tighter text-brand-dark font-nohemi-custom">
+                                    CAPTIVE DEMAND
+                                </span>
+
+                                <div className="relative w-[10vw] h-[10vw] md:w-[7vw] md:h-[7vw] rounded-full overflow-hidden shrink-0">
+                                    <video
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                        className="w-full h-full object-cover"
+                                    >
+                                        <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps.mp4" type="video/mp4" />
+                                    </video>
+                                </div>
+                            </div>
+                        ))}
+                    </motion.div>
+                </div>
+
+                {/* 2. Main Content Area */}
+                <div className="flex-1 container mx-auto px-4 md:px-8 w-full flex flex-col">
+                    <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start mt-8 md:mt-12 mb-auto">
+
+                        {/* Left Side */}
+                        <div className="flex-1 max-w-2xl">
+                            <p className="text-2xl md:text-3xl lg:text-4xl font-[300] leading-[1.2] mb-10 md:mb-14 tracking-wide text-brand-dark/90 font-nohemi-custom">
+                                We bring the "Owner Mentality" because we are owners. 50+ times over. We apply that same obsession to your business, treating your budget exactly like we treat our own.
+                            </p>
+
+                            <div className="transform origin-left scale-100 md:scale-110">
+                                <AnimatedCTAButton />
+                            </div>
+                        </div>
+
+                        {/* Right Side */}
+                        <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-10 w-full max-w-xl lg:ml-auto border-t lg:border-t-0 border-brand-dark/10 lg:border-none pt-8 lg:pt-0">
+
+                            <div className="flex flex-col gap-6">
+                                <h4 className="text-sm md:text-base font-[600] uppercase tracking-widest text-brand-dark/50 font-nohemi-custom">Explore</h4>
+                                <ul className="flex flex-col gap-3">
+                                    <li><Link href="/services" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Services</Link></li>
+                                    <li><Link href="/work" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Work</Link></li>
+                                    <li><Link href="/about" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">About</Link></li>
+                                    <li><Link href="/insights" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Insights</Link></li>
+                                </ul>
+                            </div>
+
+                            <div className="flex flex-col gap-6">
+                                <h4 className="text-sm md:text-base font-[600] uppercase tracking-widest text-brand-dark/50 font-nohemi-custom">Connect</h4>
+                                <ul className="flex flex-col gap-3">
+                                    <li><a href="https://linkedin.com" target="_blank" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">LinkedIn</a></li>
+                                    <li><a href="https://instagram.com" target="_blank" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Instagram</a></li>
+                                    <li><a href="mailto:info@captivedemand.com" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors truncate font-nohemi-custom">Email</a></li>
+                                </ul>
+                            </div>
+
+                            <div className="flex flex-col gap-6">
+                                <h4 className="text-sm md:text-base font-[600] uppercase tracking-widest text-brand-dark/50 font-nohemi-custom">Legal</h4>
+                                <ul className="flex flex-col gap-3">
+                                    <li><Link href="/privacy" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Privacy Policy</Link></li>
+                                    <li><Link href="/terms" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Terms</Link></li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                <div className="mt-12 border-t border-white/10 pt-6 text-body text-white/70">
-                    <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
-                        <p>© {new Date().getFullYear()} PageVibe. All rights reserved.</p>
-                        <div className="flex items-center gap-4">
-                            {socials.map(({ href, label, icon: Icon }) => (
-                                <Link
-                                    key={label}
-                                    href={href}
-                                    aria-label={label}
-                                    className="rounded-full border border-white/20 p-2 transition hover:border-white/60 hover:text-white"
-                                >
-                                    <Icon strokeWidth={1.5} className="h-5 w-5" />
-                                </Link>
-                            ))}
+                {/* 3. Bottom Copyright Bar */}
+                <div className="border-t border-brand-dark/10 py-6 bg-[#fafafa] mt-auto shrink-0">
+                    <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm md:text-base text-brand-dark/60 font-nohemi-custom">
+
+                        <div className="relative w-[120px] h-[30px] opacity-80 hover:opacity-100 transition-opacity">
+                            <Image
+                                src="/captive-demand-logo.png"
+                                alt="Captive Demand"
+                                fill
+                                className="object-contain object-left md:object-left"
+                            />
+                        </div>
+
+                        <div className="text-center hidden md:block">All rights reserved by Captive Demand, 2025</div>
+
+                        <div className="text-center md:text-right text-xs md:text-sm max-w-[250px] md:max-w-none pb-4 md:pb-0">
+                            Supporting innovative companies with Web Development and Marketing Services
                         </div>
                     </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
+        </>
     );
 }
-

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Card } from "./Card";
 
@@ -16,34 +16,51 @@ export function Carousel({ items }: CarouselProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const cardsRef = useRef<HTMLDivElement[]>([]);
 
-    // --- PURE SPOKE CONFIGURATION ---
-    // Increased RADIUS from 1800 to 2025 to maintain same perspective angle with wider cards
-    const RADIUS = 2025;     // The size of the wheel (increased proportionally: 1800 * 360/320)
-    const CARD_WIDTH = 360;  // Increased from 320px for more inline space
-    const GAP = 100;         // Gap set to 100px for tighter spacing
-    const SPEED = 0.01;
+    // Initial state
+    const [config, setConfig] = useState({
+        radius: 2025,
+        cardWidth: 360,
+        gap: 100
+    });
 
     // 16x Duplication for infinite buffer
     const extendedItems = [...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items];
 
     useLayoutEffect(() => {
+        const updateConfig = () => {
+            // Using 1024px (Tablet Landscape) as the breakpoint
+            if (window.innerWidth < 1024) {
+                // TABLET & MOBILE:
+                // - Smaller cards (280px)
+                // - Wider gap (80px) to give that "spaced out" look you wanted
+                // - Adjusted radius to maintain perspective with the new gaps
+                setConfig({ radius: 1600, cardWidth: 280, gap: 80 });
+            } else {
+                // DESKTOP / LAPTOP:
+                // - RESTORED: cardWidth 360, gap 100 (Back to original tight spacing)
+                // - Standard radius
+                setConfig({ radius: 2025, cardWidth: 360, gap: 100 });
+            }
+        };
+
+        updateConfig();
+        window.addEventListener('resize', updateConfig);
+
         const ctx = gsap.context(() => {
             if (!containerRef.current) return;
 
-            // Fade in container immediately before any positioning
-            gsap.to(containerRef.current, { 
-                opacity: 1, 
-                duration: 0.5 
+            gsap.to(containerRef.current, {
+                opacity: 1,
+                duration: 0.5
             });
 
             const cards = cardsRef.current;
             let globalRotation = 0;
 
-            // Mutable proxy object for spin-down animation
             const progress = { speed: 2.0, blur: 10 };
 
-            const circumference = 2 * Math.PI * RADIUS;
-            const arcLength = CARD_WIDTH + GAP;
+            const circumference = 2 * Math.PI * config.radius;
+            const arcLength = config.cardWidth + config.gap;
             const angleStep = (arcLength / circumference) * 360;
 
             const totalAngleSpread = extendedItems.length * angleStep;
@@ -52,19 +69,16 @@ export function Carousel({ items }: CarouselProps) {
                 totalAngleSpread / 2
             );
 
-            // Spin-down intro animation
             gsap.to(progress, {
-                speed: SPEED,
+                speed: 0.01,
                 blur: 0,
                 duration: 2.5,
                 ease: 'power4.out',
             });
 
             const animate = () => {
-                // Use dynamic speed from progress object
                 globalRotation -= progress.speed;
 
-                // Apply blur to container for better performance
                 if (containerRef.current) {
                     containerRef.current.style.filter = `blur(${progress.blur}px)`;
                 }
@@ -81,9 +95,8 @@ export function Carousel({ items }: CarouselProps) {
                     }
                     card.style.visibility = 'visible';
 
-                    // --- PURE ROTATION ---
                     gsap.set(card, {
-                        transformOrigin: `50% ${RADIUS}px`,
+                        transformOrigin: `50% ${config.radius}px`,
                         rotation: angle,
                         zIndex: Math.round(10000 - Math.abs(angle))
                     });
@@ -93,15 +106,16 @@ export function Carousel({ items }: CarouselProps) {
             gsap.ticker.add(animate);
         }, containerRef);
 
-        return () => ctx.revert();
-    }, [extendedItems.length]);
+        return () => {
+            window.removeEventListener('resize', updateConfig);
+            ctx.revert();
+        };
+    }, [extendedItems.length, config.radius, config.cardWidth, config.gap]);
 
     return (
-        // Container Setup: Removed top padding (pt-0) to fix the gap
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden pt-0 pb-4 min-h-[600px]">
             <div ref={containerRef} className="relative h-full w-full flex justify-center opacity-0">
-                {/* Anchor Point: Removed top offset (top-0) */}
-                <div className="relative w-0 h-0 top-0"> 
+                <div className="relative w-0 h-0 top-0">
                     {extendedItems.map((item, index) => (
                         <div
                             key={`${item.title}-${index}`}
@@ -110,12 +124,12 @@ export function Carousel({ items }: CarouselProps) {
                             }}
                             className="absolute will-change-transform"
                             style={{
-                                width: `${CARD_WIDTH}px`,
-                                left: `-${CARD_WIDTH / 2}px`,
+                                width: `${config.cardWidth}px`,
+                                left: `-${config.cardWidth / 2}px`,
                                 top: "50px"
                             }}
                         >
-                            <Card 
+                            <Card
                                 title={item.title}
                                 tags={item.tags}
                                 imageSrc={item.imageSrc}

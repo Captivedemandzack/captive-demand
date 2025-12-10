@@ -7,19 +7,106 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
 }
+
+// --- SHAPES FOR THE BUTTON ---
+
+const CornerShape = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 48" className={className} style={{ display: 'block' }}>
+        <path d="M0 0h5.63c7.808 0 13.536 7.337 11.642 14.91l-6.09 24.359A11.527 11.527 0 0 1 0 48V0Z" fill="currentColor" />
+    </svg>
+);
+
+const IconBlobShape = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48" className={className} style={{ display: 'block' }}>
+        <path fill="currentColor" d="M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z" />
+    </svg>
+);
+
+const ArrowIcon = ({ color = "currentColor", className = "" }: { color?: string; className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none" className={className}>
+        <path fill={color} d="M7.703 5.8H.398V4.6h7.305l-3.36-3.36.855-.84 4.8 4.8-4.8 4.8-.855-.84 3.36-3.36Z" />
+    </svg>
+);
+
+// --- HERO BUTTON COMPONENT (FINAL POLISH) ---
+// Design: 
+// - Label Body: #f3f4f6 (Light Gray) + Black Text
+// - Icon Box (Normal): #ff5501 (Orange) + White Arrow
+// - Icon Box (Hover): #f3f4f6 (Light Gray - matches body) + Black Arrow
+const HeroButton = () => (
+    <a
+        href="https://connect.captivedemand.com/meetings/spencer-donaldson/discovery-call"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none"
+        aria-label="Book a Call"
+    >
+
+        {/* Label Container */}
+        <span className="
+        relative flex items-center h-12 pl-5 pr-2 mr-4
+        rounded-l-xl font-mono text-sm uppercase tracking-normal
+        transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
+        bg-[#f3f4f6] text-[#1a1512]
+      ">
+            <span className="z-10 relative">Book an intro call</span>
+
+            {/* Decorative Corner: Matches Label Body (#f3f4f6) */}
+            <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 text-[#f3f4f6] transition-colors duration-300">
+                <CornerShape className="w-full h-full" />
+            </div>
+        </span>
+
+        {/* Icon Container */}
+        <i className="
+        relative block w-[51px] h-12 
+        transform-gpu
+        transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
+      ">
+            {/* Blob Shape Background: Orange -> Light Gray on Hover */}
+            <div className="
+        absolute inset-0 z-0 transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
+        text-[#ff5501] group-hover:text-[#f3f4f6]
+      ">
+                <IconBlobShape className="w-full h-full" />
+            </div>
+
+            {/* The Sliding Arrows Container */}
+            <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
+                {/* Arrow 1: Visible initially (White) -> Slides Out */}
+                <span className="
+            absolute flex items-center justify-center w-full h-full
+            transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
+            translate-x-0 group-hover:translate-x-[150%]
+          ">
+                    <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
+                </span>
+
+                {/* Arrow 2: Enters on Hover (Black) -> Slides In */}
+                <span className="
+            absolute flex items-center justify-center w-full h-full
+            transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
+            -translate-x-[150%] group-hover:translate-x-0
+          ">
+                    <ArrowIcon color="#1a1512" className="w-5 h-5" />
+                </span>
+            </span>
+        </i>
+    </a>
+);
 
 export function FeaturesSection() {
     const headingRef = useRef<HTMLHeadingElement>(null);
 
     useLayoutEffect(() => {
-        // Masked Text Reveal Animation with hard cut-off
+        // Masked Text Reveal Animation
         const lineMasks = document.querySelectorAll('.line-mask');
-        
+
         lineMasks.forEach((mask) => {
             const revealText = mask.querySelector('.reveal-text');
-            
+
             if (revealText) {
                 gsap.from(revealText, {
                     y: '100%',
@@ -34,113 +121,24 @@ export function FeaturesSection() {
             }
         });
 
-        // Scramble Animation for breadcrumb and numbers
-        const scrambleElements = document.querySelectorAll('.scramble-text');
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ';
-        
-        scrambleElements.forEach((element) => {
-            const el = element as HTMLElement;
-            
-            // Get text from both text nodes and preserve the br structure
-            const lines = el.innerHTML.split('<br>');
-            let globalIndex = 0;
-            
-            // Wrap each character in a span, preserving line breaks
-            const wrappedText = lines.map(line => {
-                return line.split('').map(char => {
-                    const span = `<span class="char" data-char="${char}" data-index="${globalIndex}">${char}</span>`;
-                    globalIndex++;
-                    return span;
-                }).join('');
-            }).join('<br>');
-            
-            el.innerHTML = wrappedText;
-            const charElements = el.querySelectorAll('.char');
-            
-            const state = { progress: 0 };
-            
-            gsap.to(state, {
-                progress: 1,
-                duration: 1.5,
-                ease: 'expo.out',
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none',
-                },
-                onUpdate: () => {
-                    charElements.forEach((charEl, index) => {
-                        const char = charEl as HTMLElement;
-                        const originalChar = char.getAttribute('data-char') || '';
-                        
-                        if (originalChar === ' ' || originalChar === '/') {
-                            char.textContent = originalChar;
-                            char.style.color = 'inherit';
-                            return;
-                        }
-                        
-                        const charProgress = Math.max(0, Math.min(1, (state.progress * 1.5) - (index / charElements.length) * 0.5));
-                        
-                        if (charProgress >= 0.8) {
-                            char.textContent = originalChar;
-                            char.style.color = 'inherit';
-                        } else {
-                            const randomChar = chars[Math.floor(Math.random() * chars.length)];
-                            char.textContent = randomChar;
-                            char.style.color = '#fafafa';
-                        }
-                    });
-                },
-            });
-        });
-
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         };
     }, []);
 
-    // Animated dots pattern - Asterisk shape
+    // Animated dots pattern
     const centerX = 90;
     const centerY = 90;
     const dots = [
-        // Center dot
         { x: centerX, y: centerY },
-        
-        // Vertical line (up)
-        { x: centerX, y: centerY - 20 },
-        { x: centerX, y: centerY - 40 },
-        { x: centerX, y: centerY - 60 },
-        
-        // Vertical line (down)
-        { x: centerX, y: centerY + 20 },
-        { x: centerX, y: centerY + 40 },
-        { x: centerX, y: centerY + 60 },
-        
-        // Horizontal line (left)
-        { x: centerX - 20, y: centerY },
-        { x: centerX - 40, y: centerY },
-        { x: centerX - 60, y: centerY },
-        
-        // Horizontal line (right)
-        { x: centerX + 20, y: centerY },
-        { x: centerX + 40, y: centerY },
-        { x: centerX + 60, y: centerY },
-        
-        // Diagonal top-left to bottom-right
-        { x: centerX - 15, y: centerY - 15 },
-        { x: centerX - 30, y: centerY - 30 },
-        { x: centerX - 45, y: centerY - 45 },
-        { x: centerX + 15, y: centerY + 15 },
-        { x: centerX + 30, y: centerY + 30 },
-        { x: centerX + 45, y: centerY + 45 },
-        
-        // Diagonal top-right to bottom-left
-        { x: centerX + 15, y: centerY - 15 },
-        { x: centerX + 30, y: centerY - 30 },
-        { x: centerX + 45, y: centerY - 45 },
-        { x: centerX - 15, y: centerY + 15 },
-        { x: centerX - 30, y: centerY + 30 },
-        { x: centerX - 45, y: centerY + 45 },
+        { x: centerX, y: centerY - 20 }, { x: centerX, y: centerY - 40 }, { x: centerX, y: centerY - 60 },
+        { x: centerX, y: centerY + 20 }, { x: centerX, y: centerY + 40 }, { x: centerX, y: centerY + 60 },
+        { x: centerX - 20, y: centerY }, { x: centerX - 40, y: centerY }, { x: centerX - 60, y: centerY },
+        { x: centerX + 20, y: centerY }, { x: centerX + 40, y: centerY }, { x: centerX + 60, y: centerY },
+        { x: centerX - 15, y: centerY - 15 }, { x: centerX - 30, y: centerY - 30 }, { x: centerX - 45, y: centerY - 45 },
+        { x: centerX + 15, y: centerY + 15 }, { x: centerX + 30, y: centerY + 30 }, { x: centerX + 45, y: centerY + 45 },
+        { x: centerX + 15, y: centerY - 15 }, { x: centerX + 30, y: centerY - 30 }, { x: centerX + 45, y: centerY - 45 },
+        { x: centerX - 15, y: centerY + 15 }, { x: centerX - 30, y: centerY + 30 }, { x: centerX - 45, y: centerY + 45 },
     ];
 
     return (
@@ -148,40 +146,37 @@ export function FeaturesSection() {
             <div className="container mx-auto max-w-7xl">
                 {/* Large Card */}
                 <div className="relative bg-[#E8E8E8] rounded-3xl p-8 md:p-12 lg:p-16 overflow-hidden">
-                    
+
                     {/* Header with Title and Button */}
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-4">
                         <div className="line-mask overflow-hidden block">
-                            <h2 
+                            <h2
                                 ref={headingRef}
-                                className="reveal-text block text-4xl md:text-5xl lg:text-6xl tracking-tight text-black uppercase" 
+                                className="reveal-text block text-4xl md:text-5xl lg:text-6xl tracking-tight text-black uppercase"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
                                 Why Choose<br />Captive Demand?
                             </h2>
                         </div>
-                        <a 
-                            href="https://connect.captivedemand.com/meetings/spencer-donaldson/discovery-call" 
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block font-mono text-sm tracking-wider text-black border border-black/20 px-6 py-2 rounded-full hover:bg-black/5 transition-colors"
-                        >
-                            [BOOK A CALL]
-                        </a>
+
+                        {/* THE BUTTON */}
+                        <div className="mt-4 md:mt-0">
+                            <HeroButton />
+                        </div>
                     </div>
 
                     {/* Content Grid */}
                     <div className="grid md:grid-cols-2 gap-12 md:gap-8 relative">
-                        
-                        {/* Vertical Divider - Hidden on mobile */}
+
+                        {/* Vertical Divider */}
                         <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-black/10" />
 
                         {/* Left Column - Animation */}
                         <div className="flex flex-col justify-start">
-                            <p className="scramble-text font-mono text-sm md:text-base tracking-wider text-black/70 mb-8 uppercase">
+                            <p className="font-mono text-sm md:text-base tracking-wider text-black/70 mb-8 uppercase">
                                 / Your Business<br />Is Our Business
                             </p>
-                            
+
                             {/* Animated Dots Pattern */}
                             <div className="relative w-full h-48 flex items-center justify-center">
                                 {dots.map((dot, index) => (
@@ -209,11 +204,11 @@ export function FeaturesSection() {
 
                         {/* Right Column - Features List */}
                         <div className="flex flex-col gap-8">
-                            
+
                             {/* Feature 01 */}
                             <div className="space-y-3">
                                 <div className="space-y-1">
-                                    <span className="scramble-text font-mono text-sm text-[#ff5501] tracking-wider block">01.</span>
+                                    <span className="font-mono text-sm text-[#ff5501] tracking-wider block">01.</span>
                                     <div className="line-mask overflow-hidden inline-block">
                                         <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-wider text-black uppercase">
                                             / Built for Local Businesses.
@@ -230,7 +225,7 @@ export function FeaturesSection() {
                             {/* Feature 02 */}
                             <div className="space-y-3">
                                 <div className="space-y-1">
-                                    <span className="scramble-text font-mono text-sm text-[#ff5501] tracking-wider block">02.</span>
+                                    <span className="font-mono text-sm text-[#ff5501] tracking-wider block">02.</span>
                                     <div className="line-mask overflow-hidden inline-block">
                                         <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-wider text-black uppercase">
                                             / Entrepreneurial Approach.
@@ -247,7 +242,7 @@ export function FeaturesSection() {
                             {/* Feature 03 */}
                             <div className="space-y-3">
                                 <div className="space-y-1">
-                                    <span className="scramble-text font-mono text-sm text-[#ff5501] tracking-wider block">03.</span>
+                                    <span className="font-mono text-sm text-[#ff5501] tracking-wider block">03.</span>
                                     <div className="line-mask overflow-hidden inline-block">
                                         <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-wider text-black uppercase">
                                             / All-in-One Solutions.
@@ -269,4 +264,3 @@ export function FeaturesSection() {
         </section>
     );
 }
-
