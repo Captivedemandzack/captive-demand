@@ -9,9 +9,8 @@ type CustomMotionProps<T extends ElementType> = MotionProps &
 
 export const CustomMotion = memo(
   forwardRef<HTMLDivElement, CustomMotionProps<any>>((props, ref) => {
-    const tagFromAttr =
+    const htmlTag =
       props['data-magicpath-motion-tag']?.split('.')[1] || props['prevTag']?.split('.')[1];
-    const htmlTag: keyof typeof motion = (tagFromAttr ?? 'div') as keyof typeof motion;
     const MotionComponent = motion[htmlTag];
 
     const { isEditMode } = useMoves();
