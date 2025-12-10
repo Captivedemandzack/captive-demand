@@ -45,14 +45,9 @@ export function Carousel({ items }: CarouselProps) {
 
             if (isTablet) {
                 // TABLET & MOBILE:
-                // - Smaller cards (280px)
-                // - Wider gap (80px) to give that "spaced out" look you wanted
-                // - Adjusted radius to maintain perspective with the new gaps
                 setConfig({ radius: 1600, cardWidth: 280, gap: 80 });
             } else {
                 // DESKTOP / LAPTOP:
-                // - RESTORED: cardWidth 360, gap 100 (Back to original tight spacing)
-                // - Standard radius
                 setConfig({ radius: 2025, cardWidth: 360, gap: 100 });
             }
         };
@@ -83,8 +78,17 @@ export function Carousel({ items }: CarouselProps) {
                 totalAngleSpread / 2
             );
 
+            // --- SPEED SETTINGS ---
+            const isMobile = window.innerWidth < 768;
+
+            // TWEAK THESE NUMBERS TO CHANGE SPEED:
+            const MOBILE_SPEED = 0.05;
+            const DESKTOP_SPEED = 0.08; // Increased from 0.05 to make desktop faster
+
+            const targetSpeed = isMobile ? MOBILE_SPEED : DESKTOP_SPEED;
+
             gsap.to(progress, {
-                speed: 0.01,
+                speed: targetSpeed,
                 blur: 0,
                 duration: 2.5,
                 ease: 'power4.out',

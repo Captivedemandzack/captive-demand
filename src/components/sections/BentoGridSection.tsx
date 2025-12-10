@@ -21,17 +21,17 @@ export function BentoGridSection() {
     const element = servicesLabelRef.current;
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ';
     const originalText = element.textContent || '';
-    
+
     // Wrap each character
-    const wrappedText = originalText.split('').map((char, i) => 
+    const wrappedText = originalText.split('').map((char, i) =>
       `<span class="char" data-char="${char}" data-index="${i}">${char}</span>`
     ).join('');
-    
+
     element.innerHTML = wrappedText;
     const charElements = element.querySelectorAll('.char');
-    
+
     const state = { progress: 0 };
-    
+
     gsap.to(state, {
       progress: 1,
       duration: 1.5,
@@ -45,14 +45,14 @@ export function BentoGridSection() {
         charElements.forEach((charEl, index) => {
           const char = charEl as HTMLElement;
           const originalChar = char.getAttribute('data-char') || '';
-          
+
           if (originalChar === ' ' || originalChar === '/') {
             char.textContent = originalChar;
             return;
           }
-          
+
           const charProgress = Math.max(0, Math.min(1, (state.progress * 1.5) - (index / charElements.length) * 0.5));
-          
+
           if (charProgress >= 0.8) {
             char.textContent = originalChar;
           } else {
@@ -71,35 +71,35 @@ export function BentoGridSection() {
   return (
     <section className="w-full min-h-screen bg-[#FAFAFA] text-[#1a1512] py-20 md:py-32 font-sans">
       <div className="container mx-auto max-w-7xl px-4 md:px-8">
-        
+
         {/* Header Section */}
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           className="relative mb-8 h-px"
         >
           {/* Horizontal Line */}
           <div className="relative h-px w-full overflow-hidden">
-            <motion.div 
+            <motion.div
               initial={{ width: 0 }}
               animate={{ width: '100%' }}
               transition={{ duration: 1, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
               className="absolute left-0 h-px bg-[#e5e5e5]"
             />
           </div>
-          
+
           {/* SVG Decorative Shape */}
-          <svg 
-            className="absolute bottom-0 left-0 flex-shrink-0" 
-            width="80" 
-            height="8" 
-            viewBox="0 0 80 8" 
+          <svg
+            className="absolute bottom-0 left-0 flex-shrink-0"
+            width="80"
+            height="8"
+            viewBox="0 0 80 8"
             fill="none"
             preserveAspectRatio="none"
           >
-            <path 
-              d="M0 7 L0 0 L68 0 L80 7 L80 8 L0 8 Z" 
+            <path
+              d="M0 7 L0 0 L68 0 L80 7 L80 8 L0 8 Z"
               fill="#e5e5e5"
             />
           </svg>
@@ -108,9 +108,9 @@ export function BentoGridSection() {
         {/* Breadcrumb */}
         <div className="flex items-center gap-1 mb-6">
           <span className="text-sm font-normal text-[#1a1512]">/</span>
-          <span 
+          <span
             ref={servicesLabelRef}
-            className="text-sm font-normal tracking-[0.02em] text-[#1a1512] uppercase" 
+            className="text-sm font-normal tracking-[0.02em] text-[#1a1512] uppercase"
             style={{ fontFamily: '"Roboto Mono", monospace' }}
           >
             OUR SERVICES
@@ -121,32 +121,32 @@ export function BentoGridSection() {
           {/* Left Side - Heading */}
           <div className="flex-1">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              transition={{ duration: 0.6, delay: 0.4 }} 
-              className="text-4xl md:text-5xl lg:text-6xl tracking-wide text-[#1a1512]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-3xl md:text-4xl lg:text-5xl tracking-wide text-[#1a1512]"
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300, letterSpacing: '0.05em' }}
             >
-              Digital marketing solutions
+              Everything you need. Nothing you don't.
             </motion.h2>
           </div>
-          
+
           {/* Right Side - Description */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ delay: 0.5, duration: 0.6 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
             className="flex-1 md:max-w-xl"
           >
             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-              We specialize in crafting digital experiences that empower your brand and engage your audience. With a keen eye for the latest trends and a deep understanding of your market, we tailor solutions that elevate your online presence and drive results.
+              Stop piecing your company together with isolated vendors. We align your design, tech, and traffic into one synchronized system. Every component on this list is chosen because it amplifies the others and drives hard revenue.
             </p>
           </motion.div>
         </div>
 
         {/* Bento Grid - 2 Equal Cards on Top, 3 Equal Cards on Bottom */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-6 md:gap-8">
-          
+
           {/* Card 1 - Web Design & Development (Top Left) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -158,14 +158,14 @@ export function BentoGridSection() {
             <div className="mb-6">
               <h3 className="text-[16px] font-normal text-[#1a1512] mb-3 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>Website Design & Development</h3>
               <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                Designed with conversion psychology and AI technology, our digital experiences convert visitors into customers.
+                <b>The Closer.</b> We don't build digital brochures. We build sites that do one job: turn strangers into customers. If it doesn't convert, we don't ship it.
               </p>
             </div>
-            
+
             {/* Web Design Graphic - Arc Stack */}
             <div className="relative w-full h-48 flex items-center justify-center overflow-visible">
               <div className="relative w-full max-w-md h-40">
-                
+
                 {/* Browser Window 1 - Far Left */}
                 <div className="absolute -left-4 top-10 w-52 bg-[#1E2025] border border-white/10 rounded-lg shadow-2xl transform -rotate-[20deg] opacity-50 transition-all duration-500 group-hover:-rotate-[28deg] group-hover:-translate-x-4 overflow-hidden">
                   <div className="flex items-center gap-1 px-2 py-1.5 bg-[#16181C] border-b border-white/5">
@@ -176,7 +176,7 @@ export function BentoGridSection() {
                     </div>
                   </div>
                   <div className="relative w-full h-32 overflow-hidden">
-                    <Image 
+                    <Image
                       src="/goodmanors.png"
                       alt="Website Example"
                       fill
@@ -195,7 +195,7 @@ export function BentoGridSection() {
                     </div>
                   </div>
                   <div className="relative w-full h-32 overflow-hidden">
-                    <Image 
+                    <Image
                       src="/Firstfuture.png"
                       alt="Website Example"
                       fill
@@ -217,7 +217,7 @@ export function BentoGridSection() {
                     </div>
                   </div>
                   <div className="relative w-full h-32 overflow-hidden">
-                    <Image 
+                    <Image
                       src="/Brooks Banking Hero  copy.png"
                       alt="Brooks Banking Website"
                       fill
@@ -236,7 +236,7 @@ export function BentoGridSection() {
                     </div>
                   </div>
                   <div className="relative w-full h-32 overflow-hidden">
-                    <Image 
+                    <Image
                       src="/Symmetri.png"
                       alt="Website Example"
                       fill
@@ -255,7 +255,7 @@ export function BentoGridSection() {
                     </div>
                   </div>
                   <div className="relative w-full h-32 overflow-hidden">
-                    <Image 
+                    <Image
                       src="/theskinreal.png"
                       alt="Website Example"
                       fill
@@ -279,18 +279,18 @@ export function BentoGridSection() {
             <div className="mb-6">
               <h3 className="text-[16px] font-normal text-[#1a1512] mb-3 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>Email Marketing</h3>
               <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                Automated campaigns that nurture leads and drive revenue, powered by data-driven insights and personalized messaging.
+                <b>The Follow-Up.</b> 98% of people leave your site without buying. We build the automated emails that chase them down and bring them back until they do.
               </p>
             </div>
-            
+
             {/* Email Marketing Graphic */}
             <div className="relative w-full h-52 flex items-center justify-center">
               {/* Background radial glow */}
               <div className="absolute w-32 h-32 bg-[#ff5501]/10 blur-[50px] rounded-full" />
-              
+
               {/* Main Container */}
               <div className="relative w-full max-w-md h-44">
-                
+
                 {/* Card 1: Analytics Dashboard (Back Left - Symmetrical) */}
                 <div className="absolute top-1/2 -translate-y-1/2 left-0 w-32 h-32 bg-white border border-[#1a1512]/10 rounded-xl p-3 transform -rotate-3 opacity-80 scale-95 transition-all duration-500 group-hover:-translate-x-8 group-hover:-rotate-6 group-hover:opacity-95 overflow-hidden z-0 shadow-lg">
                   <div className="text-[10px] text-[#1a1512] mb-2 font-semibold">Email Performance</div>
@@ -347,7 +347,7 @@ export function BentoGridSection() {
                       <span className="text-[8px] text-[#1a1512]/70 truncate">Claim Your 30% Off Before Time Runs Out!</span>
                     </div>
                   </div>
-                  
+
                   {/* Email Content - Hover Scroll Window */}
                   <div className="relative w-full h-[calc(100%-42px)] overflow-hidden">
                     <motion.div
@@ -360,7 +360,7 @@ export function BentoGridSection() {
                       }}
                     >
                       <div className="relative w-full aspect-[9/16]">
-                        <Image 
+                        <Image
                           src="/emailexample.png"
                           alt="Email Marketing Example"
                           fill
@@ -387,13 +387,13 @@ export function BentoGridSection() {
                 Software Development
               </h4>
               <p className="font-mono text-sm text-white/80 leading-relaxed uppercase tracking-wide">
-                Custom applications and automation tools built with modern frameworks, delivering scalable solutions that streamline your operations.
+                <b>The Custom Edge.</b> You can’t beat your competitors if you use the exact same tools as them. We build the custom tech that gives you an unfair advantage.
               </p>
             </div>
-            
+
             {/* Software Dev Graphic */}
             <div className="w-full h-full flex items-start justify-center relative px-6 pt-4">
-              
+
               {/* Background Glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#ff5501]/5 blur-[60px] rounded-full pointer-events-none" />
 
@@ -402,77 +402,77 @@ export function BentoGridSection() {
 
                 {/* LAYER 1: BACKGROUND DASHBOARD UI */}
                 <div className="absolute bottom-2 left-2 w-[190px] h-[105px] bg-[#16181C] rounded-xl border border-white/10 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.7)] flex flex-col overflow-hidden transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_25px_50px_-12px_rgba(255,85,1,0.15)] z-0">
-                    
-                    {/* Dashboard Header */}
-                    <div className="p-3 border-b border-white/5 flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <div className="p-1 rounded bg-[#ff5501]/10">
-                          <BarChart3 size={12} className="text-[#ff5501]" />
-                        </div>
-                        <span className="text-[10px] font-medium text-white/80">Analytics</span>
+
+                  {/* Dashboard Header */}
+                  <div className="p-3 border-b border-white/5 flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <div className="p-1 rounded bg-[#ff5501]/10">
+                        <BarChart3 size={12} className="text-[#ff5501]" />
                       </div>
-                      
-                      {/* Deploy Success Badge */}
-                      <div className="flex items-center gap-1 bg-[#ff5501]/10 border border-[#ff5501]/20 px-1.5 py-0.5 rounded-full">
-                        <CheckCircle2 size={8} className="text-[#ff5501]" />
-                        <span className="text-[8px] font-bold text-[#ff5501]">Deploy Success</span>
-                      </div>
+                      <span className="text-[10px] font-medium text-white/80">Analytics</span>
                     </div>
 
-                    {/* Dashboard Content - Chart */}
-                    <div className="flex-1 p-4 flex items-end justify-between gap-2">
-                        {/* Bar 1 */}
-                        <div className="w-full bg-white/5 rounded-t-sm h-[40%] relative overflow-hidden">
-                            <motion.div 
-                              className="absolute bottom-0 left-0 right-0 bg-[#ff5501]/80"
-                              initial={{ height: 0 }}
-                              whileInView={{ height: '100%' }}
-                              transition={{ duration: 0.7, delay: 0.1 }}
-                            />
-                        </div>
-                        {/* Bar 2 */}
-                        <div className="w-full bg-white/5 rounded-t-sm h-[65%] relative overflow-hidden">
-                            <motion.div 
-                              className="absolute bottom-0 left-0 right-0 bg-[#ff5501]/80"
-                              initial={{ height: 0 }}
-                              whileInView={{ height: '100%' }}
-                              transition={{ duration: 0.7, delay: 0.15 }}
-                            />
-                        </div>
-                        {/* Bar 3 */}
-                        <div className="w-full bg-white/5 rounded-t-sm h-[50%] relative overflow-hidden">
-                            <motion.div 
-                              className="absolute bottom-0 left-0 right-0 bg-[#ff5501]/80"
-                              initial={{ height: 0 }}
-                              whileInView={{ height: '100%' }}
-                              transition={{ duration: 0.7, delay: 0.2 }}
-                            />
-                        </div>
-                        {/* Bar 4 */}
-                        <div className="w-full bg-white/5 rounded-t-sm h-[85%] relative overflow-hidden">
-                            <motion.div 
-                              className="absolute bottom-0 left-0 right-0 bg-[#ff5501]/80"
-                              initial={{ height: 0 }}
-                              whileInView={{ height: '100%' }}
-                              transition={{ duration: 0.7, delay: 0.25 }}
-                            />
-                        </div>
-                        {/* Bar 5 */}
-                        <div className="w-full bg-white/5 rounded-t-sm h-[60%] relative overflow-hidden">
-                            <motion.div 
-                              className="absolute bottom-0 left-0 right-0 bg-[#ff5501]/80"
-                              initial={{ height: 0 }}
-                              whileInView={{ height: '100%' }}
-                              transition={{ duration: 0.7, delay: 0.3 }}
-                            />
-                        </div>
+                    {/* Deploy Success Badge */}
+                    <div className="flex items-center gap-1 bg-[#ff5501]/10 border border-[#ff5501]/20 px-1.5 py-0.5 rounded-full">
+                      <CheckCircle2 size={8} className="text-[#ff5501]" />
+                      <span className="text-[8px] font-bold text-[#ff5501]">Deploy Success</span>
                     </div>
+                  </div>
+
+                  {/* Dashboard Content - Chart */}
+                  <div className="flex-1 p-4 flex items-end justify-between gap-2">
+                    {/* Bar 1 */}
+                    <div className="w-full bg-white/5 rounded-t-sm h-[40%] relative overflow-hidden">
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 bg-[#ff5501]/80"
+                        initial={{ height: 0 }}
+                        whileInView={{ height: '100%' }}
+                        transition={{ duration: 0.7, delay: 0.1 }}
+                      />
+                    </div>
+                    {/* Bar 2 */}
+                    <div className="w-full bg-white/5 rounded-t-sm h-[65%] relative overflow-hidden">
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 bg-[#ff5501]/80"
+                        initial={{ height: 0 }}
+                        whileInView={{ height: '100%' }}
+                        transition={{ duration: 0.7, delay: 0.15 }}
+                      />
+                    </div>
+                    {/* Bar 3 */}
+                    <div className="w-full bg-white/5 rounded-t-sm h-[50%] relative overflow-hidden">
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 bg-[#ff5501]/80"
+                        initial={{ height: 0 }}
+                        whileInView={{ height: '100%' }}
+                        transition={{ duration: 0.7, delay: 0.2 }}
+                      />
+                    </div>
+                    {/* Bar 4 */}
+                    <div className="w-full bg-white/5 rounded-t-sm h-[85%] relative overflow-hidden">
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 bg-[#ff5501]/80"
+                        initial={{ height: 0 }}
+                        whileInView={{ height: '100%' }}
+                        transition={{ duration: 0.7, delay: 0.25 }}
+                      />
+                    </div>
+                    {/* Bar 5 */}
+                    <div className="w-full bg-white/5 rounded-t-sm h-[60%] relative overflow-hidden">
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 bg-[#ff5501]/80"
+                        initial={{ height: 0 }}
+                        whileInView={{ height: '100%' }}
+                        transition={{ duration: 0.7, delay: 0.3 }}
+                      />
+                    </div>
+                  </div>
 
                 </div>
 
                 {/* LAYER 2: FOREGROUND CODE EDITOR */}
                 <div className="absolute top-0 right-0 w-[185px] h-[100px] bg-[#0F1115] rounded-lg border border-white/5 shadow-2xl overflow-hidden transform transition-transform duration-500 group-hover:translate-x-4 group-hover:-translate-y-1 group-hover:rotate-1 z-20">
-                  
+
                   {/* Editor Header */}
                   <div className="h-5 bg-white/5 border-b border-white/5 flex items-center px-2 space-x-1">
                     <div className="w-1.5 h-1.5 rounded-full bg-white/10" />
@@ -513,13 +513,13 @@ export function BentoGridSection() {
             <div className="bg-[#e8e8e8] rounded-3xl p-6 mb-6 w-full aspect-video flex items-center justify-center overflow-hidden">
               {/* SEO Graphic */}
               <div className="relative w-full h-full flex flex-col items-center justify-center gap-4">
-                
+
                 {/* Search Bar Abstract */}
                 <div className="w-56 h-10 bg-[#1a1512] rounded-full border border-[#1a1512]/20 flex items-center px-4 gap-3 shadow-lg relative z-20 group-hover:border-[#1a1512]/40 transition-colors">
                   <Search size={14} className="text-white/60" />
                   <div className="h-1.5 w-24 bg-white/20 rounded-full overflow-hidden relative">
                     {/* Typing animation effect */}
-                    <motion.div 
+                    <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
                       animate={{ x: ['-100%', '200%'] }}
                       transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -529,7 +529,7 @@ export function BentoGridSection() {
 
                 {/* Ranking List / Chart */}
                 <div className="w-56 bg-white border border-[#1a1512]/10 rounded-xl p-3 shadow-xl relative z-10 flex flex-col gap-2">
-                  
+
                   {/* Item 1 - The Winner */}
                   <div className="flex items-center gap-3 p-2 rounded-lg bg-[#ff5501]/10 border border-[#ff5501]/20 transition-all duration-500 group-hover:translate-x-1 group-hover:bg-[#ff5501]/20 group-hover:border-[#ff5501]/40">
                     <div className="text-[10px] font-bold text-[#ff5501]">#1</div>
@@ -542,7 +542,7 @@ export function BentoGridSection() {
                     <div className="text-[10px] font-bold text-[#1a1512]/40">#2</div>
                     <div className="flex-1 h-1.5 bg-[#1a1512]/10 rounded-full" />
                   </div>
-                    
+
                   {/* Item 3 */}
                   <div className="flex items-center gap-3 p-2 rounded-lg border border-transparent opacity-40">
                     <div className="text-[10px] font-bold text-[#1a1512]/30">#3</div>
@@ -552,12 +552,12 @@ export function BentoGridSection() {
 
               </div>
             </div>
-            
+
             <h4 className="text-[16px] font-normal text-[#1a1512] mb-2 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
               SEO/AEO
             </h4>
             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-              Dominate search rankings and AI-powered answer engines with optimization strategies designed to increase visibility, drive organic traffic, and position your brand as the authority.
+              <b>The Compounder.</b> Paid ads are a treadmill. You have to keep spending to keep moving. We build an organic search strategy that gains momentum over time. We build the infrastructure. You collect the dividends.
             </p>
           </motion.div>
 
@@ -571,80 +571,80 @@ export function BentoGridSection() {
           >
             <div className="bg-[#e8e8e8] rounded-3xl p-6 mb-6 w-full aspect-video flex items-center justify-center overflow-hidden">
               <div className="grid grid-cols-3 gap-2 max-w-sm">
-              {/* Gmail */}
-              <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
-                <Image 
-                  src="/512px-Gmail_icon_(2020).svg.png"
-                  alt="Gmail"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-              </div>
-              {/* Slack */}
-              <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
-                <Image 
-                  src="/Slack_icon_2019.svg.png"
-                  alt="Slack"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-              </div>
-              {/* Notion */}
-              <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
-                <Image 
-                  src="/notion-icon.png"
-                  alt="Notion"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-              </div>
-              {/* Airtable */}
-              <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
-                <Image 
-                  src="/airtable.png"
-                  alt="Airtable"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-              </div>
-              {/* HubSpot */}
-              <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
-                <Image 
-                  src="/hubspot.png"
-                  alt="HubSpot"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-              </div>
-              {/* Google Analytics */}
-              <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
-                <Image 
-                  src="/Google-Analytics-logo-01.png"
-                  alt="Google Analytics"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-              </div>
+                {/* Gmail */}
+                <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
+                  <Image
+                    src="/512px-Gmail_icon_(2020).svg.png"
+                    alt="Gmail"
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+                </div>
+                {/* Slack */}
+                <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
+                  <Image
+                    src="/Slack_icon_2019.svg.png"
+                    alt="Slack"
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+                </div>
+                {/* Notion */}
+                <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
+                  <Image
+                    src="/notion-icon.png"
+                    alt="Notion"
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+                </div>
+                {/* Airtable */}
+                <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
+                  <Image
+                    src="/airtable.png"
+                    alt="Airtable"
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+                </div>
+                {/* HubSpot */}
+                <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
+                  <Image
+                    src="/hubspot.png"
+                    alt="HubSpot"
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+                </div>
+                {/* Google Analytics */}
+                <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">
+                  <Image
+                    src="/Google-Analytics-logo-01.png"
+                    alt="Google Analytics"
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+                </div>
               </div>
             </div>
-            
+
             <h4 className="text-[16px] font-normal text-[#1a1512] mb-2 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
               Workflow Automation
             </h4>
             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-              Seamlessly integrate your favorite tools and eliminate repetitive tasks with intelligent automation that connects your entire tech stack and amplifies productivity.
+              <b>The Time Saver.</b> Stop copy-pasting data between spreadsheets. We wire your apps together to handle the busy work so you can get back to actual business.
             </p>
           </motion.div>
 
         </div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 }
 

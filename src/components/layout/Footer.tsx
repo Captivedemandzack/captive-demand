@@ -141,7 +141,8 @@ export default function Footer() {
                         </div>
 
                         {/* Right Side */}
-                        <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-10 w-full max-w-xl lg:ml-auto border-t lg:border-t-0 border-brand-dark/10 lg:border-none pt-8 lg:pt-0">
+                        {/* UPDATE: Added 'py-12' for equal top/bottom padding on mobile, reset to 'lg:py-0' on desktop */}
+                        <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-10 w-full max-w-xl lg:ml-auto border-t lg:border-t-0 border-brand-dark/10 lg:border-none py-12 lg:py-0">
 
                             <div className="flex flex-col gap-6">
                                 <h4 className="text-sm md:text-base font-[600] uppercase tracking-widest text-brand-dark/50 font-nohemi-custom">Explore</h4>
@@ -176,20 +177,26 @@ export default function Footer() {
 
                 {/* 3. Bottom Copyright Bar */}
                 <div className="border-t border-brand-dark/10 py-6 bg-[#fafafa] mt-auto shrink-0">
-                    <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm md:text-base text-brand-dark/60 font-nohemi-custom">
+                    {/* UPDATE: Changed to flex-col for mobile stacking, added gap-6 for spacing */}
+                    <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4 text-sm md:text-base text-brand-dark/60 font-nohemi-custom">
 
-                        <div className="relative w-[120px] h-[30px] opacity-80 hover:opacity-100 transition-opacity">
+                        {/* Logo - Order 1 on mobile */}
+                        <div className="relative w-[120px] h-[30px] opacity-80 hover:opacity-100 transition-opacity order-1 md:order-none">
                             <Image
                                 src="/captive-demand-logo.png"
                                 alt="Captive Demand"
                                 fill
-                                className="object-contain object-left md:object-left"
+                                className="object-contain object-center md:object-left"
                             />
                         </div>
 
-                        <div className="text-center hidden md:block">All rights reserved by Captive Demand, 2025</div>
+                        {/* Rights Text - Order 2 on mobile, unhidden */}
+                        <div className="text-center order-2 md:order-none block">
+                            All rights reserved by Captive Demand, 2025
+                        </div>
 
-                        <div className="text-center md:text-right text-xs md:text-sm max-w-[250px] md:max-w-none pb-4 md:pb-0">
+                        {/* Support Text - Order 3 on mobile */}
+                        <div className="text-center md:text-right text-xs md:text-sm max-w-[250px] md:max-w-none order-3 md:order-none">
                             Supporting innovative companies with Web Development and Marketing Services
                         </div>
                     </div>

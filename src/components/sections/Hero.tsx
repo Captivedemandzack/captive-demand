@@ -28,15 +28,18 @@ const ArrowIcon = ({ color = 'currentColor', className }: { color?: string; clas
 export const AnimatedCTAButton = () => {
     return (
         <a href="#" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Start Your Build">
+            {/* CHANGED: bg-[#1a1512] (Dark) and text-white */}
             <span className="
             relative flex items-center h-12 pl-5 pr-2 mr-4
-            bg-[#f3f4f6] text-[#121212]
+            bg-[#1a1512] text-white
             rounded-l-xl
             font-mono text-sm uppercase tracking-normal
             transition-all duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]
           ">
                 <span className="z-10 relative">Start Your Build</span>
-                <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 text-[#f3f4f6]">
+
+                {/* CHANGED: text-[#1a1512] to match the body color */}
+                <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 text-[#1a1512]">
                     <CornerShape className="w-full h-full transition-colors duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]" />
                 </div>
             </span>
@@ -46,7 +49,8 @@ export const AnimatedCTAButton = () => {
             transform-gpu
             transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
           ">
-                <div className="absolute inset-0 z-0 text-[#ff5501] group-hover:text-[#f3f4f6] transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                {/* CHANGED: group-hover:text-[#1a1512] so the blob merges with the dark body on hover */}
+                <div className="absolute inset-0 z-0 text-[#ff5501] group-hover:text-[#1a1512] transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
                     <IconBlobShape className="w-full h-full" />
                 </div>
                 <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
@@ -62,7 +66,8 @@ export const AnimatedCTAButton = () => {
                 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
                 -translate-x-[150%] group-hover:translate-x-0
               ">
-                        <ArrowIcon color="#1a1512" className="w-5 h-5" />
+                        {/* CHANGED: Arrow color to #FFFFFF so it is visible against the dark hover state */}
+                        <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
                     </span>
                 </span>
             </i>
@@ -186,7 +191,6 @@ export function Hero() {
     }, []);
 
     return (
-        // EDIT: Increased pt-20 to pt-32 to create more space between Nav and Hero text
         <section className="relative flex flex-col items-center justify-start overflow-hidden bg-[#FAFAFA] pt-32 md:pt-48 pb-20 md:pb-32 text-center">
             <div className="container relative z-10 mx-auto px-4 max-w-full">
 

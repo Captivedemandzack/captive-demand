@@ -10,7 +10,7 @@ if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
 
-// --- SHAPES FOR THE BUTTON ---
+// --- SHAPES FOR THE BUTTON (Matching Hero Button) ---
 
 const CornerShape = ({ className }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 48" className={className} style={{ display: 'block' }}>
@@ -25,12 +25,12 @@ const IconBlobShape = ({ className }: { className?: string }) => (
 );
 
 const ArrowIcon = ({ color = "currentColor", className = "" }: { color?: string; className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none" className={className}>
+    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none" className={className}>
         <path fill={color} d="M7.703 5.8H.398V4.6h7.305l-3.36-3.36.855-.84 4.8 4.8-4.8 4.8-.855-.84 3.36-3.36Z" />
     </svg>
 );
 
-// --- HERO BUTTON COMPONENT (FINAL POLISH) ---
+// --- HERO BUTTON COMPONENT (EXACT COPY OF ANIMATED CTA BUTTON) ---
 const HeroButton = () => (
     <a
         href="https://connect.captivedemand.com/meetings/spencer-donaldson/discovery-call"
@@ -39,18 +39,18 @@ const HeroButton = () => (
         className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none"
         aria-label="Book a Call"
     >
-
-        {/* Label Container */}
+        {/* Label Container - Dark Theme Match */}
         <span className="
         relative flex items-center h-12 pl-5 pr-2 mr-4
-        rounded-l-xl font-mono text-sm uppercase tracking-normal
-        transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        bg-[#f3f4f6] text-[#1a1512]
+        bg-[#1a1512] text-white
+        rounded-l-xl
+        font-mono text-sm uppercase tracking-normal
+        transition-all duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]
       ">
             <span className="z-10 relative">Book an intro call</span>
 
-            {/* Decorative Corner: Matches Label Body (#f3f4f6) */}
-            <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 text-[#f3f4f6] transition-colors duration-300">
+            {/* Decorative Corner: Matches Label Body (#1a1512) */}
+            <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 text-[#1a1512] transition-colors duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]">
                 <CornerShape className="w-full h-full" />
             </div>
         </span>
@@ -61,10 +61,10 @@ const HeroButton = () => (
         transform-gpu
         transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
       ">
-            {/* Blob Shape Background: Orange -> Light Gray on Hover */}
+            {/* Blob Shape Background: Orange -> Dark on Hover */}
             <div className="
         absolute inset-0 z-0 transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        text-[#ff5501] group-hover:text-[#f3f4f6]
+        text-[#ff5501] group-hover:text-[#1a1512]
       ">
                 <IconBlobShape className="w-full h-full" />
             </div>
@@ -80,13 +80,13 @@ const HeroButton = () => (
                     <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
                 </span>
 
-                {/* Arrow 2: Enters on Hover (Black) -> Slides In */}
+                {/* Arrow 2: Enters on Hover (White to match dark bg) -> Slides In */}
                 <span className="
             absolute flex items-center justify-center w-full h-full
             transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
             -translate-x-[150%] group-hover:translate-x-0
           ">
-                    <ArrowIcon color="#1a1512" className="w-5 h-5" />
+                    <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
                 </span>
             </span>
         </i>
@@ -95,31 +95,31 @@ const HeroButton = () => (
 
 export function FeaturesSection() {
     const headingRef = useRef<HTMLHeadingElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
-        // Masked Text Reveal Animation
-        const lineMasks = document.querySelectorAll('.line-mask');
+        // PERF FIX: Use gsap.context() for safe cleanup
+        let ctx = gsap.context(() => {
+            const lineMasks = document.querySelectorAll('.line-mask');
 
-        lineMasks.forEach((mask) => {
-            const revealText = mask.querySelector('.reveal-text');
+            lineMasks.forEach((mask) => {
+                const revealText = mask.querySelector('.reveal-text');
+                if (revealText) {
+                    gsap.from(revealText, {
+                        y: '100%',
+                        duration: 1.2,
+                        ease: 'expo.out',
+                        scrollTrigger: {
+                            trigger: mask,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none',
+                        },
+                    });
+                }
+            });
+        }, containerRef);
 
-            if (revealText) {
-                gsap.from(revealText, {
-                    y: '100%',
-                    duration: 1.2,
-                    ease: 'expo.out',
-                    scrollTrigger: {
-                        trigger: mask,
-                        start: 'top 85%',
-                        toggleActions: 'play none none none',
-                    },
-                });
-            }
-        });
-
-        return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        };
+        return () => ctx.revert();
     }, []);
 
     // Animated dots pattern
@@ -138,7 +138,7 @@ export function FeaturesSection() {
     ];
 
     return (
-        <section className="relative w-full bg-[#FAFAFA] py-20 md:py-32 px-4">
+        <section ref={containerRef} className="relative w-full bg-[#FAFAFA] py-20 md:py-32 px-4">
             <div className="container mx-auto max-w-7xl">
                 {/* Large Card */}
                 <div className="relative bg-[#E8E8E8] rounded-3xl p-8 md:p-12 lg:p-16 overflow-hidden">
@@ -151,13 +151,9 @@ export function FeaturesSection() {
                                 className="reveal-text block text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1]"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                {/* UX FIX: Using black/50 for readability + hierarchy */}
                                 <span className="text-black/50">We make great<br />design </span>
-
-                                {/* EMPHASIS: Brand Orange + Asterisk (matches Hero star motif) */}
                                 <span className="text-[#ff5501] font-medium">
                                     print money
-                                    {/* The Asterisk acts as the period, connecting to the brand's 'Fast Builds * Real Results' motif */}
                                     <span className="inline-block align-top text-3xl md:text-4xl lg:text-5xl ml-1 relative top-1">*</span>
                                 </span>
                             </h2>
@@ -181,8 +177,8 @@ export function FeaturesSection() {
                                 / Your Business<br />Is Our Business
                             </p>
 
-                            {/* Animated Dots Pattern */}
-                            <div className="relative w-full h-48 flex items-center justify-center">
+                            {/* Animated Dots Pattern - PERF FIX: HIDDEN ON MOBILE using hidden md:flex */}
+                            <div className="hidden md:flex relative w-full h-48 items-center justify-center">
                                 {dots.map((dot, index) => (
                                     <motion.div
                                         key={index}

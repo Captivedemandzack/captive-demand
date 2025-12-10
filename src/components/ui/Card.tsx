@@ -17,27 +17,27 @@ interface TagStyle {
     border: string;
 }
 
+// Updated Tag Styles Configuration
 const TAG_STYLES: Record<string, TagStyle> = {
-    "Web Design": {
+    // CONDENSED: "Website" (uses old "Web Design" colors - Orange)
+    "Website": {
         bg: "#FFF0E6",
         text: "#FF5500",
         border: "#FF5500",
     },
-    "Web Dev": {
+    // REASSIGNED: "SEO" (uses old "Web Dev" colors - Teal)
+    "SEO": {
         bg: "#E0F2F2",
         text: "#008080",
         border: "#008080",
     },
+    // REASSIGNED: "Software" (uses old "SEO" colors - Dark Blue)
     "Software": {
-        bg: "#FFF5D1",
-        text: "#CCA000AD",
-        border: "#CCA000AD",
-    },
-    "SEO": {
         bg: "#DCE4F2",
         text: "#293445",
         border: "#293445",
     },
+    // KEPT: "Email Marketing" (Same as before)
     "Email Marketing": {
         bg: "#ECEEF6",
         text: "#5C6BC0",
@@ -51,10 +51,22 @@ const TAG_STYLES: Record<string, TagStyle> = {
 };
 
 export function Card({ title, tags, imageSrc, className }: CardProps) {
+    // Data Cleaning Helper:
+    // If your data still says "Web Design" or "Web Dev", we map it to "Website" for display.
+    // If it's already updated in the data, it just passes through.
+    const cleanTags = tags.map(tag => {
+        if (tag === "Web Design" || tag === "Web Dev") return "Website";
+        return tag;
+    });
+
+    // Remove duplicates (e.g., if a project had both "Web Design" and "Web Dev", it would show "Website" twice without this)
+    const uniqueTags = Array.from(new Set(cleanTags));
+
     return (
         <div
             className={cn(
-                "relative flex flex-col overflow-hidden rounded-xl bg-[#f3f4f6] text-[#121212] transition-transform hover:scale-105",
+                // ADDED: border border-[#1a1512]/5 for the 1px thin border
+                "relative flex flex-col overflow-hidden rounded-xl bg-[#f3f4f6] text-[#121212] transition-transform hover:scale-105 border border-[#1a1512]/5",
                 className
             )}
             // EDIT: Unlocked width/height so parent Carousel controls size
@@ -75,7 +87,7 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
 
                 {/* 1. TAGS (Top) */}
                 <div className="flex flex-wrap justify-start gap-2">
-                    {tags.map((tag) => {
+                    {uniqueTags.map((tag) => {
                         const style = TAG_STYLES[tag] || TAG_STYLES["default"];
 
                         return (
