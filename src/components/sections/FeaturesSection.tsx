@@ -31,10 +31,6 @@ const ArrowIcon = ({ color = "currentColor", className = "" }: { color?: string;
 );
 
 // --- HERO BUTTON COMPONENT (FINAL POLISH) ---
-// Design: 
-// - Label Body: #f3f4f6 (Light Gray) + Black Text
-// - Icon Box (Normal): #ff5501 (Orange) + White Arrow
-// - Icon Box (Hover): #f3f4f6 (Light Gray - matches body) + Black Arrow
 const HeroButton = () => (
     <a
         href="https://connect.captivedemand.com/meetings/spencer-donaldson/discovery-call"
@@ -152,10 +148,18 @@ export function FeaturesSection() {
                         <div className="line-mask overflow-hidden block">
                             <h2
                                 ref={headingRef}
-                                className="reveal-text block text-4xl md:text-5xl lg:text-6xl tracking-tight text-black uppercase"
+                                className="reveal-text block text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1]"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                Why Choose<br />Captive Demand?
+                                {/* UX FIX: Using black/50 for readability + hierarchy */}
+                                <span className="text-black/50">We make great<br />design </span>
+
+                                {/* EMPHASIS: Brand Orange + Asterisk (matches Hero star motif) */}
+                                <span className="text-[#ff5501] font-medium">
+                                    print money
+                                    {/* The Asterisk acts as the period, connecting to the brand's 'Fast Builds * Real Results' motif */}
+                                    <span className="inline-block align-top text-3xl md:text-4xl lg:text-5xl ml-1 relative top-1">*</span>
+                                </span>
                             </h2>
                         </div>
 
@@ -210,14 +214,14 @@ export function FeaturesSection() {
                                 <div className="space-y-1">
                                     <span className="font-mono text-sm text-[#ff5501] tracking-wider block">01.</span>
                                     <div className="line-mask overflow-hidden inline-block">
-                                        <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-wider text-black uppercase">
-                                            / Built for Local Businesses.
+                                        <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-tighter text-black uppercase">
+                                            / IT'S NOT ART. IT'S MATH.
                                         </h3>
                                     </div>
                                 </div>
                                 <div className="line-mask overflow-hidden block">
                                     <p className="reveal-text block font-mono text-sm text-black/60 leading-relaxed uppercase tracking-wide">
-                                        While others chase enterprise clients, we champion local businesses. Top-tier digital marketing that's accessible and affordable for the businesses that form the heart of our communities.
+                                        "Vibes" don't pay the bills. Conversion does. Using data from our 50+ previous builds, every layout is engineered to force specific user actions. The focus is on tracking eyes, clicks, and revenue—not chasing design awards.
                                     </p>
                                 </div>
                             </div>
@@ -227,14 +231,14 @@ export function FeaturesSection() {
                                 <div className="space-y-1">
                                     <span className="font-mono text-sm text-[#ff5501] tracking-wider block">02.</span>
                                     <div className="line-mask overflow-hidden inline-block">
-                                        <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-wider text-black uppercase">
-                                            / Entrepreneurial Approach.
+                                        <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-tighter text-black uppercase">
+                                            / WE DON'T COPY YOUR RIVALS.
                                         </h3>
                                     </div>
                                 </div>
                                 <div className="line-mask overflow-hidden block">
                                     <p className="reveal-text block font-mono text-sm text-black/60 leading-relaxed uppercase tracking-wide">
-                                        Founded by seasoned entrepreneurs and investors. We bring an ownership mindset to every project—treating your business with the vested interest of an owner, ensuring results.
+                                        Niche agencies tend to recycle the same playbook for everyone. It’s time to break the pattern. By stealing winning tactics from outside sectors (like SaaS and Luxury), you get a strategic edge your competitors won't even understand.
                                     </p>
                                 </div>
                             </div>
@@ -244,14 +248,14 @@ export function FeaturesSection() {
                                 <div className="space-y-1">
                                     <span className="font-mono text-sm text-[#ff5501] tracking-wider block">03.</span>
                                     <div className="line-mask overflow-hidden inline-block">
-                                        <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-wider text-black uppercase">
-                                            / All-in-One Solutions.
+                                        <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-tighter text-black uppercase">
+                                            / PROFIT OVER PIXELS.
                                         </h3>
                                     </div>
                                 </div>
                                 <div className="line-mask overflow-hidden block">
                                     <p className="reveal-text block font-mono text-sm text-black/60 leading-relaxed uppercase tracking-wide">
-                                        From web design and SEO to marketing automation and analytics—everything you need under one roof. No juggling multiple vendors or piecing together your digital presence.
+                                        Founders see things differently than creatives. Every design decision gets filtered through the lens of an owner: "Will this make money?" If the answer is no, it gets cut. Treating your budget like our own is the only way to operate.
                                     </p>
                                 </div>
                             </div>
