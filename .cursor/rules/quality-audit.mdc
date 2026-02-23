@@ -1,0 +1,23 @@
+---
+description: Post-build Quality Audit. Triggers when the user asks to "audit", "review", or "check" the code.
+globs:
+  - "**/*.tsx"
+  - "**/*.ts"
+  - "**/*.jsx"
+  - "**/*.js"
+alwaysApply: false
+---
+
+# SENIOR DESIGNER QUALITY AUDIT (V4.0)
+
+## 1. THE FIDELITY CHECKLIST
+When asked to audit, verify the following and FIX any violations immediately:
+- **Materiality Check:** Apply `shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]` if missing.
+- **Typography Tension:** Check "Nohemi" `-0.05em` tracking and "Geist Mono" metadata.
+- **Elevation Audit:** Verify layered shadows; if "flat," refactor to "beveled".
+- **Polish Audit:** Ensure the `0.02` noise texture is active.
+
+## 2. AUDIT OUTPUT
+1.  **Grade:** [Junior / Mid / Senior]
+2.  **Violations:** List flaws.
+3.  **The Fix:** Automatically rewrite the code to meet the "Elite" standard.

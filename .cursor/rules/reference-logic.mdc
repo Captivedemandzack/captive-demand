@@ -1,0 +1,18 @@
+---
+description: Logic for deconstructing visual references and mapping to code.
+globs: ["**/*.{tsx}"]
+alwaysApply: true
+---
+
+# VISUAL TRANSLATION PROTOCOL
+
+## 1. DECONSTRUCTION PHASE (Mandatory)
+- **First Step:** Before writing code, output a "Structural Analysis" describing the reference's grid, spacing, and hierarchy.
+- **Intent Extraction:** Identify the "Design Mood" (e.g., Brutalist, Minimalist, Data-Dense).
+
+## 2. MAPPING TO BRAND
+- **Force Swap:** Map all reference colors to our internal `@brand-identity` tokens.
+- **Spacing Translation:** Translate visual gaps into our Tailwind standard (`gap-4`, `p-8`, `py-24`).
+
+## 3. REVERSE-ENGINEERING MOTION
+- For video references, identify the keyframe timings and replicate using the `motion-physics.mdc` weighted standards.

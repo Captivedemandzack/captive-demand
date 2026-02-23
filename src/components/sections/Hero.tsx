@@ -26,33 +26,143 @@ const ArrowIcon = ({ color = 'currentColor', className }: { color?: string; clas
 );
 
 export const AnimatedCTAButton = () => {
+    const buttonText = "START YOUR BUILD";
+    const borderRadius = 12; // rounded-l-xl = 12px
+    // Button dimensions: text width (162px) + corner overlap
+    const buttonWidth = 180; // Total width including corner
+    const buttonHeight = 48;
+    
     return (
         <a href="#" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Start Your Build">
-            {/* CHANGED: bg-[#1a1512] (Dark) and text-white */}
-            <span className="
-            relative flex items-center h-12 pl-5 pr-2 mr-4
-            bg-[#1a1512] text-white
-            rounded-l-xl
-            font-mono text-sm uppercase tracking-normal
-            transition-all duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]
-          ">
-                <span className="z-10 relative">Start Your Build</span>
+            {/* Container for button - sets dimensions and positioning */}
+            <div className="relative flex items-center justify-center h-12 mr-1" style={{ width: `${buttonWidth}px` }}>
+                {/* Unified SVG Background - Single seamless path covering entire button */}
+                <svg 
+                    className="absolute inset-0 w-full h-full"
+                    viewBox={`0 0 ${buttonWidth} ${buttonHeight}`}
+                    preserveAspectRatio="none"
+                    style={{ 
+                        filter: 'drop-shadow(0px 2px 0px #000000) drop-shadow(0 2px 4px rgba(0,0,0,0.06))'
+                    }}
+                >
+                    <defs>
+                        {/* Volume gradient: Lighter top (#2A2522) to darker bottom (#1a1512) for convex 3D shape */}
+                        <linearGradient id="buttonFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#2A2522" />
+                            <stop offset="100%" stopColor="#1a1512" />
+                        </linearGradient>
+                        
+                        {/* Rim Light gradient: Bright white/light at top (50% opacity) fading to transparent at bottom */}
+                        <linearGradient id="buttonBorder" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.5" />
+                            <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                        </linearGradient>
+                    </defs>
+                    
+                    {/* Unified seamless path: Flows continuously from rounded left corner through rectangle to curved right corner */}
+                    {/* Left: rounded corner (12px radius) */}
+                    {/* Middle: straight rectangle body */}
+                    {/* Right: curved corner transition (matching original CornerShape path) */}
+                    <path
+                        d={`M${borderRadius},0 
+                           L${buttonWidth - 18},0 
+                           h5.63 
+                           c7.808,0 13.536,7.337 11.642,14.91 
+                           l-6.09,24.359 
+                           A11.527,11.527 0 0,1 ${buttonWidth - 18},${buttonHeight} 
+                           L${borderRadius},${buttonHeight} 
+                           Q0,${buttonHeight} 0,${buttonHeight - borderRadius} 
+                           L0,${borderRadius} 
+                           Q0,0 ${borderRadius},0 Z`}
+                        fill="url(#buttonFill)"
+                        stroke="url(#buttonBorder)"
+                        strokeWidth="1.5"
+                    />
+                </svg>
+                
+                {/* Text Content - Centered within button width */}
+                <span className="
+                    relative z-10
+                    text-white
+                    font-mono text-sm uppercase tracking-normal
+                    transition-all duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]
+                    text-center
+                    w-full
+                ">
+                    {buttonText}
+                </span>
+            </div>
 
-                {/* CHANGED: text-[#1a1512] to match the body color */}
-                <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 text-[#1a1512]">
-                    <CornerShape className="w-full h-full transition-colors duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]" />
-                </div>
-            </span>
-
+            {/* Icon Blob - 3D Treatment Matching Button */}
             <i className="
-            relative block w-[51px] h-12 
+            relative flex items-center justify-center w-[51px] h-12 
             transform-gpu
             transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
           ">
-                {/* CHANGED: group-hover:text-[#1a1512] so the blob merges with the dark body on hover */}
-                <div className="absolute inset-0 z-0 text-[#ff5501] group-hover:text-[#1a1512] transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
-                    <IconBlobShape className="w-full h-full" />
-                </div>
+                {/* Orange state SVG - Default visible */}
+                <svg 
+                    className="absolute inset-0 w-full h-full opacity-100 group-hover:opacity-0 transition-opacity duration-300 z-0"
+                    viewBox="0 0 51 48"
+                    preserveAspectRatio="none"
+                    style={{ 
+                        filter: 'drop-shadow(0px 2px 0px rgba(224, 68, 0, 0.8)) drop-shadow(0 2px 4px rgba(224, 68, 0, 0.3))',
+                        visibility: 'visible'
+                    }}
+                >
+                    <defs>
+                        {/* Orange state: Lighter orange top to darker orange bottom for 3D convex effect */}
+                        <linearGradient id="blobFillOrange" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#FF7A2E" />
+                            <stop offset="100%" stopColor="#CC3300" />
+                        </linearGradient>
+                        
+                        {/* Rim Light gradient: Bright white/orange at top fading to transparent */}
+                        <linearGradient id="blobBorderOrange" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.6" />
+                            <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <path
+                        d="M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z"
+                        fill="url(#blobFillOrange)"
+                        stroke="url(#blobBorderOrange)"
+                        strokeWidth="1.5"
+                    />
+                </svg>
+                
+                {/* Black state SVG (hover) - Completely hidden by default */}
+                <svg 
+                    className="absolute inset-0 w-full h-full invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 z-0 pointer-events-none"
+                    viewBox="0 0 51 48"
+                    preserveAspectRatio="none"
+                    style={{ 
+                        filter: 'drop-shadow(0px 2px 0px #000000) drop-shadow(0 2px 4px rgba(0,0,0,0.06))'
+                    }}
+                >
+                    <defs>
+                        {/* Black state: Same as button */}
+                        <linearGradient id="blobFillBlack" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#2A2522" />
+                            <stop offset="100%" stopColor="#1a1512" />
+                        </linearGradient>
+                        
+                        {/* Rim Light gradient: Same as button */}
+                        <linearGradient id="blobBorderBlack" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.5" />
+                            <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <path
+                        d="M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z"
+                        fill="url(#blobFillBlack)"
+                        stroke="url(#blobBorderBlack)"
+                        strokeWidth="1.5"
+                    />
+                </svg>
+                
+                {/* Arrow icons */}
                 <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
                     <span className="
                 absolute flex items-center justify-center w-full h-full
@@ -66,7 +176,6 @@ export const AnimatedCTAButton = () => {
                 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
                 -translate-x-[150%] group-hover:translate-x-0
               ">
-                        {/* CHANGED: Arrow color to #FFFFFF so it is visible against the dark hover state */}
                         <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
                     </span>
                 </span>

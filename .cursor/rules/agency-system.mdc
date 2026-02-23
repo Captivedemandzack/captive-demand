@@ -1,0 +1,18 @@
+---
+description: Structural and Architectural rules for the Agency project.
+globs: ["**/*.{ts,tsx}"]
+alwaysApply: true
+---
+
+# AGENCY SYSTEM ARCHITECT (V1.0)
+
+## 1. COMPONENT REUSE PROTOCOL
+- **Search Before Coding:** Before generating any new UI, you MUST search `@src/components/` and `@docs/design-system/components.md`.
+- **80% Rule:** If a component matches 80% of the required layout, import and extend it via props rather than creating a duplicate.
+
+## 2. FILE NAMING & PATHS
+- **Standard:** Use PascalCase for components (e.g., `ServiceCard.tsx`) and kebab-case for folders.
+- **Absolute Imports:** Always use `@/components/` or `@/hooks/`.
+
+## 3. PARALLEL BUILD COORDINATION
+- **Syncing:** When building multiple pages simultaneously, check `@src/pages/` for sibling components to ensure cross-page consistency.

@@ -1,0 +1,15 @@
+---
+description: GSAP and Framer Motion physics rules.
+globs: ["**/*.{tsx,ts}"]
+alwaysApply: true
+---
+
+# MOTION PHYSICS PROTOCOL (V1.0)
+
+## 1. ENTRANCE WEIGHT
+- **Ease:** All GSAP/Framer Motion entrance animations MUST use `power4.out`.
+- **Stagger:** Stagger child elements (text lines, cards) by exactly `0.08s` to create a "fluid ripple" effect.
+
+## 2. INTERACTION PHYSICS
+- **Magnetic Buttons:** Use spring physics (`stiffness: 400, damping: 10`) for all hover scales.
+- **Hover Lift:** Interactive cards should use a `translateY(-4px)` lift with a simultaneous increase in shadow spread.

@@ -1,0 +1,22 @@
+---
+description: High-fidelity visual and branding rules.
+globs: ["**/*.{tsx,css,scss}"]
+alwaysApply: true
+---
+
+# TACTILE DESIGN ENGINE (V2.0)
+
+## 1. BRAND TOKENS
+- **Background:** Primary: `#FAF9F6` (Warm Paper) | Dark: `#1A1512` (Ink Black).
+- **Accent:** `#FF5501` (Action Orange) — reserved for primary CTAs and active states.
+
+## 2. THE TACTILE PROTOCOL (The "Bevel" Look)
+- **Depth:** Never use flat borders. Apply `shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]` to catch virtual light on the top edge.
+- **Layered Shadows:** Use custom utility `shadow-tactile` which stacks a large ambient blur with a sharp, tight occlusion shadow.
+
+## 3. MATERIALITY & POLISH
+- **Noise:** Apply a global `0.02` opacity noise SVG filter to all main backgrounds to add "analog" texture.
+- **Glassmorphism:** Use `backdrop-blur-xl` with `bg-white/5` and a `1px border-white/10` for premium overlays.
+
+## 4. TYPOGRAPHY TENSION
+- **Scale:** Pair massive "Nohemi" headlines (tracking-tighter) with 10px monospaced "Geist Mono" labels to create professional density.

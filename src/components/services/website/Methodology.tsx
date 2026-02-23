@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Plus } from 'lucide-react';
@@ -25,9 +25,9 @@ const servicesData = [
         description: "You wouldn’t build a skyscraper without a blueprint. We don't build websites without one, either. Before we draw a single pixel, we interrogate your business model, spy on your competitors, and map out the exact architecture needed to dominate your niche. We define what \"winning\" looks like mathematically, then we build the plan to hit it.",
         tags: ["Competitor Recon", "SEO Architecture", "Sitemap Logic", "Success Metrics", "User Personas", "Tech Stack Audit"],
         cards: [
-            { title: 'Good Manors', image: '/heatmap.png' },
-            { title: 'TwoCents', image: '/seostrategy.png' },
-            { title: 'EOS Wellness', image: '/sitemapstrategy.png' }
+            { title: 'New You Laser NYC', image: '/newyou.png' },
+            { title: 'WFH Investor', image: '/wfh-new2.png' },
+            { title: 'EOS Wellness', image: '/eos-new.png' }
         ]
     },
     {
@@ -37,9 +37,9 @@ const servicesData = [
         description: "Your customers judge you in 0.05 seconds. If you look cheap, they assume you are. We don't just pick colors; we engineer a visual system that signals \"Market Leader\" instantly. This creates the \"Halo Effect\" that allows you to stop competing on features and start competing on value.",
         tags: ["Status Signaling", "Visual Hierarchy", "Trust Psychology", "Asset Direction", "Brand Physics", "Conversion UI"],
         cards: [
-            { title: 'Custom Cowgirl', image: '/ccstrategy.png' },
+            { title: 'Custom Cowgirl', image: '/cc-vid.gif' },
             { title: 'EOS Wellness', image: '/eosart.png' },
-            { title: 'WFH Investor', image: '/moodboardwfhfinal.png' }
+            { title: 'Dubsy', image: '/dubsy-art.gif' }
         ]
     },
     {
@@ -49,9 +49,9 @@ const servicesData = [
         description: "Great design is invisible. It works so well you don't notice it, you just feel it. We craft user interfaces and brand assets that are beautiful, functional, and built to scale.",
         tags: ["UI/UX Design", "Web Design", "App Design", "Design Systems", "Prototyping"],
         cards: [
-            { title: 'Linear Web Design', image: '/Symmetri.png' },
-            { title: 'Raycast App', image: '/goodmanors.png' },
-            { title: 'Cash App UI', image: '/Firstfuture.png' }
+            { title: 'LLM Research', image: '/llm_design.png' },
+            { title: 'Rossi', image: '/rossi-design.png' },
+            { title: 'First Future', image: '/ff-vid.gif' }
         ]
     },
     {
@@ -61,9 +61,9 @@ const servicesData = [
         description: "We don't just hand off designs. We build them. Using modern frameworks and clean code, we bring digital experiences to life with performance, accessibility, and scalability in mind.",
         tags: ["Front-end Dev", "Next.js", "React", "WebGL", "Creative Coding", "CMS Integration"],
         cards: [
-            { title: 'Vercel Platform', image: '/goodmanors.png' },
-            { title: 'Stripe Doc Site', image: '/Firstfuture.png' },
-            { title: 'Airbnb Listing', image: '/Symmetri.png' }
+            { title: 'Dubsy', image: '/dubsy-dev.png' },
+            { title: 'Mantality', image: '/man-vid.gif' },
+            { title: 'Symmetri', image: '/symmetri-dev.png' }
         ]
     }
 ];
@@ -113,16 +113,45 @@ const ServiceContent = ({ service }: { service: typeof servicesData[0] }) => (
         {/* Bottom Grid: Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {service.cards.map((card, i) => (
-                <div key={i} className="group relative w-full aspect-square bg-[#2a2522] rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300">
-                    <div className="absolute top-4 left-4 z-20">
-                        <span className="bg-[#1a1512]/80 backdrop-blur-sm text-white text-[10px] font-mono px-3 py-1.5 rounded-full uppercase tracking-wide">
-                            e.g. {card.title}
-                        </span>
+                <div key={i} className="group relative w-full aspect-square rounded-2xl overflow-hidden">
+                    {/* Gradient Border Effect */}
+                    <div className="absolute inset-0 rounded-2xl p-[1.5px] bg-gradient-to-br from-[#1a1512]/15 via-[#1a1512]/8 via-[#1a1512]/12 to-[#1a1512]/15">
+                        <div className="w-full h-full rounded-2xl bg-white/98 backdrop-blur-sm shadow-sm overflow-hidden">
+                            {/* Status Pill - Warm Tactile */}
+                            <div className="absolute top-4 left-4 z-20">
+                                <span 
+                                    className="text-[10px] font-medium px-3 py-1.5 rounded-full uppercase tracking-wider"
+                                    style={{
+                                        background: 'linear-gradient(to bottom, #f7f6f5, #EBE9E5)',
+                                        color: '#1a1512',
+                                        boxShadow: `
+                                            inset 0 1px 0 0 #FFFFFF,
+                                            0 0 0 1px #D1CDC7,
+                                            0 2px 4px rgba(0,0,0,0.06)
+                                        `
+                                    }}
+                                >
+                                    {card.title}
+                                </span>
+                            </div>
+                            
+                            {/* Full Cover Image */}
+                            <div className="absolute inset-0">
+                                <Image 
+                                    src={card.image}
+                                    alt={card.title} 
+                                    fill 
+                                    className="object-cover"
+                                    key={card.image}
+                                    unoptimized
+                                    priority={i === 0}
+                                />
+                            </div>
+                            
+                            {/* Hover overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                        </div>
                     </div>
-                    <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
-                        <Image src={card.image} alt={card.title} fill className="object-cover" />
-                    </div>
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 pointer-events-none" />
                 </div>
             ))}
 
