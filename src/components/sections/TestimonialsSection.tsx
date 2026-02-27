@@ -224,7 +224,12 @@ export function TestimonialsSection() {
 
           {/* Active Card Container */}
           <div className="relative w-full h-[320px] md:h-[400px] z-10">
-            <div className="relative w-full h-full bg-[#f6f5f6] rounded-2xl border border-black/5 p-6 md:p-8 flex flex-col shadow-2xl overflow-hidden group">
+            <div className="relative w-full h-full bg-[#f6f5f6] rounded-2xl border border-black/5 p-6 md:p-8 flex flex-col overflow-hidden group" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.08), inset 0 1px 0 0 rgba(255,255,255,0.5)' }}>
+              {/* Corner Rivets */}
+              <div className="absolute top-4 left-4 w-[7px] h-[7px] rounded-full z-20" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
+              <div className="absolute top-4 right-4 w-[7px] h-[7px] rounded-full z-20" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
+              <div className="absolute bottom-4 left-4 w-[7px] h-[7px] rounded-full z-20" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
+              <div className="absolute bottom-4 right-4 w-[7px] h-[7px] rounded-full z-20" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
               {/* Subtle Gradient Glow inside card */}
               <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-orange-500/5 to-transparent opacity-50 pointer-events-none" />
 

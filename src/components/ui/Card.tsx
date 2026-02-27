@@ -66,11 +66,11 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
         <div
             className={cn(
                 // ADDED: border border-[#1a1512]/5 for the 1px thin border
-                "relative flex flex-col overflow-hidden rounded-xl bg-[#f3f4f6] text-[#121212] transition-transform hover:scale-105 border border-[#1a1512]/5",
+                "relative flex flex-col overflow-hidden rounded-xl bg-[#f3f4f6] text-[#121212] transition-all hover:scale-105 border border-[#1a1512]/5",
                 className
             )}
             // EDIT: Unlocked width/height so parent Carousel controls size
-            style={{ width: "100%", height: "100%", padding: "0" }}
+            style={{ width: "100%", height: "100%", padding: "0", boxShadow: '0 1px 2px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04), 0 12px 32px rgba(0,0,0,0.05), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}
         >
             {/* Image Container */}
             <div className="relative h-[180px] w-[calc(100%-10px)] mx-auto mt-[5px] overflow-hidden rounded-lg bg-gray-200 shrink-0">

@@ -42,7 +42,7 @@ const ArrowIcon = ({ color = "currentColor", className = "" }: { color?: string;
 // 1. Normal State: White Label, Black Box, White Arrow
 // 2. Hover State: White Label, WHITE Box (Matches body), BLACK Arrow
 const BookCallButton = ({ onOrange = false }: { onOrange?: boolean }) => (
-  <a href="#" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Book a Call">
+  <a href="#" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Book a Call" style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}>
 
     {/* Label Container */}
     <span className={`
@@ -229,6 +229,10 @@ const ProcessCard = ({
       ? 'bg-[#ff5501] border-[#ff5501] text-white'
       : 'bg-[#f6f5f6] border-[#1a1512]/5'
       }`}
+    style={{ boxShadow: isOrange
+      ? '0 2px 4px rgba(255,85,1,0.15), 0 8px 20px rgba(255,85,1,0.12), 0 20px 48px rgba(0,0,0,0.1), inset 0 1px 0 0 rgba(255,255,255,0.15)'
+      : '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)'
+    }}
   >
     {/* Timeline Badge + Headshot */}
     <div className="flex items-start justify-between mb-6">

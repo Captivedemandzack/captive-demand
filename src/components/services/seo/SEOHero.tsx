@@ -62,11 +62,7 @@ function GlassBadge({ children, className = '' }: { children: React.ReactNode; c
     );
 }
 
-function SelectionHandle({ className }: { className: string }) {
-    return <div className={`absolute w-[7px] h-[7px] bg-[#4a90d9] ${className}`} />;
-}
-
-export function WebsiteHero() {
+export function SEOHero() {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -148,15 +144,15 @@ export function WebsiteHero() {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.from('.ws-hero-text', {
+            gsap.from('.seo-hero-text', {
                 opacity: 0, x: -30, filter: 'blur(8px)',
                 duration: 1.2, ease: 'power4.out', stagger: 0.08, delay: 0.3,
             });
-            gsap.from('.ws-hero-image', {
+            gsap.from('.seo-hero-image', {
                 opacity: 0, x: 60, scale: 0.96,
                 duration: 1.4, ease: 'power4.out', delay: 0.5,
             });
-            gsap.from('.ws-badge', {
+            gsap.from('.seo-badge', {
                 opacity: 0, scale: 0.8, y: 20,
                 duration: 0.9, ease: 'power4.out', stagger: 0.08, delay: 1.0,
             });
@@ -184,143 +180,91 @@ export function WebsiteHero() {
 
                     {/* LEFT — Text */}
                     <div className="w-full lg:w-[38%] flex flex-col items-start text-left">
-                        <div className="ws-hero-text mb-6">
-                            <EyebrowHeading category="Service" label="Website Design/Development" dark />
+                        <div className="seo-hero-text mb-6">
+                            <EyebrowHeading category="Service" label="SEO / AEO" dark />
                         </div>
                         <h1
-                            className="ws-hero-text text-[clamp(2.5rem,5vw+1rem,4.5rem)] leading-[1] tracking-tighter mb-8 bg-gradient-to-br from-white via-white/90 to-white/30 bg-clip-text text-transparent"
+                            className="seo-hero-text text-[clamp(2.5rem,5vw+1rem,4.5rem)] leading-[1] tracking-tighter mb-8 bg-gradient-to-br from-white via-white/90 to-white/30 bg-clip-text text-transparent"
                             style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
                         >
-                            Design that prints money
+                            Search clarity for the AI era
                         </h1>
-                        <p className="ws-hero-text text-[15px] md:text-base text-white/40 font-mono mb-10 max-w-md leading-relaxed">
-                        Your website should produce ROI. We are conversion-obsessed and take your business's performance personally. Every pixel is optimized to do one thing: generate cash flow. If it doesn't align with your goals, it doesn't make it into production.
+                        <p className="seo-hero-text text-[15px] md:text-base text-white/40 font-mono mb-10 max-w-md leading-relaxed">
+                            Most websites need support in two areas today. Traditional SEO that helps you show up on Google. AEO that helps you appear in AI Overviews and AI search results. We build both into your site so search engines and AI models can read your content clearly and present it accurately.
                         </p>
-                        <div className="ws-hero-text">
+                        <div className="seo-hero-text">
                             <AnimatedCTAButton />
                         </div>
                     </div>
 
-                    {/* RIGHT — Editor Composition */}
-                    <div className="w-full lg:w-[62%] relative ws-hero-image pt-6 pb-16 px-6 sm:px-10 lg:p-0">
+                    {/* RIGHT — SERP / Dashboard Composition */}
+                    <div className="w-full lg:w-[62%] relative seo-hero-image pt-6 pb-16 px-6 sm:px-10 lg:p-0">
                         <div className="relative w-full" style={{ aspectRatio: '4 / 3' }}>
 
-                            {/* EDITOR FRAME */}
+                            {/* MAIN FRAME */}
                             <div className="absolute inset-0 rounded-xl overflow-hidden border-2 border-white/[0.10] shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_24px_80px_rgba(0,0,0,0.6)]">
-
-                                {/* Rossi website screenshot */}
                                 <Image
                                     src="/eosblank3.png"
-                                    alt="Website in development"
+                                    alt="SEO dashboard overview"
                                     fill
                                     className="object-cover"
                                     style={{ objectPosition: 'left top' }}
                                     priority
                                 />
-
-                                {/* ADD SECTION banner */}
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 z-30">
-                                    <div className="bg-[#4a90d9] text-white text-[7px] sm:text-[8px] font-mono tracking-[0.15em] uppercase px-4 py-[3px] rounded-b-sm shadow-sm">
-                                        ADD SECTION
-                                    </div>
-                                </div>
-
-                                {/* TEXT selection box — over the heading */}
-                                <div className="absolute top-[26%] left-[2%] w-[47%] h-[17%] border-[1.5px] border-[#4a90d9]/50 z-20 pointer-events-none">
-                                    <div className="absolute -top-[14px] left-0 bg-[#4a90d9] text-white text-[7px] font-mono tracking-[0.12em] px-2 py-[2px] rounded-t-sm uppercase">
-                                        TEXT
-                                    </div>
-                                    <SelectionHandle className="-top-[3px] -left-[3px]" />
-                                    <SelectionHandle className="-top-[3px] -right-[3px]" />
-                                    <SelectionHandle className="-bottom-[3px] -left-[3px]" />
-                                    <SelectionHandle className="-bottom-[3px] -right-[3px]" />
-                                    <SelectionHandle className="-top-[3px] left-1/2 -translate-x-1/2" />
-                                    <SelectionHandle className="-bottom-[3px] left-1/2 -translate-x-1/2" />
-                                    <SelectionHandle className="top-1/2 -translate-y-1/2 -left-[3px]" />
-                                    <SelectionHandle className="top-1/2 -translate-y-1/2 -right-[3px]" />
-                                </div>
-
-                                {/* ADD BLOCK — below the CTA button */}
-                                <div className="absolute top-[85%] left-[4%] z-20">
-                                    <div className="bg-transparent rounded border border-dotted border-[#4a90d9] px-1.5 sm:px-2 py-1.5 flex items-center gap-1 hover:bg-[#4a90d9]/10 transition-colors">
-                                        <span className="text-[#4a90d9] text-[10px] leading-none font-medium">+</span>
-                                        <span className="text-[#4a90d9] text-[7px] sm:text-[8px] font-mono tracking-wider uppercase">ADD BLOCK</span>
-                                    </div>
-                                </div>
                             </div>
 
                             {/* GLASSMORPHIC BADGES */}
 
-                            {/* Custom Icons — top right */}
-                            <div className="ws-badge absolute -top-5 right-[3%] z-40">
+                            {/* Keyword Research — top right */}
+                            <div className="seo-badge absolute -top-5 right-[3%] z-40">
                                 <GlassBadge>
                                     <div className="flex items-center gap-2.5">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/45">
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
+                                            <circle cx="11" cy="11" r="8" />
+                                            <path d="M21 21l-4.35-4.35" />
                                         </svg>
-                                        <span className="text-white/50 font-mono text-[10px] tracking-[0.1em] uppercase">Custom Icons</span>
+                                        <span className="text-white/50 font-mono text-[10px] tracking-[0.1em] uppercase">Keywords</span>
                                     </div>
                                 </GlassBadge>
                             </div>
 
-                            {/* Site Typography — left side */}
-                            <div className="ws-badge absolute bottom-[28%] -left-3 sm:-left-8 lg:-left-10 z-40">
+                            {/* Alt Text — left side */}
+                            <div className="seo-badge absolute bottom-[28%] -left-3 sm:-left-8 lg:-left-10 z-40">
                                 <GlassBadge className="min-w-[110px]">
                                     <div className="flex flex-col items-start gap-1">
                                         <span className="text-white/80 text-[28px] leading-none font-serif italic">
                                             Aa
                                         </span>
                                         <span className="text-white/30 font-mono text-[9px] tracking-[0.12em]">
-                                            Site Typography
+                                            Alt Text
                                         </span>
                                     </div>
                                 </GlassBadge>
                             </div>
 
-                            {/* Color Palette — hanging off bottom edge */}
-                            <div className="ws-badge absolute -bottom-5 left-[24%] z-40">
+                            {/* Schema Markup — bottom center-left */}
+                            <div className="seo-badge absolute -bottom-5 left-[24%] z-40">
                                 <GlassBadge>
                                     <div className="flex items-center gap-2.5">
-                                        <div className="w-5 h-5 rounded-full bg-[#0d1617] ring-1 ring-white/[0.08]" />
-                                        <div className="w-5 h-5 rounded-full bg-[#2d3e50] ring-1 ring-white/[0.08]" />
-                                        <div className="w-5 h-5 rounded-full bg-[#fbf5f3] ring-1 ring-white/[0.08]" />
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/45">
+                                            <polyline points="16 18 22 12 16 6" />
+                                            <polyline points="8 6 2 12 8 18" />
+                                        </svg>
+                                        <span className="text-white/50 font-mono text-[10px] tracking-[0.1em] uppercase">Schema</span>
                                     </div>
                                 </GlassBadge>
                             </div>
 
-                            {/* Responsive — right side, above finished site */}
-                            <div className="ws-badge absolute top-[28%] -right-3 sm:-right-8 lg:-right-10 z-40">
+                            {/* Core Web Vitals — right side */}
+                            <div className="seo-badge absolute top-[28%] -right-3 sm:-right-8 lg:-right-10 z-40">
                                 <GlassBadge>
                                     <div className="flex items-center gap-2">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/45">
-                                            <rect x="2" y="3" width="20" height="14" rx="2" />
-                                            <line x1="8" y1="21" x2="16" y2="21" />
-                                            <line x1="12" y1="17" x2="12" y2="21" />
+                                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
                                         </svg>
-                                        <span className="text-white/50 font-mono text-[10px] tracking-[0.1em] uppercase">Responsive</span>
+                                        <span className="text-white/50 font-mono text-[10px] tracking-[0.1em] uppercase">Vitals</span>
                                     </div>
                                 </GlassBadge>
-                            </div>
-
-                            {/* FINISHED WEBSITE — bottom right */}
-                            <div className="ws-badge absolute -bottom-10 sm:-bottom-14 right-0 sm:-right-3 lg:-right-6 w-[36%] sm:w-[44%] z-30 rounded-lg overflow-hidden border-2 border-white/[0.10] shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_60px_rgba(0,0,0,0.5)]">
-                                <div className="h-6 bg-[#e8e5e1] flex items-center px-2.5 gap-2 border-b border-black/[0.05]">
-                                    <div className="flex gap-1.5">
-                                        <div className="w-2 h-2 rounded-full bg-[#ff5f57]" />
-                                        <div className="w-2 h-2 rounded-full bg-[#febc2e]" />
-                                        <div className="w-2 h-2 rounded-full bg-[#28c840]" />
-                                    </div>
-                                    <div className="flex-1 flex items-center h-3.5 bg-white/70 rounded px-2 mx-1">
-                                        <span className="text-[6px] text-black/30 font-mono truncate">symmetri.com</span>
-                                    </div>
-                                </div>
-                                <Image
-                                    src="/eos6152.png"
-                                    alt="Finished website"
-                                    width={500}
-                                    height={350}
-                                    className="object-cover object-top w-full h-auto"
-                                />
                             </div>
 
                         </div>

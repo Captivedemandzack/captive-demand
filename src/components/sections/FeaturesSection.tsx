@@ -38,6 +38,7 @@ const HeroButton = () => (
         rel="noopener noreferrer"
         className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none"
         aria-label="Book a Call"
+        style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}
     >
         {/* Label Container - Dark Theme Match */}
         <span className="
@@ -141,7 +142,13 @@ export function FeaturesSection() {
         <section ref={containerRef} className="relative w-full bg-[#FAFAFA] py-20 md:py-32 px-4">
             <div className="container mx-auto max-w-7xl">
                 {/* Large Card */}
-                <div className="relative bg-[#E8E8E8] rounded-3xl p-8 md:p-12 lg:p-16 overflow-hidden">
+                <div className="relative bg-[#E8E8E8] rounded-3xl p-8 md:p-12 lg:p-16 overflow-hidden" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}>
+
+                    {/* Corner Rivets */}
+                    <div className="absolute top-5 left-5 w-[7px] h-[7px] rounded-full z-10" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
+                    <div className="absolute top-5 right-5 w-[7px] h-[7px] rounded-full z-10" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
+                    <div className="absolute bottom-5 left-5 w-[7px] h-[7px] rounded-full z-10" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
+                    <div className="absolute bottom-5 right-5 w-[7px] h-[7px] rounded-full z-10" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
 
                     {/* Header with Title and Button */}
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-4">

@@ -153,7 +153,8 @@ export function BentoGridSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="bg-[#e8e8e8] rounded-3xl p-6 md:p-8 shadow-lg border border-[#1a1512]/5 hover:shadow-xl transition-shadow col-span-2 md:col-span-3 max-h-[400px] overflow-hidden group"
+            className="bg-[#e8e8e8] rounded-3xl p-6 md:p-8 border border-[#1a1512]/5 transition-shadow col-span-2 md:col-span-3 max-h-[400px] overflow-hidden group"
+            style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}
           >
             <div className="mb-6">
               <h3 className="text-[16px] font-normal text-[#1a1512] mb-3 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>Website Design & Development</h3>
@@ -274,7 +275,8 @@ export function BentoGridSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="bg-[#e8e8e8] rounded-3xl p-6 md:p-8 shadow-lg border border-[#1a1512]/5 hover:shadow-xl transition-shadow col-span-2 md:col-span-3 max-h-[400px] overflow-hidden group"
+            className="bg-[#e8e8e8] rounded-3xl p-6 md:p-8 border border-[#1a1512]/5 transition-shadow col-span-2 md:col-span-3 max-h-[400px] overflow-hidden group"
+            style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}
           >
             <div className="mb-6">
               <h3 className="text-[16px] font-normal text-[#1a1512] mb-3 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>Email Marketing</h3>
@@ -380,7 +382,8 @@ export function BentoGridSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="bg-[#ff5501] rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow col-span-2 md:col-span-2 group"
+            className="bg-[#ff5501] rounded-3xl p-8 transition-shadow col-span-2 md:col-span-2 group"
+            style={{ boxShadow: '0 2px 4px rgba(255,85,1,0.15), 0 8px 20px rgba(255,85,1,0.12), 0 20px 48px rgba(0,0,0,0.1), inset 0 1px 0 0 rgba(255,255,255,0.15)' }}
           >
             <div className="mb-6">
               <h4 className="text-[16px] font-normal text-white mb-3 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
@@ -510,7 +513,7 @@ export function BentoGridSection() {
             viewport={{ once: true }}
             className="flex flex-col items-start col-span-2 md:col-span-2 group"
           >
-            <div className="bg-[#e8e8e8] rounded-3xl p-6 mb-6 w-full aspect-video flex items-center justify-center overflow-hidden">
+            <div className="bg-[#e8e8e8] rounded-3xl p-6 mb-6 w-full aspect-video flex items-center justify-center overflow-hidden" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}>
               {/* SEO Graphic */}
               <div className="relative w-full h-full flex flex-col items-center justify-center gap-4">
 
@@ -569,7 +572,7 @@ export function BentoGridSection() {
             viewport={{ once: true }}
             className="flex flex-col items-start col-span-2 md:col-span-2"
           >
-            <div className="bg-[#e8e8e8] rounded-3xl p-6 mb-6 w-full aspect-video flex items-center justify-center overflow-hidden">
+            <div className="bg-[#e8e8e8] rounded-3xl p-6 mb-6 w-full aspect-video flex items-center justify-center overflow-hidden" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}>
               <div className="grid grid-cols-3 gap-2 max-w-sm">
                 {/* Gmail */}
                 <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-md p-3">

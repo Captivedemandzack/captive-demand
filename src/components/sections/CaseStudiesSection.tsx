@@ -31,7 +31,7 @@ const ArrowIcon = ({ color = "currentColor", className = "" }: { color?: string;
 
 // --- MAIN CTA BUTTON (Remains unchanged, matching About Section) ---
 const MoreWorkButton = () => (
-  <a href="/case-studies" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="View All Work">
+  <a href="/case-studies" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="View All Work" style={{ filter: 'drop-shadow(0px 1px 0px rgba(0,0,0,0.1)) drop-shadow(0 2px 4px rgba(0,0,0,0.05))' }}>
 
     {/* Label Container */}
     <span className="
@@ -144,7 +144,8 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       viewport={{ once: true, margin: "-100px" }}
-      className="relative overflow-hidden shadow-lg group cursor-pointer rounded-2xl"
+      className="relative overflow-hidden group cursor-pointer rounded-2xl"
+      style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.2)' }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}

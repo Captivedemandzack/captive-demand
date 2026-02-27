@@ -305,20 +305,20 @@ export function Hero() {
 
                 {/* --- 1. PARTNER PILLS --- */}
                 <div ref={partnersRef} className="mb-8 hidden md:flex flex-wrap items-center justify-center gap-3">
-                    <div className="partner-pill flex items-center gap-2 rounded-full border border-[#f3f4f6] bg-white px-4 py-1.5 font-mono uppercase text-[11px] tracking-[0.2em] text-[#121212]/80">
-                        <div className="relative h-3.5 w-3.5">
+                    <div className="partner-pill flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[11px] tracking-[0.15em] text-[#121212]/70" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
+                        <div className="relative h-4 w-4">
                             <Image src="/Elementor-Logo-Symbol-Red (1).svg" alt="Elementor" fill className="object-contain" />
                         </div>
                         <span>Elementor Agency Partner</span>
                     </div>
-                    <div className="partner-pill flex items-center gap-2 rounded-full border border-[#f3f4f6] bg-white px-4 py-1.5 font-mono uppercase text-[11px] tracking-[0.2em] text-[#121212]/80">
-                        <div className="relative h-3.5 w-3.5">
+                    <div className="partner-pill flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[11px] tracking-[0.15em] text-[#121212]/70" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
+                        <div className="relative h-4 w-4">
                             <Image src="/shopify_glyph.svg" alt="Shopify" fill className="object-contain" />
                         </div>
                         <span>Shopify Partner</span>
                     </div>
-                    <div className="partner-pill flex items-center gap-2 rounded-full border border-[#f3f4f6] bg-white px-4 py-1.5 font-mono uppercase text-[11px] tracking-[0.2em] text-[#121212]/80">
-                        <div className="relative h-3.5 w-3.5">
+                    <div className="partner-pill flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[11px] tracking-[0.15em] text-[#121212]/70" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
+                        <div className="relative h-4 w-4">
                             <Image src="/CUBE_2D_LIGHT.svg" alt="Cursor" fill className="object-contain" />
                         </div>
                         <span>Cursor Experts</span>
@@ -385,8 +385,17 @@ export function Hero() {
                 </div>
 
                 {/* --- 5. CTA BUTTON --- */}
-                <div className="relative z-30 -mt-[200px] md:-mt-[220px] flex justify-center pb-8 md:pb-12">
+                <div className="relative z-30 -mt-[200px] md:-mt-[220px] flex flex-col items-center pb-8 md:pb-12">
                     <AnimatedCTAButton />
+                    <div className="mt-4 flex items-center gap-2">
+                        <span className="relative flex h-2.5 w-2.5">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff5501] opacity-40" />
+                            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#ff5501]" />
+                        </span>
+                        <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#1a1512]/50">
+                            2 Spots Available
+                        </span>
+                    </div>
                 </div>
 
             </div>

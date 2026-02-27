@@ -41,7 +41,7 @@ const CornerBracket = ({ className, position }: { className?: string; position: 
 
 // --- SECONDARY BUTTON (GREY FILLED) ---
 const OurStoryButton = () => (
-    <a href="/about" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Our Story">
+    <a href="/about" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Our Story" style={{ filter: 'drop-shadow(0px 1px 0px rgba(0,0,0,0.1)) drop-shadow(0 2px 4px rgba(0,0,0,0.05))' }}>
 
         {/* DESIGN LOGIC: "The Grey Tonal"
         - Normal: #e8e8e8 Background (Solid Grey), #1a1512 Text (Dark Grey)
