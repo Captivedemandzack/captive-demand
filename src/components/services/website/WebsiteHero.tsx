@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import Image from 'next/image';
 import { AnimatedCTAButton } from '@/components/sections/Hero';
 import { EyebrowHeading } from '@/components/ui/eyebrow-heading';
+import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 
 const VERT = `attribute vec2 position;void main(){gl_Position=vec4(position,0,1);}`;
 
@@ -168,15 +169,7 @@ export function WebsiteHero() {
         <section ref={containerRef} className="relative w-full min-h-screen overflow-hidden">
             <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
-            {/* Noise grain */}
-            <div
-                className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-soft-light"
-                style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-                    backgroundRepeat: 'repeat',
-                    backgroundSize: '256px 256px',
-                }}
-            />
+            <NoiseOverlay opacity={0.03} className="mix-blend-soft-light" />
 
             {/* Content */}
             <div className="relative z-10 mx-auto max-w-7xl px-[15px] sm:px-container-px pt-36 md:pt-48 pb-24 md:pb-36">

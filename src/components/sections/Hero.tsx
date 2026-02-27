@@ -233,70 +233,71 @@ export function Hero() {
     useLayoutEffect(() => {
         if (!videoRef.current || !partnersRef.current || !headlineRef.current || !subtextRef.current) return;
 
-        // Video animation
-        const video = videoRef.current;
-        const videoState = { rate: 8, blur: 10 };
+        const ctx = gsap.context(() => {
+            const video = videoRef.current!;
+            const videoState = { rate: 8, blur: 10 };
 
-        video.playbackRate = videoState.rate;
-        if (!window.matchMedia("(max-width: 768px)").matches) {
-            video.style.filter = `blur(${videoState.blur}px)`;
-        }
+            video.playbackRate = videoState.rate;
+            if (!window.matchMedia("(max-width: 768px)").matches) {
+                video.style.filter = `blur(${videoState.blur}px)`;
+            }
 
-        gsap.to(videoState, {
-            rate: 1,
-            blur: 0,
-            duration: 3,
-            ease: 'power4.out',
-            onUpdate: () => {
-                if (videoRef.current) {
-                    videoRef.current.playbackRate = videoState.rate;
-                    // CRITICAL OPTIMIZATION: Skip blur filter on mobile to prevent crash
-                    if (!window.matchMedia("(max-width: 768px)").matches) {
-                        videoRef.current.style.filter = `blur(${videoState.blur}px)`;
+            gsap.to(videoState, {
+                rate: 1,
+                blur: 0,
+                duration: 3,
+                ease: 'power4.out',
+                onUpdate: () => {
+                    if (videoRef.current) {
+                        videoRef.current.playbackRate = videoState.rate;
+                        if (!window.matchMedia("(max-width: 768px)").matches) {
+                            videoRef.current.style.filter = `blur(${videoState.blur}px)`;
+                        }
                     }
-                }
-            },
+                },
+            });
+
+            const partnerPills = partnersRef.current!.querySelectorAll('.partner-pill');
+            const headlineWords = headlineRef.current!.querySelectorAll('.word, .video-word');
+            const subtextWords = subtextRef.current!.querySelectorAll('.word');
+
+            gsap.set([...partnerPills, ...headlineWords, ...subtextWords], {
+                opacity: 0,
+                filter: 'blur(12px)',
+                y: 20,
+            });
+
+            const masterTl = gsap.timeline();
+
+            masterTl.to(partnerPills, {
+                opacity: 1,
+                filter: 'blur(0px)',
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                stagger: 0.1,
+            });
+
+            masterTl.to(headlineWords, {
+                opacity: 1,
+                filter: 'blur(0px)',
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                stagger: 0.04,
+            }, '-=0.5');
+
+            masterTl.to(subtextWords, {
+                opacity: 1,
+                filter: 'blur(0px)',
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                stagger: 0.02,
+            }, '-=0.5');
         });
 
-        const partnerPills = partnersRef.current.querySelectorAll('.partner-pill');
-        const headlineWords = headlineRef.current.querySelectorAll('.word, .video-word');
-        const subtextWords = subtextRef.current.querySelectorAll('.word');
-
-        gsap.set([...partnerPills, ...headlineWords, ...subtextWords], {
-            opacity: 0,
-            filter: 'blur(12px)',
-            y: 20,
-        });
-
-        const masterTl = gsap.timeline();
-
-        masterTl.to(partnerPills, {
-            opacity: 1,
-            filter: 'blur(0px)',
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.1,
-        });
-
-        masterTl.to(headlineWords, {
-            opacity: 1,
-            filter: 'blur(0px)',
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.04,
-        }, '-=0.5');
-
-        masterTl.to(subtextWords, {
-            opacity: 1,
-            filter: 'blur(0px)',
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.02,
-        }, '-=0.5');
-
+        return () => ctx.revert();
     }, []);
 
     return (

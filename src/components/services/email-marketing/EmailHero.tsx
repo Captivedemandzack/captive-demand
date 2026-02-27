@@ -6,15 +6,7 @@ import { AnimatedCTAButton } from '@/components/sections/Hero';
 import MockBrowserWindow from '@/components/ui/MockBrowserWindow';
 import { Mail, TrendingUp, MousePointerClick, Users } from 'lucide-react';
 import { EyebrowHeading } from '@/components/ui/eyebrow-heading';
-
-const NoiseFilter = () => (
-    <svg className="absolute inset-0 w-full h-full pointer-events-none z-50 opacity-[0.02]">
-        <filter id="heroNoise">
-            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#heroNoise)" />
-    </svg>
-);
+import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 
 function EmailDashboardMockup() {
     return (
@@ -125,7 +117,7 @@ export function EmailHero() {
 
     return (
         <section ref={containerRef} className="relative w-full bg-[#FAFAFA] pt-36 md:pt-52 pb-20 md:pb-32 px-4 overflow-hidden">
-            <NoiseFilter />
+            <NoiseOverlay opacity={0.02} className="z-50" />
             <div className="container mx-auto max-w-5xl text-center relative z-10">
                 <div ref={labelRef} className="inline-block mb-6">
                     <EyebrowHeading category="Service:" label="Email Marketing" />

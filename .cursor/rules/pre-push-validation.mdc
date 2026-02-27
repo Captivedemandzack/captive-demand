@@ -1,0 +1,29 @@
+---
+description: Always validate the build before committing/pushing to prevent Netlify deploy failures
+alwaysApply: true
+---
+
+# Pre-Push Build Validation
+
+## MANDATORY: Run before every commit & push
+
+Before committing or pushing ANY code changes, you MUST run `npx tsc --noEmit` to catch TypeScript errors. If errors are found, fix them ALL before committing — do not involve the user unless the fix is ambiguous.
+
+## Common Framer Motion pitfall
+
+Cubic-bezier ease arrays in standalone variant objects widen to `number[]`. Always assert the tuple:
+
+```tsx
+// BAD — breaks the build
+ease: [0.25, 0.46, 0.45, 0.94],
+
+// GOOD
+ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+```
+
+## Workflow
+
+1. Make code changes
+2. Run `npx tsc --noEmit`
+3. If errors → fix them, re-run step 2
+4. Only when step 2 passes with exit code 0 → commit & push

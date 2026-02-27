@@ -5,6 +5,7 @@ import { Monitor, Smartphone, Layout } from 'lucide-react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 
 const codeSnippets = [
     { text: 'const app = createServer();', top: '8%', left: '5%', rotate: -6 },
@@ -72,11 +73,7 @@ export function PlatformShowcase() {
 
     return (
         <section ref={sectionRef} className="relative w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden">
-            {/* Noise texture */}
-            <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-                backgroundRepeat: 'repeat',
-            }} />
+            <NoiseOverlay />
 
             {/* Floating code snippets */}
             {codeSnippets.map((snippet, i) => (

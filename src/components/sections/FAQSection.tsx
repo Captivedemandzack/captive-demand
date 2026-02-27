@@ -148,7 +148,9 @@ export function FAQSection() {
   const labelRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
-    if (labelRef.current) {
+    if (!labelRef.current) return;
+
+    const ctx = gsap.context(() => {
       const originalText = "FAQ";
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -156,7 +158,7 @@ export function FAQSection() {
         duration: 1.2,
         ease: "expo.out",
         scrollTrigger: {
-          trigger: labelRef.current,
+          trigger: labelRef.current!,
           start: "top 90%",
           toggleActions: "play none none none"
         },
@@ -182,7 +184,9 @@ export function FAQSection() {
           }
         }
       });
-    }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   const handleToggle = (index: number) => {

@@ -23,8 +23,8 @@ export function Carousel({ items }: CarouselProps) {
         gap: 100
     });
 
-    // State for duplication count (16x for desktop, 3x for mobile)
-    const [duplicationCount, setDuplicationCount] = useState(16);
+    // Start with mobile-friendly count; desktop useLayoutEffect will increase before paint
+    const [duplicationCount, setDuplicationCount] = useState(3);
 
     // Dynamic duplication based on state
     const extendedItems = React.useMemo(() => {

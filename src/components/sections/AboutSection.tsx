@@ -127,34 +127,36 @@ export function AboutSection() {
     useEffect(() => {
         if (!containerRef.current || !textRef.current || !teamRef.current || !buttonRef.current || !topBracketRef.current || !bottomBracketRef.current) return;
 
-        const words = textRef.current.querySelectorAll('.word');
-        const elements = [teamRef.current, ...words, buttonRef.current];
+        const ctx = gsap.context(() => {
+            const words = textRef.current!.querySelectorAll('.word');
+            const elements = [teamRef.current!, ...words, buttonRef.current!];
 
-        gsap.set(elements, { opacity: 0, filter: 'blur(10px)', y: 20 });
-        gsap.set(topBracketRef.current, { opacity: 0, x: -60, y: -40 });
-        gsap.set(bottomBracketRef.current, { opacity: 0, x: 60, y: 40 });
+            gsap.set(elements, { opacity: 0, filter: 'blur(10px)', y: 20 });
+            gsap.set(topBracketRef.current!, { opacity: 0, x: -60, y: -40 });
+            gsap.set(bottomBracketRef.current!, { opacity: 0, x: 60, y: 40 });
 
-        gsap.to(teamRef.current, {
-            opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.8,
-            scrollTrigger: { trigger: containerRef.current, start: 'center 80%', end: 'center 50%', scrub: 1 }
-        });
+            gsap.to(teamRef.current!, {
+                opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.8,
+                scrollTrigger: { trigger: containerRef.current!, start: 'center 80%', end: 'center 50%', scrub: 1 }
+            });
 
-        gsap.to(words, {
-            opacity: 1, filter: 'blur(0px)', y: 0, duration: 1.2, stagger: 0.05,
-            scrollTrigger: { trigger: containerRef.current, start: 'center 80%', end: 'center 50%', scrub: 1 }
-        });
+            gsap.to(words, {
+                opacity: 1, filter: 'blur(0px)', y: 0, duration: 1.2, stagger: 0.05,
+                scrollTrigger: { trigger: containerRef.current!, start: 'center 80%', end: 'center 50%', scrub: 1 }
+            });
 
-        gsap.to(buttonRef.current, {
-            opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.8,
-            scrollTrigger: { trigger: containerRef.current, start: 'center 80%', end: 'center 50%', scrub: 1 }
-        });
+            gsap.to(buttonRef.current!, {
+                opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.8,
+                scrollTrigger: { trigger: containerRef.current!, start: 'center 80%', end: 'center 50%', scrub: 1 }
+            });
 
-        gsap.to([topBracketRef.current, bottomBracketRef.current], {
-            opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'power2.out',
-            scrollTrigger: { trigger: containerRef.current, start: 'center 65%', end: 'center 50%', scrub: 1 }
-        });
+            gsap.to([topBracketRef.current!, bottomBracketRef.current!], {
+                opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'power2.out',
+                scrollTrigger: { trigger: containerRef.current!, start: 'center 65%', end: 'center 50%', scrub: 1 }
+            });
+        }, containerRef);
 
-        return () => ScrollTrigger.getAll().forEach(t => t.kill());
+        return () => ctx.revert();
     }, []);
 
     const text = "The market is full, the timeline is tight, and the standard is high. We build the digital experience that bridges the gap between where you are and where you belong.";

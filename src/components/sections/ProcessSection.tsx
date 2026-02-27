@@ -293,7 +293,9 @@ export function ProcessSection() {
   const labelRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
-    if (labelRef.current) {
+    if (!labelRef.current) return;
+
+    const ctx = gsap.context(() => {
       const originalText = "OUR PROCESS";
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -301,7 +303,7 @@ export function ProcessSection() {
         duration: 1.2,
         ease: "expo.out",
         scrollTrigger: {
-          trigger: labelRef.current,
+          trigger: labelRef.current!,
           start: "top 90%",
           toggleActions: "play none none none"
         },
@@ -327,7 +329,9 @@ export function ProcessSection() {
           }
         }
       });
-    }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   const processSteps = [

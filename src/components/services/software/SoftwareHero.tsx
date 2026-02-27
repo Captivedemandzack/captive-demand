@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { AnimatedCTAButton } from '@/components/sections/Hero';
 import { EyebrowHeading } from '@/components/ui/eyebrow-heading';
+import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 
 const terminalLines = [
     { prompt: '~', cmd: 'npm create captive-app@latest', delay: 0 },
@@ -85,11 +86,7 @@ export function SoftwareHero() {
 
     return (
         <section ref={containerRef} className="relative w-full bg-[#1A1512] pt-32 md:pt-48 pb-20 md:pb-32 px-4 overflow-hidden">
-            {/* Noise texture overlay */}
-            <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-                backgroundRepeat: 'repeat',
-            }} />
+            <NoiseOverlay />
 
             {/* Ambient glow */}
             <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#ff5501]/5 blur-[120px] pointer-events-none" />

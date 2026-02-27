@@ -304,8 +304,9 @@ export function CaseStudiesSection() {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useLayoutEffect(() => {
-    // Scramble animation for label
-    if (labelRef.current) {
+    if (!labelRef.current) return;
+
+    const ctx = gsap.context(() => {
       const originalText = "CASE STUDIES";
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -313,7 +314,7 @@ export function CaseStudiesSection() {
         duration: 1.2,
         ease: "expo.out",
         scrollTrigger: {
-          trigger: labelRef.current,
+          trigger: labelRef.current!,
           start: "top 90%",
           toggleActions: "play none none none"
         },
@@ -339,7 +340,9 @@ export function CaseStudiesSection() {
           }
         }
       });
-    }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   return (

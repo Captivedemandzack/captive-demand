@@ -22,7 +22,6 @@ export function BentoGridSection() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ';
     const originalText = element.textContent || '';
 
-    // Wrap each character
     const wrappedText = originalText.split('').map((char, i) =>
       `<span class="char" data-char="${char}" data-index="${i}">${char}</span>`
     ).join('');
@@ -32,40 +31,40 @@ export function BentoGridSection() {
 
     const state = { progress: 0 };
 
-    gsap.to(state, {
-      progress: 1,
-      duration: 1.5,
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: element,
-        start: 'top 100%',
-        toggleActions: 'play none none none',
-      },
-      onUpdate: () => {
-        charElements.forEach((charEl, index) => {
-          const char = charEl as HTMLElement;
-          const originalChar = char.getAttribute('data-char') || '';
+    const ctx = gsap.context(() => {
+      gsap.to(state, {
+        progress: 1,
+        duration: 1.5,
+        ease: 'expo.out',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 100%',
+          toggleActions: 'play none none none',
+        },
+        onUpdate: () => {
+          charElements.forEach((charEl, index) => {
+            const char = charEl as HTMLElement;
+            const originalChar = char.getAttribute('data-char') || '';
 
-          if (originalChar === ' ' || originalChar === '/') {
-            char.textContent = originalChar;
-            return;
-          }
+            if (originalChar === ' ' || originalChar === '/') {
+              char.textContent = originalChar;
+              return;
+            }
 
-          const charProgress = Math.max(0, Math.min(1, (state.progress * 1.5) - (index / charElements.length) * 0.5));
+            const charProgress = Math.max(0, Math.min(1, (state.progress * 1.5) - (index / charElements.length) * 0.5));
 
-          if (charProgress >= 0.8) {
-            char.textContent = originalChar;
-          } else {
-            const randomChar = chars[Math.floor(Math.random() * chars.length)];
-            char.textContent = randomChar;
-          }
-        });
-      },
+            if (charProgress >= 0.8) {
+              char.textContent = originalChar;
+            } else {
+              const randomChar = chars[Math.floor(Math.random() * chars.length)];
+              char.textContent = randomChar;
+            }
+          });
+        },
+      });
     });
 
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
