@@ -82,7 +82,7 @@ function EmailDashboardMockup() {
 
 export function EmailHero() {
     const containerRef = useRef<HTMLDivElement>(null);
-    const labelRef = useRef<HTMLSpanElement>(null);
+    const labelRef = useRef<HTMLDivElement>(null);
     const headlineRef = useRef<HTMLHeadingElement>(null);
     const subtextRef = useRef<HTMLParagraphElement>(null);
     const ctaRef = useRef<HTMLDivElement>(null);
