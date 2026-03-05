@@ -57,3 +57,8 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Capabilities illustration box — enhanced shadow on card hover */
+.cap-card:hover .cap-illus-box {
+  box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.9), inset 0 2px 8px -2px rgba(26,21,18,0.08), 0 1px 4px rgba(26,21,18,0.04), 0 8px 36px -8px rgba(26,21,18,0.12);
+}

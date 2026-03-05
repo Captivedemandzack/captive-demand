@@ -17,13 +17,38 @@ interface TagStyle {
     border: string;
 }
 
+// Shared pill component — less round (matches card radius), bezel + depth
+function TagPill({ tag, style }: { tag: string; style: TagStyle }) {
+    return (
+        <span
+            className="inline-block font-mono text-[10px] font-normal uppercase leading-none"
+            style={{
+                backgroundColor: style.bg,
+                color: style.text,
+                borderColor: style.border,
+                padding: "3px 8px",
+                borderRadius: "4px",
+                borderWidth: "1px",
+                borderStyle: "solid",
+                boxShadow: `
+                    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.5),
+                    inset 0px 1px 2px 0px rgba(0, 0, 0, 0.06),
+                    0px 1px 2px 0px rgba(255, 255, 255, 0.06)
+                `,
+            }}
+        >
+            {tag}
+        </span>
+    );
+}
+
 // Updated Tag Styles Configuration
 const TAG_STYLES: Record<string, TagStyle> = {
     // CONDENSED: "Website" (uses old "Web Design" colors - Orange)
     "Website": {
-        bg: "#FFF0E6",
-        text: "#FF5500",
-        border: "#FF5500",
+        bg: "rgba(255, 240, 230, 0.7)",
+        text: "rgba(255, 85, 0, 0.9)",
+        border: "rgba(255, 85, 0, 1)",
     },
     // REASSIGNED: "SEO" (uses old "Web Dev" colors - Teal)
     "SEO": {
@@ -86,27 +111,10 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
             <div className="flex flex-1 flex-col px-5 pt-[20px] pb-[20px] gap-[10px]">
 
                 {/* 1. TAGS (Top) */}
-                <div className="flex flex-wrap justify-start gap-2">
-                    {uniqueTags.map((tag) => {
-                        const style = TAG_STYLES[tag] || TAG_STYLES["default"];
-
-                        return (
-                            <span
-                                key={tag}
-                                className="inline-block font-mono text-[11px] font-normal uppercase border leading-none"
-                                style={{
-                                    backgroundColor: style.bg,
-                                    color: style.text,
-                                    borderColor: style.border,
-                                    padding: "4px 10px",
-                                    borderRadius: "30px",
-                                    borderWidth: "1px"
-                                }}
-                            >
-                                {tag}
-                            </span>
-                        );
-                    })}
+                <div className="flex flex-wrap justify-start gap-1.5 items-baseline">
+                    {uniqueTags.map((tag) => (
+                        <TagPill key={tag} tag={tag} style={TAG_STYLES[tag] || TAG_STYLES["default"]} />
+                    ))}
                 </div>
 
                 {/* 2. TITLE (Bottom) */}

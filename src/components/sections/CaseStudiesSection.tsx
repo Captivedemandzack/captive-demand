@@ -3,97 +3,14 @@
 import React, { useRef, useLayoutEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- SHAPES FOR THE MAIN CTA BUTTON SYSTEM ---
-
-const CornerShape = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 48" className={className} style={{ display: 'block' }}>
-    <path d="M0 0h5.63c7.808 0 13.536 7.337 11.642 14.91l-6.09 24.359A11.527 11.527 0 0 1 0 48V0Z" fill="currentColor" />
-  </svg>
-);
-
-const IconBlobShape = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48" className={className} style={{ display: 'block' }}>
-    <path fill="currentColor" d="M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z" />
-  </svg>
-);
-
-const ArrowIcon = ({ color = "currentColor", className = "" }: { color?: string; className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none" className={className}>
-    <path fill={color} d="M7.703 5.8H.398V4.6h7.305l-3.36-3.36.855-.84 4.8 4.8-4.8 4.8-.855-.84 3.36-3.36Z" />
-  </svg>
-);
-
-// --- MAIN CTA BUTTON (Remains unchanged, matching About Section) ---
-const MoreWorkButton = () => (
-  <a href="/case-studies" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="View All Work" style={{ filter: 'drop-shadow(0px 1px 0px rgba(0,0,0,0.1)) drop-shadow(0 2px 4px rgba(0,0,0,0.05))' }}>
-
-    {/* Label Container */}
-    <span className="
-        relative flex items-center h-12 pl-5 pr-2 mr-4
-        rounded-l-xl
-        font-mono text-sm uppercase tracking-normal
-        transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        bg-[#e8e8e8] text-[#1a1512]
-        group-hover:bg-[#ff5501] group-hover:text-white
-      ">
-      <span className="z-10 relative">More case studies</span>
-
-      {/* Decorative Corner */}
-      <div className="
-        absolute top-0 right-[-16px] bottom-0 w-[18px] h-12
-        transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        text-[#e8e8e8]
-        group-hover:text-[#ff5501]
-      ">
-        <CornerShape className="w-full h-full" />
-      </div>
-    </span>
-
-    {/* Icon Container */}
-    <i className="
-        relative block w-[51px] h-12 
-        transform-gpu
-        transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-      ">
-      {/* Blob Shape Background */}
-      <div className="
-        absolute inset-0 z-0 
-        transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        text-[#e8e8e8]
-        group-hover:text-[#ff5501]
-      ">
-        <IconBlobShape className="w-full h-full" />
-      </div>
-
-      {/* The Sliding Arrows Container */}
-      <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
-        {/* Arrow 1: Visible initially (Dark Grey) */}
-        <span className="
-            absolute flex items-center justify-center w-full h-full
-            transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-            translate-x-0 group-hover:translate-x-[150%]
-          ">
-          <ArrowIcon color="#1a1512" className="w-5 h-5" />
-        </span>
-
-        {/* Arrow 2: Enters on Hover (White) */}
-        <span className="
-            absolute flex items-center justify-center w-full h-full
-            transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-            -translate-x-[150%] group-hover:translate-x-0
-          ">
-          <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
-        </span>
-      </span>
-    </i>
-  </a>
-);
+import { CTAButton } from '@/components/ui/CTAButton';
 
 // Helper Shapes
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
@@ -120,6 +37,7 @@ type CaseStudy = {
   headline: string;
   stats: Stat[];
   image: string;
+  slug?: string;
 };
 
 // Case Study Card Component
@@ -137,7 +55,7 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
     });
   };
 
-  return (
+  const cardContent = (
     <motion.div
       ref={cardRef}
       initial={{ opacity: 0, y: 40 }}
@@ -266,6 +184,11 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
       </div>
     </motion.div>
   );
+
+  if (study.slug) {
+    return <Link href={`/work/${study.slug}`} className="block">{cardContent}</Link>;
+  }
+  return cardContent;
 };
 
 // Data
@@ -281,7 +204,8 @@ const caseStudies: CaseStudy[] = [
       { value: "9x", label: "ORGANIC TRAFFIC" },
       { value: "$2.1M", label: "ANNUAL REVENUE" }
     ],
-    image: "/mockup3.png"
+    image: "/mockup3.png",
+    slug: "farmulated",
   },
   {
     id: 2,
@@ -294,7 +218,8 @@ const caseStudies: CaseStudy[] = [
       { value: "4.8", label: "APP STORE RATING", suffix: "★" },
       { value: "12x", label: "USER ENGAGEMENT" }
     ],
-    image: "/mockup4.png"
+    image: "/mockup4.png",
+    slug: "boombox",
   }
 ];
 
@@ -374,7 +299,7 @@ export function CaseStudiesSection() {
 
             {/* CTA Button */}
             <div>
-              <MoreWorkButton />
+              <CTAButton variant="grey" text="More case studies" href="/work" style={{ filter: 'drop-shadow(0px 1px 0px rgba(0,0,0,0.1)) drop-shadow(0 2px 4px rgba(0,0,0,0.05))' }} ariaLabel="View All Work" />
             </div>
 
           </div>

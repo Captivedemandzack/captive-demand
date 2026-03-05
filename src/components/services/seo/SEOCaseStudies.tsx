@@ -189,7 +189,7 @@ export function SEOCaseStudies() {
                                     unoptimized
                                 />
                                 {/* Metric Badge */}
-                                <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 bg-[#1a1512]/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-full">
+                                <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 bg-[rgba(247,247,247,0.17)] backdrop-blur-[10px] text-white px-3 py-1.5 rounded-[6px]">
                                     <TrendingUp size={12} className="text-[#ff5501]" strokeWidth={2} />
                                     <span className="text-sm font-bold tracking-tight">{study.metric}</span>
                                     <span className="text-[10px] font-mono text-white/50 uppercase">{study.metricLabel}</span>
@@ -221,7 +221,7 @@ export function SEOCaseStudies() {
                                     {study.tags.map((tag, i) => (
                                         <span
                                             key={i}
-                                            className="px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#f3f4f6] text-[#1a1512]/50"
+                                            className="px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider bg-[#f3f4f6] text-[#1a1512]/50"
                                         >
                                             {tag}
                                         </span>

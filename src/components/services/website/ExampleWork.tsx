@@ -5,54 +5,7 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-// --- BUTTON COMPONENTS START ---
-const CornerShape = ({ className }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 48" className={className} style={{ display: 'block' }}>
-        <path d="M0 0h5.63c7.808 0 13.536 7.337 11.642 14.91l-6.09 24.359A11.527 11.527 0 0 1 0 48V0Z" fill="currentColor" />
-    </svg>
-);
-
-const IconBlobShape = ({ className }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48" className={className} style={{ display: 'block' }}>
-        <path fill="currentColor" d="M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z" />
-    </svg>
-);
-
-const ArrowIcon = ({ color = "currentColor", className = "" }: { color?: string; className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none" className={className}>
-        <path fill={color} d="M7.703 5.8H.398V4.6h7.305l-3.36-3.36.855-.84 4.8 4.8-4.8 4.8-.855-.84 3.36-3.36Z" />
-    </svg>
-);
-
-const MoreWorkButton = () => (
-    <a href="/case-studies" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="View All Work">
-        <span className="
-        relative flex items-center h-12 pl-5 pr-2 mr-4
-        rounded-l-xl font-mono text-sm uppercase tracking-normal
-        transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        bg-[#e8e8e8] text-[#1a1512] group-hover:bg-[#ff5501] group-hover:text-white
-      ">
-            <span className="z-10 relative">More case studies</span>
-            <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] text-[#e8e8e8] group-hover:text-[#ff5501]">
-                <CornerShape className="w-full h-full" />
-            </div>
-        </span>
-        <i className="relative block w-[51px] h-12 transform-gpu transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
-            <div className="absolute inset-0 z-0 transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] text-[#e8e8e8] group-hover:text-[#ff5501]">
-                <IconBlobShape className="w-full h-full" />
-            </div>
-            <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
-                <span className="absolute flex items-center justify-center w-full h-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] translate-x-0 group-hover:translate-x-[150%]">
-                    <ArrowIcon color="#1a1512" className="w-5 h-5" />
-                </span>
-                <span className="absolute flex items-center justify-center w-full h-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] -translate-x-[150%] group-hover:translate-x-0">
-                    <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
-                </span>
-            </span>
-        </i>
-    </a>
-);
-// --- BUTTON COMPONENTS END ---
+import { CTAButton } from '@/components/ui/CTAButton';
 
 // --- HELPER COMPONENT ---
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
@@ -186,7 +139,7 @@ export function ExampleWork() {
                             {project.number}
                         </span>
                         {project.industry && (
-                            <span className="bg-[#1a1512]/5 text-[#1a1512]/60 text-[10px] font-mono uppercase px-3 py-1 rounded-full tracking-wider">
+                            <span className="bg-[#1a1512]/5 text-[#1a1512]/60 text-[10px] font-mono uppercase px-3 py-1 rounded-[6px] tracking-wider">
                                 {project.industry}
                             </span>
                         )}
@@ -211,7 +164,7 @@ export function ExampleWork() {
                         {project.services && (
                             <div className="flex flex-wrap gap-2">
                                 {project.services.map((service, i) => (
-                                    <span key={i} className="border border-[#1a1512]/10 text-[#1a1512]/70 text-[10px] font-mono uppercase px-3 py-1.5 rounded-full tracking-wider">
+                                    <span key={i} className="border border-[#1a1512]/10 text-[#1a1512]/70 text-[10px] font-mono uppercase px-3 py-1.5 rounded-[4px] tracking-wider shadow-[inset_0px_4px_7px_0px_rgba(255,255,255,0.07),0px_4px_12px_0px_rgba(0,0,0,0.07)]">
                                         {service}
                                     </span>
                                 ))}
@@ -263,7 +216,7 @@ export function ExampleWork() {
                             </h2>
                         </div>
                         <div className="shrink-0">
-                            <MoreWorkButton />
+                            <CTAButton variant="grey" text="More case studies" href="/case-studies" ariaLabel="View All Work" />
                         </div>
                     </div>
                 </div>
@@ -343,7 +296,7 @@ export function ExampleWork() {
                                 <div className="flex flex-col gap-6">
                                     <div className="flex justify-between items-start">
                                         {project.industry && (
-                                            <span className="bg-[#1a1512]/5 text-[#1a1512]/60 text-[10px] font-mono uppercase px-3 py-1 rounded-full tracking-wider">
+                                            <span className="bg-[#1a1512]/5 text-[#1a1512]/60 text-[10px] font-mono uppercase px-3 py-1 rounded-[6px] tracking-wider">
                                                 {project.industry}
                                             </span>
                                         )}
@@ -357,7 +310,7 @@ export function ExampleWork() {
                                     {project.services && (
                                         <div className="flex flex-wrap gap-2">
                                             {project.services.map((service, i) => (
-                                                <span key={i} className="border border-[#1a1512]/10 text-[#1a1512]/70 text-[10px] font-mono uppercase px-3 py-1.5 rounded-full tracking-wider">
+                                                <span key={i} className="border border-[#1a1512]/10 text-[#1a1512]/70 text-[10px] font-mono uppercase px-3 py-1.5 rounded-[4px] tracking-wider shadow-[inset_0px_4px_7px_0px_rgba(255,255,255,0.07),0px_4px_12px_0px_rgba(0,0,0,0.07)]">
                                                     {service}
                                                 </span>
                                             ))}

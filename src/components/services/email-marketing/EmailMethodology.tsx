@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Plus } from 'lucide-react';
+import { AnimatedCTAButton } from '@/components/sections/Hero';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
@@ -73,10 +74,7 @@ const ServiceContent = ({ service }: { service: typeof emailServicesData[0] }) =
                 <p className="text-xl md:text-2xl text-white/80 mb-8 max-w-sm leading-snug">
                     {service.subtext}
                 </p>
-                <button className="group/btn flex items-center gap-2 bg-white text-[#1a1512] px-6 py-3 rounded-full font-mono text-sm uppercase tracking-wider hover:bg-[#ff5501] hover:text-white transition-colors duration-300">
-                    Get Started
-                    <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                </button>
+                <AnimatedCTAButton />
             </div>
 
             <div className="lg:col-span-4">
@@ -88,7 +86,7 @@ const ServiceContent = ({ service }: { service: typeof emailServicesData[0] }) =
             <div className="lg:col-span-4">
                 <div className="flex flex-wrap gap-2 justify-start lg:justify-end">
                     {service.tags.map((tag, i) => (
-                        <span key={i} className="px-3 py-1.5 rounded-full border border-white/10 text-xs font-mono text-white/60 hover:border-white/40 hover:text-white transition-colors cursor-default">
+                        <span key={i} className="px-3 py-1.5 rounded-[7px] border border-white/10 text-xs font-mono text-white/60 hover:border-white/40 hover:text-white transition-colors cursor-default" style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.15)' }}>
                             {tag}
                         </span>
                     ))}
@@ -103,7 +101,7 @@ const ServiceContent = ({ service }: { service: typeof emailServicesData[0] }) =
                         <div className="w-full h-full rounded-2xl bg-white/98 backdrop-blur-sm shadow-sm overflow-hidden">
                             <div className="absolute top-4 left-4 z-20">
                                 <span
-                                    className="text-[10px] font-medium px-3 py-1.5 rounded-full uppercase tracking-wider"
+                                    className="text-[10px] font-medium px-3 py-1.5 rounded-[7px] uppercase tracking-wider"
                                     style={{
                                         background: 'linear-gradient(to bottom, #f7f6f5, #EBE9E5)',
                                         color: '#1a1512',
@@ -131,7 +129,7 @@ const ServiceContent = ({ service }: { service: typeof emailServicesData[0] }) =
 
             <div className="group/card relative w-full aspect-square bg-white/5 border border-white/10 rounded-2xl overflow-hidden cursor-pointer hover:bg-[#ff5501] hover:border-[#ff5501] transition-all duration-500">
                 <div className="absolute top-4 left-4 z-20">
-                    <span className="bg-white/10 text-white text-[10px] font-mono px-3 py-1.5 rounded-full uppercase tracking-wide">
+                    <span className="bg-white/10 text-white text-[10px] font-mono px-3 py-1.5 rounded-[7px] uppercase tracking-wide">
                         Your Brand Here →
                     </span>
                 </div>

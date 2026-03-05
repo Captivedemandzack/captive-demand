@@ -118,14 +118,17 @@ const SubMenuItem = ({
       onClick={onClick}
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
-      className="relative flex items-center w-full h-10 pl-10 pr-6 text-brand-bg hover:bg-white/10 transition-colors duration-200 text-[16px] font-normal"
-      style={{
-        filter: isFaded ? 'blur(3px)' : 'blur(0px)',
-        opacity: isFaded ? 0.25 : 1,
-        transition: 'filter 0.35s ease, opacity 0.35s ease',
-      }}
+      className="relative flex items-center w-full h-10 pl-10 pr-6 text-brand-bg transition-colors duration-200 text-[16px] font-normal"
     >
-      {text}
+      <span
+        style={{
+          filter: isFaded ? 'blur(3px)' : 'blur(0px)',
+          opacity: isFaded ? 0.25 : 1,
+          transition: 'filter 0.35s ease, opacity 0.35s ease',
+        }}
+      >
+        {text}
+      </span>
     </Link>
   );
 };
@@ -179,7 +182,7 @@ export default function Navbar() {
   return (
     <div className="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[50%] max-w-[500px]">
       <motion.div
-        className="relative flex flex-col items-center w-full rounded-xl overflow-hidden backdrop-blur-2xl bg-white/70 border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.06),inset_0_1px_0_0_rgba(255,255,255,0.7)]"
+        className="relative flex flex-col items-center w-full rounded-xl overflow-hidden backdrop-blur-md bg-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04),inset_0_1px_0_0_rgba(255,255,255,0.3)]"
         initial="collapsed"
         animate={isOpen ? "expanded" : "collapsed"}
         variants={containerVariants}
@@ -187,7 +190,7 @@ export default function Navbar() {
         {/* Top Navigation Bar */}
         <div className="w-full h-[53px] flex items-center justify-between px-8 shrink-0 relative z-20">
           <div className="relative group cursor-pointer h-full flex items-center">
-            <Link href="/case-studies" className="absolute inset-0 z-10" onClick={closeAllMenus} />
+            <Link href="/work" className="absolute inset-0 z-10" onClick={closeAllMenus} />
             <span className="font-mono uppercase text-[13px] tracking-[0.2em] text-brand-dark/60 select-none">
               WORK
             </span>
@@ -286,7 +289,7 @@ export default function Navbar() {
                   <div className="w-1/2 border-r border-brand-dark/10">
                     <MenuLinkItem
                       text="Case Studies"
-                      href="/case-studies"
+                      href="/work"
                       onClick={closeAllMenus}
                       isFaded={isMainFaded("Case Studies")}
                       onHoverStart={() => setHoveredMainItem("Case Studies")}

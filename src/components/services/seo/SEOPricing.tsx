@@ -10,70 +10,7 @@ import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CornerShape = ({ className }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 48" className={className} style={{ display: 'block' }}>
-        <path d="M0 0h5.63c7.808 0 13.536 7.337 11.642 14.91l-6.09 24.359A11.527 11.527 0 0 1 0 48V0Z" fill="currentColor" />
-    </svg>
-);
-
-const IconBlobShape = ({ className }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48" className={className} style={{ display: 'block' }}>
-        <path fill="currentColor" d="M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z" />
-    </svg>
-);
-
-const ArrowIcon = ({ color = "currentColor", className = "" }: { color?: string; className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none" className={className}>
-        <path fill={color} d="M7.703 5.8H.398V4.6h7.305l-3.36-3.36.855-.84 4.8 4.8-4.8 4.8-.855-.84 3.36-3.36Z" />
-    </svg>
-);
-
-const PricingCTAButton = ({ text, isDarkBg = false }: { text: string; isDarkBg?: boolean }) => (
-    <button className="group relative inline-flex items-center text-left cursor-pointer focus:outline-none w-full" style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}>
-        <span className={`
-            relative flex items-center h-12 pl-5 pr-2 mr-4 flex-grow
-            rounded-l-xl
-            font-mono text-sm uppercase tracking-normal
-            transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-            ${isDarkBg
-                ? 'bg-white text-[#1a1512] group-hover:bg-[#ff5501] group-hover:text-white'
-                : 'bg-[#1a1512] text-white group-hover:bg-[#ff5501]'
-            }
-        `}>
-            <span className="z-10 relative font-bold tracking-wider">{text}</span>
-            <div className={`
-                absolute top-0 right-[-16px] bottom-0 w-[18px] h-12
-                transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-                ${isDarkBg
-                    ? 'text-white group-hover:text-[#ff5501]'
-                    : 'text-[#1a1512] group-hover:text-[#ff5501]'
-                }
-            `}>
-                <CornerShape className="w-full h-full" />
-            </div>
-        </span>
-        <i className="relative block w-[51px] h-12 transform-gpu transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
-            <div className={`
-                absolute inset-0 z-0 
-                transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-                ${isDarkBg
-                    ? 'text-white group-hover:text-[#ff5501]'
-                    : 'text-[#1a1512] group-hover:text-[#ff5501]'
-                }
-            `}>
-                <IconBlobShape className="w-full h-full" />
-            </div>
-            <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
-                <span className="absolute flex items-center justify-center w-full h-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] translate-x-0 group-hover:translate-x-[150%]">
-                    <ArrowIcon color={isDarkBg ? "#1a1512" : "#FFFFFF"} className="w-5 h-5" />
-                </span>
-                <span className="absolute flex items-center justify-center w-full h-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] -translate-x-[150%] group-hover:translate-x-0">
-                    <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
-                </span>
-            </span>
-        </i>
-    </button>
-);
+import { CTAButton } from '@/components/ui/CTAButton';
 
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
     <div className="flex items-end w-full">
@@ -157,7 +94,7 @@ const PricingCard = ({
                 <span className="text-4xl font-bold tracking-tight mb-1">{price}</span>
                 <span className={`text-xs font-mono uppercase tracking-widest ${isPro ? 'text-white/40' : 'text-[#1a1512]/40'}`}>Per month / Cancel anytime</span>
             </div>
-            <PricingCTAButton text={buttonText} isDarkBg={isPro} />
+            <CTAButton variant="pricing" text={buttonText} isDarkBg={isPro} fullWidth as="button" style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }} />
         </div>
     </div>
 );

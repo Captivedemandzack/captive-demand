@@ -4,6 +4,7 @@ import React, { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { Carousel } from "../ui/Carousel";
+import { ArrowThreeDots } from "../ui/ArrowThreeDots";
 
 // --- MAGIC PATH COMPONENTS START ---
 
@@ -19,11 +20,6 @@ const IconBlobShape = ({ className }: { className?: string }) => (
     </svg>
 );
 
-const ArrowIcon = ({ color = 'currentColor', className }: { color?: string; className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none" className={className}>
-        <path fill={color} d="M7.703 5.8H.398V4.6h7.305l-3.36-3.36.855-.84 4.8 4.8-4.8 4.8-.855-.84 3.36-3.36Z" />
-    </svg>
-);
 
 export const AnimatedCTAButton = () => {
     const buttonText = "START YOUR BUILD";
@@ -162,21 +158,13 @@ export const AnimatedCTAButton = () => {
                     />
                 </svg>
                 
-                {/* Arrow icons */}
+                {/* Three-dot arrow icon */}
                 <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
-                    <span className="
-                absolute flex items-center justify-center w-full h-full
-                transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-                translate-x-0 group-hover:translate-x-[150%]
-              ">
-                        <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
+                    <span className="flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] translate-x-0 group-hover:translate-x-[150%]">
+                        <ArrowThreeDots color="#FFFFFF" className="w-6 h-6" />
                     </span>
-                    <span className="
-                absolute flex items-center justify-center w-full h-full
-                transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-                -translate-x-[150%] group-hover:translate-x-0
-              ">
-                        <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
+                    <span className="absolute flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] -translate-x-[150%] group-hover:translate-x-0">
+                        <ArrowThreeDots color="#FFFFFF" className="w-6 h-6" />
                     </span>
                 </span>
             </i>
@@ -346,9 +334,9 @@ export function Hero() {
                                 loop
                                 muted
                                 playsInline
-                                className="w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] object-cover rounded-full"
+                                className="w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] object-cover rounded-full will-change-transform"
                             >
-                                <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps.mp4" type="video/mp4" />
+                                <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps copy.mp4" type="video/mp4" />
                             </video>
                         </span>
                     </h1>

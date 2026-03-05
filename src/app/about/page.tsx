@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import { AboutHero } from "@/components/about/AboutHero";
-import { FounderQuote } from "@/components/about/FounderQuote";
-import { TeamSection } from "@/components/about/TeamSection";
-import { AwardsSection } from "@/components/about/AwardsSection";
-import { AboutTestimonials } from "@/components/about/AboutTestimonials";
-import { WhyWorkWithUs } from "@/components/about/WhyWorkWithUs";
-import { CTASection } from "@/components/sections/CTASection";
+import { AboutHero } from '@/components/about/AboutHero';
+import { FounderLetter } from '@/components/about/FounderLetter';
+import { ScrollExperience } from '@/components/about/ScrollExperience';
+import { AboutStats } from '@/components/about/AboutStats';
+import { TeamGrid } from '@/components/about/TeamGrid';
+import { ClientLogos } from '@/components/about/ClientLogos';
+import { AboutCTA } from '@/components/about/AboutCTA';
 
 export default function AboutPage() {
     return (
         <main className="w-full bg-[#FAFAFA] min-h-screen">
             <AboutHero />
-            <FounderQuote />
-            <TeamSection />
-            <AwardsSection />
-            <AboutTestimonials />
-            <WhyWorkWithUs />
-            <CTASection />
+            <FounderLetter />
+            <ScrollExperience />
+            <AboutStats />
+            <TeamGrid />
+            <ClientLogos />
+            <AboutCTA />
         </main>
     );
 }

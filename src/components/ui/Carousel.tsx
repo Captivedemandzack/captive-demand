@@ -83,7 +83,7 @@ export function Carousel({ items }: CarouselProps) {
 
             // TWEAK THESE NUMBERS TO CHANGE SPEED:
             const MOBILE_SPEED = 0.05;
-            const DESKTOP_SPEED = 0.08; // Increased from 0.05 to make desktop faster
+            const DESKTOP_SPEED = 0.05; // Increased from 0.05 to make desktop faster
 
             const targetSpeed = isMobile ? MOBILE_SPEED : DESKTOP_SPEED;
 
@@ -112,9 +112,16 @@ export function Carousel({ items }: CarouselProps) {
 
                     if (Math.abs(angle) > 60) {
                         card.style.visibility = 'hidden';
+                    } else {
+                        card.style.visibility = 'visible';
+                    }
+
+                    // Buffer zone: Keep updating transform up to 100 degrees 
+                    // so any CSS transitions finish while the card is safely hidden.
+                    // This perfectly avoids the jump glitch AND restores 60fps performance!
+                    if (Math.abs(angle) > 100) {
                         return;
                     }
-                    card.style.visibility = 'visible';
 
                     gsap.set(card, {
                         transformOrigin: `50% ${config.radius}px`,

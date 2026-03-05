@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useRef, useLayoutEffect } from 'react';
-import { Globe, Server, Smartphone, Cloud, Brain, RefreshCw } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
     <div className="flex items-end w-full">
@@ -19,42 +19,149 @@ const techStack = [
     'PostgreSQL', 'AWS', 'Docker', 'GraphQL', 'Redis',
 ];
 
+/* Shared stroke props for wireframes — brand grey base, orange accents, tonal hierarchy */
+const strokeGrey = 'rgba(26,21,18,0.38)';
+const strokeGreyMid = 'rgba(26,21,18,0.28)';
+const strokeGreyLight = 'rgba(26,21,18,0.22)';
+const strokeGreySubtle = 'rgba(26,21,18,0.12)';
+const strokeOrange = 'rgba(255,85,1,0.55)';
+const fillGreySubtle = 'rgba(26,21,18,0.03)';
+
+/* Skeleton UI wireframe illustrations — fine lines, brand grey + orange accents, tonal depth */
+const SkeletonDashboard = () => (
+    <svg viewBox="0 0 120 72" className="w-full h-full" fill="none" strokeWidth="0.9" strokeLinecap="round">
+        <rect x="2" y="2" width="28" height="68" rx="2" stroke={strokeGrey} fill={fillGreySubtle} />
+        <line x1="8" y1="12" x2="24" y2="12" stroke={strokeGrey} />
+        <line x1="8" y1="20" x2="20" y2="20" stroke={strokeGreyMid} />
+        <line x1="8" y1="28" x2="22" y2="28" stroke={strokeGreyLight} />
+        <rect x="34" y="2" width="84" height="12" rx="1" stroke={strokeGrey} fill={fillGreySubtle} />
+        <rect x="34" y="18" width="84" height="24" rx="1" stroke={strokeGreyMid} fill={fillGreySubtle} />
+        <rect x="34" y="46" width="84" height="24" rx="1" stroke={strokeGreyLight} fill={fillGreySubtle} />
+        <line x1="40" y1="52" x2="100" y2="52" stroke={strokeGrey} />
+        <line x1="40" y1="58" x2="90" y2="58" stroke={strokeGreyMid} />
+        <line x1="40" y1="64" x2="80" y2="64" stroke={strokeGreySubtle} />
+        <rect x="38" y="22" width="8" height="16" rx="1" stroke={strokeOrange} fill="rgba(255,85,1,0.1)" />
+    </svg>
+);
+
+const SkeletonApp = () => (
+    <svg viewBox="0 0 120 72" className="w-full h-full" fill="none" strokeWidth="0.9" strokeLinecap="round">
+        <rect x="38" y="2" width="44" height="68" rx="4" stroke={strokeGrey} fill={fillGreySubtle} />
+        <rect x="44" y="8" width="32" height="6" rx="1" stroke={strokeGrey} fill={fillGreySubtle} />
+        <line x1="48" y1="22" x2="72" y2="22" stroke={strokeGrey} />
+        <line x1="48" y1="28" x2="68" y2="28" stroke={strokeGreyMid} />
+        <line x1="48" y1="34" x2="70" y2="34" stroke={strokeGreyLight} />
+        <rect x="48" y="42" width="24" height="16" rx="2" stroke={strokeGreyMid} fill={fillGreySubtle} />
+        <rect x="48" y="62" width="24" height="4" rx="1" stroke={strokeOrange} fill="rgba(255,85,1,0.14)" />
+        <rect x="52" y="58" width="16" height="3" rx="1" stroke={strokeGreySubtle} />
+    </svg>
+);
+
+/* Plugin: extension popup + connect slot — "add-on" feel */
+const SkeletonPlugin = () => (
+    <svg viewBox="0 0 120 72" className="w-full h-full" fill="none" strokeWidth="0.9" strokeLinecap="round">
+        {/* Browser bar with extension icon */}
+        <rect x="2" y="2" width="116" height="10" rx="1" stroke={strokeGrey} fill={fillGreySubtle} />
+        <rect x="6" y="5" width="4" height="4" rx="0.5" stroke={strokeOrange} fill="rgba(255,85,1,0.12)" />
+        <rect x="14" y="5" width="4" height="4" rx="0.5" stroke={strokeGreyMid} />
+        <rect x="22" y="5" width="4" height="4" rx="0.5" stroke={strokeGreySubtle} />
+        {/* Extension popup panel (settings list) */}
+        <rect x="8" y="18" width="48" height="48" rx="3" stroke={strokeGrey} fill={fillGreySubtle} />
+        <line x1="14" y1="26" x2="46" y2="26" stroke={strokeGrey} />
+        <line x1="14" y1="32" x2="40" y2="32" stroke={strokeGreyMid} />
+        <line x1="14" y1="38" x2="44" y2="38" stroke={strokeGreyLight} />
+        <rect x="14" y="46" width="24" height="14" rx="2" stroke={strokeOrange} fill="rgba(255,85,1,0.1)" />
+        {/* Host app / "Connect to" slot */}
+        <rect x="64" y="24" width="48" height="36" rx="3" stroke={strokeGreyMid} fill={fillGreySubtle} />
+        <rect x="70" y="30" width="36" height="12" rx="1" stroke={strokeGrey} fill={fillGreySubtle} />
+        <line x1="74" y1="36" x2="98" y2="36" stroke={strokeGreyLight} />
+        <rect x="70" y="48" width="24" height="8" rx="1" stroke={strokeOrange} fill="rgba(255,85,1,0.08)" />
+    </svg>
+);
+
+/* Database: cylinder + table rows — classic DB icon */
+const SkeletonDatabase = () => (
+    <svg viewBox="0 0 120 72" className="w-full h-full" fill="none" strokeWidth="0.9" strokeLinecap="round">
+        {/* Cylinder top ellipse */}
+        <ellipse cx="60" cy="16" rx="36" ry="6" stroke={strokeGrey} />
+        {/* Cylinder sides and bottom */}
+        <line x1="24" y1="16" x2="24" y2="52" stroke={strokeGrey} />
+        <line x1="96" y1="16" x2="96" y2="52" stroke={strokeGrey} />
+        <ellipse cx="60" cy="52" rx="36" ry="6" stroke={strokeGrey} />
+        {/* Horizontal bands = stacked data layers */}
+        <line x1="28" y1="28" x2="92" y2="28" stroke={strokeGreyMid} />
+        <line x1="28" y1="36" x2="90" y2="36" stroke={strokeGreyLight} />
+        <line x1="28" y1="44" x2="88" y2="44" stroke={strokeGreySubtle} />
+        {/* Primary key accent */}
+        <rect x="50" y="54" width="20" height="10" rx="1" stroke={strokeOrange} fill="rgba(255,85,1,0.12)" />
+    </svg>
+);
+
+/* AI Assistant: chat bubbles + input — clear chat UI */
+const SkeletonAIAssistant = () => (
+    <svg viewBox="0 0 120 72" className="w-full h-full" fill="none" strokeWidth="0.9" strokeLinecap="round">
+        {/* User message (right-aligned bubble) */}
+        <rect x="52" y="8" width="56" height="20" rx="10" stroke={strokeGreyMid} fill={fillGreySubtle} />
+        <line x1="62" y1="16" x2="98" y2="16" stroke={strokeGrey} />
+        <line x1="62" y1="22" x2="90" y2="22" stroke={strokeGreyLight} />
+        {/* AI response (left-aligned bubble) */}
+        <rect x="12" y="32" width="72" height="24" rx="12" stroke={strokeGrey} fill={fillGreySubtle} />
+        <line x1="22" y1="40" x2="74" y2="40" stroke={strokeGrey} />
+        <line x1="22" y1="46" x2="68" y2="46" stroke={strokeGreyMid} />
+        <line x1="22" y1="52" x2="58" y2="52" stroke={strokeGreySubtle} />
+        {/* Input bar */}
+        <rect x="12" y="60" width="96" height="10" rx="5" stroke={strokeOrange} fill="rgba(255,85,1,0.08)" />
+        <line x1="22" y1="65" x2="50" y2="65" stroke={strokeGrey} />
+    </svg>
+);
+
+const SkeletonSaaS = () => (
+    <svg viewBox="0 0 120 72" className="w-full h-full" fill="none" strokeWidth="0.9" strokeLinecap="round">
+        <rect x="2" y="2" width="28" height="68" rx="2" stroke={strokeGrey} fill={fillGreySubtle} />
+        <rect x="6" y="8" width="20" height="4" rx="1" stroke={strokeOrange} fill="rgba(255,85,1,0.1)" />
+        <line x1="6" y1="18" x2="24" y2="18" stroke={strokeGreyMid} />
+        <line x1="6" y1="24" x2="22" y2="24" stroke={strokeGreySubtle} />
+        <rect x="34" y="2" width="84" height="10" rx="1" stroke={strokeGrey} fill={fillGreySubtle} />
+        <rect x="34" y="16" width="28" height="24" rx="2" stroke={strokeOrange} fill="rgba(255,85,1,0.08)" />
+        <rect x="66" y="16" width="28" height="24" rx="2" stroke={strokeGreyMid} fill={fillGreySubtle} />
+        <rect x="98" y="16" width="20" height="24" rx="2" stroke={strokeGreyLight} fill={fillGreySubtle} />
+        <rect x="34" y="44" width="84" height="26" rx="2" stroke={strokeGreyLight} fill={fillGreySubtle} />
+        <line x1="40" y1="52" x2="100" y2="52" stroke={strokeGrey} />
+        <line x1="40" y1="58" x2="90" y2="58" stroke={strokeGreyMid} />
+        <line x1="40" y1="64" x2="80" y2="64" stroke={strokeGreySubtle} />
+    </svg>
+);
+
 const capabilities = [
     {
-        icon: Globe,
-        title: 'Web Applications',
-        description: 'Full-stack platforms built with modern frameworks. Server-rendered, edge-optimized, and infinitely scalable.',
-        span: 'lg:col-span-4',
+        Illustration: SkeletonDashboard,
+        title: 'Dashboards',
+        description: 'Real-time dashboards with live data, KPIs, and interactive charts. Built for your workflow, not a template.',
     },
     {
-        icon: Server,
-        title: 'API Development',
-        description: 'RESTful and GraphQL APIs designed for performance, security, and seamless third-party integration.',
-        span: 'lg:col-span-4',
+        Illustration: SkeletonApp,
+        title: 'Apps',
+        description: 'Web and mobile apps that feel native. Cross-platform, responsive, and built for the way people actually work.',
     },
     {
-        icon: Smartphone,
-        title: 'Mobile Apps',
-        description: 'Cross-platform native experiences for iOS and Android. One codebase, zero compromises.',
-        span: 'lg:col-span-4',
+        Illustration: SkeletonPlugin,
+        title: 'Plugins',
+        description: 'Extensions, integrations, and add-ons that extend your platform. Connect to Figma, Slack, Shopify, or any API.',
     },
     {
-        icon: Cloud,
-        title: 'Cloud Infrastructure',
-        description: 'AWS, GCP, and Azure architectures with CI/CD pipelines, auto-scaling, and 99.9% uptime SLAs.',
-        span: 'lg:col-span-6',
+        Illustration: SkeletonDatabase,
+        title: 'Databases',
+        description: 'Scalable data architecture. Schemas, migrations, indexes, and queries optimized for performance and growth.',
     },
     {
-        icon: Brain,
-        title: 'AI / ML Integration',
-        description: 'Intelligent features powered by OpenAI, custom models, and RAG pipelines embedded directly into your product.',
-        span: 'lg:col-span-6',
+        Illustration: SkeletonAIAssistant,
+        title: 'AI Assistants',
+        description: 'Intelligent features embedded in your product. Chatbots, search, classification, and automation that learns.',
     },
     {
-        icon: RefreshCw,
-        title: 'Legacy Modernization',
-        description: 'Migrate aging systems to modern stacks without downtime. Incremental rewrites, not risky big-bangs.',
-        span: 'lg:col-span-12',
+        Illustration: SkeletonSaaS,
+        title: 'SaaS',
+        description: 'Full-stack platforms with auth, billing, multi-tenancy, and admin. Built to scale from day one.',
     },
 ];
 
@@ -102,26 +209,16 @@ export function Capabilities() {
                 });
             }
 
-            gsap.from('.cap-card', {
-                opacity: 0,
-                y: 40,
-                duration: 0.8,
-                ease: 'power4.out',
-                stagger: 0.08,
-                scrollTrigger: {
-                    trigger: '.cap-grid',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none',
-                }
-            });
+            // Cards visible by default — no opacity animation that could block rendering
         }, sectionRef);
 
         return () => ctx.revert();
     }, []);
 
     return (
-        <section ref={sectionRef} className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4">
-            <div className="max-w-7xl mx-auto">
+        <section ref={sectionRef} className="relative w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden">
+            <NoiseOverlay />
+            <div className="relative z-10 max-w-7xl mx-auto">
 
                 {/* Header */}
                 <div className="mb-16 md:mb-24">
@@ -152,41 +249,57 @@ export function Capabilities() {
                     </div>
                 </div>
 
-                {/* Tech Stack Trust Bar */}
-                <div className="mb-16 flex flex-wrap items-center justify-center gap-3">
-                    {techStack.map((tech) => (
-                        <span
-                            key={tech}
-                            className="px-4 py-2 rounded-full border border-[#1a1512]/10 text-xs font-mono text-[#1a1512]/60 tracking-wider uppercase hover:border-[#1a1512]/30 hover:text-[#1a1512] transition-colors duration-300 cursor-default"
-                        >
-                            {tech}
-                        </span>
-                    ))}
-                </div>
-
-                {/* Capability Cards Grid */}
-                <div className="cap-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
+                {/* Capability Cards Grid — 3x2 */}
+                <div className="cap-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {capabilities.map((cap) => (
                         <div
                             key={cap.title}
-                            className={`cap-card group relative ${cap.span} rounded-2xl p-8 bg-white/50 backdrop-blur-sm border border-[#1a1512]/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#1a1512]/5`}
+                            className="cap-card group relative rounded-2xl p-8 transition-all duration-300"
+                        >
+                            {/* Illustration — subtle grey→white gradient, soft bezel, layered inner/outer shadow */}
+                            <div
+                                className="mb-8 h-[200px] w-full rounded-xl overflow-hidden flex items-center justify-center p-4 transition-all duration-300 cap-illus-box"
+                                style={{
+                                    background: 'linear-gradient(180deg, #f2f2f2 0%, #f8f8f8 35%, #fcfcfc 70%, #ffffff 100%)',
+                                    border: '1px solid rgba(26,21,18,0.08)',
+                                    boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.9), inset 0 2px 4px -1px rgba(26,21,18,0.04), 0 1px 4px rgba(26,21,18,0.04), 0 6px 28px -6px rgba(26,21,18,0.08)',
+                                }}
+                            >
+                                <div className="w-[250px] h-[100px]">
+                                    <cap.Illustration />
+                                </div>
+                            </div>
+
+                            {/* Text content — underneath illustration */}
+                            <div className="space-y-3">
+                                <h3
+                                    className="text-xl md:text-2xl text-[#1a1512]"
+                                    style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
+                                >
+                                    {cap.title}
+                                </h3>
+                                <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed">
+                                    {cap.description}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Tech Stack — below cards, ServiceContent-style pills */}
+                <div className="mt-16 flex flex-wrap items-center justify-center gap-3">
+                    {techStack.map((tech) => (
+                        <span
+                            key={tech}
+                            className="text-[10px] font-medium px-3 py-1.5 rounded-[7px] uppercase tracking-wider"
                             style={{
-                                boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.15), 0 4px 24px -4px rgba(26,21,18,0.04), 0 1px 2px rgba(26,21,18,0.06)',
+                                background: 'linear-gradient(to bottom, #f7f6f5, #EBE9E5)',
+                                color: '#1a1512',
+                                boxShadow: 'inset 0 1px 0 0 #FFFFFF, 0 0 0 1px #D1CDC7, 0 2px 4px rgba(0,0,0,0.06)',
                             }}
                         >
-                            <div className="mb-6 w-12 h-12 rounded-lg bg-[#ff5501] flex items-center justify-center text-white">
-                                <cap.icon size={24} strokeWidth={1.5} />
-                            </div>
-                            <h3
-                                className="text-xl md:text-2xl text-[#1a1512] mb-3"
-                                style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
-                            >
-                                {cap.title}
-                            </h3>
-                            <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed">
-                                {cap.description}
-                            </p>
-                        </div>
+                            {tech}
+                        </span>
                     ))}
                 </div>
 

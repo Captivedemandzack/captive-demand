@@ -10,25 +10,7 @@ if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
 
-// --- GEOMETRY SHAPES (Solid Fills) ---
-
-const CornerShape = ({ className }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 48" className={className} style={{ display: 'block' }}>
-        <path d="M0 0h5.63c7.808 0 13.536 7.337 11.642 14.91l-6.09 24.359A11.527 11.527 0 0 1 0 48V0Z" fill="currentColor" />
-    </svg>
-);
-
-const IconBlobShape = ({ className }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48" className={className} style={{ display: 'block' }}>
-        <path fill="currentColor" d="M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z" />
-    </svg>
-);
-
-const ArrowIcon = ({ color = 'currentColor', className }: { color?: string; className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none" className={className}>
-        <path fill={color} d="M7.703 5.8H.398V4.6h7.305l-3.36-3.36.855-.84 4.8 4.8-4.8 4.8-.855-.84 3.36-3.36Z" />
-    </svg>
-);
+import { CTAButton } from '@/components/ui/CTAButton';
 
 const CornerBracket = ({ className, position }: { className?: string; position: 'top-left' | 'bottom-right' }) => {
     const rotation = position === 'bottom-right' ? 'rotate(180deg)' : 'rotate(0deg)';
@@ -38,83 +20,6 @@ const CornerBracket = ({ className, position }: { className?: string; position: 
         </svg>
     );
 };
-
-// --- SECONDARY BUTTON (GREY FILLED) ---
-const OurStoryButton = () => (
-    <a href="/about" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Our Story" style={{ filter: 'drop-shadow(0px 1px 0px rgba(0,0,0,0.1)) drop-shadow(0 2px 4px rgba(0,0,0,0.05))' }}>
-
-        {/* DESIGN LOGIC: "The Grey Tonal"
-        - Normal: #e8e8e8 Background (Solid Grey), #1a1512 Text (Dark Grey)
-        - Hover: #ff5501 Background (Orange), White Text
-    */}
-
-        {/* Label Container */}
-        <span className="
-        relative flex items-center h-12 pl-5 pr-2 mr-4
-        rounded-l-xl font-mono text-sm uppercase tracking-normal
-        transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        
-        /* COLORS */
-        bg-[#e8e8e8] text-[#1a1512]
-        group-hover:bg-[#ff5501] group-hover:text-white
-      ">
-            <span className="z-10 relative">Our Story</span>
-
-            {/* Decorative Corner (Matches Label BG) */}
-            <div className="
-        absolute top-0 right-[-16px] bottom-0 w-[18px] h-12
-        transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        
-        /* COLORS */
-        text-[#e8e8e8]
-        group-hover:text-[#ff5501]
-      ">
-                <CornerShape className="w-full h-full" />
-            </div>
-        </span>
-
-        {/* Icon Container */}
-        <i className="
-        relative block w-[51px] h-12 
-        transform-gpu
-        transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-      ">
-
-            {/* Blob Shape Background */}
-            <div className="
-        absolute inset-0 z-0 
-        transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        
-        /* COLORS: Grey -> Orange on Hover */
-        text-[#e8e8e8]
-        group-hover:text-[#ff5501]
-      ">
-                <IconBlobShape className="w-full h-full" />
-            </div>
-
-            {/* The Sliding Arrows Container */}
-            <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
-                {/* Arrow 1: Visible initially (Dark Grey) -> Slides Out */}
-                <span className="
-            absolute flex items-center justify-center w-full h-full
-            transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-            translate-x-0 group-hover:translate-x-[150%]
-          ">
-                    <ArrowIcon color="#1a1512" className="w-5 h-5" />
-                </span>
-
-                {/* Arrow 2: Enters on Hover (White) -> Slides In */}
-                <span className="
-            absolute flex items-center justify-center w-full h-full
-            transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-            -translate-x-[150%] group-hover:translate-x-0
-          ">
-                    <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
-                </span>
-            </span>
-        </i>
-    </a>
-);
 
 export function AboutSection() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -211,7 +116,7 @@ export function AboutSection() {
 
                 {/* Button Container */}
                 <div ref={buttonRef}>
-                    <OurStoryButton />
+                    <CTAButton variant="grey" text="Our Story" href="/about" style={{ filter: 'drop-shadow(0px 1px 0px rgba(0,0,0,0.1)) drop-shadow(0 2px 4px rgba(0,0,0,0.05))' }} ariaLabel="Our Story" />
                 </div>
 
             </div>

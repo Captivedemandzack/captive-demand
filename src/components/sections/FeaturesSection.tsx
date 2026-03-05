@@ -10,89 +10,7 @@ if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
 
-// --- SHAPES FOR THE BUTTON (Matching Hero Button) ---
-
-const CornerShape = ({ className }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 48" className={className} style={{ display: 'block' }}>
-        <path d="M0 0h5.63c7.808 0 13.536 7.337 11.642 14.91l-6.09 24.359A11.527 11.527 0 0 1 0 48V0Z" fill="currentColor" />
-    </svg>
-);
-
-const IconBlobShape = ({ className }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48" className={className} style={{ display: 'block' }}>
-        <path fill="currentColor" d="M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z" />
-    </svg>
-);
-
-const ArrowIcon = ({ color = "currentColor", className = "" }: { color?: string; className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none" className={className}>
-        <path fill={color} d="M7.703 5.8H.398V4.6h7.305l-3.36-3.36.855-.84 4.8 4.8-4.8 4.8-.855-.84 3.36-3.36Z" />
-    </svg>
-);
-
-// --- HERO BUTTON COMPONENT (EXACT COPY OF ANIMATED CTA BUTTON) ---
-const HeroButton = () => (
-    <a
-        href="https://connect.captivedemand.com/meetings/spencer-donaldson/discovery-call"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none"
-        aria-label="Book a Call"
-        style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}
-    >
-        {/* Label Container - Dark Theme Match */}
-        <span className="
-        relative flex items-center h-12 pl-5 pr-2 mr-4
-        bg-[#1a1512] text-white
-        rounded-l-xl
-        font-mono text-sm uppercase tracking-normal
-        transition-all duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]
-      ">
-            <span className="z-10 relative">Book an intro call</span>
-
-            {/* Decorative Corner: Matches Label Body (#1a1512) */}
-            <div className="absolute top-0 right-[-16px] bottom-0 w-[18px] h-12 text-[#1a1512] transition-colors duration-600 ease-[cubic-bezier(0.25,1,0.5,1)]">
-                <CornerShape className="w-full h-full" />
-            </div>
-        </span>
-
-        {/* Icon Container */}
-        <i className="
-        relative block w-[51px] h-12 
-        transform-gpu
-        transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-      ">
-            {/* Blob Shape Background: Orange -> Dark on Hover */}
-            <div className="
-        absolute inset-0 z-0 transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-        text-[#ff5501] group-hover:text-[#1a1512]
-      ">
-                <IconBlobShape className="w-full h-full" />
-            </div>
-
-            {/* The Sliding Arrows Container */}
-            <span className="absolute inset-0 z-10 overflow-hidden flex items-center justify-center">
-                {/* Arrow 1: Visible initially (White) -> Slides Out */}
-                <span className="
-            absolute flex items-center justify-center w-full h-full
-            transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-            translate-x-0 group-hover:translate-x-[150%]
-          ">
-                    <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
-                </span>
-
-                {/* Arrow 2: Enters on Hover (White to match dark bg) -> Slides In */}
-                <span className="
-            absolute flex items-center justify-center w-full h-full
-            transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
-            -translate-x-[150%] group-hover:translate-x-0
-          ">
-                    <ArrowIcon color="#FFFFFF" className="w-5 h-5" />
-                </span>
-            </span>
-        </i>
-    </a>
-);
+import { CTAButton } from '@/components/ui/CTAButton';
 
 export function FeaturesSection() {
     const headingRef = useRef<HTMLHeadingElement>(null);
@@ -168,7 +86,15 @@ export function FeaturesSection() {
 
                         {/* THE BUTTON */}
                         <div className="mt-4 md:mt-0">
-                            <HeroButton />
+                            <CTAButton
+                                variant="dark"
+                                text="Book an intro call"
+                                href="https://connect.captivedemand.com/meetings/spencer-donaldson/discovery-call"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}
+                                ariaLabel="Book a Call"
+                            />
                         </div>
                     </div>
 
