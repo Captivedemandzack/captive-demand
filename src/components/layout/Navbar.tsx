@@ -171,7 +171,7 @@ export default function Navbar() {
     }
   };
 
-  const mainItems = ["Services", "Process & Pricing", "Case Studies", "Team", "Insights", "Client Portal"];
+  const mainItems = ["Services", "Process & Pricing", "Case Studies", "Our Story", "Insights", "Client Portal"];
 
   const isMainFaded = (itemText: string) =>
     hoveredMainItem !== null && hoveredMainItem !== itemText;
@@ -298,11 +298,11 @@ export default function Navbar() {
                   </div>
                   <div className="w-1/2">
                     <MenuLinkItem
-                      text="Team"
-                      href="/team"
+                      text="Our Story"
+                      href="/about"
                       onClick={closeAllMenus}
-                      isFaded={isMainFaded("Team")}
-                      onHoverStart={() => setHoveredMainItem("Team")}
+                      isFaded={isMainFaded("Our Story")}
+                      onHoverStart={() => setHoveredMainItem("Our Story")}
                       onHoverEnd={() => setHoveredMainItem(null)}
                     />
                   </div>

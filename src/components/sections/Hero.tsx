@@ -29,7 +29,7 @@ export const AnimatedCTAButton = () => {
     const buttonHeight = 48;
     
     return (
-        <a href="#" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Start Your Build">
+        <a href="/contact" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Start Your Build">
             {/* Container for button - sets dimensions and positioning */}
             <div className="relative flex items-center justify-center h-12 mr-1" style={{ width: `${buttonWidth}px` }}>
                 {/* Unified SVG Background - Single seamless path covering entire button */}

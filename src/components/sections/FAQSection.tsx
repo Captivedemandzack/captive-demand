@@ -224,7 +224,7 @@ export function FAQSection() {
             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed mb-8 max-w-sm">
               Don't find what you are looking for?{' '}
               <a
-                href="#contact"
+                href="/contact"
                 className="text-[#1a1512] underline underline-offset-2 hover:text-[#ff5501] transition-colors"
               >
                 Send us a message.

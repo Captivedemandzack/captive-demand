@@ -52,6 +52,7 @@ export interface CTAButtonProps {
   className?: string;
   style?: React.CSSProperties;
   ariaLabel?: string;
+  type?: 'button' | 'submit';
 }
 
 const variantConfig: Record<
@@ -117,6 +118,7 @@ export function CTAButton({
   className = "",
   style = {},
   ariaLabel,
+  type = 'button',
 }: CTAButtonProps) {
   const isAnchor = as === "a" || (href != null && href !== "");
   const El = isAnchor ? "a" : "button";
@@ -204,7 +206,7 @@ export function CTAButton({
 
   return (
     <button
-      type="button"
+      type={type}
       className={commonClasses}
       style={style}
       aria-label={ariaLabel ?? text}
