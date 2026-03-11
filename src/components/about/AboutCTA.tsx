@@ -4,6 +4,7 @@ import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { AnimatedCTAButton } from '@/components/sections/Hero';
+import { Rivet } from '@/components/ui/Rivet';
 import { Clock, Video, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const BookingCalendar = () => {
@@ -122,9 +123,13 @@ const TestimonialCard = () => (
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
         viewport={{ once: true }}
-        className="bg-[#f6f5f6] border border-[#e8e8e8] rounded-2xl p-6 max-w-md"
-        style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}
+        className="relative bg-[#f6f5f6] border border-[#e8e8e8] rounded-2xl p-6 max-w-md overflow-hidden"
+        style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4), inset 0 -1px 0 0 rgba(0,0,0,0.04)' }}
     >
+        <Rivet className="top-4 left-4" />
+        <Rivet className="top-4 right-4" />
+        <Rivet className="bottom-4 left-4" />
+        <Rivet className="bottom-4 right-4" />
         <p className="text-[#1a1512]/80 text-sm leading-relaxed mb-6">
             Forward thinking, creative team with great chemistry. Ahead of the curve when it comes to the latest design trends! Would recommend for those who prioritise branding, UI and UX.
         </p>

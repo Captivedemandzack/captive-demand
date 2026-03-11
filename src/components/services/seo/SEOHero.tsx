@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { AnimatedCTAButton } from '@/components/sections/Hero';
 import { EyebrowHeading } from '@/components/ui/eyebrow-heading';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
+import { AccentBr } from '@/components/ui/accent-br';
 
 function GlassBadge({ children, className = '' }: { children: React.ReactNode; className?: string }) {
     return (
@@ -201,7 +202,7 @@ export function SEOHero() {
                             className="seo-hero-text text-[clamp(2.5rem,5vw+1rem,4.5rem)] leading-[1] tracking-tighter mb-8 text-[#1a1512]"
                             style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
                         >
-                            Search clarity<br />
+                            Search clarity<AccentBr />
                             <span className="relative inline-flex items-center justify-center px-5 pt-[0.12em] pb-[0.08em] -mx-5 z-10 overflow-hidden whitespace-nowrap rounded-[6px]">
                                 {/* Container border — thin, subtle */}
                                 <span className="absolute inset-0 rounded-[6px] bg-white/55 border border-[#d5d5d5]/40 shadow-[0_6px_20px_rgba(15,15,15,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]" />

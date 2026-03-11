@@ -6,6 +6,7 @@ import { XCircle } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
+import { AccentBr } from '@/components/ui/accent-br';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -106,8 +107,8 @@ export function WhyAEO() {
                             className="text-3xl md:text-4xl lg:text-[2.75rem] text-[#1a1512] leading-[1.15] mb-10 tracking-tighter"
                             style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                         >
-                            Traditional SEO agencies<br className="hidden md:block" />
-                            weren&apos;t built for the<br className="hidden md:block" />
+                            Traditional SEO agencies<AccentBr />
+                            weren&apos;t built for the<AccentBr />
                             <span className="text-[#1a1512]/30">AI search era</span>
                         </h2>
 

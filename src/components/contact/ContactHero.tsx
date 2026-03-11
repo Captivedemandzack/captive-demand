@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { Clock, Video, Calendar, Linkedin, Instagram } from 'lucide-react';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 import { ContactFormCard } from './ContactFormCard';
+import { AccentBr } from '@/components/ui/accent-br';
 
 gsap.registerPlugin();
 
@@ -155,7 +156,7 @@ export function ContactHero() {
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
             >
               <span className="text-[#111]">Let&apos;s build</span>
-              <br />
+              <AccentBr />
               <span className="font-light text-[#666]">something real.</span>
             </h1>
 

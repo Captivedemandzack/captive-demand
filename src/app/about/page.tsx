@@ -2,7 +2,6 @@
 
 import { AboutHero } from '@/components/about/AboutHero';
 import { FounderLetter } from '@/components/about/FounderLetter';
-import { ScrollExperience } from '@/components/about/ScrollExperience';
 import { AboutStats } from '@/components/about/AboutStats';
 import { TeamGrid } from '@/components/about/TeamGrid';
 import { ClientLogos } from '@/components/about/ClientLogos';
@@ -13,7 +12,6 @@ export default function AboutPage() {
         <main className="w-full bg-[#FAFAFA] min-h-screen">
             <AboutHero />
             <FounderLetter />
-            <ScrollExperience />
             <AboutStats />
             <TeamGrid />
             <ClientLogos />

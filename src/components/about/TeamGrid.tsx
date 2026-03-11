@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { AccentBr } from '@/components/ui/accent-br';
 
 interface TeamMember {
     name: string;
@@ -11,10 +12,10 @@ interface TeamMember {
 }
 
 const TEAM: TeamMember[] = [
-    { name: 'Spencer Donaldson', role: 'Founder & Creative Director', photo: '/spencer-donaldson.jpg', tags: ['Strategy', 'Creative Direction', 'SEO'] },
-    { name: 'Alex Rivera', role: 'Lead Developer', photo: '/placeholder-team-2.jpg', tags: ['React', 'Next.js', 'API Design'] },
-    { name: 'Jordan Kim', role: 'Design Director', photo: '/placeholder-team-3.jpg', tags: ['UI/UX', 'Brand', 'Motion'] },
-    { name: 'Morgan Chen', role: 'SEO Strategist', photo: '/placeholder-team-4.jpg', tags: ['Email', 'Automation', 'Analytics'] },
+    { name: 'Spencer Donaldson', role: 'Founder & CEO', photo: '/spencer-donaldson-2.png', tags: ['Strategy', 'Leadership', 'Growth'] },
+    { name: 'Zachary Creasy', role: 'Creative Director', photo: '/zack-creasy.png', tags: ['Brand', 'Design', 'Visual'] },
+    { name: 'Michael Turner', role: 'Client Success Manager', photo: '/michael-turner-2.png', tags: ['Onboarding', 'Client Relations', 'Support'] },
+    { name: 'Jordan Schneider', role: 'CMO', photo: '/Jordan2.png', tags: ['Email', 'Automation', 'Analytics'] },
 ];
 
 const DecorativeShapeWithLine = () => (
@@ -45,7 +46,7 @@ export function TeamGrid() {
                                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                Embedded in your business.<br />
+                                Embedded in your business.<AccentBr />
                                 <span className="text-[#1a1512]/40">invested in your growth.</span>
                             </h2>
                         </div>
@@ -67,8 +68,8 @@ export function TeamGrid() {
                                 boxShadow: '0 1px 3px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.6)',
                             }}
                         >
-                            {/* Photo */}
-                            <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4 / 5' }}>
+                            {/* Photo — max-h 350px when stacked or 2-col */}
+                            <div className="relative w-full overflow-hidden max-h-[350px] lg:max-h-none" style={{ aspectRatio: '4 / 5' }}>
                                 <Image
                                     src={member.photo}
                                     alt={member.name}

@@ -11,6 +11,7 @@ import {
     Palette,
     ShieldCheck,
 } from 'lucide-react';
+import { AccentBr } from '@/components/ui/accent-br';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -134,7 +135,7 @@ export function EmailFeatures() {
                                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                Every campaign,<br />
+                                Every campaign,<AccentBr />
                                 <span className="text-[#1a1512]/40">engineered.</span>
                             </h2>
                         </div>

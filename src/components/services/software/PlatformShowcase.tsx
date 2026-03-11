@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
+import { AccentBr } from '@/components/ui/accent-br';
 
 const codeSnippets = [
     { text: 'const app = createServer();', top: '8%', left: '5%', rotate: -6 },
@@ -102,7 +103,7 @@ export function PlatformShowcase() {
                         className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512] mb-6"
                         style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                     >
-                        Your vision,<br />
+                        Your vision,<AccentBr />
                         <span className="text-[#1a1512]/40">every platform.</span>
                     </h2>
                     <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed max-w-xl mx-auto">

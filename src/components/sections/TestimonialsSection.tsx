@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { AccentBr } from '@/components/ui/accent-br';
 
 // Types
 type Testimonial = {
@@ -194,7 +195,7 @@ export function TestimonialsSection() {
         <div className="mb-12 md:mb-24 text-center max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-wide" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300, letterSpacing: '0.05em' }}>
             <span className="text-[#d3d4d9]">Trusted to drive revenue</span>
-            <br />
+            <AccentBr />
             <span className="text-[#1a1512]">by the best in the industry</span>
           </h2>
         </div>

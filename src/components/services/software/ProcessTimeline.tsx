@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Layers, Code2, Rocket } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { AccentBr } from '@/components/ui/accent-br';
 
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
     <div className="flex items-end w-full">
@@ -107,7 +108,7 @@ export function ProcessTimeline() {
                                 className="text-4xl md:text-5xl lg:text-6xl text-white"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                From idea to live.<br />
+                                From idea to live.<AccentBr />
                                 <span className="text-white/30">Every step, visible.</span>
                             </h2>
                         </div>

@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
+import { AccentBr } from '@/components/ui/accent-br';
 
 gsap.registerPlugin();
 
@@ -152,7 +153,7 @@ export function InsightHero() {
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
             >
               Perspectives that
-              <br />
+              <AccentBr />
               <span className="font-light text-[#666] font-sans">
                 move the needle.
               </span>

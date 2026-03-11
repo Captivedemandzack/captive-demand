@@ -8,6 +8,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
+import { AccentBr } from '@/components/ui/accent-br';
 import { EyebrowHeading } from '@/components/ui/eyebrow-heading';
 import { CaseStudyCard } from '@/components/work/CaseStudyCard';
 import { caseStudies, getFeaturedCaseStudies, getLiveWebsites } from '@/data/case-studies';
@@ -165,7 +166,7 @@ function WorkHero() {
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
             >
               Proof beats
-              <br />
+              <AccentBr />
               <span className="relative inline-flex items-center justify-center px-5 pt-[0.12em] pb-[0.08em] -mx-5 z-10 overflow-hidden whitespace-nowrap rounded-[6px]">
                 <span className="absolute inset-0 rounded-[6px] bg-white/55 border border-[#d5d5d5]/40 shadow-[0_6px_20px_rgba(15,15,15,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]" />
                 <span className="relative text-[#0f0d0a]" style={{ zIndex: 1 }}>
@@ -752,7 +753,7 @@ function ResultsBand() {
             className="text-4xl md:text-5xl lg:text-6xl text-white max-w-3xl mx-auto tracking-tighter"
             style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
           >
-            Numbers that speak<br />
+            Numbers that speak<AccentBr />
             <span className="text-white/30">louder than promises.</span>
           </h2>
         </div>

@@ -2,6 +2,7 @@
 
 import React, { useRef, useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
+import { AccentBr } from '@/components/ui/accent-br';
 import { Check } from 'lucide-react';
 import Image from 'next/image';
 import gsap from 'gsap';
@@ -290,7 +291,7 @@ export function ProcessSection() {
                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]"
                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
               >
-                From intro to impact<br />
+                From intro to impact<AccentBr />
                 <span className="text-[#1a1512]/40">in record time.</span>
               </h2>
             </div>

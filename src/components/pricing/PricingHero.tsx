@@ -1,19 +1,30 @@
 'use client';
 
-import React, { useRef, useLayoutEffect } from 'react';
+import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { AccentBr } from '@/components/ui/accent-br';
+import { EyebrowHeading } from '@/components/ui/eyebrow-heading';
+import { partnerLogos } from '@/data/logos';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
-    <div className="flex items-end w-full">
-        <svg viewBox="0 0 80 8" className="w-20 h-2 flex-shrink-0" preserveAspectRatio="none">
-            <path d="M0 8 L0 0 L68 0 L80 8 Z" fill={shapeColor} />
-        </svg>
-        <div className="flex-1 h-[1px] self-end" style={{ backgroundColor: lineColor }} />
+const LogoScroll = () => (
+    <div className="relative w-full max-w-sm overflow-hidden">
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#FAFAFA] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#FAFAFA] to-transparent z-10 pointer-events-none" />
+        <motion.div
+            className="flex gap-12 items-center"
+            animate={{ x: [0, -800] }}
+            transition={{ x: { repeat: Infinity, repeatType: 'loop', duration: 25, ease: 'linear' } }}
+        >
+            {[...partnerLogos, ...partnerLogos].map((logo, i) => (
+                <div key={`${logo.id}-${i}`} className="flex-shrink-0 opacity-50" style={{ filter: 'grayscale(100%) brightness(0.5)' }}>
+                    <div className="relative h-10 w-24">
+                        <Image src={logo.src} alt={logo.name} fill className="object-contain" />
+                    </div>
+                </div>
+            ))}
+        </motion.div>
     </div>
 );
 
@@ -38,160 +49,79 @@ const fadeUp = {
     },
 };
 
-interface PricingHeroProps {
-    billingCycle: 'monthly' | 'annual';
-    onToggle: (cycle: 'monthly' | 'annual') => void;
-}
+export type PricingService = 'website' | 'seo' | 'software' | 'email' | 'automation';
 
-export function PricingHero({ billingCycle, onToggle }: PricingHeroProps) {
-    const labelRef = useRef<HTMLSpanElement>(null);
-    const sectionRef = useRef<HTMLDivElement>(null);
+export const SERVICE_TABS: { id: PricingService; label: string }[] = [
+    { id: 'website', label: 'Website' },
+    { id: 'seo', label: 'SEO' },
+    { id: 'software', label: 'Software' },
+    { id: 'email', label: 'Email' },
+    { id: 'automation', label: 'Automation' },
+];
 
-    useLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            if (labelRef.current) {
-                const originalText = "PRICING";
-                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const TESTIMONIAL_AVATARS = [
+    '/tricia.webp',
+    '/Jordan.jpeg',
+    '/matthew.webp',
+    '/bonnie.webp',
+    '/ben.webp',
+];
 
-                gsap.to({}, {
-                    duration: 1.2,
-                    ease: "expo.out",
-                    scrollTrigger: {
-                        trigger: labelRef.current,
-                        start: "top 90%",
-                        toggleActions: "play none none none",
-                    },
-                    onUpdate: function () {
-                        const progress = this.progress();
-                        let result = "";
-                        for (let i = 0; i < originalText.length; i++) {
-                            if (originalText[i] === " ") {
-                                result += " ";
-                            } else if (progress > i / originalText.length) {
-                                result += originalText[i];
-                            } else {
-                                result += chars[Math.floor(Math.random() * chars.length)];
-                            }
-                        }
-                        if (labelRef.current) {
-                            labelRef.current.textContent = "/ " + result;
-                        }
-                    },
-                    onComplete: function () {
-                        if (labelRef.current) {
-                            labelRef.current.textContent = "/ PRICING";
-                        }
-                    },
-                });
-            }
-        }, sectionRef);
-
-        return () => ctx.revert();
-    }, []);
-
+export function PricingHero() {
     return (
-        <section ref={sectionRef} className="w-full bg-[#FAFAFA] pt-32 md:pt-40 pb-16 md:pb-24 px-4">
-            <div className="max-w-7xl mx-auto">
-
-                <div className="mb-6 w-full">
-                    <DecorativeShapeWithLine shapeColor="#d5d5d5" lineColor="#e5e5e5" />
-                </div>
+        <section className="w-full bg-[#FAFAFA] pt-32 md:pt-40 pb-8 md:pb-12 px-4">
+            <div className="max-w-7xl mx-auto flex flex-col">
 
                 <motion.div
                     variants={staggerContainer}
                     initial="hidden"
                     animate="visible"
-                    className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-12 md:mb-16"
+                    className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-8 md:mb-10"
                 >
                     <div>
-                        <motion.span
-                            variants={fadeUp}
-                            ref={labelRef}
-                            className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
-                        >
-                            / PRICING
-                        </motion.span>
+                        <motion.div variants={fadeUp} className="mb-6">
+                            <EyebrowHeading category="Plans" label="Pricing" />
+                        </motion.div>
 
                         <motion.h1
                             variants={fadeUp}
                             className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-[#1a1512] tracking-tighter"
                             style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                         >
-                            We&apos;ve got a plan<br />
+                            We&apos;ve got a plan<AccentBr />
                             <span className="text-[#1a1512]/40">that&apos;s perfect for you</span>
                         </motion.h1>
                     </div>
 
-                    {/* Social Proof */}
-                    <motion.div variants={fadeUp} className="flex items-center gap-4">
-                        <div className="flex -space-x-3">
-                            {[0, 1, 2, 3].map((i) => (
-                                <div
-                                    key={i}
-                                    className="w-10 h-10 rounded-full border-2 border-[#FAFAFA] bg-[#1a1512]/10 overflow-hidden"
-                                    style={{
-                                        background: `linear-gradient(135deg, ${['#ff5501', '#8b5cf6', '#1a1512', '#E8DDD3'][i]} 0%, ${['#8f3a00', '#6d28d9', '#2d2621', '#d5c9bd'][i]} 100%)`,
-                                    }}
-                                />
-                            ))}
-                        </div>
-                        <div className="flex flex-col">
-                            <div className="flex items-center gap-1">
-                                {[0, 1, 2, 3, 4].map((i) => (
-                                    <Star key={i} size={14} fill="#ff5501" className="text-[#ff5501]" strokeWidth={0} />
+                    {/* Logo scroll + Social Proof — aligned to bottom */}
+                    <div className="flex flex-col items-start md:items-end gap-4 md:pt-8">
+                        <motion.div variants={fadeUp} className="w-full md:w-auto">
+                            <LogoScroll />
+                        </motion.div>
+                        <motion.div variants={fadeUp} className="flex items-center gap-4">
+                            <div className="flex -space-x-3">
+                                {TESTIMONIAL_AVATARS.map((src) => (
+                                    <div
+                                        key={src}
+                                        className="relative w-10 h-10 rounded-full border-2 border-[#FAFAFA] overflow-hidden flex-shrink-0"
+                                    >
+                                        <Image src={src} alt="" fill className="object-cover" sizes="40px" />
+                                    </div>
                                 ))}
-                                <span className="font-mono text-xs text-[#1a1512] ml-1 font-bold">5.0</span>
                             </div>
-                            <span className="font-mono text-[10px] text-[#1a1512]/50 uppercase tracking-wider">
-                                from 4,200+ reviews
-                            </span>
-                        </div>
-                    </motion.div>
-                </motion.div>
-
-                {/* Billing Toggle */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className="flex items-center gap-4"
-                >
-                    <div className="inline-flex items-center rounded-full p-1 bg-[#f3f4f6] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] backdrop-blur-sm border border-[#1a1512]/5">
-                        <button
-                            onClick={() => onToggle('monthly')}
-                            className={`
-                                relative px-5 py-2.5 rounded-full text-sm font-mono tracking-wide transition-all duration-300
-                                ${billingCycle === 'monthly'
-                                    ? 'bg-[#1a1512] text-white shadow-lg'
-                                    : 'text-[#1a1512]/60 hover:text-[#1a1512]'
-                                }
-                            `}
-                        >
-                            Monthly billing
-                        </button>
-                        <button
-                            onClick={() => onToggle('annual')}
-                            className={`
-                                relative px-5 py-2.5 rounded-full text-sm font-mono tracking-wide transition-all duration-300
-                                ${billingCycle === 'annual'
-                                    ? 'bg-[#1a1512] text-white shadow-lg'
-                                    : 'text-[#1a1512]/60 hover:text-[#1a1512]'
-                                }
-                            `}
-                        >
-                            Annual billing
-                        </button>
+                            <div className="flex flex-col">
+                                <div className="flex items-center gap-1">
+                                    {[0, 1, 2, 3, 4].map((i) => (
+                                        <Star key={i} size={14} fill="#ff5501" className="text-[#ff5501]" strokeWidth={0} />
+                                    ))}
+                                    <span className="font-mono text-xs text-[#1a1512] ml-1 font-bold">5.0</span>
+                                </div>
+                                <span className="font-mono text-[10px] text-[#1a1512]/50 uppercase tracking-wider">
+                                    300+ businesses supported
+                                </span>
+                            </div>
+                        </motion.div>
                     </div>
-
-                    {billingCycle === 'annual' && (
-                        <motion.span
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="inline-flex items-center px-3 py-1.5 rounded-full bg-[#ff5501]/10 text-[#ff5501] text-xs font-mono font-bold uppercase tracking-wider"
-                        >
-                            Save 20%
-                        </motion.span>
-                    )}
                 </motion.div>
             </div>
         </section>

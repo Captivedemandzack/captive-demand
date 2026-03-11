@@ -4,6 +4,7 @@ import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
+import { AccentBr } from '@/components/ui/accent-br';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -85,7 +86,7 @@ export function AutomationStats() {
                         className="text-4xl md:text-5xl lg:text-6xl text-white max-w-3xl mx-auto tracking-tighter"
                         style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                     >
-                        Numbers that speak<br />
+                        Numbers that speak<AccentBr />
                         <span className="text-white/30">louder than promises.</span>
                     </h2>
                 </div>

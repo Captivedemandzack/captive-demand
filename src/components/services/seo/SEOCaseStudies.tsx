@@ -7,6 +7,7 @@ import { TrendingUp, ArrowUpRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
+import { AccentBr } from '@/components/ui/accent-br';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -144,7 +145,7 @@ export function SEOCaseStudies() {
                                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512] tracking-tighter"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                Proof, not promises.<br />
+                                Proof, not promises.<AccentBr />
                                 <span className="text-[#1a1512]/40">Real results for real brands.</span>
                             </h2>
                         </div>

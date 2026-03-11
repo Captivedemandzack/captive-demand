@@ -5,6 +5,7 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
+import { AccentBr } from '@/components/ui/accent-br';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -255,7 +256,7 @@ export function AutomationIntegrations() {
                         className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512] tracking-tighter"
                         style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                     >
-                        Connect your stack.<br />
+                        Connect your stack.<AccentBr />
                         <span className="text-[#1a1512]/40">We handle the rest.</span>
                     </h2>
                 </div>

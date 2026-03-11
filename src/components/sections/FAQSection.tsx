@@ -6,6 +6,7 @@ import { Plus } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import { AccentBr } from '@/components/ui/accent-br';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -218,7 +219,7 @@ export function FAQSection() {
               className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512] mb-6"
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
             >
-              Commonly given<br />answers
+              Commonly given<AccentBr />answers
             </h2>
 
             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed mb-8 max-w-sm">

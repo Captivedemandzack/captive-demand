@@ -7,6 +7,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { CTAButton } from '@/components/ui/CTAButton';
+import { AccentBr } from '@/components/ui/accent-br';
 
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
     <div className="flex items-end w-full">
@@ -21,6 +22,7 @@ const PricingCard = ({
     title,
     description,
     price,
+    priceLabel = "Starting price / Custom quotes",
     features,
     isPro = false,
     buttonText = "Select Plan"
@@ -28,6 +30,7 @@ const PricingCard = ({
     title: string;
     description: string;
     price: string;
+    priceLabel?: string;
     features: string[];
     isPro?: boolean;
     buttonText?: string;
@@ -88,7 +91,7 @@ const PricingCard = ({
         <div className="mt-auto relative z-10">
             <div className="flex flex-col mb-8">
                 <span className="text-4xl font-bold tracking-tight mb-1">{price}</span>
-                <span className={`text-xs font-mono uppercase tracking-widest ${isPro ? 'text-white/40' : 'text-[#1a1512]/40'}`}>Starting price / Custom quotes available</span>
+                <span className={`text-xs font-mono uppercase tracking-widest ${isPro ? 'text-white/40' : 'text-[#1a1512]/40'}`}>{priceLabel}</span>
             </div>
             <CTAButton variant="pricing" text={buttonText} isDarkBg={isPro} fullWidth as="button" style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }} />
         </div>
@@ -105,7 +108,11 @@ const AddOnCard = ({ icon: Icon, title, description }: { icon: any, title: strin
     </div>
 );
 
-export function SoftwarePricing() {
+interface SoftwarePricingProps {
+    embedded?: boolean;
+}
+
+export function SoftwarePricing({ embedded }: SoftwarePricingProps) {
     const sectionRef = useRef<HTMLDivElement>(null);
     const labelRef = useRef<HTMLSpanElement>(null);
 
@@ -163,33 +170,38 @@ export function SoftwarePricing() {
     ];
 
     return (
-        <section ref={sectionRef} className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4">
+        <section ref={sectionRef} className={`w-full bg-[#FAFAFA] px-4 ${embedded ? 'pt-0 pb-20 md:pb-32' : 'py-20 md:py-32'}`}>
             <div className="max-w-7xl mx-auto">
 
                 {/* Header */}
-                <div className="mb-16 md:mb-24">
+                <div className={embedded ? 'mb-8 md:mb-10' : 'mb-16 md:mb-24'}>
                     <div className="mb-6 w-full">
                         <DecorativeShapeWithLine shapeColor="#d5d5d5" lineColor="#e5e5e5" />
                     </div>
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+                    <div className={`flex flex-col md:flex-row md:items-start md:justify-between ${embedded ? 'gap-4' : 'gap-8'}`}>
                         <div>
-                            <span
-                                ref={labelRef}
-                                className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
-                            >
-                                / INVESTMENT
-                            </span>
+                            {embedded ? (
+                                <span className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4">
+                                    / SERVICE
+                                </span>
+                            ) : (
+                                <span
+                                    ref={labelRef}
+                                    className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
+                                >
+                                    / INVESTMENT
+                                </span>
+                            )}
                             <h2
                                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                Transparent pricing.<br />
-                                <span className="text-[#1a1512]/40">Engineered for growth.</span>
+                                {embedded ? 'Software' : <>Transparent pricing.<AccentBr /><span className="text-[#1a1512]/40">Engineered for growth.</span></>}
                             </h2>
                         </div>
                         <div className="md:max-w-md md:text-right">
                             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                                Choose a foundation. Scale with add-ons. No hidden fees, no surprise invoices.
+                                {embedded ? 'Build the tool that runs your business.' : 'Choose a foundation. Scale with add-ons. No hidden fees, no surprise invoices.'}
                             </p>
                         </div>
                     </div>
@@ -199,39 +211,40 @@ export function SoftwarePricing() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 mb-24 items-stretch">
                     <div className="lg:col-span-5 h-full">
                         <PricingCard
-                            title="MVP Launch"
-                            description="Validate your idea with a production-ready minimum viable product."
+                            title="MVP"
+                            description="Validate your idea. One core feature, production-ready, shipped in 4–6 weeks."
                             price="$5,000"
+                            priceLabel="One-time / 4–6 week build"
                             features={[
                                 'Single Core Feature',
-                                'User Auth & Profiles',
-                                'Database + API Layer',
+                                'User Auth & Database',
+                                'API Layer',
                                 'Responsive Frontend',
-                                'Cloud Deployment',
-                                '1 Month Bug Support'
+                                'Cloud Deployment (Vercel/AWS)',
+                                '30 Days Bug Support'
                             ]}
-                            buttonText="Start MVP"
+                            buttonText="Get Started"
                         />
                     </div>
                     <div className="lg:col-span-7 h-full">
                         <PricingCard
-                            title="Full-Stack Platform"
-                            description="End-to-end custom software for established businesses ready to dominate."
+                            title="Platform"
+                            description="Full custom software: dashboards, integrations, multi-tenant, built to scale."
                             price="$15,000+"
+                            priceLabel="Project-based / Custom scope"
                             isPro={true}
                             features={[
-                                'Multi-Feature Platform',
+                                'Multi-Feature Build',
                                 'Custom Admin Dashboard',
                                 'Third-Party Integrations',
-                                'Advanced Role-Based Auth',
-                                'Automated Testing Suite',
-                                'Performance Optimization',
-                                'CI/CD Pipeline Setup',
+                                'Role-Based Access Control',
+                                'Automated Testing',
+                                'CI/CD Pipeline',
                                 'Monitoring & Alerts',
                                 'Security Hardening',
-                                '3 Months Priority Support'
+                                '90 Days Priority Support'
                             ]}
-                            buttonText="Build Platform"
+                            buttonText="Get Started"
                         />
                     </div>
                 </div>
@@ -243,7 +256,7 @@ export function SoftwarePricing() {
                             Power-Up Add-ons
                         </h3>
                         <p className="text-[#1a1512]/60 max-w-xl mx-auto font-mono text-sm">
-                            Extend your platform with specialized engineering services.
+                            Add-ons to extend your software project. Pick what you need.
                         </p>
                     </div>
 

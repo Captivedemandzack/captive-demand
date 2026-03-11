@@ -9,6 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 import { CTAButton } from '@/components/ui/CTAButton';
+import { AccentBr } from '@/components/ui/accent-br';
 
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
     <div className="flex items-end w-full">
@@ -23,6 +24,7 @@ const PricingCard = ({
     title,
     description,
     price,
+    priceLabel = "Per month / Cancel anytime",
     features,
     isPro = false,
     buttonText = "Select Plan"
@@ -30,6 +32,7 @@ const PricingCard = ({
     title: string;
     description: string;
     price: string;
+    priceLabel?: string;
     features: string[];
     isPro?: boolean;
     buttonText?: string;
@@ -94,7 +97,7 @@ const PricingCard = ({
         <div className="mt-auto relative z-10">
             <div className="flex flex-col mb-8">
                 <span className="text-4xl font-bold tracking-tight mb-1">{price}</span>
-                <span className={`text-xs font-mono uppercase tracking-widest ${isPro ? 'text-white/40' : 'text-[#1a1512]/40'}`}>Per month / Cancel anytime</span>
+                <span className={`text-xs font-mono uppercase tracking-widest ${isPro ? 'text-white/40' : 'text-[#1a1512]/40'}`}>{priceLabel}</span>
             </div>
             <CTAButton variant="pricing" text={buttonText} isDarkBg={isPro} fullWidth as="button" style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }} />
         </div>
@@ -119,7 +122,11 @@ const AddOnCard = ({ icon: Icon, title, description }: { icon: React.ElementType
     </div>
 );
 
-export function EmailPricing() {
+interface EmailPricingProps {
+    embedded?: boolean;
+}
+
+export function EmailPricing({ embedded }: EmailPricingProps) {
     const labelRef = useRef<HTMLSpanElement>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -199,33 +206,37 @@ export function EmailPricing() {
     ];
 
     return (
-        <section ref={sectionRef} className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4">
+        <section ref={sectionRef} className={`w-full bg-[#FAFAFA] px-4 ${embedded ? 'pt-0 pb-20 md:pb-32' : 'py-20 md:py-32'}`}>
             <div className="max-w-7xl mx-auto">
 
-                <div className="mb-16 md:mb-24">
+                <div className={embedded ? 'mb-8 md:mb-10' : 'mb-16 md:mb-24'}>
                     <div className="mb-6 w-full">
                         <DecorativeShapeWithLine shapeColor="#d5d5d5" lineColor="#e5e5e5" />
                     </div>
-
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+                    <div className={`flex flex-col md:flex-row md:items-start md:justify-between ${embedded ? 'gap-4' : 'gap-8'}`}>
                         <div>
-                            <span
-                                ref={labelRef}
-                                className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
-                            >
-                                / PRICING & ADD-ONS
-                            </span>
+                            {embedded ? (
+                                <span className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4">
+                                    / SERVICE
+                                </span>
+                            ) : (
+                                <span
+                                    ref={labelRef}
+                                    className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
+                                >
+                                    / PRICING & ADD-ONS
+                                </span>
+                            )}
                             <h2
                                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                Transparent pricing.<br />
-                                <span className="text-[#1a1512]/40">Compounding returns.</span>
+                                {embedded ? 'Email Marketing' : <>Transparent pricing.<AccentBr /><span className="text-[#1a1512]/40">Compounding returns.</span></>}
                             </h2>
                         </div>
                         <div className="md:max-w-md md:text-right">
                             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                                Start with a proven foundation and scale as your list grows. No hidden fees, just measurable ROI.
+                                {embedded ? 'Automated sequences that convert visitors into revenue.' : 'Start with a proven foundation and scale as your list grows. No hidden fees, just measurable ROI.'}
                             </p>
                         </div>
                     </div>
@@ -234,40 +245,40 @@ export function EmailPricing() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 mb-24 items-stretch">
                     <div className="lg:col-span-5 h-full">
                         <PricingCard
-                            title="Email Starter"
-                            description="Essential email infrastructure for growing brands."
+                            title="Starter"
+                            description="Capture leads and nurture them. Welcome series, abandoned cart, basic flows."
                             price="$1,500"
+                            priceLabel="Per month / Up to 10k subscribers"
                             features={[
                                 "3 Automated Flows",
-                                "Up to 10k Subscribers",
-                                "Basic Template Library",
-                                "Monthly Campaign Sends",
+                                "Welcome & Nurture Sequences",
+                                "Abandoned Cart Recovery",
+                                "Monthly Broadcast Sends",
                                 "Performance Reporting",
-                                "1 Month Onboarding"
+                                "Platform Setup & Onboarding"
                             ]}
-                            buttonText="Select Starter"
+                            buttonText="Get Started"
                         />
                     </div>
 
                     <div className="lg:col-span-7 h-full">
                         <PricingCard
-                            title="Email Pro"
-                            description="Full-service email engine for brands ready to scale revenue."
+                            title="Growth"
+                            description="Full email engine: unlimited flows, segmentation, revenue attribution."
                             price="$3,500"
+                            priceLabel="Per month / Up to 50k subscribers"
                             isPro={true}
                             features={[
                                 "Unlimited Automated Flows",
-                                "50k+ Subscribers",
                                 "Custom Template Design",
-                                "A/B Testing Suite",
+                                "A/B Testing & Optimization",
                                 "Revenue Attribution Dashboard",
                                 "Advanced Segmentation",
                                 "Deliverability Monitoring",
                                 "Dedicated Email Strategist",
-                                "Weekly Performance Calls",
-                                "3 Months Priority Support"
+                                "Weekly Strategy Calls"
                             ]}
-                            buttonText="Select Pro"
+                            buttonText="Get Started"
                         />
                     </div>
                 </div>
@@ -278,7 +289,7 @@ export function EmailPricing() {
                             Power-Up Add-ons
                         </h3>
                         <p className="text-[#1a1512]/60 max-w-xl mx-auto">
-                            Extend your email ecosystem with specialized capabilities tailored to your growth stage.
+                            Add-ons to extend your email program. Stack what you need.
                         </p>
                     </div>
 

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 import { CTAButton } from '@/components/ui/CTAButton';
+import { AccentBr } from '@/components/ui/accent-br';
 
 // --- HELPER COMPONENT ---
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
@@ -210,8 +211,8 @@ export function ExampleWork() {
                                 / SELECTED WORK
                             </span>
                             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}>
-                                We build ideas that shift<br />
-                                perspectives and create <br />
+                                We build ideas that shift<AccentBr />
+                                perspectives and create<AccentBr />
                                 <span className="text-[#1a1512]/40">lasting impact.</span>
                             </h2>
                         </div>

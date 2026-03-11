@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Plus } from 'lucide-react';
 import { AnimatedCTAButton } from '@/components/sections/Hero';
+import { AccentBr } from '@/components/ui/accent-br';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const DecorativeShapeWithLine = ({ shapeColor = '#e5e5e5', lineColor = '#e5e5e5' }: { shapeColor?: string; lineColor?: string }) => (
@@ -159,7 +160,7 @@ export function AutomationMethodology() {
                                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                From manual to autopilot.<br />
+                                From manual to autopilot.<AccentBr />
                                 <span className="text-[#1a1512]/40">The system behind the flow.</span>
                             </h2>
                         </div>

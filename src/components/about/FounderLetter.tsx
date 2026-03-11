@@ -118,10 +118,10 @@ export function FounderLetter() {
                         </div>
 
                         {/* Signature Footer — name left, signature right */}
-                        <div className="mt-12 pt-8 border-t border-[#e8e8e8] flex items-end justify-between">
+                        <div className="mt-12 pt-8 border-t border-[#e8e8e8] flex items-end justify-between gap-6 md:gap-8">
                             <div>
                                 <p
-                                    className="text-[22px] text-[#1a1512] tracking-tight"
+                                    className="text-[17px] md:text-[22px] leading-tight text-[#1a1512] tracking-tight"
                                     style={{ fontFamily: 'Syne, sans-serif', fontWeight: 600 }}
                                 >
                                     Spencer Donaldson
@@ -130,7 +130,7 @@ export function FounderLetter() {
                                     Founder, Captive Demand
                                 </p>
                             </div>
-                            <div className="relative w-[220px] h-[90px] shrink-0">
+                            <div className="relative w-[180px] h-[75px] md:w-[220px] md:h-[90px] shrink-0 self-end -translate-y-1">
                                 <Image
                                     src="/signature.png"
                                     alt="Spencer Donaldson's signature"
@@ -144,7 +144,7 @@ export function FounderLetter() {
 
                 {/* P.S. Note */}
                 <div className="letter-ps mt-8 text-center">
-                    <p className="font-mono text-[12px] text-[#1a1512]/40 tracking-wide">
+                    <p className="font-mono text-[11px] text-[#1a1512]/40 tracking-wide">
                         P.S. We&apos;re always looking for great people.{' '}
                         <Link href="mailto:hello@captivedemand.com" className="text-[#E8480C] hover:underline transition-colors">
                             Get in touch →

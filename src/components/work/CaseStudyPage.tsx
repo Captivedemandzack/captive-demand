@@ -8,6 +8,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
+import { Rivet } from '@/components/ui/Rivet';
+import { AccentBr } from '@/components/ui/accent-br';
 import { EyebrowHeading } from '@/components/ui/eyebrow-heading';
 import { CaseStudyCard } from '@/components/work/CaseStudyCard';
 import { caseStudies } from '@/data/case-studies';
@@ -134,8 +136,10 @@ function CaseStudyHero({ study }: { study: CaseStudy }) {
         {/* Client Logo Badge */}
         <div className="cs-hero-text flex justify-center mb-8">
           <div className="inline-flex items-center justify-center px-6 py-3 rounded-[4px] border border-[#d5d5d5]/40 bg-white/50 backdrop-blur-[10px] shadow-[0_4px_20px_rgba(0,0,0,0.04)] relative">
-            <div className="absolute -top-[1px] -left-[1px] w-[10px] h-[10px] border-t-[2px] border-l-[2px] border-[#d5d5d5] rounded-tl-[4px] pointer-events-none" />
-            <div className="absolute -bottom-[1px] -right-[1px] w-[10px] h-[10px] border-b-[2px] border-r-[2px] border-[#d5d5d5] rounded-br-[4px] pointer-events-none" />
+            <Rivet className="top-2 left-2" size={5} />
+            <Rivet className="top-2 right-2" size={5} />
+            <Rivet className="bottom-2 left-2" size={5} />
+            <Rivet className="bottom-2 right-2" size={5} />
             {study.logoSrc ? (
               <div className="relative h-8 w-32">
                 <Image src={study.logoSrc} alt={study.clientName} fill className="object-contain" style={{ filter: 'grayscale(100%) brightness(0.3)' }} />
@@ -454,7 +458,7 @@ function ResultsSection({ study }: { study: CaseStudy }) {
         <div className="text-center mb-16 md:mb-24">
           <span className="font-mono text-sm tracking-wider text-white/30 uppercase block mb-4">/ The Results</span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl text-white max-w-3xl mx-auto tracking-tighter" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}>
-            Numbers that speak<br /><span className="text-white/30">for themselves.</span>
+            Numbers that speak<AccentBr /><span className="text-white/30">for themselves.</span>
           </h2>
         </div>
 

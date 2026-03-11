@@ -2,7 +2,7 @@
 
 import React, { useRef, useLayoutEffect } from 'react';
 import Image from 'next/image';
-import { Check } from 'lucide-react';
+import { Check, Plug, BarChart3, Database, Bot, Bell, Zap } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
@@ -10,6 +10,7 @@ import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 gsap.registerPlugin(ScrollTrigger);
 
 import { CTAButton } from '@/components/ui/CTAButton';
+import { AccentBr } from '@/components/ui/accent-br';
 
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
     <div className="flex items-end w-full">
@@ -100,7 +101,21 @@ const PricingCard = ({
     </div>
 );
 
-export function AutomationPricing() {
+const AddOnCard = ({ icon: Icon, title, description }: { icon: React.ElementType; title: string; description: string }) => (
+    <div className="group p-8 h-full bg-[#FAFAFA] hover:bg-white transition-colors duration-300">
+        <div className="mb-6 w-12 h-12 rounded-lg bg-[#ff5501] flex items-center justify-center text-white">
+            <Icon size={24} strokeWidth={1.5} />
+        </div>
+        <h4 className="text-lg text-[#1a1512] mb-2 font-medium">{title}</h4>
+        <p className="text-sm text-[#1a1512]/60 leading-relaxed">{description}</p>
+    </div>
+);
+
+interface AutomationPricingProps {
+    embedded?: boolean;
+}
+
+export function AutomationPricing({ embedded }: AutomationPricingProps) {
     const labelRef = useRef<HTMLSpanElement>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -146,79 +161,112 @@ export function AutomationPricing() {
         return () => ctx.revert();
     }, []);
 
+    const addOns = [
+        { icon: Plug, title: 'Additional Integrations', description: 'Connect more tools beyond your base package. CRM, e-commerce, forms, databases, and custom APIs.' },
+        { icon: BarChart3, title: 'Custom Reporting', description: 'Dashboards and reports that surface automation metrics, conversion data, and workflow health.' },
+        { icon: Database, title: 'Data Migration', description: 'Move data between systems safely. Imports, exports, and sync setup for legacy or new platforms.' },
+        { icon: Bot, title: 'AI & LLM Integration', description: 'Add ChatGPT, Claude, or custom AI to your workflows for smart routing, summarization, or content.' },
+        { icon: Bell, title: 'Error Handling & Alerts', description: 'Monitoring, failure alerts, and auto-retry logic so you know when something breaks.' },
+        { icon: Zap, title: 'Workflow Optimization', description: 'Audit existing automations. We identify bottlenecks, reduce costs, and improve reliability.' },
+    ];
+
     return (
-        <section ref={sectionRef} className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4 relative overflow-hidden">
+        <section ref={sectionRef} className={`w-full bg-[#FAFAFA] px-4 relative overflow-hidden ${embedded ? 'pt-0 pb-20 md:pb-32' : 'py-20 md:py-32'}`}>
             <NoiseOverlay />
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Header */}
-                <div className="mb-16 md:mb-24">
+                <div className={embedded ? 'mb-8 md:mb-10' : 'mb-16 md:mb-24'}>
                     <div className="mb-6 w-full">
                         <DecorativeShapeWithLine shapeColor="#d5d5d5" lineColor="#e5e5e5" />
                     </div>
-
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+                    <div className={`flex flex-col md:flex-row md:items-start md:justify-between ${embedded ? 'gap-4' : 'gap-8'}`}>
                         <div>
-                            <span
-                                ref={labelRef}
-                                className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
-                            >
-                                / PRICING
-                            </span>
+                            {embedded ? (
+                                <span className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4">
+                                    / SERVICE
+                                </span>
+                            ) : (
+                                <span
+                                    ref={labelRef}
+                                    className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
+                                >
+                                    / PRICING
+                                </span>
+                            )}
                             <h2
                                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512] tracking-tighter"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                Simple pricing.<br />
-                                <span className="text-[#1a1512]/40">Powerful results.</span>
+                                {embedded ? 'Automation' : <>Simple pricing.<AccentBr /><span className="text-[#1a1512]/40">Powerful results.</span></>}
                             </h2>
                         </div>
                         <div className="md:max-w-md md:text-right">
                             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                                One-time builds or ongoing partnerships. No hidden fees, just working automations.
+                                {embedded ? 'Your tools connected. Your workflows automated.' : 'One-time builds or ongoing partnerships. No hidden fees, just working automations.'}
                             </p>
                         </div>
                     </div>
                 </div>
 
                 {/* Pricing Cards */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 mb-24 items-stretch">
                     <div className="lg:col-span-5 h-full">
                         <PricingCard
-                            title="Automation Build"
-                            description="We design and build your custom automation workflows, connect your tools, and hand off a fully working system."
+                            title="Build"
+                            description="One-time setup: we design, build, and hand off working automations. Zapier, Make, or custom."
                             price="$2,500"
-                            priceLabel="One-time"
+                            priceLabel="One-time / Up to 5 workflows"
                             features={[
-                                "Custom workflow design",
-                                "Up to 5 automations",
-                                "Tool integrations included",
-                                "Documentation & training",
-                                "30 days post-launch support",
+                                "Custom Workflow Design",
+                                "Up to 5 Automations",
+                                "Tool Integrations (CRM, Forms, etc.)",
+                                "Documentation & Handoff",
+                                "30 Days Post-Launch Support",
                             ]}
                             buttonText="Get Started"
                         />
                     </div>
                     <div className="lg:col-span-7 h-full">
                         <PricingCard
-                            title="Automation Partner"
-                            description="Ongoing automation management. We build, maintain, and continuously add new workflows as your business grows."
-                            price="$1,500/mo"
+                            title="Partner"
+                            description="Ongoing automation management. We build, maintain, and add workflows as you grow."
+                            price="$1,500"
                             priceLabel="Per month / Cancel anytime"
                             isPro={true}
                             features={[
-                                "Everything in Automation Build",
-                                "Unlimited new automations",
-                                "Monthly optimization",
-                                "Priority support",
-                                "Dedicated automation strategist",
-                                "Performance monitoring",
-                                "Workflow health checks",
-                                "Tool migration support",
-                                "Custom reporting dashboards",
-                                "Quarterly strategy sessions",
+                                "Everything in Build",
+                                "Unlimited New Automations",
+                                "Monthly Optimization",
+                                "Priority Support",
+                                "Dedicated Strategist",
+                                "Workflow Health Monitoring",
+                                "Tool Migration Support",
+                                "Quarterly Strategy Sessions",
                             ]}
                             buttonText="Get Started"
                         />
+                    </div>
+                </div>
+
+                {/* Add-Ons Grid */}
+                <div className="w-full">
+                    <div className="text-center mb-12">
+                        <h3 className="text-3xl md:text-4xl text-[#1a1512] mb-4" style={{ fontFamily: 'Nohemi, sans-serif' }}>
+                            Power-Up Add-ons
+                        </h3>
+                        <p className="text-[#1a1512]/60 max-w-xl mx-auto font-mono text-sm">
+                            Add-ons to extend your automation. Pick what you need.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1a1512]/10 border border-[#1a1512]/10 rounded-2xl overflow-hidden">
+                        {addOns.map((addon, index) => (
+                            <AddOnCard
+                                key={index}
+                                icon={addon.icon}
+                                title={addon.title}
+                                description={addon.description}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>

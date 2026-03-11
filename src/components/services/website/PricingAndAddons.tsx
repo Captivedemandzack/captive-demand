@@ -2,11 +2,12 @@
 
 import React, { useRef, useLayoutEffect } from 'react';
 import Image from 'next/image';
-import { Check, Search, Mail, Code, Zap, Smartphone, PenTool } from 'lucide-react';
+import { Check, ArrowRightLeft, Server, Sparkles, Palette, PenTool, Plug } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { CTAButton } from '@/components/ui/CTAButton';
+import { AccentBr } from '@/components/ui/accent-br';
 
 // --- HELPER COMPONENTS ---
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
@@ -23,6 +24,7 @@ const PricingCard = ({
     title,
     description,
     price,
+    priceLabel = "Per month / Cancel anytime",
     features,
     isPro = false,
     buttonText = "Select Plan"
@@ -30,6 +32,7 @@ const PricingCard = ({
     title: string;
     description: string;
     price: string;
+    priceLabel?: string;
     features: string[];
     isPro?: boolean;
     buttonText?: string;
@@ -102,7 +105,7 @@ const PricingCard = ({
         <div className="mt-auto relative z-10">
             <div className="flex flex-col mb-8">
                 <span className="text-4xl font-bold tracking-tight mb-1">{price}</span>
-                <span className={`text-xs font-mono uppercase tracking-widest ${isPro ? 'text-white/40' : 'text-[#1a1512]/40'}`}>Per month / Cancel anytime</span>
+                <span className={`text-xs font-mono uppercase tracking-widest ${isPro ? 'text-white/40' : 'text-[#1a1512]/40'}`}>{priceLabel}</span>
             </div>
 
             <CTAButton variant="pricing" text={buttonText} isDarkBg={isPro} fullWidth as="button" />
@@ -124,7 +127,11 @@ const AddOnCard = ({ icon: Icon, title, description }: { icon: any, title: strin
     </div>
 );
 
-export function PricingAndAddons() {
+interface PricingAndAddonsProps {
+    embedded?: boolean;
+}
+
+export function PricingAndAddons({ embedded }: PricingAndAddonsProps) {
     const labelRef = useRef<HTMLSpanElement>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -172,66 +179,70 @@ export function PricingAndAddons() {
 
     const addOns = [
         {
-            icon: Search,
-            title: "SEO / AEO",
-            description: "Optimize for search engines and AI answers to dominate organic traffic."
+            icon: ArrowRightLeft,
+            title: "Migration",
+            description: "Seamless site migration from your current platform. Zero downtime, preserved SEO, content and redirects handled."
         },
         {
-            icon: Mail,
-            title: "Email Marketing",
-            description: "Automated flows and campaigns that convert leads into loyal customers."
+            icon: Server,
+            title: "Hosting & Maintenance",
+            description: "Managed hosting, security updates, backups, and ongoing maintenance so your site stays fast and secure."
         },
         {
-            icon: Code,
-            title: "Software Development",
-            description: "Custom solutions, API integrations, and complex web applications."
+            icon: Sparkles,
+            title: "Custom Animations",
+            description: "Scroll-triggered reveals, micro-interactions, and motion design that elevates your brand experience."
         },
         {
-            icon: Zap,
-            title: "Automation",
-            description: "Streamline operations with Zapier, Make, and custom workflow scripts."
-        },
-        {
-            icon: Smartphone,
-            title: "Mobile Apps",
-            description: "Native iOS and Android applications built for performance and scale."
+            icon: Palette,
+            title: "Custom Graphics & Imagery",
+            description: "Photography, illustration, or custom graphics tailored to your brand and audience."
         },
         {
             icon: PenTool,
             title: "Branding",
-            description: "Logo design, visual identity systems, and brand guidelines."
+            description: "Logo design, visual identity systems, and brand guidelines that extend across your digital presence."
+        },
+        {
+            icon: Plug,
+            title: "Integrations",
+            description: "CRM, payment processors, booking systems, forms, and third-party tools connected and configured."
         }
     ];
 
     return (
-        <section ref={sectionRef} className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4">
+        <section ref={sectionRef} className={`w-full bg-[#FAFAFA] px-4 ${embedded ? 'pt-0 pb-20 md:pb-32' : 'py-20 md:py-32'}`}>
             <div className="max-w-7xl mx-auto">
 
                 {/* --- HEADER --- */}
-                <div className="mb-16 md:mb-24">
+                <div className={embedded ? 'mb-8 md:mb-10' : 'mb-16 md:mb-24'}>
                     <div className="mb-6 w-full">
                         <DecorativeShapeWithLine shapeColor="#d5d5d5" lineColor="#e5e5e5" />
                     </div>
-
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+                    <div className={`flex flex-col md:flex-row md:items-start md:justify-between ${embedded ? 'gap-4' : 'gap-8'}`}>
                         <div>
-                            <span
-                                ref={labelRef}
-                                className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
-                            >
-                                / PRICING & ADD-ONS
-                            </span>
+                            {embedded ? (
+                                <span className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4">
+                                    / SERVICE
+                                </span>
+                            ) : (
+                                <span
+                                    ref={labelRef}
+                                    className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
+                                >
+                                    / PRICING & ADD-ONS
+                                </span>
+                            )}
                             <h2
                                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                Transparent pricing.<br />
-                                <span className="text-[#1a1512]/40">Scalable solutions.</span>
+                                {embedded ? 'Website' : <>Transparent pricing.<AccentBr /><span className="text-[#1a1512]/40">Scalable solutions.</span></>}
                             </h2>
                         </div>
                         <div className="md:max-w-md md:text-right">
                             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                                Start with a solid foundation and expand as you grow. No hidden fees, just results.
+                                {embedded ? 'Design that turns visitors into customers.' : 'Start with a solid foundation and expand as you grow. No hidden fees, just results.'}
                             </p>
                         </div>
                     </div>
@@ -243,41 +254,41 @@ export function PricingAndAddons() {
                     {/* LEFT: STARTER CARD (5/12) */}
                     <div className="lg:col-span-5 h-full">
                         <PricingCard
-                            title="Website Starter"
-                            description="Essential digital presence for growing businesses."
+                            title="Launch"
+                            description="Your brand's digital storefront. Custom design, mobile-ready, built to convert."
                             price="$2,500"
+                            priceLabel="One-time / 5-page site"
                             features={[
                                 "Custom Design (5 Pages)",
                                 "Mobile Responsive",
-                                "Basic SEO Setup",
-                                "CMS Integration",
-                                "Contact Form & Map",
-                                "1 Month Support"
+                                "CMS (WordPress or Webflow)",
+                                "Contact Forms & Basic SEO",
+                                "Google Analytics Setup",
+                                "30 Days Post-Launch Support"
                             ]}
-                            buttonText="Select Starter"
+                            buttonText="Get Started"
                         />
                     </div>
 
                     {/* RIGHT: PRO CARD (7/12) */}
                     <div className="lg:col-span-7 h-full">
                         <PricingCard
-                            title="Website Pro"
-                            description="All-inclusive solution for established brands ready to scale."
+                            title="Scale"
+                            description="Full digital presence for brands ready to grow. E-commerce, custom features, ongoing optimization."
                             price="$5,000"
+                            priceLabel="One-time / 10+ pages"
                             isPro={true}
                             features={[
-                                "Premium Design (10+ Pages)",
-                                "Advanced Animations & Interactions",
-                                "Comprehensive SEO Strategy",
-                                "E-commerce Functionality",
-                                "CRM Integration",
-                                "Performance Optimization",
-                                "Custom Dashboard",
-                                "Advanced Analytics",
-                                "A/B Testing Setup",
-                                "3 Months Priority Support"
+                                "Everything in Launch",
+                                "10+ Custom Pages",
+                                "E-commerce or Member Portal",
+                                "Advanced Animations & UX",
+                                "Technical SEO Implementation",
+                                "Conversion Tracking & CRO",
+                                "CRM or Form Integrations",
+                                "90 Days Priority Support"
                             ]}
-                            buttonText="Select Pro"
+                            buttonText="Get Started"
                         />
                     </div>
                 </div>
@@ -289,7 +300,7 @@ export function PricingAndAddons() {
                             Power-Up Add-ons
                         </h3>
                         <p className="text-[#1a1512]/60 max-w-xl mx-auto">
-                            Enhance your digital ecosystem with specialized services tailored to your needs.
+                            Add-ons to extend your website project. Pick what you need.
                         </p>
                     </div>
 

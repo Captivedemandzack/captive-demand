@@ -9,6 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import gsap from 'gsap';
 
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
+import { AccentBr } from '@/components/ui/accent-br';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -289,7 +290,7 @@ export function SEOMethodology() {
                                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512] tracking-tighter"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                From invisible to inevitable.<br />
+                                From invisible to inevitable.<AccentBr />
                                 <span className="text-[#1a1512]/40">The system behind the rankings.</span>
                             </h2>
                         </div>

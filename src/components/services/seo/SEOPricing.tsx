@@ -11,6 +11,7 @@ import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 gsap.registerPlugin(ScrollTrigger);
 
 import { CTAButton } from '@/components/ui/CTAButton';
+import { AccentBr } from '@/components/ui/accent-br';
 
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
     <div className="flex items-end w-full">
@@ -25,6 +26,7 @@ const PricingCard = ({
     title,
     description,
     price,
+    priceLabel = "Per month / Cancel anytime",
     features,
     isPro = false,
     buttonText = "Select Plan",
@@ -32,6 +34,7 @@ const PricingCard = ({
     title: string;
     description: string;
     price: string;
+    priceLabel?: string;
     features: string[];
     isPro?: boolean;
     buttonText?: string;
@@ -92,7 +95,7 @@ const PricingCard = ({
         <div className="mt-auto relative z-10">
             <div className="flex flex-col mb-8">
                 <span className="text-4xl font-bold tracking-tight mb-1">{price}</span>
-                <span className={`text-xs font-mono uppercase tracking-widest ${isPro ? 'text-white/40' : 'text-[#1a1512]/40'}`}>Per month / Cancel anytime</span>
+                <span className={`text-xs font-mono uppercase tracking-widest ${isPro ? 'text-white/40' : 'text-[#1a1512]/40'}`}>{priceLabel}</span>
             </div>
             <CTAButton variant="pricing" text={buttonText} isDarkBg={isPro} fullWidth as="button" style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }} />
         </div>
@@ -109,7 +112,11 @@ const AddOnCard = ({ icon: Icon, title, description }: { icon: React.ElementType
     </div>
 );
 
-export function SEOPricing() {
+interface SEOPricingProps {
+    embedded?: boolean;
+}
+
+export function SEOPricing({ embedded }: SEOPricingProps) {
     const labelRef = useRef<HTMLSpanElement>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -189,34 +196,38 @@ export function SEOPricing() {
     ];
 
     return (
-        <section ref={sectionRef} className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4 relative overflow-hidden">
+        <section ref={sectionRef} className={`w-full bg-[#FAFAFA] px-4 relative overflow-hidden ${embedded ? 'pt-0 pb-20 md:pb-32' : 'py-20 md:py-32'}`}>
             <NoiseOverlay />
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Header */}
-                <div className="mb-16 md:mb-24">
+                <div className={embedded ? 'mb-8 md:mb-10' : 'mb-16 md:mb-24'}>
                     <div className="mb-6 w-full">
                         <DecorativeShapeWithLine shapeColor="#d5d5d5" lineColor="#e5e5e5" />
                     </div>
-
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+                    <div className={`flex flex-col md:flex-row md:items-start md:justify-between ${embedded ? 'gap-4' : 'gap-8'}`}>
                         <div>
-                            <span
-                                ref={labelRef}
-                                className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
-                            >
-                                / PRICING & PACKAGES
-                            </span>
+                            {embedded ? (
+                                <span className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4">
+                                    / SERVICE
+                                </span>
+                            ) : (
+                                <span
+                                    ref={labelRef}
+                                    className="font-mono text-sm tracking-wider text-[#1a1512]/70 uppercase block mb-4"
+                                >
+                                    / PRICING & PACKAGES
+                                </span>
+                            )}
                             <h2
                                 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512] tracking-tighter"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                Transparent investment.<br />
-                                <span className="text-[#1a1512]/40">Compounding returns.</span>
+                                {embedded ? 'SEO' : <>Transparent investment.<AccentBr /><span className="text-[#1a1512]/40">Compounding returns.</span></>}
                             </h2>
                         </div>
                         <div className="md:max-w-md md:text-right">
                             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                                SEO is a compounding asset. Every month builds on the last. No lock-in contracts, just results.
+                                {embedded ? 'Organic traffic that compounds — without the ad spend.' : 'SEO is a compounding asset. Every month builds on the last. No lock-in contracts, just results.'}
                             </p>
                         </div>
                     </div>
@@ -226,39 +237,39 @@ export function SEOPricing() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 mb-24 items-stretch">
                     <div className="lg:col-span-5 h-full">
                         <PricingCard
-                            title="SEO Essentials"
-                            description="Foundation-level SEO for businesses ready to start ranking."
+                            title="Essentials"
+                            description="Foundation SEO: get found locally, fix technical issues, start ranking."
                             price="$1,500"
+                            priceLabel="Per month / 6-month minimum"
                             features={[
-                                "Comprehensive Site Audit",
+                                "Technical Site Audit & Fixes",
                                 "On-Page Optimization (20 pages)",
+                                "Google Business Profile Setup",
+                                "Local Citation Building",
+                                "Monthly Rank & Traffic Reports",
                                 "Schema Markup Implementation",
-                                "Monthly Rank Tracking",
-                                "Google Business Profile",
-                                "Monthly Performance Report",
                             ]}
-                            buttonText="Select Essentials"
+                            buttonText="Get Started"
                         />
                     </div>
                     <div className="lg:col-span-7 h-full">
                         <PricingCard
-                            title="Full AEO Strategy"
-                            description="Complete answer engine domination for brands ready to own their market."
+                            title="Growth"
+                            description="Full SEO + AEO: dominate search and AI answers. Content, links, and authority."
                             price="$3,500"
+                            priceLabel="Per month / 6-month minimum"
                             isPro={true}
                             features={[
                                 "Everything in Essentials",
-                                "AI Citation Optimization",
-                                "Entity & Knowledge Graph Building",
                                 "Content Strategy & Production",
-                                "Topical Authority Clusters",
-                                "Competitor Intelligence Reports",
+                                "AI Citation Optimization (AEO)",
+                                "Link Building & Outreach",
+                                "Competitor Gap Analysis",
                                 "Core Web Vitals Optimization",
-                                "Advanced Schema & Structured Data",
                                 "Weekly AI Citation Monitoring",
                                 "Dedicated Strategy Calls",
                             ]}
-                            buttonText="Select AEO Strategy"
+                            buttonText="Get Started"
                         />
                     </div>
                 </div>
@@ -270,7 +281,7 @@ export function SEOPricing() {
                             Power-Up Add-ons
                         </h3>
                         <p className="text-[#1a1512]/60 max-w-xl mx-auto">
-                            Stack additional services to accelerate your growth trajectory.
+                            Add-ons to extend your SEO engagement. Stack what you need.
                         </p>
                     </div>
 

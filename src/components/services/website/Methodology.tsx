@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Plus } from 'lucide-react';
 import { AnimatedCTAButton } from '@/components/sections/Hero';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { AccentBr } from '@/components/ui/accent-br';
 
 // --- HELPER COMPONENT ---
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
@@ -269,7 +270,7 @@ export function Methodology() {
                                 / METHODOLOGY
                             </span>
                             <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}>
-                                From chaos to clarity.<br />
+                                From chaos to clarity.<AccentBr />
                                 <span className="text-[#1a1512]/40">The process behind the product.</span>
                             </h2>
                         </div>
