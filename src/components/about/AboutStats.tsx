@@ -33,11 +33,14 @@ export function AboutStats() {
             if (!cards) return;
 
             gsap.from(cards, {
-                opacity: 0, y: 40,
-                duration: 0.8, ease: 'power4.out', stagger: 0.08,
+                scale: 0.5,
+                opacity: 0,
+                duration: 0.6,
+                ease: 'power4.out',
+                stagger: 0.1,
                 scrollTrigger: {
                     trigger: sectionRef.current,
-                    start: 'top 80%',
+                    start: 'top 85%',
                     toggleActions: 'play none none none',
                 },
             });
@@ -82,7 +85,7 @@ export function AboutStats() {
 
             <div className="relative z-10 mx-auto max-w-7xl">
                 {/* Header */}
-                <div className="text-center mb-12 md:mb-16">
+                <div className="text-center mb-16 md:mb-24">
                     <span className="font-mono text-sm tracking-wider text-white/30 uppercase block mb-4">
                         / Results
                     </span>
@@ -96,7 +99,7 @@ export function AboutStats() {
                 </div>
 
                 {/* Stat Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {STATS.map((stat) => (
                         <div
                             key={stat.label}

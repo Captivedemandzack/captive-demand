@@ -429,9 +429,12 @@ function ResultsSection({ study }: { study: CaseStudy }) {
       const cards = sectionRef.current?.querySelectorAll('.cs-result-card');
       if (cards) {
         gsap.from(cards, {
-          opacity: 0, y: 40,
-          duration: 0.8, ease: 'power4.out', stagger: 0.08,
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none none' },
+          scale: 0.5,
+          opacity: 0,
+          duration: 0.6,
+          ease: 'power4.out',
+          stagger: 0.1,
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 85%', toggleActions: 'play none none none' },
         });
       }
     }, sectionRef);

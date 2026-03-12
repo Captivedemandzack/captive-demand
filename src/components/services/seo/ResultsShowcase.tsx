@@ -50,14 +50,14 @@ export function ResultsShowcase() {
             const cards = sectionRef.current?.querySelectorAll('.stat-card');
             if (cards) {
                 gsap.from(cards, {
+                    scale: 0.5,
                     opacity: 0,
-                    y: 40,
-                    duration: 0.8,
+                    duration: 0.6,
                     ease: 'power4.out',
-                    stagger: 0.08,
+                    stagger: 0.1,
                     scrollTrigger: {
                         trigger: sectionRef.current,
-                        start: 'top 80%',
+                        start: 'top 85%',
                         toggleActions: 'play none none none',
                     },
                 });
