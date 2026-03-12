@@ -167,7 +167,7 @@ export function SEOCaseStudies() {
                             transition={{ duration: 0.5, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
                             viewport={{ once: true, margin: "-50px" }}
                             whileHover={{ y: -4, transition: { type: 'spring', stiffness: 400, damping: 10 } }}
-                            className="group relative rounded-2xl overflow-hidden bg-white border border-[#1a1512]/5 cursor-pointer"
+                            className="group relative rounded-2xl overflow-hidden bg-white cursor-pointer"
                             style={{
                                 boxShadow: '0 4px 20px rgba(26,21,18,0.04), 0 1px 3px rgba(26,21,18,0.06)',
                             }}
@@ -175,7 +175,7 @@ export function SEOCaseStudies() {
                             {/* Image */}
                             <div className="relative aspect-[16/10] overflow-hidden">
                                 {/* Browser Chrome */}
-                                <div className="absolute top-0 left-0 right-0 h-7 bg-[#f3f4f6] flex items-center px-3 z-10 border-b border-[#1a1512]/5">
+                                <div className="absolute top-0 left-0 right-0 h-7 bg-[#f3f4f6] flex items-center px-3 z-10 rounded-t-2xl">
                                     <div className="flex items-center gap-1.5">
                                         <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
                                         <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />

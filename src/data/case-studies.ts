@@ -37,6 +37,120 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "mentality-health",
+    clientName: "Mentality Health",
+    logoSrc: "",
+    industry: "Health & Wellness",
+    year: "2026",
+    headline: "A conversion-optimized website that drives engagement and reduces bounce.",
+    shortDescription:
+      "Website design, development, and CRO that increased organic sessions and engagement while dramatically reducing bounce rate.",
+    websiteUrl: "",
+    featured: true,
+    services: ["Website Design", "Website Development", "CRO"],
+    industryTag: "Health & Wellness",
+    stats: [
+      { value: "5,646", label: "Organic Sessions", context: "Since Launch · Jan–Mar 2026" },
+      { value: "+22.5%", label: "Engagement Time Increase", context: "Month-over-Month" },
+      { value: "-32.9%", label: "Bounce Rate Reduction", context: "96% down to 64.4%" },
+    ],
+    testimonial: {
+      quote:
+        "Captive Demand delivered a website that truly represents our brand and drives real results. The team understood our vision from day one.",
+      author: "Partner",
+      role: "Team",
+      company: "Mentality Health",
+      avatarSrc: "/spencer-donaldson.jpg",
+    },
+    overview:
+      "Mentality Health needed a modern, conversion-focused website that could attract and retain visitors in the competitive health and wellness space.",
+    challenge:
+      "The existing site had a 96% bounce rate and minimal engagement. Visitors were leaving before understanding the value proposition.",
+    solution:
+      "We redesigned and developed a new website with a focus on conversion optimization, clear messaging, and an intuitive user experience that keeps visitors engaged.",
+    results:
+      "Organic sessions grew to 5,646 since launch. Engagement time increased 22.5% month-over-month. Bounce rate dropped from 96% to 64.4%.",
+    timeline: "3 months",
+    heroImage: "/mantalitycover2.png",
+    galleryImages: ["/mantalitycover2.png", "/mockup3.png", "/mockup4.png"],
+  },
+  {
+    slug: "custom-cowgirl",
+    clientName: "Custom Cowgirl",
+    logoSrc: "",
+    industry: "FASHION",
+    year: "2025",
+    headline: "A modern e-commerce experience that keeps visitors exploring.",
+    shortDescription:
+      "Website design and development for an apparel brand with a focus on session duration and pages per visit.",
+    websiteUrl: "https://customcowgirl.com",
+    featured: true,
+    services: ["Website Design", "Website Development"],
+    industryTag: "Fashion",
+    stats: [
+      { value: "1,057", label: "Total Sessions", context: "Nov 2025 – Mar 2026" },
+      { value: "1:48", label: "Avg. Session Duration", context: "Visitors staying & exploring" },
+      { value: "2.02", label: "Pages Per Session", context: "Avg. pages per visit" },
+    ],
+    testimonial: {
+      quote:
+        "Our new website has transformed how customers interact with our brand. The team understood exactly what we needed.",
+      author: "Partner",
+      role: "Team",
+      company: "Custom Cowgirl",
+      avatarSrc: "/spencer-donaldson.jpg",
+    },
+    overview:
+      "Custom Cowgirl needed a refreshed e-commerce presence that would encourage visitors to explore and convert.",
+    challenge:
+      "The previous site had low session duration and visitors weren't exploring multiple pages.",
+    solution:
+      "We designed and built a modern e-commerce website with intuitive navigation, compelling product presentation, and a seamless shopping experience.",
+    results:
+      "Total sessions reached 1,057 in the first five months. Average session duration hit 1:48, with visitors exploring 2.02 pages per session.",
+    timeline: "5 months",
+    heroImage: "/customcowgirlcover2.png",
+    galleryImages: ["/customcowgirlcover2.png", "/mockup3.png", "/mockup4.png"],
+  },
+  {
+    slug: "work-from-home-investor",
+    clientName: "Work From Home Investor",
+    logoSrc: "",
+    industry: "Education",
+    year: "2024",
+    headline: "An authoritative platform that engages and converts.",
+    shortDescription:
+      "Website design and development for a real estate investment education platform with strong engagement metrics.",
+    websiteUrl: "https://wfhinvestor.com",
+    featured: true,
+    services: ["Website Design", "Website Development"],
+    industryTag: "EDUCATION",
+    stats: [
+      { value: "739", label: "Total Sessions", context: "16 Months Since Launch" },
+      { value: "49.5 sec", label: "Avg. Engagement Time", context: "Last 30 Days" },
+      { value: "19.49%", label: "Engagement Rate", context: "Last 16 Months" },
+    ],
+    testimonial: {
+      quote:
+        "Captive Demand built us a platform that commands attention and keeps our audience engaged. The results speak for themselves.",
+      author: "Partner",
+      role: "Team",
+      company: "Work From Home Investor",
+      avatarSrc: "/spencer-donaldson.jpg",
+    },
+    overview:
+      "Work From Home Investor needed a professional, authoritative website for their real estate investment education platform.",
+    challenge:
+      "The platform needed to establish credibility and keep visitors engaged in a competitive finance and lifestyle space.",
+    solution:
+      "We designed and developed a clean, authoritative website that communicates expertise and encourages visitors to explore content and take action.",
+    results:
+      "739 total sessions over 16 months. Average engagement time of 49.5 seconds in the last 30 days. 19.49% engagement rate over the full period.",
+    timeline: "16 months",
+    heroImage: "/wfhcover2.png",
+    galleryImages: ["/wfhcover2.png", "/mockup3.png", "/mockup4.png"],
+  },
+  {
     slug: "farmulated",
     clientName: "Farmulated",
     logoSrc: "/logos/farmulated.png",
@@ -46,13 +160,13 @@ export const caseStudies: CaseStudy[] = [
     shortDescription:
       "A complete SEO and content overhaul that transformed Farmulated from invisible to industry-dominant in organic search.",
     websiteUrl: "https://farmulated.com",
-    featured: true,
+    featured: false,
     services: ["SEO", "Content Strategy", "AEO"],
     industryTag: "Health & Wellness",
     stats: [
-      { value: "+427%", label: "Organic Traffic", context: "in 6 months" },
-      { value: "34", label: "Page 1 Rankings", context: "high-intent keywords" },
-      { value: "+34%", label: "Revenue YOY", context: "from organic" },
+      { value: "+816%", label: "Organic Traffic", context: "1,200 → 11,000 Sessions/Mo" },
+      { value: "+40%", label: "Revenue Growth", context: "Year-over-Year" },
+      { value: "6.61%", label: "Conversion Rate", context: "Up 145%" },
     ],
     testimonial: {
       quote:
@@ -71,54 +185,50 @@ export const caseStudies: CaseStudy[] = [
     results:
       "Within 6 months, Farmulated went from page 5 to position 1 for 34 high-intent keywords. Organic traffic increased by 427%, and revenue from organic channels grew 34% year-over-year. They're now consistently cited in AI overviews for CBD-related queries, driving a new channel of zero-click authority traffic.",
     timeline: "6 months",
-    heroImage: "/farmulated.png",
+    heroImage: "/farmulatedcover2.png",
     galleryImages: [
-      "/farmulated.png",
+      "/farmulatedcover2.png",
       "/mockup3.png",
       "/mockup4.png",
     ],
   },
   {
-    slug: "north-star-nature-suites",
-    clientName: "North Star Nature Suites",
-    logoSrc: "/logos/arcticelevation.png",
-    industry: "Hospitality",
+    slug: "voyage-and-vibes",
+    clientName: "Voyage & Vibes",
+    logoSrc: "",
+    industry: "Travel Agency & Tours",
     year: "2024",
-    headline: "Dominated local search and cut OTA dependency by 60%.",
+    headline: "A fully operational booking system, CRM, and custom dashboard — every trip sold out.",
     shortDescription:
-      "Local SEO and schema markup strategy that drove direct bookings and reduced reliance on third-party booking platforms.",
-    websiteUrl: "https://northstarnaturesuites.com",
-    featured: true,
-    services: ["Local SEO", "Website Design", "Schema Markup"],
-    industryTag: "Hospitality",
+      "Web design & development, booking system, CRM, and marketing automation for a Nashville-based travel experience company.",
+    websiteUrl: "",
+    featured: false,
+    services: ["Website Design", "Website Development", "CRM", "Marketing Automation", "Booking System"],
+    industryTag: "Travel Agency & Tours",
     stats: [
-      { value: "+289%", label: "Direct Bookings", context: "year-over-year" },
-      { value: "60%", label: "OTA Dependency Cut", context: "in 4 months" },
-      { value: "#1", label: "Local Pack", context: "luxury cabin rentals" },
+      { value: "20,000", label: "Monthly Website Visits", context: "Consistent monthly traffic" },
+      { value: "100%", label: "YoY Revenue Growth", context: "Year-over-Year" },
+      { value: "100%", label: "Trips Sold Out", context: "Every trip at full capacity" },
     ],
     testimonial: {
       quote:
-        "Our business went from only referral-based clients to having an entire authoritative online presence that allowed us to grow by over 1,000% in our first true year of business. It opened doors to partnerships that we did not believe were possible.",
-      author: "Matthew Ford",
-      role: "Founder",
-      company: "North Star Nature Suites",
-      avatarSrc: "/matthew.webp",
+        "Voyage & Vibes launched with a fully operational booking system, CRM, and custom dashboard — and the results speak for themselves. Every trip since launch has sold out at 100% capacity. The site now drives 20,000 visits a month, and the business has grown 100% year-over-year.",
+      author: "Partner",
+      role: "Team",
+      company: "Voyage & Vibes",
+      avatarSrc: "/spencer-donaldson.jpg",
     },
     overview:
-      "North Star Nature Suites is a luxury cabin rental property in a competitive hospitality market. They were hemorrhaging margin to OTA platforms like Airbnb and VRBO, paying 15-20% commissions on every booking. They needed direct bookings driven by organic search.",
+      "Voyage & Vibes is a Nashville-based travel experience company specializing in curated group trips. They offer themed travel experiences across adventure, cultural, culinary & wine, and fitness & wellness — handling everything from planning to execution for a fully stress-free experience.",
     challenge:
-      "The hospitality industry is dominated by OTAs with massive domain authority. Competing for local search visibility against Airbnb, VRBO, and Booking.com requires a precision strategy. North Star had no local SEO foundation, no schema markup, and a website that wasn't optimized for conversion.",
+      "Voyage & Vibes needed a scalable digital infrastructure to support their growing travel business — from booking to customer management to marketing.",
     solution:
-      "We built a comprehensive local SEO strategy: Google Business Profile optimization, location-specific landing pages, and rich schema markup for lodging and reviews. The website was redesigned with a focus on direct booking conversion. We implemented FAQ and review schema to capture rich snippet real estate in search results.",
+      "We built a visually engaging, user-friendly website with a full end-to-end booking flow. We created a custom trip management dashboard for internal operations, implemented a full CRM to manage customer relationships, and integrated marketing automation for customer communication and trip promotion.",
     results:
-      "Direct bookings increased 289% year-over-year. OTA dependency dropped from 85% to 25% of total revenue. North Star now holds the #1 position in the local pack for luxury cabin rental searches in their market, and their average booking value increased 22% through direct-channel upselling.",
-    timeline: "4 months",
-    heroImage: "/northstarnaturesuites.png",
-    galleryImages: [
-      "/northstarnaturesuites.png",
-      "/mockup3.png",
-      "/mockup4.png",
-    ],
+      "Voyage & Vibes launched with a fully operational booking system, CRM, and custom dashboard — and the results speak for themselves. Every trip since launch has sold out at 100% capacity. The site now drives 20,000 visits a month, and the business has grown 100% year-over-year.",
+    timeline: "6 months",
+    heroImage: "/voyagecover2.png",
+    galleryImages: ["/voyagecover2.png", "/mockup3.png", "/mockup4.png"],
   },
   {
     slug: "boombox",
@@ -130,8 +240,8 @@ export const caseStudies: CaseStudy[] = [
     shortDescription:
       "Technical SEO and entity-building strategy that earned AI citations across ChatGPT and Google SGE for a music tech startup.",
     websiteUrl: "https://boombox.com",
-    featured: true,
-    services: ["Technical SEO", "Entity SEO", "AEO"],
+    featured: false,
+    services: ["Website Design", "Website Development", "Technical SEO", "Entity SEO", "AEO"],
     industryTag: "Entertainment",
     stats: [
       { value: "+512%", label: "Search Visibility", context: "in 4 months" },
@@ -155,93 +265,94 @@ export const caseStudies: CaseStudy[] = [
     results:
       "Within 4 months, search visibility increased 512%. Boombox earned 47 AI citations across ChatGPT and Google SGE results. Organic lead generation tripled quarter-over-quarter. They're now recognized as a topical authority in the AI music space, with content being cited by AI models as a primary source.",
     timeline: "4 months",
-    heroImage: "/boombox.png",
+    heroImage: "/boomboxcover2.png",
     galleryImages: [
-      "/boombox.png",
+      "/boomboxcover2.png",
       "/mockup3.png",
       "/mockup4.png",
     ],
   },
   {
     slug: "velocity-international",
-    clientName: "Velocity International",
+    clientName: "Velocity International Group",
     logoSrc: "/logos/velocity.png",
-    industry: "Logistics",
-    year: "2025",
-    headline: "A website that finally matched the scale of the business.",
+    industry: "Logistics & 3PL",
+    year: "2024",
+    headline: "67% YoY growth for three consecutive years — infrastructure that scales.",
     shortDescription:
-      "Enterprise-grade website redesign and email automation that repositioned Velocity as a market leader in global logistics.",
+      "Website design & development, custom software, SEO, and business process development for a Nashville-based same-day courier and 3PL logistics company.",
     websiteUrl: "https://velocityintl.com",
     featured: false,
-    services: ["Website Design", "Email Marketing", "Branding"],
-    industryTag: "Logistics",
+    services: ["Website Design", "Website Development", "SEO", "Custom Software", "Analytics & Reporting", "Business Process Development"],
+    industryTag: "Logistics & 3PL",
     stats: [
-      { value: "4.2x", label: "Lead Conversion", context: "post-redesign" },
-      { value: "+156%", label: "Email Revenue", context: "in 3 months" },
-      { value: "38%", label: "Bounce Rate Drop", context: "site-wide" },
+      { value: "67%", label: "YoY Revenue Growth", context: "3 consecutive years" },
+      { value: "3 yrs", label: "Consecutive Growth", context: "" },
+      { value: "40%", label: "Reduction in Admin Time", context: "Through custom software & process builds" },
+      { value: "2x", label: "Hiring Efficiency", context: "Faster onboarding, better retention" },
     ],
     testimonial: {
       quote:
-        "Captive Demand is different than any other agency we have worked with. They take a genuine interest in your success and back up their promises with results. Our website is everything we wanted and more.",
+        "Velocity International has grown 67% year-over-year for three consecutive years — and the infrastructure we've built together is a big part of why. From a performance website and SEO to custom internal software and business processes, every engagement has been focused on making the business faster, leaner, and more scalable. The result is a logistics company that doesn't just move freight — it runs like one.",
       author: "Ben Elizer",
       role: "CEO",
-      company: "Velocity International",
+      company: "Velocity International Group",
       avatarSrc: "/ben.webp",
     },
     overview:
-      "Velocity International is a global logistics company with enterprise clients, but their digital presence told a different story. Their website looked like it was built in 2015, their email marketing was nonexistent, and they were losing deals to competitors with better-looking brands.",
+      "Velocity International Group is a Nashville-based same-day courier and 3PL logistics company serving businesses of all sizes. They offer local and long-distance expedited shipping, warehousing, and fulfillment — built around reliability and speed.",
     challenge:
-      "In B2B logistics, trust is everything. Velocity's outdated website was actively undermining their sales team's efforts. Prospects would visit the site after a great sales call and immediately question the company's capabilities. The disconnect between their actual service quality and their digital presence was costing them six-figure contracts.",
+      "Velocity needed to scale operations without scaling headcount. Manual processes, outdated systems, and lack of visibility were limiting growth.",
     solution:
-      "We redesigned the entire web presence from the ground up — a modern, enterprise-grade website that communicated scale and reliability. We implemented a full email marketing automation system with nurture sequences, proposal follow-ups, and re-engagement campaigns. The brand was refreshed to match the caliber of their client roster.",
+      "We built and continue to support a full website that positions Velocity as a credible logistics partner. We built internal software tooling to streamline operations and reduce manual work. We implemented ongoing SEO, full GA4 setup, custom analytics, and business process development across hiring, onboarding, and fulfillment workflows.",
     results:
-      "Lead conversion increased 4.2x after the redesign. Email marketing generated a 156% increase in revenue within the first 3 months. Site-wide bounce rate dropped 38%, and average session duration doubled. The sales team reported that prospects now arrive to calls already pre-sold on Velocity's capabilities.",
-    timeline: "8 weeks",
-    heroImage: "/mockup3.png",
+      "Velocity International has grown 67% year-over-year for three consecutive years. Custom software and process builds reduced admin time by 40%. Hiring efficiency doubled through faster onboarding and better retention.",
+    timeline: "3 years",
+    heroImage: "/velocitycover2.png",
     galleryImages: [
-      "/mockup3.png",
+      "/velocitycover2.png",
       "/mockup4.png",
       "/farmulated.png",
     ],
   },
   {
-    slug: "apex-digital",
-    clientName: "Apex Digital",
-    logoSrc: "/logos/encappture.png",
-    industry: "SaaS",
-    year: "2025",
-    headline: "Automated 80% of their marketing ops in 6 weeks.",
+    slug: "endura-commerce",
+    clientName: "Endura Commerce",
+    logoSrc: "/logos/enduracommerce.svg",
+    industry: "Fintech / Payment Processing",
+    year: "2024",
+    headline: "Full lead generation infrastructure from scratch — CRM, data, workflows, campaigns, and funnels.",
     shortDescription:
-      "Marketing automation and email infrastructure that freed up 30+ hours per week and doubled their lead-to-close rate.",
-    websiteUrl: "https://apexdigital.io",
+      "Marketing automation, CRM, email marketing, and website & funnel builds for a Nashville-based fintech company (formerly Verity Payment Solutions).",
+    websiteUrl: "",
     featured: false,
-    services: ["Marketing Automation", "Email Marketing", "SEO"],
-    industryTag: "SaaS",
+    services: ["Marketing Automation", "CRM Setup", "Email Marketing", "Website Design", "Website Development", "Sales Funnels"],
+    industryTag: "Fintech / Payment Processing",
     stats: [
-      { value: "80%", label: "Ops Automated", context: "in 6 weeks" },
-      { value: "2x", label: "Close Rate", context: "lead-to-customer" },
-      { value: "30+", label: "Hours Saved", context: "per week" },
+      { value: "3x", label: "Monthly Lead Volume", context: "From automated email campaigns" },
+      { value: "40%+", label: "Email Open Rate", context: "Above industry average" },
+      { value: "5", label: "Active Funnels Built", context: "Websites, landing pages & workflows" },
     ],
     testimonial: {
       quote:
-        "They are always on time and they're always willing to listen to my non-tech vision and translate the vision into core pieces of my business. They are responsive, have a high quality of work, and always listen to my goals.",
-      author: "Bonnie Paik",
-      role: "Owner",
-      company: "Apex Digital",
-      avatarSrc: "/bonnie.webp",
+        "Endura Commerce came to us with a strong service offering and no scalable way to generate leads. We built the full infrastructure from scratch — CRM, data, workflows, campaigns, websites, and funnels — and turned it into a consistent, automated lead generation engine. The result is a fintech brand that now competes for the merchants that bigger processors overlook, with the systems to prove it.",
+      author: "Partner",
+      role: "Team",
+      company: "Endura Commerce",
+      avatarSrc: "/spencer-donaldson.jpg",
     },
     overview:
-      "Apex Digital is a fast-growing SaaS company whose marketing team was drowning in manual processes. Lead scoring, email sequences, follow-ups, and reporting were all handled manually — consuming over 30 hours per week of skilled labor on tasks that should be automated.",
+      "Endura Commerce (formerly Verity Payment Solutions) is a Nashville-based fintech company specializing in payment processing solutions for small and mid-sized businesses. With over 30 years of combined experience, they exist specifically to serve the merchants that big-box processors ignore.",
     challenge:
-      "The marketing team was spending more time on operational tasks than strategic work. Manual lead scoring meant hot leads went cold. Email sequences were inconsistent. Reporting took days to compile. The team was burning out, and growth was plateauing because they couldn't scale their efforts without scaling headcount.",
+      "Endura Commerce had a strong service offering but no scalable way to generate leads. They needed full infrastructure — CRM, data, workflows, campaigns, websites, and funnels.",
     solution:
-      "We implemented a full marketing automation stack: automated lead scoring and routing, multi-touch email nurture sequences triggered by behavior, real-time reporting dashboards, and integration between their CRM, email platform, and analytics tools. Every workflow was designed to eliminate manual touchpoints while maintaining personalization.",
+      "We built a custom CRM to manage leads and pipeline. We sourced high-quality prospect data and designed automated email workflows for lead nurturing, onboarding, and re-engagement. We designed and built multiple websites and conversion funnels to support campaigns and capture inbound interest.",
     results:
-      "Within 6 weeks, 80% of their marketing operations were automated. The lead-to-close rate doubled as hot leads were routed instantly. The team recovered 30+ hours per week, redirecting that time into strategic initiatives that drove a 45% increase in pipeline value the following quarter.",
-    timeline: "6 weeks",
-    heroImage: "/mockup4.png",
+      "Endura Commerce came to us with a strong service offering and no scalable way to generate leads. We built the full infrastructure from scratch — CRM, data, workflows, campaigns, websites, and funnels — and turned it into a consistent, automated lead generation engine. The result is a fintech brand that now competes for the merchants that bigger processors overlook, with the systems to prove it.",
+    timeline: "6 months",
+    heroImage: "/enduracover2.png",
     galleryImages: [
-      "/mockup4.png",
+      "/enduracover2.png",
       "/mockup3.png",
       "/farmulated.png",
     ],

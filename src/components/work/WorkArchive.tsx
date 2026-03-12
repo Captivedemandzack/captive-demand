@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, ExternalLink, Star } from 'lucide-react';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 import { AccentBr } from '@/components/ui/accent-br';
 import { EyebrowHeading } from '@/components/ui/eyebrow-heading';
@@ -15,6 +15,7 @@ import { caseStudies, getFeaturedCaseStudies, getLiveWebsites } from '@/data/cas
 import { partnerLogos } from '@/data/logos';
 import type { CaseStudy } from '@/data/case-studies';
 import { CTASection } from '@/components/sections/CTASection';
+import { AnimatedCTAButton } from '@/components/sections/Hero';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,11 +73,22 @@ function ArchitecturalGrid({ positions }: { positions: GridPositions | null }) {
 
 /* ─── Section 1: Hero ─── */
 
+const WORK_HERO_AVATARS = ['/tricia.webp', '/Jordan.jpeg', '/matthew.webp', '/bonnie.webp', '/ben.webp'];
+
+const HERO_BG = '#FAFAFA';
+
 function LogoScroll() {
   return (
-    <div className="relative w-full max-w-sm overflow-hidden">
-      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#FAFAFA] to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#FAFAFA] to-transparent z-10 pointer-events-none" />
+    <div className="relative w-full max-w-[320px] overflow-hidden bg-[#FAFAFA]">
+      <NoiseOverlay opacity={0.02} className="z-[11]" />
+      <div
+        className="absolute left-0 top-0 bottom-0 w-12 z-10 pointer-events-none"
+        style={{ background: `linear-gradient(to right, ${HERO_BG} 0%, ${HERO_BG} 20%, transparent 100%)` }}
+      />
+      <div
+        className="absolute right-0 top-0 bottom-0 w-12 z-10 pointer-events-none"
+        style={{ background: `linear-gradient(to left, ${HERO_BG} 0%, ${HERO_BG} 20%, transparent 100%)` }}
+      />
       <motion.div
         className="flex gap-12 items-center"
         animate={{ x: [0, -800] }}
@@ -198,25 +210,62 @@ function WorkHero() {
             </p>
 
             <div className="work-hero-text mt-8 flex flex-col items-start gap-2">
-              <a
-                href="https://cal.com"
-                className="inline-flex items-center gap-3 bg-[#1a1512] text-white px-8 py-4 rounded-xl font-mono text-sm uppercase tracking-wider hover:scale-[1.02] transition-transform group"
-              >
-                Talk to a Founder
-                <ArrowRight size={16} className="text-[#ff5501] group-hover:translate-x-1 transition-transform" strokeWidth={2} />
-              </a>
-              <span className="font-mono text-[10px] text-[#1a1512]/40 uppercase tracking-wider">
-                2 spots left this month
-              </span>
+              <AnimatedCTAButton />
+              <div className="mt-4 flex items-center gap-2">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff5501] opacity-40" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#ff5501]" />
+                </span>
+                <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#1a1512]/50">
+                  2 spots left this month
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Right — Logo Scroll */}
-          <div ref={rightRef} className="w-full lg:w-[45%] flex flex-col items-start lg:items-end gap-4 lg:pt-8">
-            <span className="work-hero-badge font-mono text-[10px] text-[#1a1512]/30 uppercase tracking-wider mb-2">
-              Trusted Partner Network
-            </span>
-            <LogoScroll />
+          {/* Right — Badges + Stats + LogoScroll, aligned left under badges */}
+          <div ref={rightRef} className="w-full lg:w-[45%] flex flex-col items-start gap-2 lg:pt-8 lg:self-center">
+            <div className="work-hero-badge flex flex-wrap gap-2 lg:ml-4">
+              {[
+                { label: 'Top Web Design Agency of 2025', icon: '/clutch.png' },
+                { label: 'Elementor Agency Partner', icon: '/Elementor-Logo-Symbol-Red (1).svg' },
+                { label: 'Shopify Partner', icon: '/shopify_glyph.svg' },
+                { label: 'Cursor Experts', icon: '/CUBE_2D_LIGHT.svg' },
+              ].map((badge) => (
+                <span
+                  key={badge.label}
+                  className="inline-flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[10px] tracking-[0.1em] text-[#121212]/70 whitespace-nowrap w-fit"
+                  style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={badge.icon} alt="" className="w-4 h-4 shrink-0 object-contain" />
+                  {badge.label}
+                </span>
+              ))}
+            </div>
+            <div className="work-hero-badge flex items-center gap-4 w-full max-w-[320px] mt-6 lg:ml-4">
+              <div className="flex -space-x-2.5">
+                {WORK_HERO_AVATARS.map((src) => (
+                  <div key={src} className="relative w-10 h-10 rounded-full border-2 border-[#FAFAFA] overflow-hidden flex-shrink-0">
+                    <Image src={src} alt="" fill className="object-cover" sizes="40px" />
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-col min-w-0">
+                <div className="flex items-center gap-1">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <Star key={i} size={14} fill="#ff5501" className="text-[#ff5501]" strokeWidth={0} />
+                  ))}
+                  <span className="font-mono text-xs text-[#1a1512] ml-1 font-bold">5.0</span>
+                </div>
+                <span className="font-mono text-[10px] text-[#1a1512]/50 uppercase tracking-wider whitespace-nowrap">
+                  300+ businesses supported
+                </span>
+              </div>
+            </div>
+            <div className="mt-3 lg:ml-6">
+              <LogoScroll />
+            </div>
           </div>
         </div>
       </div>
@@ -240,8 +289,9 @@ function FeaturedCarousel() {
   const study = featured[activeIndex];
 
   return (
-    <section className="w-full bg-[#FAFAFA] pt-8 md:pt-16 pb-24 md:pb-40 px-4 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative w-full bg-[#FAFAFA] pt-8 md:pt-16 pb-24 md:pb-40 px-4 overflow-hidden">
+      <NoiseOverlay opacity={0.02} />
+      <div className="relative z-10 max-w-7xl mx-auto">
         <div className="mb-8">
           <div className="mb-6 w-full">
             <DecorativeShapeWithLine />
@@ -261,14 +311,14 @@ function FeaturedCarousel() {
         <AnimatePresence mode="wait">
           <motion.div
             key={study.slug}
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 1, x: 0 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -30 }}
             transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] }}
-            className="grid grid-cols-1 lg:grid-cols-[70%_30%] gap-4 lg:gap-6"
+            className="grid grid-cols-1 lg:grid-cols-[70%_30%] gap-4 lg:gap-6 bg-transparent"
           >
-            {/* Left — Image (separate box) */}
-            <Link href={`/work/${study.slug}`} className="block group">
+            {/* Left — Image (separate box) — on top so card slides out from behind */}
+            <Link href={`/work/${study.slug}`} className="block group relative z-10">
               <div
                 className="relative h-[300px] md:h-[420px] lg:h-[480px] overflow-hidden rounded-2xl border border-[#1a1512]/5"
                 style={{ boxShadow: '0 4px 20px rgba(26,21,18,0.04), 0 1px 3px rgba(26,21,18,0.06)' }}
@@ -277,27 +327,37 @@ function FeaturedCarousel() {
                   src={study.heroImage}
                   alt={study.clientName}
                   fill
-                  className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                  className="object-cover"
                   unoptimized
                 />
               </div>
             </Link>
 
-            {/* Right — Content Card (separate box) */}
-            <div
-              className="rounded-2xl p-6 md:p-8 flex flex-col justify-between relative overflow-hidden border border-[#1a1512]/5"
+            {/* Right — Content Card — slides out from behind image when section in view */}
+            <motion.div
+              initial={{ x: '-100%' }}
+              whileInView={{ x: 0 }}
+              viewport={{ once: true, amount: 1 }}
+              transition={{ type: 'spring' as const, stiffness: 200, damping: 25 }}
+              className="rounded-2xl p-6 md:p-8 flex flex-col justify-between relative overflow-hidden bg-[#0d0d0d]"
               style={{
-                background: 'linear-gradient(160deg, #1a1512 0%, #2a2018 40%, #3d2c1a 70%, #ff5501 180%)',
-                boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(255,255,255,0.06), 0 4px 20px rgba(26,21,18,0.08)',
+                boxShadow:
+                  'inset 0 1px 0 0 rgba(255,255,255,0.06), inset 0 -1px 0 0 rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.03), 0 4px 16px rgba(0,0,0,0.2), 0 16px 48px -8px rgba(0,0,0,0.4), 0 24px 64px -16px rgba(0,0,0,0.25)',
               }}
             >
-              <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 100% 100%, rgba(255,85,1,0.15) 0%, transparent 60%)' }} />
+              {/* Subtle noise texture for material feel */}
+              <div
+                className="absolute inset-0 pointer-events-none rounded-2xl opacity-[0.03] mix-blend-overlay"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                }}
+              />
 
               <div className="relative z-10">
-                {/* Logo pill — standardized with rivets, less rounded */}
-                <div className="mb-8">
+                {/* Logo pill + Industry — side by side */}
+                <div className="flex items-start justify-between gap-4 mb-8 pb-5 border-b border-white/10">
                   <div
-                    className="inline-flex items-center gap-2.5 px-4 py-2 rounded-[8px]"
+                    className="inline-flex items-center gap-2.5 px-4 py-2 rounded-[8px] shrink-0"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(255,255,255,0.12), rgba(255,255,255,0.04))',
                       boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.15), 0 0 0 1px rgba(255,255,255,0.1), 0 2px 4px rgba(0,0,0,0.2)',
@@ -315,6 +375,17 @@ function FeaturedCarousel() {
                     ) : (
                       <span className="text-white/80 text-sm font-medium">{study.clientName}</span>
                     )}
+                  </div>
+                  <div className="text-right">
+                    <span
+                      className="text-base text-white block"
+                      style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
+                    >
+                      {study.industry}
+                    </span>
+                    <span className="font-mono text-[10px] text-white/30 uppercase tracking-wider mt-0.5">
+                      Industry
+                    </span>
                   </div>
                 </div>
 
@@ -334,19 +405,6 @@ function FeaturedCarousel() {
                     </div>
                   ))}
                 </div>
-
-                {/* Industry */}
-                <div className="mt-6 pt-5 border-t border-white/10">
-                  <span
-                    className="text-base text-white block"
-                    style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
-                  >
-                    {study.industry}
-                  </span>
-                  <span className="font-mono text-[10px] text-white/30 uppercase tracking-wider">
-                    Industry
-                  </span>
-                </div>
               </div>
 
               {/* CTA — tonal like CaseStudyCard overlay */}
@@ -355,28 +413,34 @@ function FeaturedCarousel() {
                   className="inline-flex items-center justify-center w-full gap-2 bg-[#1a1512] text-[#ff5501] px-6 py-3 rounded-xl font-mono text-xs uppercase tracking-wider border border-[#ff5501]/50 hover:scale-[1.02] transition-transform"
                 >
                   Read case study
-                  <ArrowRight size={14} strokeWidth={2} />
+                  <ArrowUpRight size={14} strokeWidth={2} />
                 </span>
               </Link>
-            </div>
+            </motion.div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Navigation — dots + arrows */}
-        <div className="flex items-center justify-center gap-4 mt-8">
+        {/* Navigation — styled like FilterGrid view toggle */}
+        <div
+          className="flex items-center justify-center gap-1 mt-8 p-1 rounded-[8px] w-fit mx-auto"
+          style={{
+            background: 'linear-gradient(to bottom, #f7f6f5, #EBE9E5)',
+            boxShadow: 'inset 0 1px 0 0 #FFFFFF, 0 0 0 1px #D1CDC7, 0 2px 4px rgba(0,0,0,0.06)',
+          }}
+        >
           <button
             onClick={prev}
-            className="w-10 h-10 rounded-full border border-[#1a1512]/10 flex items-center justify-center hover:border-[#1a1512]/30 transition-colors"
+            className="w-10 h-10 rounded-[6px] flex items-center justify-center text-[#1a1512]/50 hover:text-[#1a1512]/80 hover:bg-[#1a1512]/5 transition-colors"
           >
-            <ChevronLeft size={18} className="text-[#1a1512]/50" strokeWidth={1.5} />
+            <ChevronLeft size={18} strokeWidth={1.5} />
           </button>
 
-          <div className="flex items-center gap-1.5 bg-[#f3f4f6] rounded-full px-3 py-2">
+          <div className="flex items-center gap-1.5 px-3 py-2">
             {featured.map((_, i) => (
               <button
                 key={i}
                 onClick={() => goTo(i)}
-                className={`rounded-full transition-all duration-300 ${
+                className={`rounded-[6px] transition-all duration-300 ${
                   i === activeIndex
                     ? 'w-6 h-2.5 bg-[#1a1512]'
                     : 'w-2.5 h-2.5 bg-[#1a1512]/15 hover:bg-[#1a1512]/25'
@@ -387,9 +451,9 @@ function FeaturedCarousel() {
 
           <button
             onClick={next}
-            className="w-10 h-10 rounded-full border border-[#1a1512]/10 flex items-center justify-center hover:border-[#1a1512]/30 transition-colors"
+            className="w-10 h-10 rounded-[6px] flex items-center justify-center text-[#1a1512]/50 hover:text-[#1a1512]/80 hover:bg-[#1a1512]/5 transition-colors"
           >
-            <ChevronRight size={18} className="text-[#1a1512]/50" strokeWidth={1.5} />
+            <ChevronRight size={18} strokeWidth={1.5} />
           </button>
         </div>
       </div>
@@ -431,8 +495,9 @@ function FilterGrid() {
   const filtered = viewMode === 'case-studies' ? caseStudyList : liveWebsitesList;
 
   return (
-    <section className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden">
+      <NoiseOverlay opacity={0.02} />
+      <div className="relative z-10 max-w-7xl mx-auto">
         <div className="mb-12">
           <div className="mb-6 w-full">
             <DecorativeShapeWithLine />
@@ -488,7 +553,7 @@ function FilterGrid() {
               <button
                 key={tab}
                 onClick={() => setActiveFilter(tab)}
-                className={`px-5 py-2.5 rounded-full font-mono text-xs uppercase tracking-wider transition-all duration-300 border ${
+                className={`px-5 py-2.5 rounded-[8px] font-mono text-xs uppercase tracking-wider transition-all duration-300 border ${
                   activeFilter === tab
                     ? 'bg-[#1a1512] text-white border-[#1a1512]'
                     : 'bg-transparent text-[#1a1512]/50 border-[#1a1512]/10 hover:border-[#1a1512]/30'
@@ -552,18 +617,18 @@ function LiveWebsiteCard({ study, index }: { study: CaseStudy; index: number }) 
         className="block group"
       >
         <div
-          className="rounded-2xl overflow-hidden bg-white border border-[#1a1512]/5 hover:shadow-lg transition-shadow duration-300"
+          className="rounded-2xl overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300"
           style={{ boxShadow: '0 4px 20px rgba(26,21,18,0.04), 0 1px 3px rgba(26,21,18,0.06)' }}
         >
           {/* Wider aspect ratio (laptop-like 16/10) */}
           <div className="relative aspect-[16/10] overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-7 bg-[#f3f4f6] flex items-center px-3 z-10 border-b border-[#1a1512]/5">
+            <div className="absolute top-0 left-0 right-0 h-7 bg-[#f3f4f6] flex items-center px-3 z-10 rounded-t-2xl">
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
                 <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
                 <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
               </div>
-              <div className="flex-1 mx-2 h-3.5 bg-white border border-[#1a1512]/5 rounded-sm flex items-center px-2">
+              <div className="flex-1 mx-2 h-3.5 bg-white rounded-sm flex items-center px-2">
                 <span className="text-[7px] text-[#1a1512]/30 font-mono truncate">{study.websiteUrl.replace('https://', '')}</span>
               </div>
             </div>
@@ -605,12 +670,13 @@ function LiveWebsiteCard({ study, index }: { study: CaseStudy; index: number }) 
 
 function TestimonialBand() {
   const testimonials = caseStudies
-    .filter((s) => s.testimonial.quote.length > 80)
+    .filter((s) => s.testimonial.quote.length > 80 && s.testimonial.author && s.testimonial.author !== 'Partner')
     .slice(0, 3);
 
   return (
-    <section className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden">
+      <NoiseOverlay opacity={0.02} />
+      <div className="relative z-10 max-w-7xl mx-auto">
         <div className="mb-12">
           <div className="mb-6 w-full">
             <DecorativeShapeWithLine />
@@ -627,18 +693,34 @@ function TestimonialBand() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((study, i) => (
-            <motion.div
-              key={study.slug}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              viewport={{ once: true }}
-              className="relative rounded-2xl bg-[#f6f5f6] border border-black/5 p-6 md:p-8 overflow-hidden"
-              style={{
-                boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)',
-              }}
-            >
+          {testimonials.map((study, i) => {
+            const isFeatured = i === testimonials.length - 1;
+            return (
+              <motion.div
+                key={study.slug}
+                initial={{ opacity: 1, y: 0, rotate: isFeatured ? 0 : 0 }}
+                whileInView={{ opacity: 1, y: 0, rotate: isFeatured ? -2.5 : 0 }}
+                transition={
+                  isFeatured
+                    ? { rotate: { type: 'spring' as const, stiffness: 180, damping: 14, delay: 0.15 } }
+                    : {}
+                }
+                viewport={{ once: true, amount: 1 }}
+                className={`relative rounded-2xl p-6 md:p-8 overflow-hidden ${isFeatured ? '' : 'bg-[#f6f5f6] border border-black/5'}`}
+                style={
+                  isFeatured
+                    ? {
+                        background: 'linear-gradient(160deg, #ff5501 0%, #e84d00 35%, #d94500 70%, #c73d00 100%)',
+                        boxShadow:
+                          'inset 0 1px 0 0 rgba(255,255,255,0.2), inset 0 -1px 0 0 rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.08), 0 4px 16px rgba(255,85,1,0.15), 0 12px 40px -8px rgba(0,0,0,0.2), 0 24px 56px -16px rgba(0,0,0,0.18)',
+                        transformOrigin: 'bottom center',
+                      }
+                    : {
+                        boxShadow:
+                          '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)',
+                      }
+                }
+              >
               {/* Rivets */}
               <div className="absolute top-4 left-4 w-[7px] h-[7px] rounded-full z-20" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
               <div className="absolute top-4 right-4 w-[7px] h-[7px] rounded-full z-20" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
@@ -646,24 +728,40 @@ function TestimonialBand() {
               <div className="absolute bottom-4 right-4 w-[7px] h-[7px] rounded-full z-20" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
 
               <svg width="24" height="21" viewBox="0 0 24 21" fill="none" className="mb-4 relative z-10">
-                <path d="M19.7711 12.3665C20.0495 11.3681 18.976 10.6575 17.9395 10.6575C16.5573 10.6575 15.3611 10.1461 14.351 9.12342C13.2878 8.10074 12.7561 6.86277 12.7561 5.40948C12.7561 3.90236 13.2878 2.61054 14.351 1.53403C15.3611 0.511342 16.6104 0 18.099 0C19.9065 0 21.3419 0.645908 22.4051 1.93772C23.4684 3.22954 24 4.89814 24 6.94351C24 10.496 23.0431 13.4026 21.1292 15.6632C19.3099 17.8634 16.818 19.5043 13.6535 20.5857C13.3829 20.6782 13.0928 20.5194 13.0184 20.2432C12.9581 20.0193 13.0593 19.7839 13.2603 19.6683C15.079 18.6223 16.6387 17.3143 17.9395 15.744C18.8192 14.7163 19.4297 13.5904 19.7711 12.3665ZM7.01491 12.6167C7.29338 11.6183 6.21987 10.9077 5.18331 10.9077C3.80108 10.9077 2.60493 10.3963 1.59484 9.37366C0.531589 8.35098 0 7.11299 0 5.6597C0 4.15258 0.531589 2.86076 1.59484 1.78425C2.60493 0.761562 3.85425 0.25022 5.3428 0.25022C7.15032 0.25022 8.58571 0.896128 9.64896 2.18794C10.7122 3.47976 11.2438 5.14836 11.2438 7.19373C11.2438 10.7462 10.2869 13.6528 8.37306 15.9135C6.55373 18.1137 4.06185 19.7545 0.897371 20.836C0.626768 20.9285 0.336657 20.7696 0.262276 20.4935C0.201963 20.2696 0.30315 20.0341 0.504164 19.9185C2.32284 18.8726 3.88253 17.5645 5.18331 15.9942C6.06302 14.9665 6.67355 13.8407 7.01491 12.6167Z" fill="url(#q_grad_archive)" />
+                <path d="M19.7711 12.3665C20.0495 11.3681 18.976 10.6575 17.9395 10.6575C16.5573 10.6575 15.3611 10.1461 14.351 9.12342C13.2878 8.10074 12.7561 6.86277 12.7561 5.40948C12.7561 3.90236 13.2878 2.61054 14.351 1.53403C15.3611 0.511342 16.6104 0 18.099 0C19.9065 0 21.3419 0.645908 22.4051 1.93772C23.4684 3.22954 24 4.89814 24 6.94351C24 10.496 23.0431 13.4026 21.1292 15.6632C19.3099 17.8634 16.818 19.5043 13.6535 20.5857C13.3829 20.6782 13.0928 20.5194 13.0184 20.2432C12.9581 20.0193 13.0593 19.7839 13.2603 19.6683C15.079 18.6223 16.6387 17.3143 17.9395 15.744C18.8192 14.7163 19.4297 13.5904 19.7711 12.3665ZM7.01491 12.6167C7.29338 11.6183 6.21987 10.9077 5.18331 10.9077C3.80108 10.9077 2.60493 10.3963 1.59484 9.37366C0.531589 8.35098 0 7.11299 0 5.6597C0 4.15258 0.531589 2.86076 1.59484 1.78425C2.60493 0.761562 3.85425 0.25022 5.3428 0.25022C7.15032 0.25022 8.58571 0.896128 9.64896 2.18794C10.7122 3.47976 11.2438 5.14836 11.2438 7.19373C11.2438 10.7462 10.2869 13.6528 8.37306 15.9135C6.55373 18.1137 4.06185 19.7545 0.897371 20.836C0.626768 20.9285 0.336657 20.7696 0.262276 20.4935C0.201963 20.2696 0.30315 20.0341 0.504164 19.9185C2.32284 18.8726 3.88253 17.5645 5.18331 15.9942C6.06302 14.9665 6.67355 13.8407 7.01491 12.6167Z" fill={isFeatured ? `url(#q_grad_featured_${i})` : `url(#q_grad_archive_${i})`} />
                 <defs>
-                  <linearGradient id="q_grad_archive" x1="-4.65" y1="13.23" x2="27.28" y2="14.36" gradientUnits="userSpaceOnUse">
+                  <linearGradient id={`q_grad_archive_${i}`} x1="-4.65" y1="13.23" x2="27.28" y2="14.36" gradientUnits="userSpaceOnUse">
                     <stop offset="0.127" stopColor="#FF3407" />
                     <stop offset="0.227" stopColor="#FC964C" />
                     <stop offset="0.305" stopColor="#FC964C" />
                     <stop offset="0.491" stopColor="#F62F03" />
                     <stop offset="1" stopColor="#FD7C34" />
                   </linearGradient>
+                  <linearGradient id={`q_grad_featured_${i}`} x1="-4.65" y1="13.23" x2="27.28" y2="14.36" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stopColor="rgba(255,255,255,0.95)" />
+                    <stop offset="0.5" stopColor="#1a1512" />
+                    <stop offset="1" stopColor="#1a1512" />
+                  </linearGradient>
                 </defs>
               </svg>
 
-              <p className="font-mono text-xs text-[#1a1512]/70 leading-relaxed uppercase tracking-wide mb-6 line-clamp-6 relative z-10">
+              <p
+                className={`font-mono text-xs leading-relaxed uppercase tracking-wide mb-6 line-clamp-6 relative z-10 ${
+                  isFeatured ? 'text-white/95' : 'text-[#1a1512]/70'
+                }`}
+              >
                 &ldquo;{study.testimonial.quote}&rdquo;
               </p>
 
-              <div className="flex items-center gap-3 mt-auto pt-4 border-t border-black/5 relative z-10">
-                <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-white shadow-md">
+              <div
+                className={`flex items-center gap-3 mt-auto pt-4 relative z-10 ${isFeatured ? 'border-t border-white/20' : 'border-t border-black/5'}`}
+              >
+                <div
+                  className={`relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ${
+                    isFeatured ? 'backdrop-blur-xl bg-white/5 border border-white/20' : 'border-2 border-white shadow-md'
+                  }`}
+                  style={isFeatured ? { boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.15)' } : undefined}
+                >
                   <Image
                     src={study.testimonial.avatarSrc}
                     alt={study.testimonial.author}
@@ -672,14 +770,17 @@ function TestimonialBand() {
                   />
                 </div>
                 <div>
-                  <p className="font-semibold text-[#1a1512] text-sm">{study.testimonial.author}</p>
-                  <p className="text-xs text-[#1a1512]/50">
+                  <p className={`font-semibold text-sm ${isFeatured ? 'text-white' : 'text-[#1a1512]'}`} style={isFeatured ? { fontFamily: 'Nohemi, sans-serif' } : {}}>
+                    {study.testimonial.author}
+                  </p>
+                  <p className={`text-xs ${isFeatured ? 'text-white/70' : 'text-[#1a1512]/50'}`}>
                     {study.testimonial.role}, {study.testimonial.company}
                   </p>
                 </div>
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -728,9 +829,12 @@ function ResultsBand() {
       const cards = sectionRef.current?.querySelectorAll('.stat-card-work');
       if (cards) {
         gsap.from(cards, {
-          opacity: 0, y: 40,
-          duration: 0.8, ease: 'power4.out', stagger: 0.08,
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none none' },
+          scale: 0.5,
+          opacity: 0,
+          duration: 0.6,
+          ease: 'power4.out',
+          stagger: 0.1,
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 85%', toggleActions: 'play none none none' },
         });
       }
     }, sectionRef);
