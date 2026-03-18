@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 
 import { CTAButton } from '@/components/ui/CTAButton';
 import { AccentBr } from '@/components/ui/accent-br';
+import { caseStudies } from '@/data/case-studies';
 
 // --- HELPER COMPONENT ---
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
@@ -36,77 +37,28 @@ interface Project {
     metrics?: Metric[];
 }
 
-// Sample data - Updated with 2 SINGLE NUMBER metrics per project
-const projects: Project[] = [
-    {
-        id: '01',
-        title: 'Custom Cowgirl',
-        headline: 'Modernizing Western Heritage for a Digital Audience.',
-        description: 'A bespoke digital experience blending western heritage with modern e-commerce functionality to drive sales and brand loyalty.',
-        image: '/customcowgirl.png',
-        number: '001',
-        industry: 'FASHION',
-        services: ['STRATEGY', 'UX/UI DESIGN', 'SHOPIFY DEV'],
-        metrics: [
-            { value: '+45%', label: 'YoY MOBILE SALES' },
-            { value: '5k+', label: 'PRE-LAUNCH SIGNUPS' },
-        ]
-    },
-    {
-        id: '02',
-        title: 'First Future',
-        headline: 'Forward-thinking financial services that combine trust with innovation.',
-        description: 'Forward-thinking financial services website that combines trust with modern innovation.',
-        image: '/Firstfuture.png',
-        number: '002',
-        industry: 'FINANCE',
-        services: ['WEB DESIGN', 'BRANDING'],
-        metrics: [
-            { value: '3x', label: 'LEAD GEN' },
-            { value: '90%', label: 'ENGAGEMENT' },
-        ]
-    },
-    {
-        id: '03',
-        title: 'Symmetri',
-        headline: 'Geometric precision meets digital fluidity.',
-        description: 'A portfolio site for a design studio that practices what it preaches.',
-        image: '/Symmetri.png',
-        number: '003',
-        industry: 'DESIGN',
-        services: ['PORTFOLIO', 'INTERACTION'],
-        metrics: [
-            { value: 'No.1', label: 'SITE OF THE DAY' },
-            { value: '4.9', label: 'CLIENT RATING' },
-        ]
-    },
-    {
-        id: '04',
-        title: 'Tachyon',
-        headline: 'High-performance analytics for next-gen teams.',
-        description: 'High-performance analytics dashboard for next-gen data teams. Speed meets clarity.',
-        image: '/goodmanors.png',
-        number: '004',
-        industry: 'SAAS',
-        metrics: [
-            { value: '10x', label: 'FASTER QUERIES' },
-            { value: '20k', label: 'DAILY USERS' },
-        ]
-    },
-    {
-        id: '05',
-        title: 'Vanguard',
-        headline: 'Legal tech reimagined. A bold identity.',
-        description: 'Legal tech reimagined. A bold, authoritative identity for a firm changing the landscape.',
-        image: '/Firstfuture.png',
-        number: '005',
-        industry: 'LEGAL TECH',
-        metrics: [
-            { value: '150%', label: 'GROWTH' },
-            { value: '#1', label: 'MARKET RANK' },
-        ]
-    }
-];
+// Map case study to Project format
+function caseStudyToProject(cs: (typeof caseStudies)[number], number: string): Project {
+    return {
+        id: cs.slug,
+        title: cs.clientName,
+        headline: cs.headline,
+        description: cs.shortDescription,
+        image: cs.heroImage,
+        number,
+        industry: cs.industryTag,
+        services: cs.services.map((s) => s.toUpperCase()),
+        metrics: cs.stats.slice(0, 2).map((s) => ({ value: s.value, label: s.label.toUpperCase() })),
+    };
+}
+
+// All five from real case studies (003, 004, 005 are the three different ones user requested)
+const featuredSlugs = ['custom-cowgirl', 'mentality-health', 'voyage-and-vibes', 'farmulated', 'boombox'];
+const projects: Project[] = featuredSlugs.map((slug, i) => {
+    const cs = caseStudies.find((c) => c.slug === slug);
+    if (!cs) throw new Error(`Case study not found: ${slug}`);
+    return caseStudyToProject(cs, String(i + 1).padStart(3, '0'));
+});
 
 export function ExampleWork() {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -217,7 +169,7 @@ export function ExampleWork() {
                             </h2>
                         </div>
                         <div className="shrink-0">
-                            <CTAButton variant="grey" text="More case studies" href="/case-studies" ariaLabel="View All Work" />
+                            <CTAButton variant="grey" text="More case studies" href="/work" ariaLabel="View All Work" />
                         </div>
                     </div>
                 </div>
