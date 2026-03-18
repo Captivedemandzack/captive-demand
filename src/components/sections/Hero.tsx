@@ -202,12 +202,11 @@ const PROJECT_ITEMS = [
 ];
 
 const splitIntoWords = (text: string) => {
-    return text.split(' ').map((word, index) => (
-        <span
-            key={index}
-            className="word inline-block mr-[0.3em]"
-        >
-            {word}
+    const words = text.split(' ');
+    return words.map((word, index) => (
+        <span key={index}>
+            {index > 0 && '\u00A0'}
+            <span className="word inline-block">{word}</span>
         </span>
     ));
 };

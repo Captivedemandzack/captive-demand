@@ -171,14 +171,12 @@ export function InsightPostPage({ insight, relatedInsights }: InsightPostPagePro
                 <p className="font-mono text-[12px] text-[#888] mb-4">
                   Book a free strategy call.
                 </p>
-                <a
-                  href="https://connect.captivedemand.com/meetings/spencer-donaldson/discovery-call"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/contact"
                   className="inline-flex items-center justify-center w-full bg-[#E8480C] text-white font-mono text-xs uppercase tracking-wider py-3 rounded-md hover:opacity-90 transition-opacity"
                 >
                   START YOUR BUILD →
-                </a>
+                </Link>
               </div>
             </aside>
           </div>

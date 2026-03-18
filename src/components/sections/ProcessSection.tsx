@@ -20,6 +20,7 @@ const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5"
   </div>
 );
 
+import Link from 'next/link';
 import { CTAButton } from '@/components/ui/CTAButton';
 
 // Website Wireframe UI
@@ -186,7 +187,7 @@ const ProcessCard = ({
     {/* CTA Button */}
     {hasButton && (
       <div className="mt-auto relative z-10">
-        <CTAButton variant={isOrange ? "bookCallOrange" : "bookCall"} text="Book an intro call" style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }} ariaLabel="Book a Call" />
+        <CTAButton variant={isOrange ? "bookCallOrange" : "bookCall"} text="Book an intro call" href="/contact" style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }} ariaLabel="Book a Call" />
         <p className={`font-mono text-xs mt-4 ${isOrange ? 'text-white/60' : 'text-[#1a1512]/40'}`}>
           Only 20-30min. Friendly chat, no pressure.
         </p>
@@ -299,9 +300,9 @@ export function ProcessSection() {
             <div className="md:max-w-md md:text-right">
               <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
                 We're on a mission to help local businesses dominate their digital presence...{' '}
-                <a href="#" className="text-[#1a1512] underline underline-offset-2 hover:text-[#ff5501] transition-colors">
+                <Link href="/contact" className="text-[#1a1512] underline underline-offset-2 hover:text-[#ff5501] transition-colors">
                   let's build together.
-                </a>
+                </Link>
               </p>
             </div>
           </div>

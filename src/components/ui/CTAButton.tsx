@@ -148,7 +148,7 @@ export function CTAButton({
     <span
       className={`
         relative flex items-center h-12 pl-5 pr-2 ${fullWidth ? "flex-grow mr-4" : "mr-4"}
-        rounded-l-xl font-mono text-sm uppercase tracking-normal
+        rounded-l-xl font-mono text-sm uppercase tracking-normal whitespace-nowrap
         transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
         ${baseConfig.labelClasses}
       `}

@@ -57,7 +57,7 @@ export function TestimonialMarquee() {
             </p>
             <div className="flex items-center gap-3">
               <div className="relative w-7 h-7 rounded-full overflow-hidden flex-shrink-0">
-                <Image src={t.avatar} alt={t.author} fill className="object-cover" />
+                <Image src={t.avatar} alt={t.author} fill className="object-cover object-top" />
               </div>
               <div>
                 <p className="font-sans font-bold text-[13px] text-[#111]">

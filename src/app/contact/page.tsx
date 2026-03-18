@@ -7,7 +7,7 @@ import { ContactFAQ } from '@/components/contact/ContactFAQ';
 export const metadata: Metadata = {
   title: 'Contact | Captive Demand',
   description:
-    'Start your project with Captive Demand. Tell us about your goals — we respond within 24 hours.',
+    'Start your project with Captive Demand. Tell us about your goals — we respond within 1 hour.',
 };
 
 export default function ContactPage() {

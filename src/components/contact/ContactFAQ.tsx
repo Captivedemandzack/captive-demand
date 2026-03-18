@@ -7,7 +7,7 @@ import { Plus } from 'lucide-react';
 const faqItems = [
   {
     q: 'What happens after I submit the form?',
-    a: "We review every inquiry personally and respond within 24 hours. If it looks like a good fit, we'll schedule a 30-minute strategy call to learn more about your goals before any commitment.",
+    a: "We review every inquiry personally and respond within 1 hour. If it looks like a good fit, we'll schedule a 30-minute strategy call to learn more about your goals before any commitment.",
   },
   {
     q: 'Do you work with businesses outside Nashville?',

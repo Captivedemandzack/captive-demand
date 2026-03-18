@@ -76,7 +76,9 @@ const BookingCalendar = () => {
 
           <div className="mt-auto">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-base font-medium">December 2025</h4>
+              <h4 className="text-base font-medium">
+                {new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}
+              </h4>
               <div className="flex items-center gap-1">
                 <button className="w-7 h-7 flex items-center justify-center text-white/30 hover:text-white transition-colors">
                   <ChevronLeft size={16} />
@@ -175,7 +177,7 @@ const TestimonialCard = () => (
           alt="Tricia Restifo"
           width={48}
           height={48}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-top"
         />
       </div>
       <div>

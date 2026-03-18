@@ -54,7 +54,7 @@ export function CaseStudyCard({ study, index, variant = 'default' }: CaseStudyCa
             src={study.heroImage}
             alt={study.clientName}
             fill
-            className="object-cover"
+            className="object-cover object-top"
             unoptimized
           />
         </div>

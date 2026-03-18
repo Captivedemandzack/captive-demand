@@ -247,7 +247,7 @@ function WorkHero() {
               <div className="flex -space-x-2.5">
                 {WORK_HERO_AVATARS.map((src) => (
                   <div key={src} className="relative w-10 h-10 rounded-full border-2 border-[#FAFAFA] overflow-hidden flex-shrink-0">
-                    <Image src={src} alt="" fill className="object-cover" sizes="40px" />
+                    <Image src={src} alt="" fill className="object-cover object-top" sizes="40px" />
                   </div>
                 ))}
               </div>
@@ -766,7 +766,7 @@ function TestimonialBand() {
                     src={study.testimonial.avatarSrc}
                     alt={study.testimonial.author}
                     fill
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                 </div>
                 <div>

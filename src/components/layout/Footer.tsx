@@ -157,8 +157,8 @@ export default function Footer() {
                             <div className="flex flex-col gap-6">
                                 <h4 className="text-sm md:text-base font-[600] uppercase tracking-widest text-brand-dark/50 font-nohemi-custom">Connect</h4>
                                 <ul className="flex flex-col gap-3">
-                                    <li><a href="https://linkedin.com" target="_blank" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">LinkedIn</a></li>
-                                    <li><a href="https://instagram.com" target="_blank" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Instagram</a></li>
+                                    <li><a href="https://linkedin.com/company/captive-demand" target="_blank" rel="noopener noreferrer" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">LinkedIn</a></li>
+                                    <li><a href="https://instagram.com/captivedemand" target="_blank" rel="noopener noreferrer" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Instagram</a></li>
                                     <li><a href="mailto:info@captivedemand.com" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors truncate font-nohemi-custom">Email</a></li>
                                 </ul>
                             </div>
@@ -192,7 +192,7 @@ export default function Footer() {
 
                         {/* Rights Text - Order 2 on mobile, unhidden */}
                         <div className="text-center order-2 md:order-none block">
-                            All rights reserved by Captive Demand, 2025
+                            All rights reserved by Captive Demand, {new Date().getFullYear()}
                         </div>
 
                         {/* Support Text - Order 3 on mobile */}

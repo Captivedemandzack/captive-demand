@@ -16,15 +16,17 @@ export function ContactFormCard() {
     service: '',
     budget: '',
     message: '',
+    website: '', // honeypot - leave empty, bots fill it
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.website) return; // honeypot: reject if filled (bot)
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ fullName: formData.fullName, email: formData.email, service: formData.service, budget: formData.budget, message: formData.message }),
       });
       if (res.ok) {
         setSubmitted(true);
@@ -90,7 +92,7 @@ export function ContactFormCard() {
               Message received.
             </h3>
             <p className="font-mono text-sm text-[#666]">
-              We&apos;ll be in touch within 24 hours.
+              We&apos;ll be in touch within 1 hour.
             </p>
           </div>
         ) : (
@@ -175,6 +177,18 @@ export function ContactFormCard() {
                 <option value="Let's talk">Let&apos;s talk</option>
               </select>
             </div>
+            <div className="hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input
+                id="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.website}
+                onChange={(e) => setFormData((p) => ({ ...p, website: e.target.value }))}
+                className="absolute -left-[9999px]"
+              />
+            </div>
             <div>
               <label htmlFor="message" className={labelBase}>
                 Tell us about your project
@@ -201,7 +215,7 @@ export function ContactFormCard() {
               />
             </div>
             <p className="font-mono text-[11px] text-[#999]">
-              No spam. No sales calls. We respond within 24 hours.
+              No spam. No sales calls. We respond within 1 hour.
             </p>
           </form>
         )

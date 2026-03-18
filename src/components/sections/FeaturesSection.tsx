@@ -70,17 +70,15 @@ export function FeaturesSection() {
 
                     {/* Header with Title and Button */}
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-4">
-                        <div className="line-mask overflow-hidden block">
+                        <div className="line-mask overflow-hidden">
                             <h2
                                 ref={headingRef}
                                 className="reveal-text block text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1]"
                                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                             >
-                                <span className="text-black/50">We make great<br />design </span>
-                                <span className="text-[#ff5501] font-medium">
-                                    print money
-                                    <span className="inline-block align-top text-3xl md:text-4xl lg:text-5xl ml-1 relative top-1">*</span>
-                                </span>
+                                <span className="text-black/50">We don&apos;t decorate.</span>
+                                <br />
+                                <span className="text-[#ff5501] font-medium whitespace-nowrap">We engineer demand.</span>
                             </h2>
                         </div>
 
@@ -89,9 +87,7 @@ export function FeaturesSection() {
                             <CTAButton
                                 variant="dark"
                                 text="Book an intro call"
-                                href="https://connect.captivedemand.com/meetings/spencer-donaldson/discovery-call"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                href="/contact"
                                 style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}
                                 ariaLabel="Book a Call"
                             />

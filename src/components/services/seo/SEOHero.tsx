@@ -355,7 +355,7 @@ export function SEOHero() {
                                             <div className="relative rounded-full w-4 h-4 overflow-hidden border border-[#e5e5e5] bg-[#f4f4f4]">
                                                 <Image src="/CD.png" alt="Captive Demand" fill className="object-cover" />
                                             </div>
-                                            <span className="text-[8px] sm:text-[9px] text-[#1a1512]/50 font-mono leading-none">captivedemand.com</span>
+                                            <span className="text-[8px] sm:text-[9px] text-[#1a1512]/50 font-mono leading-none">farmulated.com</span>
                                         </div>
                                         <div className="text-[#1a44d8] text-[10px] sm:text-[12px] font-medium leading-tight mb-1">
                                             Captive Demand — SEO & Web Design Agency

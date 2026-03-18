@@ -3,7 +3,7 @@
 import React from 'react';
 
 const stats = [
-  { value: '50+', label: 'BRANDS SERVED' },
+  { value: '300+', label: 'BRANDS SERVED' },
   { value: '4.9', label: 'AVG. RATING' },
   { value: '2', label: 'SPOTS LEFT THIS MONTH' },
 ];

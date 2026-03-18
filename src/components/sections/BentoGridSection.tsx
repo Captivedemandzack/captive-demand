@@ -213,7 +213,7 @@ export function BentoGridSection() {
                       <div className="w-2 h-2 rounded-full bg-green-500/40" />
                     </div>
                     <div className="flex-1 mx-2 h-4 bg-white/5 rounded flex items-center px-1.5">
-                      <div className="text-[7px] text-white/40">captivedemand.com</div>
+                      <div className="text-[7px] text-white/40">farmulated.com</div>
                     </div>
                   </div>
                   <div className="relative w-full h-32 overflow-hidden">

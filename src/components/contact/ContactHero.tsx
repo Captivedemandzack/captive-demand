@@ -178,7 +178,7 @@ export function ContactHero() {
 
             <p className="contact-hero-text font-mono text-[12px] text-[#888] mb-8 flex items-center gap-2">
               <Clock size={14} strokeWidth={1.5} />
-              TYPICALLY RESPOND WITHIN 24 HOURS
+              WE RESPOND WITHIN 1 HOUR
             </p>
 
             {/* What happens next card */}
@@ -192,7 +192,7 @@ export function ContactHero() {
               <ul className="space-y-2 font-mono text-[13px] text-[#aaa]">
                 <li className="flex items-start gap-2">
                   <span className="text-[#E8480C]">+</span>
-                  We review your inquiry and respond within 24 hours
+                  We review your inquiry and respond within 1 hour
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#E8480C]">+</span>
@@ -225,7 +225,7 @@ export function ContactHero() {
               </span>
               <div className="flex gap-4">
                 <a
-                  href="https://linkedin.com"
+                  href="https://linkedin.com/company/captive-demand"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#888] hover:text-[#111] transition-colors"
@@ -233,7 +233,7 @@ export function ContactHero() {
                   <Linkedin size={20} strokeWidth={1.5} />
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://instagram.com/captivedemand"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#888] hover:text-[#111] transition-colors"

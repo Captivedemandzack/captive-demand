@@ -195,31 +195,31 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
 const caseStudies: CaseStudy[] = [
   {
     id: 1,
-    client: "Kana",
-    clientLogo: "/logos/Kana.svg",
+    client: "Mentality Health",
+    clientLogo: "/imgi_19_mh-logo-header.png.webp",
+    year: "2026",
+    headline: "A conversion-optimized website that drives engagement and reduces bounce.",
+    stats: [
+      { value: "5,646", label: "ORGANIC SESSIONS" },
+      { value: "+22.5%", label: "ENGAGEMENT TIME INCREASE" },
+      { value: "-32.9%", label: "BOUNCE RATE REDUCTION" }
+    ],
+    image: "/mantalitycover2.png",
+    slug: "mentality-health",
+  },
+  {
+    id: 2,
+    client: "Farmulated",
+    clientLogo: "/logos/farmulated.png",
     year: "2025",
-    headline: "AI-Powered SaaS Platform for Healthcare Compliance",
+    headline: "Built topical authority from scratch in 6 months.",
     stats: [
       { value: "34%", label: "INCREASE IN REVENUE" },
       { value: "9x", label: "ORGANIC TRAFFIC" },
       { value: "$2.1M", label: "ANNUAL REVENUE" }
     ],
-    image: "/mockup3.png",
+    image: "/farmulatedcover2.png",
     slug: "farmulated",
-  },
-  {
-    id: 2,
-    client: "Dubsy",
-    clientLogo: "/logos/dubsy.svg",
-    year: "2025",
-    headline: "Mobile App Landing Page for AI Karaoke Platform",
-    stats: [
-      { value: "50K+", label: "APP DOWNLOADS" },
-      { value: "4.8", label: "APP STORE RATING", suffix: "★" },
-      { value: "12x", label: "USER ENGAGEMENT" }
-    ],
-    image: "/mockup4.png",
-    slug: "boombox",
   }
 ];
 

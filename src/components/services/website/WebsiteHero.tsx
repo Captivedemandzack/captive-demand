@@ -196,7 +196,7 @@ export function WebsiteHero() {
                             <span className="relative inline-flex items-center justify-center px-5 pt-[0.12em] pb-[0.08em] -mx-5 z-10 overflow-hidden whitespace-nowrap rounded-[6px]">
                                 <span className="absolute inset-0 rounded-[6px] bg-white/55 border border-[#d5d5d5]/40 shadow-[0_6px_20px_rgba(15,15,15,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]" />
                                 <span className="relative text-[#0f0d0a]" style={{ zIndex: 1 }}>
-                                    prints money
+                                    drives demand
                                 </span>
                                 <span
                                     className="absolute inset-0 rounded-[6px] pointer-events-none"

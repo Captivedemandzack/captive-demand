@@ -299,7 +299,7 @@ function TestimonialCTACard({ study }: { study: CaseStudy }) {
 
               <div className="flex items-center gap-4 mt-auto">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2 border-white shadow-md">
-                  <Image src={study.testimonial.avatarSrc} alt={study.testimonial.author} fill className="object-cover" />
+                  <Image src={study.testimonial.avatarSrc} alt={study.testimonial.author} fill className="object-cover object-top" />
                 </div>
                 <div>
                   <p className="font-semibold text-[#1a1512] text-sm">{study.testimonial.author} — {study.testimonial.company}</p>

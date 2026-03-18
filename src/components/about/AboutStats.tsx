@@ -19,9 +19,9 @@ interface Stat {
 
 const STATS: Stat[] = [
     { value: 50, suffix: '+', label: 'Projects Delivered', sublabel: 'Across industries' },
-    { value: 8, suffix: '+', label: 'Industries Served', sublabel: 'Deep sector knowledge' },
-    { value: 2, suffix: 'M+', label: 'Revenue Generated', sublabel: 'For our clients' },
-    { value: 3, suffix: '+', label: 'Years in Business', sublabel: 'And counting' },
+    { value: 10, suffix: '+', label: 'Industries Served', sublabel: 'Deep sector knowledge' },
+    { value: 100, suffix: 'M+', label: 'Revenue Generated', sublabel: 'For our clients' },
+    { value: 5, suffix: '+', label: 'Years in Business', sublabel: 'And counting' },
 ];
 
 export function AboutStats() {
@@ -50,7 +50,7 @@ export function AboutStats() {
                 const target = parseInt(el.getAttribute('data-target') || '0', 10);
                 gsap.fromTo(
                     { val: 0 },
-                    { val: target },
+                    { val: 0 },
                     {
                         val: target,
                         duration: 2,

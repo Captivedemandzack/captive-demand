@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import Link from 'next/link';
 import { AccentBr } from '@/components/ui/accent-br';
 
 type Testimonial = {
@@ -10,21 +11,29 @@ type Testimonial = {
     role: string;
     company: string;
     image: string;
+    useLogoAsAvatar?: boolean;
 };
 
-const LOGOS: { name: string; src: string; logoScale?: number; testimonial?: Testimonial }[] = [
-    { name: 'Hitx', src: '/logos/hitx.svg', testimonial: { quote: 'Captive Demand helped us build a digital presence that truly represents our brand.', author: 'Partner', role: 'Team', company: 'Hitx', image: '/spencer-donaldson.jpg' } },
-    { name: 'Velocity', src: '/logos/velocity.png', logoScale: 1.2, testimonial: { quote: "Captive Demand is different than any other agency we have worked with. They take a genuine interest in your success and back up their promises with results. Our website is everything we wanted and more.", author: 'Ben Elizer', role: 'CEO', company: 'Velocity International', image: '/ben.webp' } },
-    { name: 'Farmulated', src: '/logos/farmulated.png', logoScale: 1.2, testimonial: { quote: "Spencer is knowledgeable, patient, and open to listen! He's willing to try anything to help move the needle, and he's easy to talk to... I feel like he really cares about our business. In addition, our traffic has grown from 1,200 users per month to 11,000 users per month and revenue has increased by 34% YOY.", author: 'Tricia Restifo', role: 'VP Finance', company: 'Farmulated', image: '/tricia.webp' } },
+const LOGOS: {
+    name: string;
+    src: string;
+    logoScale?: number;
+    caseStudySlug?: string;
+    websiteUrl?: string;
+    testimonial?: Testimonial;
+}[] = [
+    { name: 'Hitx', src: '/logos/hitx.svg', websiteUrl: 'https://hitx.com', testimonial: { quote: 'Captive Demand helped us build a digital presence that truly represents our brand. The team was responsive and delivered exactly what we needed.', author: 'Kevin Doughty', role: 'Founder', company: 'Hitx', image: '/kevin.png' } },
+    { name: 'Velocity', src: '/logos/velocity.png', logoScale: 1.2, caseStudySlug: 'velocity-international', websiteUrl: 'https://velocityintl.com', testimonial: { quote: "Captive Demand is different than any other agency we have worked with. They take a genuine interest in your success and back up their promises with results. Our website is everything we wanted and more.", author: 'Ben Elizer', role: 'CEO', company: 'Velocity International', image: '/ben.webp' } },
+    { name: 'Farmulated', src: '/logos/farmulated.png', logoScale: 1.2, caseStudySlug: 'farmulated', websiteUrl: 'https://farmulated.com', testimonial: { quote: "Spencer is knowledgeable, patient, and open to listen! He's willing to try anything to help move the needle, and he's easy to talk to... I feel like he really cares about our business. In addition, our traffic has grown from 1,200 users per month to 11,000 users per month and revenue has increased by 34% YOY.", author: 'Tricia Restifo', role: 'VP Finance', company: 'Farmulated', image: '/tricia.webp' } },
     { name: 'Modern Mentor', src: '/logos/modernmentor.png', logoScale: 1.2, testimonial: { quote: "I cannot say enough amazing things about this team and the work they deliver. I worked with Zachary and Spencer to build my dream Wordpress website plus a custom-built, member-only dashboard that exceeded my expectations.", author: 'Amy Schols', role: 'CEO', company: 'Modern Mentor', image: '/amy.jpg' } },
-    { name: 'Boombox', src: '/logos/boombox.svg', logoScale: 1.35, testimonial: { quote: "I've been working in SEO for about a decade now. I've always built my teams in-house because agencies always tend to be too expensive or terrible quality. Captive had very fair prices and followed a process nearly identical to the one I was used to running with my in-house teams, so I knew the quality would be excellent.", author: 'Jordan Schneider', role: 'Head of Marketing', company: 'Boombox', image: '/Jordan.jpeg' } },
+    { name: 'Boombox', src: '/logos/boombox.svg', logoScale: 1.35, caseStudySlug: 'boombox', websiteUrl: 'https://boombox.com', testimonial: { quote: "I've been working in SEO for about a decade now. I've always built my teams in-house because agencies always tend to be too expensive or terrible quality. Captive had very fair prices and followed a process nearly identical to the one I was used to running with my in-house teams, so I knew the quality would be excellent.", author: 'Jordan Schneider', role: 'Head of Marketing', company: 'Boombox', image: '/Jordan.jpeg' } },
     { name: 'Finally Home Services', src: '/logos/finallyhomeservices.png', logoScale: 0.8, testimonial: { quote: "They are always on time and they're always willing to listen to my non-tech vision and translate the vision into core pieces of my business. They are responsive, have a high quality of work, and always listen to my goals.", author: 'Bonnie Paik', role: 'Owner', company: 'Finally Home Services', image: '/bonnie.webp' } },
     { name: 'BachBar', src: '/logos/bachbar.png', logoScale: 1.35, testimonial: { quote: "Our business went from only referral-based clients to having an entire authoritative online presence that allowed us to grow by over 1,000% in our first true year of business. It opened doors to partnerships that we did not believe were possible.", author: 'Matthew Ford', role: 'Founder', company: 'BachBar', image: '/matthew.webp' } },
-    { name: 'Endura Commerce', src: '/logos/enduracommerce.svg', testimonial: { quote: "Spencer is the best. He has helped us with our website needs and is always responsive. He is also great to collaborate with when it comes to marketing strategies. Highly recommend.", author: 'Michael Scott', role: 'CEO', company: 'Endura Commerce', image: '/michael.jpg' } },
-    { name: 'First Future', src: '/logos/firstfuture.png', logoScale: 0.8, testimonial: { quote: 'Working with Captive Demand on our digital presence was a game-changer. They made everything feel more intentional and aligned with who we are.', author: 'Partner', role: 'Team', company: 'First Future', image: '/spencer-donaldson.jpg' } },
-    { name: 'Voyage and Vibes', src: '/logos/voyageandvibes.png', logoScale: 1.2, testimonial: { quote: 'Captive Demand helped us bring our vision to life with a website that truly speaks to our audience.', author: 'Partner', role: 'Team', company: 'Voyage and Vibes', image: '/spencer-donaldson.jpg' } },
-    { name: 'Mountain Sledge', src: '/logos/mountainsledge.png', logoScale: 1.35, testimonial: { quote: 'They delivered exactly what we needed for our brand and online presence.', author: 'Partner', role: 'Team', company: 'Mountain Sledge', image: '/spencer-donaldson.jpg' } },
-    { name: 'The Skin Real', src: '/logos/theskinreal.png', logoScale: 1.35, testimonial: { quote: 'Professional, responsive, and results-driven. They understood our brand from day one.', author: 'Partner', role: 'Team', company: 'The Skin Real', image: '/spencer-donaldson.jpg' } },
+    { name: 'Endura Commerce', src: '/logos/enduracommerce.svg', caseStudySlug: 'endura-commerce', websiteUrl: 'https://enduracommerce.com', testimonial: { quote: "Spencer is the best. He has helped us with our website needs and is always responsive. He is also great to collaborate with when it comes to marketing strategies. Highly recommend.", author: 'Michael Scott', role: 'CEO', company: 'Endura Commerce', image: '/michael.jpg' } },
+    { name: 'First Future', src: '/logos/firstfuture.png', logoScale: 0.8, caseStudySlug: 'first-future', websiteUrl: 'https://firstfuture.com', testimonial: { quote: 'Working with Captive Demand on our digital presence was a game-changer. They made everything feel more intentional and aligned with who we are as a company.', author: 'David Park', role: 'Co-Founder', company: 'First Future', image: '/david.png' } },
+    { name: 'Voyage and Vibes', src: '/logos/voyageandvibes.png', logoScale: 1.2, caseStudySlug: 'voyage-and-vibes', testimonial: { quote: 'Captive Demand helped us bring our vision to life with a website that truly speaks to our audience. Every trip since launch has sold out — the booking system and CRM they built are flawless.', author: 'Jaime Spinner', role: 'Founder', company: 'Voyage and Vibes', image: '/jaime.jpg' } },
+    { name: "Mountain's Ledge", src: '/logos/mountainsledge.png', logoScale: 1.35, testimonial: { quote: 'They delivered exactly what we needed for our brand and online presence. Fast turnaround, clear communication, and a final product we are proud of.', author: 'Trevor Childress', role: 'Owner', company: "Mountain's Ledge", image: '/trevor.jpg' } },
+    { name: 'The Skin Real', src: '/logos/theskinreal.png', logoScale: 1.35, testimonial: { quote: 'Professional, responsive, and results-driven. They understood our brand from day one and delivered a site that converts.', author: 'Dr. Mary Alice Mina', role: 'Founder', company: 'The Skin Real', image: '/drmina.jpg' } },
 ];
 
 const BADGES: { label: string; icon: string }[] = [
@@ -108,6 +117,8 @@ function LogoCard({ logo }: { logo: (typeof LOGOS)[number] }) {
     }, [open]);
 
     const t = logo.testimonial;
+    const hasCaseStudy = !!logo.caseStudySlug;
+    const hasWebsite = !!logo.websiteUrl;
 
     const popoverContent = open && t && (
         <div
@@ -120,12 +131,12 @@ function LogoCard({ logo }: { logo: (typeof LOGOS)[number] }) {
             <p className="text-[#1a1512]/80 italic text-[13px] md:text-[15px] leading-relaxed mb-3 md:mb-4">
                 &ldquo;{t.quote}&rdquo;
             </p>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 mb-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                     src={t.image}
                     alt={t.author}
-                    className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                    className={`w-10 h-10 rounded-full flex-shrink-0 ${t.useLogoAsAvatar ? 'object-contain bg-white p-1.5 border border-[#1a1512]/10' : 'object-cover object-top'}`}
                 />
                 <div>
                     <p className="text-[#1a1512] font-semibold text-[14px]" style={{ fontFamily: 'Nohemi, sans-serif' }}>
@@ -136,6 +147,29 @@ function LogoCard({ logo }: { logo: (typeof LOGOS)[number] }) {
                     </p>
                 </div>
             </div>
+            {(hasCaseStudy || hasWebsite) && (
+                <div className="pt-2 border-t border-[#1a1512]/10">
+                    {hasCaseStudy ? (
+                        <Link
+                            href={`/work/${logo.caseStudySlug}`}
+                            className="font-mono text-[11px] uppercase tracking-[0.15em] text-[#E8480C] hover:underline"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            Read case study →
+                        </Link>
+                    ) : hasWebsite ? (
+                        <a
+                            href={logo.websiteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-mono text-[11px] uppercase tracking-[0.15em] text-[#E8480C] hover:underline"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            View website →
+                        </a>
+                    ) : null}
+                </div>
+            )}
         </div>
     );
 
@@ -164,7 +198,7 @@ function LogoCard({ logo }: { logo: (typeof LOGOS)[number] }) {
                     />
                 </div>
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#E8480C] pb-1">
-                    QUOTE
+                    {logo.caseStudySlug ? 'Case study' : 'View'}
                 </span>
             </div>
 

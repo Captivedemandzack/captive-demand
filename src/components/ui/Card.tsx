@@ -103,6 +103,8 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
                     src={imageSrc}
                     alt={title}
                     fill
+                    sizes="(max-width: 768px) 320px, 720px"
+                    quality={90}
                     className="object-cover object-top transition-transform duration-500 hover:scale-110"
                 />
             </div>

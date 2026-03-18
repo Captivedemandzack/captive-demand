@@ -346,9 +346,9 @@ export default function Navbar() {
                     <a href="tel:+16159092337" className="text-[17px] font-normal text-brand-dark hover:opacity-70 transition-opacity">
                       615.909.2337
                     </a>
-                    <a href="https://connect.captivedemand.com/meetings/spencer-donaldson/discovery-call" target="_blank" rel="noopener noreferrer" className="text-[17px] font-normal text-brand-dark hover:opacity-70 transition-opacity mt-1 underline underline-offset-2">
+                    <Link href="/contact" className="text-[17px] font-normal text-brand-dark hover:opacity-70 transition-opacity mt-1 underline underline-offset-2">
                       Plan a Call
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
