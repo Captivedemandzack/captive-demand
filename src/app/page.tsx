@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { Hero } from "@/components/sections/Hero";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { FeaturesSection } from "@/components/sections/FeaturesSection";
+import { IndustriesFolderSection } from "@/components/sections/IndustriesFolderSection";
 import { BentoGridSection } from "@/components/sections/BentoGridSection";
 
 const TestimonialsSection = dynamic(() =>
@@ -26,6 +27,7 @@ export default function Home() {
             <Hero />
             <AboutSection />
             <FeaturesSection />
+            <IndustriesFolderSection />
             <BentoGridSection />
             <TestimonialsSection />
             <ProcessSection />
