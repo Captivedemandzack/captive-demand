@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { CTAButton } from '@/components/ui/CTAButton';
 import { Check } from 'lucide-react';
+import { ANNUAL_COMPANY_REVENUE_OPTIONS, type AnnualCompanyRevenue } from '@/lib/annual-company-revenue';
 import { CalEmbed } from './CalEmbed';
 
 type Tab = 'message' | 'call';
@@ -13,6 +14,8 @@ export function ContactFormCard() {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
+    businessName: '',
+    annualCompanyRevenue: '' as AnnualCompanyRevenue | '',
     service: '',
     budget: '',
     message: '',
@@ -26,7 +29,15 @@ export function ContactFormCard() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fullName: formData.fullName, email: formData.email, service: formData.service, budget: formData.budget, message: formData.message }),
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          businessName: formData.businessName,
+          annualCompanyRevenue: formData.annualCompanyRevenue,
+          service: formData.service,
+          budget: formData.budget,
+          message: formData.message,
+        }),
       });
       if (res.ok) {
         setSubmitted(true);
@@ -34,7 +45,7 @@ export function ContactFormCard() {
         // Fallback: open mailto and show success
         const subject = encodeURIComponent(`Project inquiry from ${formData.fullName}`);
         const body = encodeURIComponent(
-          `Name: ${formData.fullName}\nEmail: ${formData.email}\nService: ${formData.service}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`
+          `Name: ${formData.fullName}\nEmail: ${formData.email}\nBusiness: ${formData.businessName}\nRevenue: ${formData.annualCompanyRevenue}\nService: ${formData.service}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`
         );
         window.location.href = `mailto:hello@captivedemand.com?subject=${subject}&body=${body}`;
         setSubmitted(true);
@@ -42,7 +53,7 @@ export function ContactFormCard() {
     } catch {
       const subject = encodeURIComponent(`Project inquiry from ${formData.fullName}`);
       const body = encodeURIComponent(
-        `Name: ${formData.fullName}\nEmail: ${formData.email}\nService: ${formData.service}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`
+        `Name: ${formData.fullName}\nEmail: ${formData.email}\nBusiness: ${formData.businessName}\nRevenue: ${formData.annualCompanyRevenue}\nService: ${formData.service}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`
       );
       window.location.href = `mailto:hello@captivedemand.com?subject=${subject}&body=${body}`;
       setSubmitted(true);
@@ -128,6 +139,47 @@ export function ContactFormCard() {
                   setFormData((p) => ({ ...p, email: e.target.value }))
                 }
               />
+            </div>
+            <div>
+              <label htmlFor="businessName" className={labelBase}>
+                Business Name *
+              </label>
+              <input
+                id="businessName"
+                type="text"
+                required
+                autoComplete="organization"
+                placeholder="Acme Inc."
+                className={inputBase}
+                value={formData.businessName}
+                onChange={(e) =>
+                  setFormData((p) => ({ ...p, businessName: e.target.value }))
+                }
+              />
+            </div>
+            <div>
+              <label htmlFor="annualCompanyRevenue" className={labelBase}>
+                Annual Company Revenue *
+              </label>
+              <select
+                id="annualCompanyRevenue"
+                required
+                className={inputBase}
+                value={formData.annualCompanyRevenue}
+                onChange={(e) =>
+                  setFormData((p) => ({
+                    ...p,
+                    annualCompanyRevenue: e.target.value as AnnualCompanyRevenue,
+                  }))
+                }
+              >
+                <option value="">Select one...</option>
+                {ANNUAL_COMPANY_REVENUE_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label htmlFor="service" className={labelBase}>

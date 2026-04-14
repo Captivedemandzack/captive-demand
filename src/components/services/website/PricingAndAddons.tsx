@@ -1,15 +1,34 @@
 'use client';
 
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useEffect, useMemo, useRef, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
-import { Check, ArrowRightLeft, Server, Sparkles, Palette, PenTool, Plug } from 'lucide-react';
+import { ArrowRightLeft, Check, Info, Palette, PenTool, Plug, Server, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { CTAButton } from '@/components/ui/CTAButton';
 import { AccentBr } from '@/components/ui/accent-br';
+import { ProjectCostEstimator } from '@/components/pricing/ProjectCostEstimator';
+import { usePricingLeadOptional } from '@/components/pricing/pricing-lead-context';
 
 // --- HELPER COMPONENTS ---
+/** Same orange pulse dot + mono label treatment as `Hero` (“2 Spots Available”). */
+function PricingSpotsUrgency({ isPro, projectByDate }: { isPro?: boolean; projectByDate: string }) {
+    return (
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 px-1 text-center">
+            <span className="relative flex h-2.5 w-2.5 shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff5501] opacity-40" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#ff5501]" />
+            </span>
+            <span
+                className={`max-w-[16rem] font-mono text-[11px] uppercase leading-snug tracking-[0.1em] sm:max-w-none ${isPro ? 'text-white/50' : 'text-[#1a1512]/50'}`}
+            >
+                Live by {projectByDate}
+            </span>
+        </div>
+    );
+}
+
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
     <div className="flex items-end w-full">
         <svg viewBox="0 0 80 8" className="w-20 h-2 flex-shrink-0" preserveAspectRatio="none">
@@ -19,6 +38,111 @@ const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5"
     </div>
 );
 
+export interface PricingFeatureLine {
+    label: string;
+    tooltip?: string;
+}
+
+/** Info icon + tooltip: hover on fine pointers, tap to pin on touch. */
+function PricingFeatureRow({
+    label,
+    tooltip,
+    isPro,
+}: {
+    label: string;
+    tooltip?: string;
+    isPro: boolean;
+}) {
+    const [pinned, setPinned] = useState(false);
+    const [hovered, setHovered] = useState(false);
+    const wrapRef = useRef<HTMLDivElement>(null);
+    const hoverLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const showTip = Boolean(tooltip) && (pinned || hovered);
+
+    const clearHoverLeaveTimer = () => {
+        if (hoverLeaveTimer.current !== null) {
+            clearTimeout(hoverLeaveTimer.current);
+            hoverLeaveTimer.current = null;
+        }
+    };
+
+    useEffect(() => {
+        if (!pinned) return;
+        const onDoc = (e: MouseEvent | TouchEvent) => {
+            const el = wrapRef.current;
+            const t = e.target;
+            if (el && t instanceof Node && !el.contains(t)) setPinned(false);
+        };
+        document.addEventListener('mousedown', onDoc);
+        document.addEventListener('touchstart', onDoc, { passive: true });
+        return () => {
+            document.removeEventListener('mousedown', onDoc);
+            document.removeEventListener('touchstart', onDoc);
+        };
+    }, [pinned]);
+
+    useEffect(() => () => clearHoverLeaveTimer(), []);
+
+    const tipSurface = isPro
+        ? 'border border-white/15 bg-[#0a0a0a]/95 text-white/95 shadow-xl backdrop-blur-sm'
+        : 'border border-[#1a1512]/10 bg-[#1a1512] text-[#fafafa] shadow-xl';
+    const iconBtn = isPro
+        ? 'text-white/35 hover:text-white/70 focus-visible:ring-white/40'
+        : 'text-[#1a1512]/30 hover:text-[#1a1512]/65 focus-visible:ring-[#1a1512]/25';
+
+    const labelClass = `text-sm leading-snug ${isPro ? 'text-white/80' : 'text-[#1a1512]/80'}`;
+
+    return (
+        <div className="group/feature relative flex items-start gap-3">
+            <div
+                className={`mt-0.5 shrink-0 rounded-full p-0.5 ${isPro ? 'bg-[#ff5501]/20 text-[#ff5501]' : 'bg-[#1a1512]/10 text-[#1a1512]'}`}
+            >
+                <Check size={12} strokeWidth={3} />
+            </div>
+            {tooltip ? (
+                <div
+                    ref={wrapRef}
+                    className="relative min-w-0 flex-1"
+                    onMouseEnter={() => {
+                        clearHoverLeaveTimer();
+                        setHovered(true);
+                    }}
+                    onMouseLeave={() => {
+                        clearHoverLeaveTimer();
+                        hoverLeaveTimer.current = setTimeout(() => setHovered(false), 200);
+                    }}
+                >
+                    <div className="relative inline-flex max-w-full flex-wrap items-baseline gap-1.5">
+                        <span className={labelClass}>{label}</span>
+                        <button
+                            type="button"
+                            className={`shrink-0 translate-y-[1px] rounded-full p-0.5 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 ${iconBtn}`}
+                            aria-label={`More information: ${label}`}
+                            aria-expanded={pinned}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setPinned((p) => !p);
+                            }}
+                        >
+                            <Info size={14} strokeWidth={1.5} aria-hidden />
+                        </button>
+                        <div
+                            role="tooltip"
+                            className={`absolute left-0 top-full z-[100] mt-1.5 w-[min(calc(100vw-2rem),16rem)] rounded-lg px-3 py-2.5 text-left text-[11px] font-mono leading-relaxed transition-opacity duration-150 motion-reduce:transition-none ${tipSurface} ${
+                                showTip ? 'visible opacity-100' : 'invisible opacity-0 pointer-events-none'
+                            }`}
+                        >
+                            {tooltip}
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <span className={`min-w-0 flex-1 ${labelClass}`}>{label}</span>
+            )}
+        </div>
+    );
+}
+
 // --- PRICING CARD COMPONENT ---
 const PricingCard = ({
     title,
@@ -27,15 +151,19 @@ const PricingCard = ({
     priceLabel = "Per month / Cancel anytime",
     features,
     isPro = false,
-    buttonText = "Select Plan"
+    buttonText = "GET STARTED",
+    projectByDate,
+    onCtaClick,
 }: {
     title: string;
     description: string;
     price: string;
     priceLabel?: string;
-    features: string[];
+    features: PricingFeatureLine[];
     isPro?: boolean;
     buttonText?: string;
+    projectByDate: string;
+    onCtaClick?: () => void;
 }) => (
     <div className={`
         relative w-full rounded-3xl p-8 lg:p-10 flex flex-col h-full transition-all duration-300 overflow-hidden
@@ -52,17 +180,14 @@ const PricingCard = ({
         }}
     >
 
-        {/* Most Popular Badge for Pro */}
         {isPro && (
             <div className="absolute top-0 right-0 bg-[#ff5501] text-white text-[10px] font-mono font-bold uppercase tracking-widest px-4 py-2 rounded-bl-xl z-10">
                 Most Popular
             </div>
         )}
 
-        {/* Top Section: Logo & Title */}
-        <div className="relative z-10">
+        <div className="relative z-30">
 
-            {/* LOGO BOX */}
             <div className="w-14 h-14 rounded-xl mb-8 flex items-center justify-center bg-[#f5f5f5] border border-[#1a1512]/5">
                 <div className="relative w-8 h-8">
                     <Image
@@ -83,40 +208,40 @@ const PricingCard = ({
                 </p>
             </div>
 
-            {/* Divider */}
             <div className={`w-full h-[1px] mb-8 ${isPro ? 'bg-gradient-to-r from-white/20 to-transparent' : 'bg-[#1a1512]/10'}`} />
 
-            {/* Features List */}
-            <div className={`mb-12 flex-1 ${isPro ? 'grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4' : 'space-y-4'}`}>
+            <div className="mb-12 flex-1 space-y-4">
                 {features.map((feature, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                        <div className={`mt-1 rounded-full p-0.5 ${isPro ? 'bg-[#ff5501]/20 text-[#ff5501]' : 'bg-[#1a1512]/10 text-[#1a1512]'}`}>
-                            <Check size={12} strokeWidth={3} />
-                        </div>
-                        <span className={`text-sm leading-tight ${isPro ? 'text-white/80' : 'text-[#1a1512]/80'}`}>
-                            {feature}
-                        </span>
-                    </div>
+                    <PricingFeatureRow
+                        key={`${feature.label}-${i}`}
+                        label={feature.label}
+                        tooltip={feature.tooltip}
+                        isPro={isPro}
+                    />
                 ))}
             </div>
         </div>
 
-        {/* Footer: Price + Button */}
-        <div className="mt-auto relative z-10">
+        <div className="relative z-0 mt-auto">
             <div className="flex flex-col mb-8">
                 <span className="text-4xl font-bold tracking-tight mb-1">{price}</span>
                 <span className={`text-xs font-mono uppercase tracking-widest ${isPro ? 'text-white/40' : 'text-[#1a1512]/40'}`}>{priceLabel}</span>
             </div>
 
-            <CTAButton variant="pricing" text={buttonText} isDarkBg={isPro} fullWidth as="button" />
+            {onCtaClick ? (
+                <CTAButton variant="pricing" text={buttonText} isDarkBg={isPro} fullWidth as="button" type="button" onClick={onCtaClick} />
+            ) : (
+                <CTAButton variant="pricing" text={buttonText} isDarkBg={isPro} fullWidth as="a" href="/contact" />
+            )}
+
+            <PricingSpotsUrgency isPro={isPro} projectByDate={projectByDate} />
         </div>
     </div>
 );
 
 // --- ADD-ON CARD COMPONENT ---
-const AddOnCard = ({ icon: Icon, title, description }: { icon: any, title: string, description: string }) => (
+const AddOnCard = ({ icon: Icon, title, description }: { icon: React.ElementType; title: string; description: string }) => (
     <div className="group p-8 h-full bg-[#FAFAFA] hover:bg-white transition-colors duration-300">
-        {/* Updated icon container with rounded square orange background */}
         <div className="mb-6 w-12 h-12 rounded-lg bg-[#ff5501] flex items-center justify-center text-white">
             <Icon size={24} />
         </div>
@@ -127,13 +252,61 @@ const AddOnCard = ({ icon: Icon, title, description }: { icon: any, title: strin
     </div>
 );
 
+const LAUNCH_FEATURES: PricingFeatureLine[] = [
+    {
+        label: '1-Hour Strategy Workshop',
+        tooltip:
+            'We present an audit of your current site and outline the exact changes needed to help you reach your goals.',
+    },
+    { label: 'Custom Design (Up to 5 Pages)' },
+    {
+        label: '3 revision rounds',
+        tooltip:
+            'Includes an interactive prototype—a fully functional design mockup you can click through and test before we build—plus three rounds of revisions on the final site.',
+    },
+    { label: 'Converting copywriting' },
+    { label: 'Mobile Responsive & No-Code Build' },
+    { label: 'CMS Setup & Contact Forms' },
+    { label: 'Basic On-Page SEO & Google Analytics Setup' },
+    {
+        label: 'Custom Video Training Library',
+        tooltip:
+            'Instead of limited-time support, you get custom tutorial videos teaching you exactly how to edit and manage your specific site forever.',
+    },
+];
+
+const SCALE_FEATURES: PricingFeatureLine[] = [
+    { label: 'Everything in Launch, plus:' },
+    { label: '8-10 pages' },
+    { label: 'Blog setup' },
+    { label: 'Custom Illustrations & Imagery' },
+    { label: 'Custom Pop-Ups' },
+    { label: 'Advanced integrations' },
+    { label: 'Technical SEO Setup' },
+    { label: 'Site speed & performance' },
+];
+
+const ENTERPRISE_FEATURES: PricingFeatureLine[] = [
+    { label: 'Everything in Scale, plus:' },
+    { label: '10+ Pages' },
+    { label: 'Funnel strategy' },
+    { label: 'E-commerce or Member portal' },
+    { label: 'Custom Booking & Payment Flows' },
+    { label: 'Advanced Micro-Interactions & Custom Animations' },
+    { label: 'Custom post types' },
+    { label: 'Complex integrations' },
+];
+
 interface PricingAndAddonsProps {
     embedded?: boolean;
+    enablePricingModal?: boolean;
 }
 
-export function PricingAndAddons({ embedded }: PricingAndAddonsProps) {
+export function PricingAndAddons({ embedded, enablePricingModal }: PricingAndAddonsProps) {
     const labelRef = useRef<HTMLSpanElement>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
+    const [estimatorOpen, setEstimatorOpen] = useState(false);
+    const lead = usePricingLeadOptional();
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -210,6 +383,14 @@ export function PricingAndAddons({ embedded }: PricingAndAddonsProps) {
         }
     ];
 
+    const open = enablePricingModal && lead;
+
+    const projectByDate = useMemo(() => {
+        const d = new Date();
+        d.setDate(d.getDate() + 42);
+        return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }, []);
+
     return (
         <section ref={sectionRef} className={`w-full bg-[#FAFAFA] px-4 ${embedded ? 'pt-0 pb-20 md:pb-32' : 'py-20 md:py-32'}`}>
             <div className="max-w-7xl mx-auto">
@@ -249,49 +430,63 @@ export function PricingAndAddons({ embedded }: PricingAndAddonsProps) {
                 </div>
 
                 {/* --- PRICING CARDS --- */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 mb-24 items-stretch">
-
-                    {/* LEFT: STARTER CARD (5/12) */}
-                    <div className="lg:col-span-5 h-full">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-8 items-stretch">
+                    <div className="h-full">
                         <PricingCard
                             title="Launch"
                             description="Your brand's digital storefront. Custom design, mobile-ready, built to convert."
-                            price="$2,500"
+                            price="$2,500+"
                             priceLabel="One-time / 5-page site"
-                            features={[
-                                "Custom Design (5 Pages)",
-                                "Mobile Responsive",
-                                "CMS (WordPress or Webflow)",
-                                "Contact Forms & Basic SEO",
-                                "Google Analytics Setup",
-                                "30 Days Post-Launch Support"
-                            ]}
-                            buttonText="Get Started"
+                            features={LAUNCH_FEATURES}
+                            buttonText="GET STARTED"
+                            projectByDate={projectByDate}
+                            onCtaClick={open ? () => lead.openModal('launch') : undefined}
                         />
                     </div>
 
-                    {/* RIGHT: PRO CARD (7/12) */}
-                    <div className="lg:col-span-7 h-full">
+                    <div className="h-full">
                         <PricingCard
                             title="Scale"
                             description="Full digital presence for brands ready to grow. E-commerce, custom features, ongoing optimization."
-                            price="$5,000"
-                            priceLabel="One-time / 10+ pages"
+                            price="$5,000+"
+                            priceLabel="One-time / 8-10 pages"
                             isPro={true}
-                            features={[
-                                "Everything in Launch",
-                                "10+ Custom Pages",
-                                "E-commerce or Member Portal",
-                                "Advanced Animations & UX",
-                                "Technical SEO Implementation",
-                                "Conversion Tracking & CRO",
-                                "CRM or Form Integrations",
-                                "90 Days Priority Support"
-                            ]}
-                            buttonText="Get Started"
+                            features={SCALE_FEATURES}
+                            buttonText="GET STARTED"
+                            projectByDate={projectByDate}
+                            onCtaClick={open ? () => lead.openModal('scale') : undefined}
+                        />
+                    </div>
+
+                    <div className="h-full">
+                        <PricingCard
+                            title="Enterprise"
+                            description="Complex builds for serious operators. E-commerce, membership portals, custom platforms."
+                            price="$8,000+"
+                            priceLabel="One-time / 10+ pages"
+                            features={ENTERPRISE_FEATURES}
+                            buttonText="GET STARTED"
+                            projectByDate={projectByDate}
+                            onCtaClick={open ? () => lead.openModal('enterprise') : undefined}
                         />
                     </div>
                 </div>
+
+                {embedded && enablePricingModal && lead && (
+                    <div className="mb-6 text-center">
+                        <p className="font-mono text-[13px]">
+                            <span className="text-[#888]">Want a more accurate ballpark? → </span>
+                            <button
+                                type="button"
+                                onClick={() => setEstimatorOpen((v) => !v)}
+                                className="cursor-pointer text-[#E8480C] underline-offset-2 hover:underline"
+                            >
+                                Estimate your project cost
+                            </button>
+                        </p>
+                        <ProjectCostEstimator expanded={estimatorOpen} />
+                    </div>
+                )}
 
                 {/* --- ADD-ONS GRID --- */}
                 <div className="w-full">
@@ -304,7 +499,6 @@ export function PricingAndAddons({ embedded }: PricingAndAddonsProps) {
                         </p>
                     </div>
 
-                    {/* Grid container with borders, seamless gap */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1a1512]/10 border border-[#1a1512]/10 rounded-2xl overflow-hidden">
                         {addOns.map((addon, index) => (
                             <AddOnCard

@@ -53,6 +53,8 @@ export interface CTAButtonProps {
   style?: React.CSSProperties;
   ariaLabel?: string;
   type?: 'button' | 'submit';
+  onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
+  disabled?: boolean;
 }
 
 const variantConfig: Record<
@@ -119,6 +121,8 @@ export function CTAButton({
   style = {},
   ariaLabel,
   type = 'button',
+  onClick,
+  disabled = false,
 }: CTAButtonProps) {
   const isAnchor = as === "a" || (href != null && href !== "");
   const El = isAnchor ? "a" : "button";
@@ -187,7 +191,7 @@ export function CTAButton({
     </>
   );
 
-  const commonClasses = `group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none ${fullWidth ? "w-full" : ""} ${className}`.trim();
+  const commonClasses = `group relative inline-flex items-center text-left no-underline focus:outline-none ${fullWidth ? "w-full" : ""} ${disabled ? "pointer-events-none cursor-not-allowed opacity-45" : "cursor-pointer"} ${className}`.trim();
 
   if (isAnchor) {
     return (
@@ -198,6 +202,8 @@ export function CTAButton({
         className={commonClasses}
         style={style}
         aria-label={ariaLabel ?? text}
+        onClick={onClick}
+        aria-disabled={disabled}
       >
         {content}
       </a>
@@ -210,6 +216,8 @@ export function CTAButton({
       className={commonClasses}
       style={style}
       aria-label={ariaLabel ?? text}
+      onClick={onClick}
+      disabled={disabled}
     >
       {content}
     </button>

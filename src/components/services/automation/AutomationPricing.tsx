@@ -113,6 +113,7 @@ const AddOnCard = ({ icon: Icon, title, description }: { icon: React.ElementType
 
 interface AutomationPricingProps {
     embedded?: boolean;
+    enablePricingModal?: boolean;
 }
 
 export function AutomationPricing({ embedded }: AutomationPricingProps) {

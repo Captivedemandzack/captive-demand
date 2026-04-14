@@ -114,6 +114,7 @@ const AddOnCard = ({ icon: Icon, title, description }: { icon: React.ElementType
 
 interface SEOPricingProps {
     embedded?: boolean;
+    enablePricingModal?: boolean;
 }
 
 export function SEOPricing({ embedded }: SEOPricingProps) {

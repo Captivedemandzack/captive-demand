@@ -11,28 +11,34 @@ interface FAQItem {
 
 const faqData: FAQItem[] = [
     {
-        question: "Is there a free trial available?",
-        answer: "Yes, you can try us for free for 30 days. If you want, we'll provide you with a free, personalized 30-minute onboarding call to get you up and running as soon as possible.",
+        question: 'How does the project process work?',
+        answer:
+            'After your intro call, we scope the project, send a proposal, and kick off within 1–2 weeks of deposit. Most projects are delivered in 3–6 weeks depending on complexity and how quickly we receive content from you.',
     },
     {
-        question: "Can I change my plan later?",
-        answer: "Of course. You can upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle, and we'll prorate any differences.",
+        question: 'Do I own everything after the project?',
+        answer:
+            'Yes — you own 100% of the code, design, and content. We hand off all files and credentials at launch. No lock-in, no ongoing fees unless you choose a maintenance retainer.',
     },
     {
-        question: "What is your cancellation policy?",
-        answer: "You can cancel your subscription at any time with no penalties. Your access continues until the end of your current billing period. We don't believe in lock-in contracts.",
+        question: 'What if I need changes after launch?',
+        answer:
+            'Every tier includes post-launch support (30–180 days depending on tier). After that, we offer flexible maintenance retainers or bill at our hourly rate for one-off requests.',
     },
     {
-        question: "Can other info be added to an invoice?",
-        answer: "Yes, you can add your company details, VAT number, purchase order numbers, and any other billing information directly from your account settings.",
+        question: 'How much do I pay upfront?',
+        answer:
+            'We work on a 50% deposit to kick off, 50% on completion model. For larger Enterprise and Custom projects we can structure payments across milestones.',
     },
     {
-        question: "How does billing work?",
-        answer: "We bill monthly or annually depending on your chosen plan. All payments are processed securely through Stripe. You'll receive a detailed invoice via email after each payment.",
+        question: 'Do you work with businesses outside Nashville?',
+        answer:
+            'Yes — we work with clients across the US and internationally. All collaboration happens over Zoom, Slack, and Loom.',
     },
     {
-        question: "How do I change my account email?",
-        answer: "You can update your email address from the account settings page. We'll send a verification link to your new email to confirm the change.",
+        question: 'What makes Captive Demand different from other agencies?',
+        answer:
+            "We're operators, not just designers. We've built and run businesses ourselves, which means we think about your site as a growth tool — not a brochure. Every decision we make is tied to outcomes.",
     },
 ];
 
@@ -55,23 +61,27 @@ const FAQAccordionItem = ({
         className="w-full border-b border-[#1a1512]/10 last:border-b-0"
     >
         <button
+            type="button"
             onClick={onClick}
-            className="w-full flex items-center justify-between py-6 text-left group"
+            className="group flex w-full items-center justify-between py-6 text-left"
         >
             <span
-                className="text-base md:text-lg text-[#1a1512] pr-8"
+                className="pr-8 text-base text-[#1a1512] md:text-lg"
                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 400 }}
             >
                 {item.question}
             </span>
 
-            <div className={`
-                flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300
-                ${isOpen
-                    ? 'bg-[#1a1512] text-white'
-                    : 'bg-[#f3f4f6] text-[#1a1512]/40 group-hover:bg-[#e8e8e8]'
+            <div
+                className={`
+                flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300
+                ${
+                    isOpen
+                        ? 'bg-[#1a1512] text-white'
+                        : 'bg-[#f3f4f6] text-[#1a1512]/40 group-hover:bg-[#e8e8e8]'
                 }
-            `}>
+            `}
+            >
                 <Plus
                     size={16}
                     className={`transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
@@ -84,15 +94,13 @@ const FAQAccordionItem = ({
             {isOpen && (
                 <motion.div
                     initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
+                    animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className="overflow-hidden"
                 >
                     <div className="pb-6 pr-12">
-                        <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed">
-                            {item.answer}
-                        </p>
+                        <p className="font-mono text-sm leading-relaxed text-[#1a1512]/60">{item.answer}</p>
                     </div>
                 </motion.div>
             )}
@@ -108,17 +116,15 @@ export function PricingFAQ() {
     };
 
     return (
-        <section className="w-full bg-[#FAFAFA] py-20 md:py-32 px-4">
-            <div className="max-w-3xl mx-auto">
-
-                {/* Centered Header */}
-                <div className="text-center mb-12 md:mb-16">
+        <section className="w-full bg-[#FAFAFA] px-4 py-20 md:py-32">
+            <div className="mx-auto max-w-3xl">
+                <div className="mb-12 text-center md:mb-16">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="text-3xl md:text-4xl lg:text-5xl text-[#1a1512] mb-4"
+                        className="mb-4 text-3xl text-[#1a1512] md:text-4xl lg:text-5xl"
                         style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
                     >
                         Questions and answers
@@ -130,15 +136,14 @@ export function PricingFAQ() {
                         viewport={{ once: true }}
                         className="font-mono text-sm text-[#1a1512]/60"
                     >
-                        Everything you need to know about the product and billing.
+                        Common questions about pricing, process, and how we work together.
                     </motion.p>
                 </div>
 
-                {/* Accordion */}
                 <div className="w-full">
                     {faqData.map((item, index) => (
                         <FAQAccordionItem
-                            key={index}
+                            key={item.question}
                             item={item}
                             isOpen={openIndex === index}
                             onClick={() => handleToggle(index)}
@@ -147,19 +152,18 @@ export function PricingFAQ() {
                     ))}
                 </div>
 
-                {/* Footer CTA */}
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                     viewport={{ once: true }}
-                    className="text-center mt-12"
+                    className="mt-12 text-center"
                 >
                     <p className="font-mono text-sm text-[#1a1512]/50">
                         Still need help? Reach out to us via{' '}
                         <a
                             href="mailto:hello@captivedemand.com"
-                            className="text-[#ff5501] underline underline-offset-2 hover:text-[#1a1512] transition-colors"
+                            className="text-[#ff5501] underline underline-offset-2 transition-colors hover:text-[#1a1512]"
                         >
                             hello@captivedemand.com
                         </a>

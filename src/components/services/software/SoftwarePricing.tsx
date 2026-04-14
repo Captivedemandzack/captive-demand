@@ -110,6 +110,7 @@ const AddOnCard = ({ icon: Icon, title, description }: { icon: any, title: strin
 
 interface SoftwarePricingProps {
     embedded?: boolean;
+    enablePricingModal?: boolean;
 }
 
 export function SoftwarePricing({ embedded }: SoftwarePricingProps) {

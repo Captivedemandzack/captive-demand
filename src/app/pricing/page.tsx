@@ -11,7 +11,9 @@ import { AutomationPricing } from '@/components/services/automation/AutomationPr
 import { PricingFAQ } from '@/components/pricing/PricingFAQ';
 import { CTASection } from '@/components/sections/CTASection';
 
-const SERVICE_COMPONENTS: Record<PricingService, React.ComponentType<{ embedded?: boolean }>> = {
+type ServicePricingProps = { embedded?: boolean; enablePricingModal?: boolean };
+
+const SERVICE_COMPONENTS: Record<PricingService, React.ComponentType<ServicePricingProps>> = {
     website: PricingAndAddons,
     seo: SEOPricing,
     software: SoftwarePricing,
@@ -62,7 +64,7 @@ export default function PricingPage() {
                         exit={{ opacity: 0, y: -12 }}
                         transition={{ duration: 0.35 }}
                     >
-                        <ServicePricing embedded />
+                        <ServicePricing embedded enablePricingModal={activeService === 'website'} />
                     </motion.div>
                 </AnimatePresence>
             </section>

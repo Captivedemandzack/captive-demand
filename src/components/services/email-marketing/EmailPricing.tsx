@@ -124,6 +124,7 @@ const AddOnCard = ({ icon: Icon, title, description }: { icon: React.ElementType
 
 interface EmailPricingProps {
     embedded?: boolean;
+    enablePricingModal?: boolean;
 }
 
 export function EmailPricing({ embedded }: EmailPricingProps) {
