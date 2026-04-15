@@ -16,8 +16,19 @@ const serviceSubMenu = [
   { text: 'Automation', href: '/services/automation' },
 ];
 
-const GLASS_PANEL =
-  'relative flex w-full flex-col items-center overflow-hidden rounded-xl border border-white/20 bg-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04),inset_0_1px_0_0_rgba(255,255,255,0.3)] backdrop-blur-md backdrop-saturate-150';
+/** Desktop: single frosted surface (md+). */
+const GLASS_DESKTOP =
+  'md:border md:border-white/20 md:bg-white/30 md:shadow-[0_8px_32px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04),inset_0_1px_0_0_rgba(255,255,255,0.3)] md:backdrop-blur-md md:backdrop-saturate-150';
+
+/** Mobile: motion shell — no backdrop-filter (Analogue “menu wrap”). */
+const GLASS_OUTER_MOBILE = 'max-md:border-0 max-md:bg-transparent';
+
+/**
+ * Mobile frosted fill: blur + border + inset highlight only.
+ * Outer drop shadow lives on the non-overflow parent so `overflow-y-auto` does not clip it.
+ */
+const MENU_BG_MOBILE =
+  'pointer-events-none absolute inset-0 z-0 rounded-xl border border-white/20 bg-white/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3)] backdrop-blur-md backdrop-saturate-150 md:hidden';
 
 type MenuItemProps = {
   text: string;
@@ -83,10 +94,10 @@ const MenuLinkItem = ({
     </div>
   );
 
+  /** Opacity-only fade: avoids `filter: blur()` on interactive rows (Safari hit-testing). */
   const fadeStyle: React.CSSProperties = {
-    filter: isFaded ? 'blur(3px)' : 'blur(0px)',
     opacity: isFaded ? 0.25 : 1,
-    transition: 'filter 0.35s ease, opacity 0.35s ease',
+    transition: 'opacity 0.35s ease',
   };
 
   if (hasSubMenu) {
@@ -132,6 +143,11 @@ const SubMenuItem = ({
   onHoverStart,
   onHoverEnd,
 }: MenuItemProps) => {
+  const spanStyle: React.CSSProperties = {
+    opacity: isFaded ? 0.25 : 1,
+    transition: 'opacity 0.35s ease',
+  };
+
   return (
     <Link
       href={href}
@@ -140,15 +156,7 @@ const SubMenuItem = ({
       onMouseLeave={onHoverEnd}
       className="relative flex w-full items-center pl-10 pr-6 text-[16px] font-normal text-brand-bg transition-colors duration-200 max-md:min-h-11 md:h-10"
     >
-      <span
-        style={{
-          filter: isFaded ? 'blur(3px)' : 'blur(0px)',
-          opacity: isFaded ? 0.25 : 1,
-          transition: 'filter 0.35s ease, opacity 0.35s ease',
-        }}
-      >
-        {text}
-      </span>
+      <span style={spanStyle}>{text}</span>
     </Link>
   );
 };
@@ -199,13 +207,25 @@ export default function Navbar() {
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center pt-4 md:pt-8">
-      <div className="pointer-events-auto w-[95%] max-w-[500px] touch-manipulation md:w-[50%]">
+      <div
+        className={cn(
+          'pointer-events-auto w-[95%] max-w-[500px] touch-manipulation md:w-[50%]',
+          /* Same ambient shadow as desktop glass; lives here so motion panel overflow does not clip it. */
+          'max-md:rounded-xl max-md:shadow-[0_8px_32px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04)]',
+        )}
+      >
         <motion.div
-          className={GLASS_PANEL}
+          className={cn(
+            'relative flex w-full flex-col items-center overflow-x-hidden overflow-y-auto rounded-xl md:overflow-hidden',
+            GLASS_DESKTOP,
+            GLASS_OUTER_MOBILE,
+          )}
           initial="collapsed"
           animate={isOpen ? 'expanded' : 'collapsed'}
           variants={containerVariants}
         >
+          <div aria-hidden className={MENU_BG_MOBILE} />
+          <div className="relative z-10 flex w-full flex-col items-center">
           <div className="relative z-30 flex h-[53px] w-full shrink-0 items-center justify-between px-8">
             <div className="relative flex h-full cursor-pointer items-center">
               <Link
@@ -284,7 +304,7 @@ export default function Navbar() {
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.3, ease: 'easeInOut' }}
-                            className="flex w-full flex-col"
+                            className="flex w-full flex-col overflow-hidden"
                           >
                             {serviceSubMenu.map((item) => (
                               <SubMenuItem
@@ -399,6 +419,7 @@ export default function Navbar() {
               </motion.div>
             )}
           </AnimatePresence>
+          </div>
         </motion.div>
       </div>
     </header>
