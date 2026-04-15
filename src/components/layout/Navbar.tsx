@@ -9,11 +9,11 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const serviceSubMenu = [
-  { text: "Website", href: "/services/website" },
-  { text: "SEO", href: "/services/seo" },
-  { text: "Email", href: "/services/email-marketing" },
-  { text: "Software", href: "/services/software" },
-  { text: "Automation", href: "/services/automation" },
+  { text: 'Website', href: '/services/website' },
+  { text: 'SEO', href: '/services/seo' },
+  { text: 'Email', href: '/services/email-marketing' },
+  { text: 'Software', href: '/services/software' },
+  { text: 'Automation', href: '/services/automation' },
 ];
 
 type MenuItemProps = {
@@ -53,20 +53,28 @@ const MenuLinkItem = ({
   };
 
   const LinkContent = (
-    <div className="relative flex items-center justify-start w-full h-[80px] px-6 cursor-pointer overflow-hidden group">
+    <div className="group relative flex h-[80px] w-full cursor-pointer items-center justify-start overflow-hidden px-6">
       <motion.div
         className="absolute inset-0 bg-brand-dark"
         initial={{ opacity: 0 }}
         animate={{ opacity: isHovered || isSubMenuOpen ? 1 : 0 }}
         transition={{ duration: 0.2 }}
       />
-      <span className={`relative z-10 font-sans font-normal text-[18px] tracking-tight transition-colors duration-200 ${isHovered || isSubMenuOpen ? 'text-brand-bg' : 'text-brand-dark'}`}>
+      <span
+        className={`relative z-10 font-sans text-[18px] font-normal tracking-tight transition-colors duration-200 ${
+          isHovered || isSubMenuOpen ? 'text-brand-bg' : 'text-brand-dark'
+        }`}
+      >
         {text}
       </span>
       {hasSubMenu && (
         <ChevronRight
-          className={`absolute right-6 transition-transform duration-300 ${isSubMenuOpen ? 'rotate-90' : 'rotate-0'} ${isHovered || isSubMenuOpen ? 'text-brand-bg' : 'text-brand-dark'}`}
+          className={`absolute right-6 transition-transform duration-300 ${
+            isSubMenuOpen ? 'rotate-90' : 'rotate-0'
+          } ${isHovered || isSubMenuOpen ? 'text-brand-bg' : 'text-brand-dark'}`}
           size={20}
+          strokeWidth={1.5}
+          aria-hidden
         />
       )}
     </div>
@@ -127,7 +135,7 @@ const SubMenuItem = ({
       onClick={onClick}
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
-      className="relative flex items-center w-full h-10 pl-10 pr-6 text-brand-bg transition-colors duration-200 text-[16px] font-normal"
+      className="relative flex h-10 w-full items-center pl-10 pr-6 text-[16px] font-normal text-brand-bg transition-colors duration-200"
     >
       <span
         style={{
@@ -171,221 +179,207 @@ export default function Navbar() {
     setHoveredSubItem(null);
   };
 
-  const containerVariants = {
-    collapsed: {
-      height: 53,
-      transition: { type: "spring" as const, stiffness: 300, damping: 30 }
-    },
-    expanded: {
-      height: 'auto',
-      transition: { type: "spring" as const, stiffness: 300, damping: 30 }
-    }
-  };
+  const isMainFaded = (itemText: string) => hoveredMainItem !== null && hoveredMainItem !== itemText;
 
-  const mainItems = ["Services", "Pricing", "Case Studies", "Our Story", "Insights", "Contact Us"];
-
-  const isMainFaded = (itemText: string) =>
-    hoveredMainItem !== null && hoveredMainItem !== itemText;
-
-  const isSubFaded = (itemText: string) =>
-    hoveredSubItem !== null && hoveredSubItem !== itemText;
+  const isSubFaded = (itemText: string) => hoveredSubItem !== null && hoveredSubItem !== itemText;
 
   return (
-    <div className="fixed top-4 left-1/2 z-50 w-[95%] max-w-[500px] -translate-x-1/2 touch-manipulation md:top-8 md:w-[50%]">
-      <motion.div
-        className="relative flex flex-col items-center w-full rounded-xl overflow-hidden backdrop-blur-md bg-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04),inset_0_1px_0_0_rgba(255,255,255,0.3)]"
-        initial="collapsed"
-        animate={isOpen ? "expanded" : "collapsed"}
-        variants={containerVariants}
-      >
-        {/* Top Navigation Bar */}
-        <div className="w-full h-[53px] flex items-center justify-between px-8 shrink-0 relative z-20">
-          <div className="relative group cursor-pointer h-full flex items-center">
-            <Link href="/work" className="absolute inset-0 z-10" onClick={closeAllMenus} />
-            <span className="font-mono uppercase text-[13px] tracking-[0.2em] text-brand-dark/60 select-none">
-              WORK
-            </span>
-          </div>
-
-          <div className="flex-grow flex justify-center items-center h-full">
-            <Link href="/" className="relative flex justify-center items-center w-[120px] h-[30px]" onClick={closeAllMenus}>
-              <Image
-                src="/captive-demand-logo.png"
-                alt="Captive Demand"
-                fill
-                className="object-contain"
-                priority
-              />
-            </Link>
-          </div>
-
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleMenu();
-            }}
-            aria-expanded={isOpen}
-            aria-controls={isOpen ? 'site-nav-flyout' : undefined}
-            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            className="relative flex h-full min-h-[48px] min-w-[4.5rem] cursor-pointer select-none items-center justify-end border-0 bg-transparent p-0 font-mono uppercase text-[13px] tracking-[0.2em] text-brand-dark/60 touch-manipulation"
-          >
-            {isOpen ? 'CLOSE' : 'ABOUT'}
-          </button>
-        </div>
-
-        {/* Expanded Content Area */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              id="site-nav-flyout"
-              className="w-full flex flex-col"
-              variants={{
-                hidden: { opacity: 0, transition: { duration: 0.2 } },
-                visible: { opacity: 1, transition: { duration: 0.4, delay: 0.1 } }
-              }}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-            >
-              <div className="w-full border-t border-brand-dark/10">
-                {/* Row 1 - Services & Process */}
-                <div className="flex w-full border-b border-brand-dark/10">
-                  <div className={`w-1/2 border-r border-brand-dark/10 ${isServicesOpen ? 'bg-brand-dark' : ''}`}>
-                    <MenuLinkItem
-                      text="Services"
-                      href="/services"
-                      hasSubMenu={true}
-                      isSubMenuOpen={isServicesOpen}
-                      toggleSubMenu={toggleServicesSubMenu}
-                      isFaded={isMainFaded("Services")}
-                      onHoverStart={() => setHoveredMainItem("Services")}
-                      onHoverEnd={() => setHoveredMainItem(null)}
-                    />
-
-                    <AnimatePresence>
-                      {isServicesOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease: 'easeInOut' }}
-                          className="w-full flex flex-col"
-                        >
-                          {serviceSubMenu.map((item) => (
-                            <SubMenuItem
-                              key={item.text}
-                              text={item.text}
-                              href={item.href}
-                              onClick={closeAllMenus}
-                              isFaded={isSubFaded(item.text)}
-                              onHoverStart={() => setHoveredSubItem(item.text)}
-                              onHoverEnd={() => setHoveredSubItem(null)}
-                            />
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  <div className="w-1/2">
-                    <MenuLinkItem
-                      text="Pricing"
-                      href="/pricing"
-                      onClick={closeAllMenus}
-                      isFaded={isMainFaded("Pricing")}
-                      onHoverStart={() => setHoveredMainItem("Pricing")}
-                      onHoverEnd={() => setHoveredMainItem(null)}
-                    />
-                  </div>
-                </div>
-
-                {/* Row 2 */}
-                <div className="flex w-full border-b border-brand-dark/10">
-                  <div className="w-1/2 border-r border-brand-dark/10">
-                    <MenuLinkItem
-                      text="Case Studies"
-                      href="/work"
-                      onClick={closeAllMenus}
-                      isFaded={isMainFaded("Case Studies")}
-                      onHoverStart={() => setHoveredMainItem("Case Studies")}
-                      onHoverEnd={() => setHoveredMainItem(null)}
-                    />
-                  </div>
-                  <div className="w-1/2">
-                    <MenuLinkItem
-                      text="Our Story"
-                      href="/about"
-                      onClick={closeAllMenus}
-                      isFaded={isMainFaded("Our Story")}
-                      onHoverStart={() => setHoveredMainItem("Our Story")}
-                      onHoverEnd={() => setHoveredMainItem(null)}
-                    />
-                  </div>
-                </div>
-
-                {/* Row 3 */}
-                <div className="flex w-full border-b border-brand-dark/10">
-                  <div className="w-1/2 border-r border-brand-dark/10">
-                    <MenuLinkItem
-                      text="Insights"
-                      href="/insights"
-                      onClick={closeAllMenus}
-                      isFaded={isMainFaded("Insights")}
-                      onHoverStart={() => setHoveredMainItem("Insights")}
-                      onHoverEnd={() => setHoveredMainItem(null)}
-                    />
-                  </div>
-                  <div className="w-1/2">
-                    <MenuLinkItem
-                      text="Contact Us"
-                      href="/contact"
-                      onClick={closeAllMenus}
-                      isFaded={isMainFaded("Contact Us")}
-                      onHoverStart={() => setHoveredMainItem("Contact Us")}
-                      onHoverEnd={() => setHoveredMainItem(null)}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Contact Info & Address Section */}
-              <div className="w-full px-8 py-8 flex flex-col gap-8">
-                <div className="flex flex-col items-start gap-3">
-                  <span className="font-mono uppercase text-[11px] tracking-[0.15em] text-brand-dark/50">
-                    GENERAL INQUIRIES
-                  </span>
-                  <div className="flex flex-col items-start gap-1">
-                    <a href="mailto:hello@captivedemand.com" className="text-[17px] font-normal text-brand-dark hover:opacity-70 transition-opacity">
-                      hello@captivedemand.com
-                    </a>
-                    <a href="tel:+16159092337" className="text-[17px] font-normal text-brand-dark hover:opacity-70 transition-opacity">
-                      615.909.2337
-                    </a>
-                    <Link href="/contact" className="text-[17px] font-normal text-brand-dark hover:opacity-70 transition-opacity mt-1 underline underline-offset-2">
-                      Plan a Call
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-start gap-3">
-                  <span className="font-mono uppercase text-[11px] tracking-[0.15em] text-brand-dark/50">
-                    VISIT
-                  </span>
-                  <div className="flex flex-col items-start">
-                    <span className="text-[17px] font-normal text-brand-dark">
-                      901 Woodland St, Suite 104,
-                    </span>
-                    <span className="text-[17px] font-normal text-brand-dark">
-                      Nashville, TN 37206
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center pt-4 md:pt-8">
+      <div className="pointer-events-auto w-[95%] max-w-[500px] touch-manipulation md:w-1/2 md:max-w-none">
+        <div
+          className={cn(
+            'relative overflow-visible rounded-xl border border-white/20 bg-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04),inset_0_1px_0_0_rgba(255,255,255,0.3)] backdrop-blur-md',
+            isOpen ? 'rounded-b-none rounded-t-xl' : 'rounded-xl',
           )}
-        </AnimatePresence>
-      </motion.div>
-    </div>
+        >
+          <div className="relative z-30 flex h-[53px] w-full shrink-0 items-center justify-between px-8">
+            <div className="relative flex h-full cursor-pointer items-center">
+              <Link href="/work" className="absolute inset-0 z-10 min-h-[48px] min-w-[3rem]" onClick={closeAllMenus} />
+              <span className="pointer-events-none font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 select-none">
+                WORK
+              </span>
+            </div>
+
+            <div className="flex h-full flex-grow items-center justify-center">
+              <Link
+                href="/"
+                className="relative z-10 flex h-[30px] w-[120px] min-h-[44px] min-w-[120px] items-center justify-center"
+                onClick={closeAllMenus}
+              >
+                <Image
+                  src="/captive-demand-logo.png"
+                  alt="Captive Demand"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </Link>
+            </div>
+
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleMenu();
+              }}
+              aria-expanded={isOpen}
+              aria-controls={isOpen ? 'site-nav-flyout' : undefined}
+              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="relative z-30 flex h-full min-h-[48px] min-w-[4.5rem] cursor-pointer select-none items-center justify-end border-0 bg-transparent p-0 font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 touch-manipulation"
+              style={{ WebkitTapHighlightColor: 'transparent' }}
+            >
+              {isOpen ? 'CLOSE' : 'ABOUT'}
+            </button>
+          </div>
+
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                id="site-nav-flyout"
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] }}
+                className="absolute left-0 right-0 top-full z-40 max-h-[min(85dvh,calc(100dvh-5.5rem))] overflow-x-hidden overflow-y-auto rounded-b-xl border border-t-0 border-white/20 bg-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-md"
+              >
+                <div className="w-full border-t border-brand-dark/10">
+                  <div className="flex w-full border-b border-brand-dark/10">
+                    <div className={`w-1/2 border-r border-brand-dark/10 ${isServicesOpen ? 'bg-brand-dark' : ''}`}>
+                      <MenuLinkItem
+                        text="Services"
+                        href="/services"
+                        hasSubMenu
+                        isSubMenuOpen={isServicesOpen}
+                        toggleSubMenu={toggleServicesSubMenu}
+                        isFaded={isMainFaded('Services')}
+                        onHoverStart={() => setHoveredMainItem('Services')}
+                        onHoverEnd={() => setHoveredMainItem(null)}
+                      />
+
+                      <AnimatePresence>
+                        {isServicesOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.25, ease: 'easeInOut' }}
+                            className="flex w-full flex-col"
+                          >
+                            {serviceSubMenu.map((item) => (
+                              <SubMenuItem
+                                key={item.text}
+                                text={item.text}
+                                href={item.href}
+                                onClick={closeAllMenus}
+                                isFaded={isSubFaded(item.text)}
+                                onHoverStart={() => setHoveredSubItem(item.text)}
+                                onHoverEnd={() => setHoveredSubItem(null)}
+                              />
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    <div className="w-1/2">
+                      <MenuLinkItem
+                        text="Pricing"
+                        href="/pricing"
+                        onClick={closeAllMenus}
+                        isFaded={isMainFaded('Pricing')}
+                        onHoverStart={() => setHoveredMainItem('Pricing')}
+                        onHoverEnd={() => setHoveredMainItem(null)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex w-full border-b border-brand-dark/10">
+                    <div className="w-1/2 border-r border-brand-dark/10">
+                      <MenuLinkItem
+                        text="Case Studies"
+                        href="/work"
+                        onClick={closeAllMenus}
+                        isFaded={isMainFaded('Case Studies')}
+                        onHoverStart={() => setHoveredMainItem('Case Studies')}
+                        onHoverEnd={() => setHoveredMainItem(null)}
+                      />
+                    </div>
+                    <div className="w-1/2">
+                      <MenuLinkItem
+                        text="Our Story"
+                        href="/about"
+                        onClick={closeAllMenus}
+                        isFaded={isMainFaded('Our Story')}
+                        onHoverStart={() => setHoveredMainItem('Our Story')}
+                        onHoverEnd={() => setHoveredMainItem(null)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex w-full border-b border-brand-dark/10">
+                    <div className="w-1/2 border-r border-brand-dark/10">
+                      <MenuLinkItem
+                        text="Insights"
+                        href="/insights"
+                        onClick={closeAllMenus}
+                        isFaded={isMainFaded('Insights')}
+                        onHoverStart={() => setHoveredMainItem('Insights')}
+                        onHoverEnd={() => setHoveredMainItem(null)}
+                      />
+                    </div>
+                    <div className="w-1/2">
+                      <MenuLinkItem
+                        text="Contact Us"
+                        href="/contact"
+                        onClick={closeAllMenus}
+                        isFaded={isMainFaded('Contact Us')}
+                        onHoverStart={() => setHoveredMainItem('Contact Us')}
+                        onHoverEnd={() => setHoveredMainItem(null)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex w-full flex-col gap-8 px-8 py-8">
+                  <div className="flex flex-col items-start gap-3">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-brand-dark/50">
+                      GENERAL INQUIRIES
+                    </span>
+                    <div className="flex flex-col items-start gap-1">
+                      <a
+                        href="mailto:hello@captivedemand.com"
+                        className="text-[17px] font-normal text-brand-dark transition-opacity hover:opacity-70"
+                      >
+                        hello@captivedemand.com
+                      </a>
+                      <a
+                        href="tel:+16159092337"
+                        className="text-[17px] font-normal text-brand-dark transition-opacity hover:opacity-70"
+                      >
+                        615.909.2337
+                      </a>
+                      <Link
+                        href="/contact"
+                        className="mt-1 text-[17px] font-normal text-brand-dark underline underline-offset-2 transition-opacity hover:opacity-70"
+                      >
+                        Plan a Call
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col items-start gap-3">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-brand-dark/50">VISIT</span>
+                    <div className="flex flex-col items-start">
+                      <span className="text-[17px] font-normal text-brand-dark">901 Woodland St, Suite 104,</span>
+                      <span className="text-[17px] font-normal text-brand-dark">Nashville, TN 37206</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </header>
   );
 }
