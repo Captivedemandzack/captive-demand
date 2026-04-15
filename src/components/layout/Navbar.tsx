@@ -216,7 +216,9 @@ export default function Navbar() {
       >
         <motion.div
           className={cn(
-            'relative flex w-full flex-col items-center overflow-x-hidden overflow-y-auto rounded-xl md:overflow-hidden',
+            'relative flex w-full flex-col items-center rounded-xl',
+            /* Closed: no vertical scroll container — iOS Safari can swallow the first tap on overflow:auto. */
+            isOpen ? 'max-md:overflow-x-hidden max-md:overflow-y-auto md:overflow-hidden' : 'overflow-hidden',
             GLASS_DESKTOP,
             GLASS_OUTER_MOBILE,
           )}
@@ -226,49 +228,52 @@ export default function Navbar() {
         >
           <div aria-hidden className={MENU_BG_MOBILE} />
           <div className="relative z-10 flex w-full flex-col items-center">
-          <div className="relative z-30 flex h-[53px] w-full shrink-0 items-center justify-between px-8">
-            <div className="relative flex h-full cursor-pointer items-center">
-              <Link
-                href="/work"
-                className="absolute inset-0 z-10 max-md:min-h-[48px] max-md:min-w-[3rem]"
-                onClick={closeAllMenus}
-              />
-              <span className="pointer-events-none font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 select-none">
-                WORK
-              </span>
-            </div>
-
-            <div className="flex h-full flex-grow items-center justify-center">
-              <Link
-                href="/"
-                className="relative z-10 flex h-[30px] w-[120px] items-center justify-center max-md:min-h-[44px] max-md:min-w-[120px]"
-                onClick={closeAllMenus}
-              >
-                <Image
-                  src="/captive-demand-logo.png"
-                  alt="Captive Demand"
-                  fill
-                  className="object-contain"
-                  priority
+            {/* Equal 1fr side tracks so the logo stays optically centered (ABOUT/CLOSE widths differ). */}
+            <div className="relative z-30 isolate grid h-[53px] w-full shrink-0 grid-cols-[1fr_auto_1fr] items-center px-8">
+              <div className="relative flex min-h-[48px] min-w-0 items-center justify-self-start">
+                <Link
+                  href="/work"
+                  className="absolute z-10 touch-manipulation max-md:inset-y-0 max-md:left-0 max-md:min-h-[48px] max-md:w-[min(100%,4.5rem)] md:inset-0"
+                  onClick={closeAllMenus}
                 />
-              </Link>
-            </div>
+                <span className="pointer-events-none font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 select-none">
+                  WORK
+                </span>
+              </div>
 
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleMenu();
-              }}
-              aria-expanded={isOpen}
-              aria-controls={isOpen ? 'site-nav-flyout' : undefined}
-              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="relative z-30 flex h-full cursor-pointer select-none items-center justify-end border-0 bg-transparent p-0 font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 touch-manipulation max-md:min-h-[48px] max-md:min-w-[4.5rem]"
-              style={{ WebkitTapHighlightColor: 'transparent' }}
-            >
-              {isOpen ? 'CLOSE' : 'ABOUT'}
-            </button>
-          </div>
+              <div className="relative flex h-[30px] w-[120px] shrink-0 justify-self-center max-md:min-h-[44px]">
+                <Link
+                  href="/"
+                  className="relative z-10 flex size-full touch-manipulation items-center justify-center"
+                  onClick={closeAllMenus}
+                >
+                  <Image
+                    src="/captive-demand-logo.png"
+                    alt="Captive Demand"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </Link>
+              </div>
+
+              <div className="flex min-h-[48px] min-w-0 justify-self-end">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleMenu();
+                  }}
+                  aria-expanded={isOpen}
+                  aria-controls={isOpen ? 'site-nav-flyout' : undefined}
+                  aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                  className="relative z-20 flex min-h-[48px] min-w-[4.5rem] cursor-pointer select-none items-center justify-end border-0 bg-transparent p-0 font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 touch-manipulation"
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
+                >
+                  {isOpen ? 'CLOSE' : 'ABOUT'}
+                </button>
+              </div>
+            </div>
 
           <AnimatePresence>
             {isOpen && (
