@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
+import { cn } from '@/lib/utils';
+
 const serviceSubMenu = [
   { text: "Website", href: "/services/website" },
   { text: "SEO", href: "/services/seo" },
@@ -78,15 +80,22 @@ const MenuLinkItem = ({
 
   if (hasSubMenu) {
     return (
-      <div
-        onClick={toggleSubMenu}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleSubMenu?.();
+        }}
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
-        className={className}
+        className={cn(
+          className,
+          'w-full touch-manipulation appearance-none border-0 bg-transparent p-0 text-left',
+        )}
         style={fadeStyle}
       >
         {LinkContent}
-      </div>
+      </button>
     );
   }
 
@@ -140,12 +149,14 @@ export default function Navbar() {
   const [hoveredSubItem, setHoveredSubItem] = useState<string | null>(null);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-    if (isOpen) {
-      setIsServicesOpen(false);
-      setHoveredMainItem(null);
-      setHoveredSubItem(null);
-    }
+    setIsOpen((prev) => {
+      if (prev) {
+        setIsServicesOpen(false);
+        setHoveredMainItem(null);
+        setHoveredSubItem(null);
+      }
+      return !prev;
+    });
   };
 
   const closeAllMenus = () => {
@@ -156,7 +167,7 @@ export default function Navbar() {
   };
 
   const toggleServicesSubMenu = () => {
-    setIsServicesOpen(!isServicesOpen);
+    setIsServicesOpen((open) => !open);
     setHoveredSubItem(null);
   };
 
@@ -180,7 +191,7 @@ export default function Navbar() {
     hoveredSubItem !== null && hoveredSubItem !== itemText;
 
   return (
-    <div className="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[50%] max-w-[500px]">
+    <div className="fixed top-4 left-1/2 z-50 w-[95%] max-w-[500px] -translate-x-1/2 touch-manipulation md:top-8 md:w-[50%]">
       <motion.div
         className="relative flex flex-col items-center w-full rounded-xl overflow-hidden backdrop-blur-md bg-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04),inset_0_1px_0_0_rgba(255,255,255,0.3)]"
         initial="collapsed"
@@ -208,21 +219,26 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <div
-            className="relative cursor-pointer h-full flex items-center select-none"
-            onClick={toggleMenu}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleMenu();
+            }}
+            aria-expanded={isOpen}
+            aria-controls={isOpen ? 'site-nav-flyout' : undefined}
+            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            className="relative flex h-full min-h-[48px] min-w-[4.5rem] cursor-pointer select-none items-center justify-end border-0 bg-transparent p-0 font-mono uppercase text-[13px] tracking-[0.2em] text-brand-dark/60 touch-manipulation"
           >
-            <span className="font-mono uppercase text-[13px] tracking-[0.2em] text-brand-dark/60">
-              {isOpen ? 'CLOSE' : 'ABOUT'}
-            </span>
-            <div className="absolute inset-0 z-10" />
-          </div>
+            {isOpen ? 'CLOSE' : 'ABOUT'}
+          </button>
         </div>
 
         {/* Expanded Content Area */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
+              id="site-nav-flyout"
               className="w-full flex flex-col"
               variants={{
                 hidden: { opacity: 0, transition: { duration: 0.2 } },
