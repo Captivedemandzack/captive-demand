@@ -123,10 +123,12 @@ export function Carousel({ items }: CarouselProps) {
                         return;
                     }
 
+                    /* Keep z-index in a modest range — extreme values + 3D transforms on the
+                       homepage carousel caused unreliable hit-testing vs the fixed nav on iOS. */
                     gsap.set(card, {
                         transformOrigin: `50% ${config.radius}px`,
                         rotation: angle,
-                        zIndex: Math.round(10000 - Math.abs(angle))
+                        zIndex: Math.max(1, Math.round(40 - Math.abs(angle))),
                     });
                 });
             };
@@ -141,7 +143,7 @@ export function Carousel({ items }: CarouselProps) {
     }, [extendedItems.length, config.radius, config.cardWidth, config.gap]);
 
     return (
-        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden pt-0 pb-4 min-h-[600px]">
+        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden pt-0 pb-4 min-h-[600px] pointer-events-none">
             <div ref={containerRef} className="relative h-full w-full flex justify-center opacity-0">
                 <div className="relative w-0 h-0 top-0">
                     {extendedItems.map((item, index) => (
@@ -150,7 +152,7 @@ export function Carousel({ items }: CarouselProps) {
                             ref={(el) => {
                                 if (el) cardsRef.current[index] = el;
                             }}
-                            className="absolute will-change-transform"
+                            className="pointer-events-auto absolute will-change-transform"
                             style={{
                                 width: `${config.cardWidth}px`,
                                 left: `-${config.cardWidth / 2}px`,
