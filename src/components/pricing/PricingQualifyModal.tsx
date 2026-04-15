@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 import { BookingCalendarShell } from '@/components/booking/BookingCalendarShell';
+import { GhlBookingCardContent } from '@/components/booking/GhlLeadConnectorBooking';
 import { CTAButton } from '@/components/ui/CTAButton';
 import { usePricingLead } from '@/components/pricing/pricing-lead-context';
 import { cn } from '@/lib/utils';
@@ -18,27 +20,6 @@ import {
 const sans = { fontFamily: 'var(--font-pricing-sans), system-ui, sans-serif' } as const;
 const mono = { fontFamily: 'var(--font-pricing-mono), ui-monospace, monospace' } as const;
 
-const DEFAULT_BOOKING_CALENDAR_URL =
-  'https://calendar.captivedemand.com/book-with-spencer-step-2-15-mins';
-
-function resolveBookingCalendarUrl(): string {
-  const fromEnv =
-    process.env.NEXT_PUBLIC_CALCOM_BOOKING_URL?.trim() ||
-    (process.env.NEXT_PUBLIC_CALCOM_LINK?.trim().startsWith('http')
-      ? process.env.NEXT_PUBLIC_CALCOM_LINK.trim()
-      : '');
-  if (fromEnv) {
-    try {
-      return new URL(fromEnv).toString();
-    } catch {
-      /* fall through */
-    }
-  }
-  return DEFAULT_BOOKING_CALENDAR_URL;
-}
-
-const BOOKING_CALENDAR_URL = resolveBookingCalendarUrl();
-
 const CAL_DISABLED = process.env.NEXT_PUBLIC_CALCOM_EMBED === 'false';
 
 type ModalStep = 'form' | 'booking' | 'thanks';
@@ -47,6 +28,7 @@ export function PricingQualifyModal() {
   const { isOpen, closeModal } = usePricingLead();
   const shouldReduceMotion = useReducedMotion();
   const { executeRecaptcha } = useGoogleReCaptcha();
+  const [mounted, setMounted] = useState(false);
 
   const [step, setStep] = useState<ModalStep>('form');
   const [name, setName] = useState('');
@@ -61,6 +43,10 @@ export function PricingQualifyModal() {
   }>({});
   const [submitError, setSubmitError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -84,9 +70,12 @@ export function PricingQualifyModal() {
   }, [isOpen]);
 
   const inputClass = (err: boolean) =>
-    `w-full rounded-lg border px-3.5 py-3 font-mono text-[13px] text-[#111] outline-none transition-colors ${
-      err ? 'border-red-500 bg-[#fafafa]' : 'border-[#e0e0e0] bg-[#fafafa] focus:border-[#E8480C] focus:bg-white'
-    }`;
+    cn(
+      'w-full rounded-lg border px-3.5 py-3 font-mono text-[13px] text-white outline-none transition-colors placeholder:text-white/35',
+      err
+        ? 'border-red-500 bg-red-500/10'
+        : 'border-white/15 bg-white/5 focus:border-[#ff5501] focus:ring-1 focus:ring-[#ff5501]/30',
+    );
 
   const validate = () => {
     const next: typeof fieldErrors = {};
@@ -177,22 +166,26 @@ export function PricingQualifyModal() {
         transition: { type: 'spring' as const, duration: 0.45, bounce: 0 },
       };
 
-  return (
+  const isBooking = step === 'booking';
+
+  const tree = (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[200] flex items-center justify-center p-4 backdrop-blur-sm"
-          style={{ backgroundColor: 'rgba(0,0,0,0.6)' }}
+          key="pricing-qualify-overlay"
+          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/60 p-4 pt-20 backdrop-blur-sm sm:items-center sm:pt-4 md:pt-8"
           onClick={closeModal}
           {...overlay}
         >
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-labelledby="pq-modal-title"
+            aria-labelledby={
+              step === 'booking' ? 'pq-booking-title' : step === 'thanks' ? 'pq-thanks-title' : 'pq-modal-title'
+            }
             className={cn(
-              'relative w-full rounded-[24px] bg-white p-6 shadow-xl md:p-8',
-              step === 'booking'
+              'relative w-full rounded-[24px] bg-[#1a1512] p-6 text-white shadow-xl ring-1 ring-white/10 md:p-8',
+              isBooking && !CAL_DISABLED
                 ? 'flex max-h-[min(92vh,780px)] max-w-[min(96vw,640px)] flex-col overflow-hidden sm:max-w-[min(96vw,680px)]'
                 : 'max-w-[520px]',
             )}
@@ -202,7 +195,7 @@ export function PricingQualifyModal() {
             <button
               type="button"
               onClick={closeModal}
-              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full text-[#111] hover:bg-[#f4f4f4]"
+              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full text-white/90 transition-colors hover:bg-white/10"
               aria-label="Close"
             >
               <X size={20} strokeWidth={1.5} />
@@ -210,15 +203,15 @@ export function PricingQualifyModal() {
 
             {step === 'form' ? (
               <form onSubmit={handleSubmit} className="pt-2">
-                <h2 id="pq-modal-title" className="mb-2 text-[22px] font-bold text-[#111]" style={sans}>
+                <h2 id="pq-modal-title" className="mb-2 text-[22px] font-bold text-white" style={sans}>
                   Tell us about your project.
                 </h2>
-                <p className="mb-8 text-[13px] text-[#888]" style={mono}>
+                <p className="mb-8 text-[13px] text-white/60" style={mono}>
                   Takes 30 seconds. We use this to prep for your call.
                 </p>
 
                 <div className="mb-5">
-                  <label htmlFor="pq-name" className="mb-2 block text-[10px] uppercase tracking-[0.1em] text-[#888]" style={mono}>
+                  <label htmlFor="pq-name" className="mb-2 block text-[10px] uppercase tracking-[0.1em] text-white/55" style={mono}>
                     Full Name
                   </label>
                   <input
@@ -232,14 +225,14 @@ export function PricingQualifyModal() {
                     onChange={(e) => setName(e.target.value)}
                   />
                   {fieldErrors.name && (
-                    <p className="mt-1 text-xs text-red-600" style={mono}>
+                    <p className="mt-1 text-xs text-red-400" style={mono}>
                       Please enter your name.
                     </p>
                   )}
                 </div>
 
                 <div className="mb-5">
-                  <label htmlFor="pq-email" className="mb-2 block text-[10px] uppercase tracking-[0.1em] text-[#888]" style={mono}>
+                  <label htmlFor="pq-email" className="mb-2 block text-[10px] uppercase tracking-[0.1em] text-white/55" style={mono}>
                     Work Email
                   </label>
                   <input
@@ -253,14 +246,14 @@ export function PricingQualifyModal() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   {fieldErrors.email && (
-                    <p className="mt-1 text-xs text-red-600" style={mono}>
+                    <p className="mt-1 text-xs text-red-400" style={mono}>
                       Please enter a valid work email.
                     </p>
                   )}
                 </div>
 
                 <div className="mb-5">
-                  <label htmlFor="pq-business" className="mb-2 block text-[10px] uppercase tracking-[0.1em] text-[#888]" style={mono}>
+                  <label htmlFor="pq-business" className="mb-2 block text-[10px] uppercase tracking-[0.1em] text-white/55" style={mono}>
                     Business Name
                   </label>
                   <input
@@ -274,14 +267,14 @@ export function PricingQualifyModal() {
                     onChange={(e) => setBusinessName(e.target.value)}
                   />
                   {fieldErrors.businessName && (
-                    <p className="mt-1 text-xs text-red-600" style={mono}>
+                    <p className="mt-1 text-xs text-red-400" style={mono}>
                       Please enter your business name.
                     </p>
                   )}
                 </div>
 
                 <div className="mb-6">
-                  <label htmlFor="pq-revenue" className="mb-2 block text-[10px] uppercase tracking-[0.1em] text-[#888]" style={mono}>
+                  <label htmlFor="pq-revenue" className="mb-2 block text-[10px] uppercase tracking-[0.1em] text-white/55" style={mono}>
                     Annual Company Revenue
                   </label>
                   <select
@@ -292,7 +285,7 @@ export function PricingQualifyModal() {
                     onChange={(e) => setAnnualRevenue(e.target.value as AnnualCompanyRevenue)}
                   >
                     {ANNUAL_COMPANY_REVENUE_OPTIONS.map((o) => (
-                      <option key={o.value} value={o.value}>
+                      <option key={o.value} value={o.value} className="bg-[#1a1512] text-white">
                         {o.label}
                       </option>
                     ))}
@@ -300,7 +293,7 @@ export function PricingQualifyModal() {
                 </div>
 
                 {submitError && (
-                  <p className="mb-4 text-sm text-red-600" style={mono}>
+                  <p className="mb-4 text-sm text-red-400" style={mono}>
                     {submitError}
                   </p>
                 )}
@@ -312,42 +305,42 @@ export function PricingQualifyModal() {
                   type="submit"
                   fullWidth
                   disabled={submitting}
+                  isDarkBg
                 />
               </form>
             ) : step === 'thanks' ? (
               <div className="pt-2">
-                <h2 className="mb-4 text-[22px] font-bold text-[#111]" style={sans}>
+                <h2 id="pq-thanks-title" className="mb-4 text-[22px] font-bold text-white" style={sans}>
                   Thank you for your interest!
                 </h2>
-                <p className="mb-8 text-[15px] leading-relaxed text-[#555]" style={mono}>
+                <p className="mb-8 text-[15px] leading-relaxed text-white/65" style={mono}>
                   We&apos;ll review your details and be in touch.
                 </p>
-                <CTAButton variant="pricing" text="CLOSE" as="button" type="button" fullWidth onClick={closeModal} />
+                <CTAButton variant="pricing" text="CLOSE" as="button" type="button" fullWidth onClick={closeModal} isDarkBg />
               </div>
             ) : (
               <div className="flex min-h-0 flex-1 flex-col pt-2">
-                <h2 className="mb-2 shrink-0 text-[22px] font-bold text-[#111]" style={sans}>
+                <h2 id="pq-booking-title" className="mb-2 shrink-0 text-[22px] font-bold text-white" style={sans}>
                   Pick a time that works.
                 </h2>
-                <p className="mb-4 shrink-0 text-[13px] text-[#888]" style={mono}>
+                <p className="mb-4 shrink-0 text-[13px] text-white/65" style={mono}>
                   15-minute intro call. No sales pitch — just a real conversation.
                 </p>
 
                 {CAL_DISABLED ? (
-                  <p className="text-center text-[13px] text-[#888]" style={mono}>
+                  <p className="text-center text-[13px] text-white/60" style={mono}>
                     Prefer to reach out directly?{' '}
-                    <a href="mailto:hello@captivedemand.com" className="text-[#E8480C] underline-offset-2 hover:underline">
+                    <a href="mailto:hello@captivedemand.com" className="text-[#ff5501] underline-offset-2 hover:underline">
                       hello@captivedemand.com
                     </a>
                   </p>
                 ) : (
-                  <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
-                    <BookingCalendarShell durationMinutes={15} className="min-h-0 w-full">
-                      <iframe
-                        title="Book a call with Spencer"
-                        src={BOOKING_CALENDAR_URL}
-                        className="absolute inset-0 h-full w-full border-0 bg-white"
-                        allow="camera; microphone; clipboard-write"
+                  <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto">
+                    <BookingCalendarShell durationMinutes={15} className="min-h-0 w-full shadow-none ring-white/10">
+                      <GhlBookingCardContent
+                        iframeId="ghl-booking-widget-pricing"
+                        className="absolute inset-0 flex min-h-0 flex-col"
+                        iframeClassName="h-full min-h-0 w-full flex-1 rounded-none border-0 bg-transparent sm:rounded-lg"
                       />
                     </BookingCalendarShell>
                   </div>
@@ -359,4 +352,7 @@ export function PricingQualifyModal() {
       )}
     </AnimatePresence>
   );
+
+  if (!mounted) return null;
+  return createPortal(tree, document.body);
 }
