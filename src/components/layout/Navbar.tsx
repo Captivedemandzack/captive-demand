@@ -16,6 +16,9 @@ const serviceSubMenu = [
   { text: 'Automation', href: '/services/automation' },
 ];
 
+const GLASS_PANEL =
+  'relative flex w-full flex-col items-center overflow-hidden rounded-xl border border-white/20 bg-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04),inset_0_1px_0_0_rgba(255,255,255,0.3)] backdrop-blur-md backdrop-saturate-150';
+
 type MenuItemProps = {
   text: string;
   href: string;
@@ -179,6 +182,17 @@ export default function Navbar() {
     setHoveredSubItem(null);
   };
 
+  const containerVariants = {
+    collapsed: {
+      height: 53,
+      transition: { type: 'spring' as const, stiffness: 300, damping: 30 },
+    },
+    expanded: {
+      height: 'auto',
+      transition: { type: 'spring' as const, stiffness: 300, damping: 30 },
+    },
+  };
+
   const isMainFaded = (itemText: string) => hoveredMainItem !== null && hoveredMainItem !== itemText;
 
   const isSubFaded = (itemText: string) => hoveredSubItem !== null && hoveredSubItem !== itemText;
@@ -186,15 +200,19 @@ export default function Navbar() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center pt-4 md:pt-8">
       <div className="pointer-events-auto w-[95%] max-w-[500px] touch-manipulation md:w-1/2 md:max-w-none">
-        <div
-          className={cn(
-            'relative overflow-visible rounded-xl border border-white/20 bg-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04),inset_0_1px_0_0_rgba(255,255,255,0.3)] backdrop-blur-md',
-            isOpen ? 'rounded-b-none rounded-t-xl' : 'rounded-xl',
-          )}
+        <motion.div
+          className={GLASS_PANEL}
+          initial="collapsed"
+          animate={isOpen ? 'expanded' : 'collapsed'}
+          variants={containerVariants}
         >
           <div className="relative z-30 flex h-[53px] w-full shrink-0 items-center justify-between px-8">
             <div className="relative flex h-full cursor-pointer items-center">
-              <Link href="/work" className="absolute inset-0 z-10 min-h-[48px] min-w-[3rem]" onClick={closeAllMenus} />
+              <Link
+                href="/work"
+                className="absolute inset-0 z-10 min-h-[48px] min-w-[3rem]"
+                onClick={closeAllMenus}
+              />
               <span className="pointer-events-none font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 select-none">
                 WORK
               </span>
@@ -236,11 +254,14 @@ export default function Navbar() {
             {isOpen && (
               <motion.div
                 id="site-nav-flyout"
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.22, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] }}
-                className="absolute left-0 right-0 top-full z-40 max-h-[min(85dvh,calc(100dvh-5.5rem))] overflow-x-hidden overflow-y-auto rounded-b-xl border border-t-0 border-white/20 bg-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-md"
+                className="flex w-full flex-col"
+                variants={{
+                  hidden: { opacity: 0, transition: { duration: 0.2 } },
+                  visible: { opacity: 1, transition: { duration: 0.4, delay: 0.1 } },
+                }}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
               >
                 <div className="w-full border-t border-brand-dark/10">
                   <div className="flex w-full border-b border-brand-dark/10">
@@ -262,7 +283,7 @@ export default function Navbar() {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.25, ease: 'easeInOut' }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
                             className="flex w-full flex-col"
                           >
                             {serviceSubMenu.map((item) => (
@@ -378,7 +399,7 @@ export default function Navbar() {
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
       </div>
     </header>
   );
