@@ -138,7 +138,7 @@ const SubMenuItem = ({
       onClick={onClick}
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
-      className="relative flex h-10 w-full items-center pl-10 pr-6 text-[16px] font-normal text-brand-bg transition-colors duration-200"
+      className="relative flex w-full items-center pl-10 pr-6 text-[16px] font-normal text-brand-bg transition-colors duration-200 max-md:min-h-11 md:h-10"
     >
       <span
         style={{
@@ -199,7 +199,7 @@ export default function Navbar() {
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center pt-4 md:pt-8">
-      <div className="pointer-events-auto w-[95%] max-w-[500px] touch-manipulation md:w-1/2 md:max-w-none">
+      <div className="pointer-events-auto w-[95%] max-w-[500px] touch-manipulation md:w-[50%]">
         <motion.div
           className={GLASS_PANEL}
           initial="collapsed"
@@ -210,7 +210,7 @@ export default function Navbar() {
             <div className="relative flex h-full cursor-pointer items-center">
               <Link
                 href="/work"
-                className="absolute inset-0 z-10 min-h-[48px] min-w-[3rem]"
+                className="absolute inset-0 z-10 max-md:min-h-[48px] max-md:min-w-[3rem]"
                 onClick={closeAllMenus}
               />
               <span className="pointer-events-none font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 select-none">
@@ -221,7 +221,7 @@ export default function Navbar() {
             <div className="flex h-full flex-grow items-center justify-center">
               <Link
                 href="/"
-                className="relative z-10 flex h-[30px] w-[120px] min-h-[44px] min-w-[120px] items-center justify-center"
+                className="relative z-10 flex h-[30px] w-[120px] items-center justify-center max-md:min-h-[44px] max-md:min-w-[120px]"
                 onClick={closeAllMenus}
               >
                 <Image
@@ -243,7 +243,7 @@ export default function Navbar() {
               aria-expanded={isOpen}
               aria-controls={isOpen ? 'site-nav-flyout' : undefined}
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="relative z-30 flex h-full min-h-[48px] min-w-[4.5rem] cursor-pointer select-none items-center justify-end border-0 bg-transparent p-0 font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 touch-manipulation"
+              className="relative z-30 flex h-full cursor-pointer select-none items-center justify-end border-0 bg-transparent p-0 font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 touch-manipulation max-md:min-h-[48px] max-md:min-w-[4.5rem]"
               style={{ WebkitTapHighlightColor: 'transparent' }}
             >
               {isOpen ? 'CLOSE' : 'ABOUT'}
