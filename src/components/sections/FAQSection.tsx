@@ -241,7 +241,7 @@ export function FAQSection() {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
-              <div className="pointer-events-none absolute inset-0 bg-black/10" />
+              <div className="absolute inset-0 bg-black/10" />
             </div>
           </div>
 

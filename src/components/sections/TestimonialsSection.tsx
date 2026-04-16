@@ -207,7 +207,7 @@ export function TestimonialsSection() {
           {/* Background Decoration Card - Orange gradient */}
           {/* EDIT: Adjusted transform for mobile (-translate-x-3) to fit screen */}
           <div
-            className="pointer-events-none absolute top-0 left-0 z-0 h-[320px] w-full -translate-x-3 translate-y-1 -rotate-3 transform rounded-2xl md:h-[400px] md:-translate-x-12"
+            className="absolute top-0 left-0 w-full h-[320px] md:h-[400px] rounded-2xl z-0 transform -translate-x-3 md:-translate-x-12 translate-y-1 -rotate-3"
             style={{
               background: 'linear-gradient(272deg, #ff3407 -16.91%, #ff3407 -.51%, #fc964c 12.46%, #fc964c 22.5%, #f62f03 46.54%, #f62f03 71.84%, #fd7c34 112.33%)',
               boxShadow: '0 25px 50px -12px rgba(209, 122, 74, 0.3)'
@@ -217,7 +217,7 @@ export function TestimonialsSection() {
           {/* Background Decoration Card - Grey */}
           {/* EDIT: Adjusted transform for mobile (translate-x-3) to fit screen */}
           <div
-            className="pointer-events-none absolute top-0 left-0 z-0 h-[320px] w-full translate-x-3 translate-y-2 rotate-3 transform rounded-2xl border border-black/5 bg-[#f6f5f6] md:h-[400px] md:translate-x-12"
+            className="absolute top-0 left-0 w-full h-[320px] md:h-[400px] bg-[#f6f5f6] rounded-2xl border border-black/5 z-0 transform translate-x-3 md:translate-x-12 translate-y-2 rotate-3"
             style={{
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)'
             }}
