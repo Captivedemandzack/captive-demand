@@ -73,30 +73,30 @@ export function FeaturesSection() {
                         {/* Vertical Divider (desktop) */}
                         <div className="pointer-events-none hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-black/10" />
 
-                        {/* Row 1 (desktop): full width — h2 + CTA */}
-                        <div className="mb-3 flex flex-col gap-3 pt-5 md:mb-0 md:pt-0 md:flex-row md:col-span-2 md:items-center md:justify-between md:gap-4">
+                        {/* Row 1: headline only in col 1 (never crosses the mid divider); CTA in col 2 */}
+                        <div className="mb-3 min-w-0 max-w-full pt-5 [container-type:inline-size] md:col-start-1 md:row-start-1 md:mb-0 md:max-w-full md:pr-2 md:pt-0">
                             <div className="line-mask w-full min-w-0 max-w-full overflow-hidden">
                                 <h2
                                     ref={headingRef}
-                                    className="reveal-text block text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1] text-balance"
-                                    style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
+                                    className="reveal-text block w-full max-w-full font-nohemi font-light leading-[1.1] tracking-tight [font-size:clamp(1.0625rem,calc(0.5rem+5.35cqi+min(1.05vw,1.125rem)),3.625rem)]"
                                 >
-                                    <span className="text-black/50">We don&apos;t decorate.</span>
-                                    <br />
-                                    <span className="text-[#ff5501] font-medium md:whitespace-nowrap">
+                                    <span className="block whitespace-nowrap text-black/50">
+                                        We don&apos;t decorate.
+                                    </span>
+                                    <span className="block whitespace-nowrap text-[#ff5501] font-medium">
                                         We engineer demand.
                                     </span>
                                 </h2>
                             </div>
-                            <div className="hidden shrink-0 md:block">
-                                <CTAButton
-                                    variant="dark"
-                                    text="Book an intro call"
-                                    href="/contact"
-                                    style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}
-                                    ariaLabel="Book a Call"
-                                />
-                            </div>
+                        </div>
+                        <div className="hidden shrink-0 justify-end pt-5 md:col-start-2 md:row-start-1 md:flex md:mb-0 md:pt-0 md:pl-2">
+                            <CTAButton
+                                variant="dark"
+                                text="Book an intro call"
+                                href="/contact"
+                                style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}
+                                ariaLabel="Book a Call"
+                            />
                         </div>
 
                         <p className="mb-10 font-mono text-sm tracking-wider text-black/70 uppercase md:mb-0 md:col-start-1 md:row-start-2 md:text-base">

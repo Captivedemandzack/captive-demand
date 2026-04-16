@@ -12,15 +12,18 @@ const VB = { w: 100, h: 70 };
 /** Column centers (same as `grid-cols-4` cell midlines) */
 const COL_X = [12.5, 37.5, 62.5, 87.5] as const;
 
+// Added realistic stats to the data array
 const SERIES = [
-  { label: 'CAC', peak: false },
-  { label: 'LTV', peak: false },
-  { label: 'AOV', peak: false },
-  { label: 'MRR', peak: true },
+  { label: 'CAC', stat: '↓14%', peak: false },
+  { label: 'LTV', stat: '↑26%', peak: false },
+  { label: 'AOV', stat: '↑18%', peak: false },
+  { label: 'MRR', stat: '↑92%', peak: true },
 ] as const;
 
-/** Y in viewBox (↓); upward story = decreasing y */
-const COL_Y = [58, 46, 35, 14] as const;
+/** * Y in viewBox (↓); 
+ * Adjusted to ensure the line sweeps from the bottom-left to the top-right. 
+ */
+const COL_Y = [55, 42, 28, 10] as const;
 
 /**
  * Standard point-to-point line graph math. 
@@ -133,7 +136,7 @@ export function VcGrowthTrajectoryIllustration({ className }: VcGrowthTrajectory
               d={linePath}
               fill="none"
               stroke="rgba(218,214,208,0.88)"
-              strokeWidth={1.5}
+              strokeWidth={0.6} /* Thinner line requested */
               strokeLinecap="round"
               strokeLinejoin="round"
               vectorEffect="nonScalingStroke"
@@ -171,18 +174,20 @@ export function VcGrowthTrajectoryIllustration({ className }: VcGrowthTrajectory
                     ease: PATH_EASE,
                   }}
                 >
-                  <div className="flex max-w-[min(5.5rem,22vw)] justify-center">
+                  <div className="flex justify-center">
                     {peak ? (
-                      <div className="relative inline-block whitespace-nowrap rounded-lg bg-[#ff5501] px-2 py-1 text-center font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_6px_20px_rgba(255,85,1,0.28),inset_0_1px_0_0_rgba(255,255,255,0.32)] sm:text-[11px]">
-                        {s.label}
+                      <div className="relative inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-[#ff5501] px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-white shadow-[0_6px_20px_rgba(255,85,1,0.28),inset_0_1px_0_0_rgba(255,255,255,0.32)] sm:text-[11px]">
+                        <span>{s.label}</span>
+                        <span className="opacity-90">{s.stat}</span>
                         <span
                           className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-x-[5px] border-x-transparent border-t-[6px] border-t-[#ff5501]"
                           aria-hidden
                         />
                       </div>
                     ) : (
-                      <div className="inline-block whitespace-nowrap rounded-lg border border-white/[0.12] bg-black/40 px-2 py-1 text-center font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-white/[0.88] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md sm:text-[11px]">
-                        {s.label}
+                      <div className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-white/[0.12] bg-black/40 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.08em] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md sm:text-[11px]">
+                        <span className="text-white/60">{s.label}</span>
+                        <span className="text-white">{s.stat}</span>
                       </div>
                     )}
                   </div>

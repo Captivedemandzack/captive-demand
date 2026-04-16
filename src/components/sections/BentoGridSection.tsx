@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useLayoutEffect, useRef } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Clock, Shield, Zap, Search, TrendingUp, BarChart2, BarChart3, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
@@ -147,12 +148,17 @@ export function BentoGridSection() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-6 md:gap-8">
 
           {/* Card 1 - Web Design & Development (Top Left) */}
+          <Link
+            href="/services/website"
+            aria-label="Website design and development — view service"
+            className="col-span-2 md:col-span-3 block max-h-[400px] rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1a1512]"
+          >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="bg-[#e8e8e8] rounded-3xl p-6 md:p-8 border border-[#1a1512]/5 transition-shadow col-span-2 md:col-span-3 max-h-[400px] overflow-hidden group"
+            className="bg-[#e8e8e8] rounded-3xl p-6 md:p-8 border border-[#1a1512]/5 transition-shadow h-full max-h-[400px] overflow-hidden group"
             style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}
           >
             <div className="mb-6">
@@ -267,14 +273,20 @@ export function BentoGridSection() {
               </div>
             </div>
           </motion.div>
+          </Link>
 
           {/* Card 2 - Email Marketing (Top Right) */}
+          <Link
+            href="/services/email-marketing"
+            aria-label="Email marketing — view service"
+            className="col-span-2 md:col-span-3 block max-h-[400px] rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1a1512]"
+          >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="bg-[#e8e8e8] rounded-3xl p-6 md:p-8 border border-[#1a1512]/5 transition-shadow col-span-2 md:col-span-3 max-h-[400px] overflow-hidden group"
+            className="bg-[#e8e8e8] rounded-3xl p-6 md:p-8 border border-[#1a1512]/5 transition-shadow h-full max-h-[400px] overflow-hidden group"
             style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}
           >
             <div className="mb-6">
@@ -374,14 +386,20 @@ export function BentoGridSection() {
               </div>
             </div>
           </motion.div>
+          </Link>
 
           {/* Card 3 - Software Development (Orange - Bottom Left) */}
+          <Link
+            href="/services/software"
+            aria-label="Software development — view service"
+            className="col-span-2 md:col-span-2 block rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="bg-[#ff5501] rounded-3xl p-8 transition-shadow col-span-2 md:col-span-2 group"
+            className="bg-[#ff5501] rounded-3xl p-8 transition-shadow h-full group"
             style={{ boxShadow: '0 2px 4px rgba(255,85,1,0.15), 0 8px 20px rgba(255,85,1,0.12), 0 20px 48px rgba(0,0,0,0.1), inset 0 1px 0 0 rgba(255,255,255,0.15)' }}
           >
             <div className="mb-6">
@@ -503,14 +521,20 @@ export function BentoGridSection() {
               </div>
             </div>
           </motion.div>
+          </Link>
 
           {/* Card 4 - SEO Services (No Background - Bottom Center) */}
+          <Link
+            href="/services/seo"
+            aria-label="SEO and AEO — view service"
+            className="col-span-2 md:col-span-2 block rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1a1512]"
+          >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
-            className="flex flex-col items-start col-span-2 md:col-span-2 group"
+            className="flex h-full flex-col items-start group"
           >
             <div className="bg-[#e8e8e8] rounded-3xl p-6 mb-6 w-full aspect-video flex items-center justify-center overflow-hidden" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}>
               {/* SEO Graphic */}
@@ -562,14 +586,20 @@ export function BentoGridSection() {
               <b>The Compounder.</b> Paid ads are a treadmill. You have to keep spending to keep moving. We build an organic search strategy that gains momentum over time. We build the infrastructure. You collect the dividends.
             </p>
           </motion.div>
+          </Link>
 
           {/* Card 5 - Workflow Automation (No Background - Bottom Right) */}
+          <Link
+            href="/services/automation"
+            aria-label="Workflow automation — view service"
+            className="col-span-2 md:col-span-2 block rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1a1512]"
+          >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
             viewport={{ once: true }}
-            className="flex flex-col items-start col-span-2 md:col-span-2"
+            className="flex h-full flex-col items-start"
           >
             <div className="bg-[#e8e8e8] rounded-3xl p-6 mb-6 w-full aspect-video flex items-center justify-center overflow-hidden" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}>
               <div className="grid grid-cols-3 gap-2 max-w-sm">
@@ -643,6 +673,7 @@ export function BentoGridSection() {
               <b>The Time Saver.</b> Stop copy-pasting data between spreadsheets. We wire your apps together to handle the busy work so you can get back to actual business.
             </p>
           </motion.div>
+          </Link>
 
         </div>
       </div >

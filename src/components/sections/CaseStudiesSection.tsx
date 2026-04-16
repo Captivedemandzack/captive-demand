@@ -131,12 +131,13 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
           </div>
         </div>
 
-        {/* Right Side - Full Cover Image */}
-        <div className="relative overflow-hidden h-[350px] lg:h-auto order-1 lg:order-2">
+        {/* Right Side — mobile: shorter strip (landscape); lg: fills grid row */}
+        <div className="relative order-1 h-[220px] min-h-0 w-full overflow-hidden sm:h-[260px] lg:order-2 lg:h-full">
           <Image
             src={study.image}
             alt={study.headline}
             fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent pointer-events-none" />

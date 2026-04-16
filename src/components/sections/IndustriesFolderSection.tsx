@@ -6,6 +6,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { CTAButton } from '@/components/ui/CTAButton';
 import { ConsolidationWireframesIllustration } from '@/components/illustrations/ConsolidationWireframesIllustration';
 import { VcGrowthTrajectoryIllustration } from '@/components/illustrations/VcGrowthTrajectoryIllustration';
+import { StudiosCodeToComponentsIllustration } from '@/components/illustrations/StudiosCodeToComponentsIllustration';
 import gsap from 'gsap';
 import { cn } from '@/lib/utils';
 
@@ -230,7 +231,7 @@ export function IndustriesFolderSection() {
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300, letterSpacing: '0.05em' }}
             >
               <span className="text-[#1a1512]">Same obsession.</span>{' '}
-              <span className="text-gray-400">Different industries.</span>
+              <span className="text-[#d3d4d9]">Different industries.</span>
             </motion.h2>
           </div>
           <motion.div
@@ -368,7 +369,7 @@ export function IndustriesFolderSection() {
                     <div
                       className={cn(
                         'relative aspect-[4/3] w-full max-h-[min(420px,55vh)] rounded-2xl overflow-hidden',
-                        active.id === 'pe' || active.id === 'vc'
+                        active.id === 'pe' || active.id === 'vc' || active.id === 'studios'
                           ? 'border border-white/[0.08] bg-[#0e0d0c] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),inset_0_-28px_56px_rgba(0,0,0,0.55),0_20px_56px_rgba(0,0,0,0.35),0_0_0_1px_rgba(0,0,0,0.35)]'
                           : 'border border-[#1a1512]/10 bg-[#f0f0f0] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6),0_16px_40px_rgba(0,0,0,0.08)]'
                       )}
@@ -377,6 +378,8 @@ export function IndustriesFolderSection() {
                         <ConsolidationWireframesIllustration className="absolute inset-0" />
                       ) : active.id === 'vc' ? (
                         <VcGrowthTrajectoryIllustration className="absolute inset-0" />
+                      ) : active.id === 'studios' ? (
+                        <StudiosCodeToComponentsIllustration className="absolute inset-0" />
                       ) : (
                         <Image
                           src={active.imageSrc}

@@ -91,7 +91,7 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
         <div
             className={cn(
                 // ADDED: border border-[#1a1512]/5 for the 1px thin border
-                "relative flex flex-col overflow-hidden rounded-xl bg-[#f3f4f6] text-[#121212] transition-all hover:scale-105 border border-[#1a1512]/5",
+                "relative flex flex-col overflow-hidden rounded-xl bg-[#f3f4f6] text-[#121212] border border-[#1a1512]/5",
                 className
             )}
             // EDIT: Unlocked width/height so parent Carousel controls size
@@ -105,7 +105,7 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
                     fill
                     sizes="(max-width: 768px) 320px, 720px"
                     quality={90}
-                    className="object-cover object-top transition-transform duration-500 hover:scale-110"
+                    className="object-cover object-top"
                 />
             </div>
 
