@@ -206,7 +206,7 @@ export default function Navbar() {
   const isSubFaded = (itemText: string) => hoveredSubItem !== null && hoveredSubItem !== itemText;
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-[100] flex justify-center pt-4 md:pt-8">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center pt-4 md:pt-8">
       <div
         className={cn(
           'pointer-events-auto w-[95%] max-w-[500px] touch-manipulation md:w-[50%]',
