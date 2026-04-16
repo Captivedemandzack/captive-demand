@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { CTAButton } from '@/components/ui/CTAButton';
+import { ConsolidationWireframesIllustration } from '@/components/illustrations/ConsolidationWireframesIllustration';
+import { VcGrowthTrajectoryIllustration } from '@/components/illustrations/VcGrowthTrajectoryIllustration';
 import gsap from 'gsap';
 import { cn } from '@/lib/utils';
 
@@ -364,19 +366,26 @@ export function IndustriesFolderSection() {
                   {/* Image below copy on mobile; right column from md+ */}
                   <div className="md:col-span-5 flex min-w-0 items-center">
                     <div
-                      className="relative aspect-[4/3] w-full max-h-[min(420px,55vh)] rounded-2xl overflow-hidden border border-[#1a1512]/10 bg-[#f0f0f0]"
-                      style={{
-                        boxShadow:
-                          'inset 0 1px 0 0 rgba(255,255,255,0.6), 0 16px 40px rgba(0,0,0,0.08)',
-                      }}
+                      className={cn(
+                        'relative aspect-[4/3] w-full max-h-[min(420px,55vh)] rounded-2xl overflow-hidden',
+                        active.id === 'pe' || active.id === 'vc'
+                          ? 'border border-white/[0.08] bg-[#0e0d0c] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),inset_0_-28px_56px_rgba(0,0,0,0.55),0_20px_56px_rgba(0,0,0,0.35),0_0_0_1px_rgba(0,0,0,0.35)]'
+                          : 'border border-[#1a1512]/10 bg-[#f0f0f0] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6),0_16px_40px_rgba(0,0,0,0.08)]'
+                      )}
                     >
-                      <Image
-                        src={active.imageSrc}
-                        alt={COMPOSITE_IMAGE_ALT}
-                        fill
-                        className="object-cover object-center"
-                        sizes="(max-width: 1024px) 100vw, 40vw"
-                      />
+                      {active.id === 'pe' ? (
+                        <ConsolidationWireframesIllustration className="absolute inset-0" />
+                      ) : active.id === 'vc' ? (
+                        <VcGrowthTrajectoryIllustration className="absolute inset-0" />
+                      ) : (
+                        <Image
+                          src={active.imageSrc}
+                          alt={COMPOSITE_IMAGE_ALT}
+                          fill
+                          className="object-cover object-center"
+                          sizes="(max-width: 1024px) 100vw, 40vw"
+                        />
+                      )}
                     </div>
                   </div>
                 </div>

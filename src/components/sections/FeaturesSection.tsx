@@ -68,71 +68,43 @@ export function FeaturesSection() {
                     <div className="absolute bottom-5 left-5 w-[7px] h-[7px] rounded-full z-10" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
                     <div className="absolute bottom-5 right-5 w-[7px] h-[7px] rounded-full z-10" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.5), rgba(0,0,0,0.06))', boxShadow: 'inset 0 0.5px 1.5px rgba(0,0,0,0.2), 0 0.5px 0 rgba(255,255,255,0.5)' }} />
 
-                    {/* Header with Title and Button */}
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-4">
-                        <div className="line-mask overflow-hidden">
-                            <h2
-                                ref={headingRef}
-                                className="reveal-text block text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1]"
-                                style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
-                            >
-                                <span className="text-black/50">We don&apos;t decorate.</span>
-                                <br />
-                                <span className="text-[#ff5501] font-medium whitespace-nowrap">We engineer demand.</span>
-                            </h2>
-                        </div>
+                    {/* Mobile: h2 → mono → features → CTA. Desktop: header row; cols = mono+dots | features */}
+                    <div className="relative grid grid-cols-1 gap-y-0 md:grid-cols-2 md:gap-x-8 md:gap-y-8">
+                        {/* Vertical Divider (desktop) */}
+                        <div className="pointer-events-none hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-black/10" />
 
-                        {/* THE BUTTON */}
-                        <div className="mt-4 md:mt-0">
-                            <CTAButton
-                                variant="dark"
-                                text="Book an intro call"
-                                href="/contact"
-                                style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}
-                                ariaLabel="Book a Call"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Content Grid */}
-                    <div className="grid md:grid-cols-2 gap-12 md:gap-8 relative">
-
-                        {/* Vertical Divider */}
-                        <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-black/10" />
-
-                        {/* Left Column - Animation */}
-                        <div className="flex flex-col justify-start">
-                            <p className="font-mono text-sm md:text-base tracking-wider text-black/70 mb-8 uppercase">
-                                / Your Business<br />Is Our Business
-                            </p>
-
-                            {/* Animated Dots Pattern - PERF FIX: HIDDEN ON MOBILE using hidden md:flex */}
-                            <div className="hidden md:flex relative w-full h-48 items-center justify-center">
-                                {dots.map((dot, index) => (
-                                    <motion.div
-                                        key={index}
-                                        className="absolute w-3 h-3 bg-[#ff5501] rounded-full"
-                                        style={{
-                                            left: `${dot.x}px`,
-                                            top: `${dot.y}px`,
-                                        }}
-                                        animate={{
-                                            scale: [1, 1.2, 1],
-                                            opacity: [0.6, 1, 0.6],
-                                        }}
-                                        transition={{
-                                            duration: 2,
-                                            repeat: Infinity,
-                                            delay: index * 0.1,
-                                            ease: "easeInOut",
-                                        }}
-                                    />
-                                ))}
+                        {/* Row 1 (desktop): full width — h2 + CTA */}
+                        <div className="mb-3 flex flex-col gap-3 pt-5 md:mb-0 md:pt-0 md:flex-row md:col-span-2 md:items-center md:justify-between md:gap-4">
+                            <div className="line-mask w-full min-w-0 max-w-full overflow-hidden">
+                                <h2
+                                    ref={headingRef}
+                                    className="reveal-text block text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1] text-balance"
+                                    style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
+                                >
+                                    <span className="text-black/50">We don&apos;t decorate.</span>
+                                    <br />
+                                    <span className="text-[#ff5501] font-medium md:whitespace-nowrap">
+                                        We engineer demand.
+                                    </span>
+                                </h2>
+                            </div>
+                            <div className="hidden shrink-0 md:block">
+                                <CTAButton
+                                    variant="dark"
+                                    text="Book an intro call"
+                                    href="/contact"
+                                    style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}
+                                    ariaLabel="Book a Call"
+                                />
                             </div>
                         </div>
 
-                        {/* Right Column - Features List */}
-                        <div className="flex flex-col gap-8">
+                        <p className="mb-10 font-mono text-sm tracking-wider text-black/70 uppercase md:mb-0 md:col-start-1 md:row-start-2 md:text-base">
+                            / Your Business<br />Is Our Business
+                        </p>
+
+                        {/* Right column on md: spans mono + dots rows */}
+                        <div className="mb-10 flex flex-col gap-6 md:mb-0 md:col-start-2 md:row-start-2 md:row-span-2 md:gap-8">
 
                             {/* Feature 01 */}
                             <div className="space-y-3">
@@ -185,6 +157,40 @@ export function FeaturesSection() {
                                 </div>
                             </div>
 
+                        </div>
+
+                        {/* Animated dots — desktop left column below mono */}
+                        <div className="relative hidden h-48 w-full items-center justify-center md:col-start-1 md:row-start-3 md:flex">
+                            {dots.map((dot, index) => (
+                                <motion.div
+                                    key={index}
+                                    className="absolute w-3 h-3 bg-[#ff5501] rounded-full"
+                                    style={{
+                                        left: `${dot.x}px`,
+                                        top: `${dot.y}px`,
+                                    }}
+                                    animate={{
+                                        scale: [1, 1.2, 1],
+                                        opacity: [0.6, 1, 0.6],
+                                    }}
+                                    transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        delay: index * 0.1,
+                                        ease: "easeInOut",
+                                    }}
+                                />
+                            ))}
+                        </div>
+
+                        <div className="pb-5 md:hidden">
+                            <CTAButton
+                                variant="dark"
+                                text="Book an intro call"
+                                href="/contact"
+                                style={{ filter: 'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))' }}
+                                ariaLabel="Book a Call"
+                            />
                         </div>
                     </div>
 
