@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
 import { Card } from "./Card";
 
@@ -14,46 +14,59 @@ interface CarouselProps {
 
 export function Carousel({ items }: CarouselProps) {
     const containerRef = useRef<HTMLDivElement>(null);
+    const outerRef = useRef<HTMLDivElement>(null);
     const cardsRef = useRef<HTMLDivElement[]>([]);
+    const isVisibleRef = useRef(true);
+    const tickerFnRef = useRef<(() => void) | null>(null);
 
-    // Initial state
     const [config, setConfig] = useState({
         radius: 2025,
         cardWidth: 360,
         gap: 100
     });
 
-    // Start with mobile-friendly count; desktop useLayoutEffect will increase before paint
     const [duplicationCount, setDuplicationCount] = useState(3);
 
-    // Dynamic duplication based on state
     const extendedItems = React.useMemo(() => {
         return Array(duplicationCount).fill(items).flat();
     }, [items, duplicationCount]);
+
+    /** Pause the GSAP ticker when the carousel scrolls out of view.
+     *  This frees the main thread so touch events work on the rest of the page. */
+    useEffect(() => {
+        const el = outerRef.current;
+        if (!el) return;
+
+        const io = new IntersectionObserver(
+            ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
+            { rootMargin: '200px' },
+        );
+        io.observe(el);
+        return () => io.disconnect();
+    }, []);
 
     useLayoutEffect(() => {
         const updateConfig = () => {
             const isMobile = window.innerWidth < 768;
             const isTablet = window.innerWidth < 1024;
 
-            // CRITICAL OPTIMIZATION: Reduce DOM nodes on mobile
             if (isMobile) {
-                setDuplicationCount(3); // ~69 nodes instead of ~368
+                setDuplicationCount(2);
             } else {
-                setDuplicationCount(16); // Full infinite scroll for desktop
+                setDuplicationCount(16);
             }
 
             if (isTablet) {
-                // TABLET & MOBILE:
                 setConfig({ radius: 1600, cardWidth: 280, gap: 80 });
             } else {
-                // DESKTOP / LAPTOP:
                 setConfig({ radius: 2025, cardWidth: 360, gap: 100 });
             }
         };
 
         updateConfig();
         window.addEventListener('resize', updateConfig);
+
+        const isMobile = window.innerWidth < 768;
 
         const ctx = gsap.context(() => {
             if (!containerRef.current) return;
@@ -78,13 +91,8 @@ export function Carousel({ items }: CarouselProps) {
                 totalAngleSpread / 2
             );
 
-            // --- SPEED SETTINGS ---
-            const isMobile = window.innerWidth < 768;
-
-            // TWEAK THESE NUMBERS TO CHANGE SPEED:
             const MOBILE_SPEED = 0.05;
-            const DESKTOP_SPEED = 0.05; // Increased from 0.05 to make desktop faster
-
+            const DESKTOP_SPEED = 0.05;
             const targetSpeed = isMobile ? MOBILE_SPEED : DESKTOP_SPEED;
 
             gsap.to(progress, {
@@ -95,13 +103,12 @@ export function Carousel({ items }: CarouselProps) {
             });
 
             const animate = () => {
+                if (!isVisibleRef.current) return;
+
                 globalRotation -= progress.speed;
 
-                // CRITICAL OPTIMIZATION: Disable blur filter on mobile
-                if (containerRef.current && window.innerWidth >= 768) {
+                if (!isMobile && containerRef.current) {
                     containerRef.current.style.filter = `blur(${progress.blur}px)`;
-                } else if (containerRef.current) {
-                    containerRef.current.style.filter = 'none';
                 }
 
                 cards.forEach((card, index) => {
@@ -116,9 +123,6 @@ export function Carousel({ items }: CarouselProps) {
                         card.style.visibility = 'visible';
                     }
 
-                    // Buffer zone: Keep updating transform up to 100 degrees 
-                    // so any CSS transitions finish while the card is safely hidden.
-                    // This perfectly avoids the jump glitch AND restores 60fps performance!
                     if (Math.abs(angle) > 100) {
                         return;
                     }
@@ -131,17 +135,19 @@ export function Carousel({ items }: CarouselProps) {
                 });
             };
 
+            tickerFnRef.current = animate;
             gsap.ticker.add(animate);
         }, containerRef);
 
         return () => {
             window.removeEventListener('resize', updateConfig);
+            if (tickerFnRef.current) gsap.ticker.remove(tickerFnRef.current);
             ctx.revert();
         };
     }, [extendedItems.length, config.radius, config.cardWidth, config.gap]);
 
     return (
-        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden pt-0 pb-4 min-h-[600px]">
+        <div ref={outerRef} className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden pt-0 pb-4 min-h-[600px]">
             <div ref={containerRef} className="relative h-full w-full flex justify-center opacity-0">
                 <div className="relative w-0 h-0 top-0">
                     {extendedItems.map((item, index) => (

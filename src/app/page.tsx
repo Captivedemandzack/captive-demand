@@ -23,7 +23,7 @@ const CTASection = dynamic(() =>
 
 export default function Home() {
     return (
-        <main>
+        <>
             <Hero />
             <AboutSection />
             <FeaturesSection />
@@ -34,6 +34,6 @@ export default function Home() {
             <CaseStudiesSection />
             <FAQSection />
             <CTASection />
-        </main>
+        </>
     );
 }
