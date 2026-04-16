@@ -22,8 +22,10 @@ const CTASection = dynamic(() =>
 );
 
 export default function Home() {
+    /* Fragment: layout already wraps routes in <main>; a second <main> is invalid HTML
+       and has been linked to flaky hit-testing on mobile Safari. */
     return (
-        <main>
+        <>
             <Hero />
             <AboutSection />
             <FeaturesSection />
@@ -34,6 +36,6 @@ export default function Home() {
             <CaseStudiesSection />
             <FAQSection />
             <CTASection />
-        </main>
+        </>
     );
 }

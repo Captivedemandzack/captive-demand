@@ -98,8 +98,8 @@ export default function Footer() {
                - bottom-0: Sticks to the bottom.
                - -z-10: Puts it BEHIND the rest of your content (Hero, About, etc).
             */}
-            <footer className="fixed bottom-0 left-0 w-full h-screen bg-[#fafafa] text-brand-dark flex flex-col -z-10 pt-24 md:pt-32 font-nohemi-custom overflow-y-auto overflow-x-hidden">
-
+            <footer className="pointer-events-none fixed bottom-0 left-0 -z-10 h-screen w-full font-nohemi-custom">
+                <div className="pointer-events-auto flex h-full min-h-0 w-full flex-col overflow-y-auto overflow-x-hidden bg-[#fafafa] pt-24 text-brand-dark md:pt-32">
                 {/* 1. Marquee Section */}
                 <div className="w-full py-4 relative z-20 shrink-0">
                     <motion.div
@@ -200,6 +200,7 @@ export default function Footer() {
                             Supporting innovative companies with Web Development and Marketing Services
                         </div>
                     </div>
+                </div>
                 </div>
             </footer>
         </>
