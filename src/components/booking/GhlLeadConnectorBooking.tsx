@@ -23,7 +23,10 @@ export function resolveGhlBookingWidgetUrl(): string {
 export interface GhlBookingCardContentProps {
   iframeId?: string;
   className?: string;
-  /** Override default `h-[min(88svh,900px)]` (e.g. fill `BookingCalendarShell` or a modal). */
+  /**
+   * Override default height. Default is shorter on mobile so the calendar step doesn’t leave a huge
+   * empty band above the footer; taller flows scroll inside the iframe. Desktop keeps a large frame.
+   */
   iframeClassName?: string;
 }
 
@@ -42,7 +45,8 @@ export function GhlBookingCardContent({
         id={iframeId}
         className={cn(
           'block w-full border-0 bg-transparent',
-          iframeClassName ?? 'h-[min(88svh,900px)] rounded-2xl',
+          iframeClassName ??
+            'h-[min(68svh,620px)] md:h-[min(88svh,900px)] rounded-2xl',
         )}
         style={{ border: 'none' }}
       />
