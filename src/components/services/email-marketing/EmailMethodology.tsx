@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { prefetchImageUrls } from '@/lib/prefetch-images';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Plus } from 'lucide-react';
 import { AnimatedCTAButton } from '@/components/sections/Hero';
@@ -169,12 +170,12 @@ const AccordionItem = ({
                 onClick={onClick}
                 className="w-full flex items-center justify-between p-6 md:p-8"
             >
-                <div className="flex items-center gap-4 md:gap-8">
-                    <span className={`font-mono text-sm transition-colors duration-300 ${isOpen ? 'text-[#ff5501] font-bold' : 'text-[#1a1512]/40'}`}>
+                <div className="flex min-w-0 flex-1 items-start md:items-center gap-3 sm:gap-4 md:gap-8">
+                    <span className={`shrink-0 font-mono text-sm transition-colors duration-300 ${isOpen ? 'text-[#ff5501] font-bold' : 'text-[#1a1512]/40'}`}>
                         {service.id}
                     </span>
                     <span
-                        className={`text-2xl md:text-4xl uppercase tracking-wide transition-colors duration-300 ${isOpen ? 'text-white font-medium' : 'text-[#1a1512]/60 group-hover:text-[#1a1512]'}`}
+                        className={`min-w-0 text-left text-lg leading-tight sm:text-xl md:text-4xl md:leading-none uppercase tracking-wide transition-colors duration-300 ${isOpen ? 'text-white font-medium' : 'text-[#1a1512]/60 group-hover:text-[#1a1512]'}`}
                         style={{ fontFamily: 'Nohemi, sans-serif' }}
                     >
                         {service.name}
@@ -210,6 +211,11 @@ const AccordionItem = ({
 
 export function EmailMethodology() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+    useEffect(() => {
+        const urls = emailServicesData.flatMap((s) => s.cards.map((c) => c.image));
+        prefetchImageUrls(urls);
+    }, []);
 
     useEffect(() => {
         const timeout = setTimeout(() => {

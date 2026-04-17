@@ -92,16 +92,16 @@ const AccordionItem = ({
         style={isOpen ? {} : { boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.15)' }}
     >
         <button onClick={onClick} className="w-full flex items-center justify-between p-6 md:p-8">
-            <div className="flex items-center gap-4 md:gap-8">
+            <div className="flex min-w-0 flex-1 items-start md:items-center gap-3 sm:gap-4 md:gap-8">
                 <span
-                    className={`font-mono text-sm transition-colors duration-300 ${
+                    className={`shrink-0 font-mono text-sm transition-colors duration-300 ${
                         isOpen ? 'text-[#ff5501] font-bold' : 'text-[#1a1512]/40'
                     }`}
                 >
                     {service.id}
                 </span>
                 <span
-                    className={`text-2xl md:text-4xl uppercase tracking-wide transition-colors duration-300 ${
+                    className={`min-w-0 text-left text-lg leading-tight sm:text-xl md:text-4xl md:leading-none uppercase tracking-wide transition-colors duration-300 ${
                         isOpen ? 'text-white font-medium' : 'text-[#1a1512]/60 group-hover:text-[#1a1512]'
                     }`}
                     style={{ fontFamily: 'Nohemi, sans-serif' }}

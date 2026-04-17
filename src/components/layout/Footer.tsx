@@ -4,42 +4,13 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { usePlayVideoWhenVisible } from '@/hooks/usePlayVideoWhenVisible';
 import { AnimatedCTAButton } from '../sections/Hero';
 
-// Optimized Video Component for Footer Marquee
+/** Marquee clip — same visibility resume as hero so loops don’t stall after scroll/tab. */
 const FooterVideo = () => {
     const videoRef = React.useRef<HTMLVideoElement>(null);
-
-    React.useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        // Desktop: Always play
-        if (window.matchMedia("(min-width: 768px)").matches) {
-            video.play().catch(() => { });
-            return;
-        }
-
-        // Mobile: Only play when visible to save GPU/Memory
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        video.play().catch(() => { });
-                    } else {
-                        video.pause();
-                    }
-                });
-            },
-            { threshold: 0.1 } // Play when 10% visible
-        );
-
-        observer.observe(video);
-
-        return () => {
-            observer.disconnect();
-        };
-    }, []);
+    usePlayVideoWhenVisible(videoRef, { threshold: 0.08 });
 
     return (
         <video

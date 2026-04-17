@@ -238,12 +238,13 @@ export function ExampleWork() {
                                 "p-5",
                                 "shadow-sm"
                             )}>
-                                <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-200 shrink-0">
+                                <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-200 shrink-0">
                                     <Image
                                         src={project.image}
                                         alt={project.title}
                                         fill
                                         className="object-cover"
+                                        sizes="(max-width: 1024px) 100vw, 50vw"
                                     />
                                 </div>
                                 <div className="flex flex-col gap-6">

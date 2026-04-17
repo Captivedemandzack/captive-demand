@@ -22,17 +22,48 @@ const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5"
     </div>
 );
 
-const methodologyData = [
+type SeoMethodologyCard = {
+    brand: string;
+    /** Bold outcome, e.g. "+427%" — matches SEO case-study stat treatment */
+    stat: string;
+    /** Uppercase mono label, e.g. "ORGANIC TRAFFIC" */
+    label: string;
+    image: string;
+};
+
+const methodologyData: Array<{
+    id: string;
+    name: string;
+    subtext: React.ReactNode;
+    description: string;
+    tags: string[];
+    cards: SeoMethodologyCard[];
+}> = [
     {
         id: '01',
         name: 'Audit & Discovery',
         subtext: <>Find the gaps.<br />Map the opportunity.</>,
         description: "Before we touch a single meta tag, we run a comprehensive audit of your entire digital footprint. We analyze your technical health, content gaps, competitor positioning, and AI citation landscape. This isn't a cookie-cutter checklist — it's a forensic examination of why you're invisible and exactly what it takes to fix it.",
-        tags: ["Technical Audit", "Content Gap Analysis", "Competitor Intel", "AI Citation Mapping", "Keyword Universe", "SERP Analysis"],
+        tags: ['Technical Audit', 'Content Gap Analysis', 'Competitor Intel', 'AI Citation Mapping', 'Keyword Universe', 'SERP Analysis'],
         cards: [
-            { title: 'Farmulated SEO', image: '/farmulated.png' },
-            { title: 'Boombox SEO', image: '/boombox.png' },
-            { title: 'North Star', image: '/northstarnaturesuites.png' },
+            {
+                brand: 'Farmulated',
+                stat: '+427%',
+                label: 'ORGANIC TRAFFIC',
+                image: '/seo/farmulatedseo2.jpg',
+            },
+            {
+                brand: 'Two Cents',
+                stat: '40+',
+                label: 'QUERIES FLAGGED',
+                image: '/seo/twocentsseo.jpg',
+            },
+            {
+                brand: 'North Star Nature Suites',
+                stat: '18',
+                label: 'LISTINGS UNIFIED',
+                image: '/seo/northstarseo.jpg',
+            },
         ],
     },
     {
@@ -40,11 +71,26 @@ const methodologyData = [
         name: 'Technical SEO',
         subtext: <>Fix the foundation.<br />Speed wins.</>,
         description: "Your website's technical infrastructure determines whether search engines can even find, crawl, and index your content. We fix Core Web Vitals, implement structured data markup, optimize crawl budgets, and ensure your site architecture feeds AI the signals it needs to trust you as an authoritative source.",
-        tags: ["Core Web Vitals", "Schema Markup", "Site Architecture", "Crawl Optimization", "Mobile-First", "Page Speed"],
+        tags: ['Core Web Vitals', 'Schema Markup', 'Site Architecture', 'Crawl Optimization', 'Mobile-First', 'Page Speed'],
         cards: [
-            { title: 'EOS Wellness', image: '/eoswellness.png' },
-            { title: 'Symmetri', image: '/Symmetri.png' },
-            { title: 'First Future', image: '/Firstfuture.png' },
+            {
+                brand: 'BU Medical',
+                stat: '1.0s',
+                label: 'LCP',
+                image: '/seo/beyouseo.jpg',
+            },
+            {
+                brand: 'Core',
+                stat: '-88%',
+                label: 'CRAWL ERRORS',
+                image: '/seo/coreseo.jpg',
+            },
+            {
+                brand: 'Nashville Water Taxi',
+                stat: '3×',
+                label: 'BRANDED IMPRESSIONS',
+                image: '/seo/nashvillewatertaxiseo.jpg',
+            },
         ],
     },
     {
@@ -52,11 +98,26 @@ const methodologyData = [
         name: 'Content & Entity Strategy',
         subtext: <>Own the conversation.<br />Become the answer.</>,
         description: "We build content that isn't just optimized for keywords — it's engineered to be cited by AI. We map your brand's entity graph, create topical authority clusters, and produce content that positions you as the definitive source in your market. This is how you become the answer, not just a result.",
-        tags: ["Entity SEO", "Topical Authority", "Content Clusters", "AI-Optimized Copy", "FAQ Engineering", "Knowledge Panels"],
+        tags: ['Entity SEO', 'Topical Authority', 'Content Clusters', 'AI-Optimized Copy', 'FAQ Engineering', 'Knowledge Panels'],
         cards: [
-            { title: 'WFH Investor', image: '/wfhinvestor.png' },
-            { title: 'Modern Mentor', image: '/modernmentor.png' },
-            { title: 'Endura', image: '/endura.png' },
+            {
+                brand: 'Wavmaker',
+                stat: '+64%',
+                label: 'SEARCH IMPRESSIONS',
+                image: '/seo/wavmakerseo.png',
+            },
+            {
+                brand: 'Sound Strip',
+                stat: '9',
+                label: 'RICH RESULTS',
+                image: '/seo/soundstripseo.jpeg',
+            },
+            {
+                brand: 'Velocity',
+                stat: '+41%',
+                label: 'AI OVERVIEW MENTIONS',
+                image: '/seo/velocityseo.jpg',
+            },
         ],
     },
     {
@@ -64,11 +125,26 @@ const methodologyData = [
         name: 'Monitor & Scale',
         subtext: <>Measure everything.<br />Scale what works.</>,
         description: "SEO isn't a project — it's a system. We track rankings, AI citations, traffic patterns, and conversion data in real-time. Monthly strategy reviews identify what's working and where to double down. As your authority grows, we expand into new markets, topics, and AI platforms systematically.",
-        tags: ["Rank Tracking", "AI Citation Monitoring", "Monthly Reporting", "Conversion Tracking", "Market Expansion", "ROI Analysis"],
+        tags: ['Rank Tracking', 'AI Citation Monitoring', 'Monthly Reporting', 'Conversion Tracking', 'Market Expansion', 'ROI Analysis'],
         cards: [
-            { title: 'Custom Cowgirl', image: '/customcowgirl.png' },
-            { title: 'Dubsy', image: '/dubsy.png' },
-            { title: 'Good Manors', image: '/goodmanors.png' },
+            {
+                brand: 'Boombox',
+                stat: '+22',
+                label: 'POSITIONS MoM',
+                image: '/seo/boomboxseo.jpg',
+            },
+            {
+                brand: 'Pontoon',
+                stat: '+$120K',
+                label: 'PIPELINE FROM ORGANIC',
+                image: '/seo/pontoonseo.webp',
+            },
+            {
+                brand: 'Dunlap',
+                stat: 'MoM',
+                label: 'SEO REVENUE',
+                image: '/seo/dunlapseo.webp',
+            },
         ],
     },
 ];
@@ -109,22 +185,26 @@ const ServiceContent = ({ service }: { service: typeof methodologyData[0] }) => 
                 <div key={i} className="group relative w-full aspect-square rounded-2xl overflow-hidden">
                     <div className="absolute inset-0 rounded-2xl p-[1.5px] bg-gradient-to-br from-[#1a1512]/15 via-[#1a1512]/8 via-[#1a1512]/12 to-[#1a1512]/15">
                         <div className="w-full h-full rounded-2xl bg-white/98 backdrop-blur-sm shadow-sm overflow-hidden">
-                            <div className="absolute top-4 left-4 z-20">
-                                <span
-                                    className="text-[10px] font-medium px-3 py-1.5 rounded-[7px] uppercase tracking-wider"
+                            <div className="absolute top-4 left-4 right-8 z-20 max-w-[calc(100%-2rem)]">
+                                <div
+                                    className="inline-flex max-w-full flex-col items-start gap-0.5 px-3 py-2 rounded-[7px] text-left"
                                     style={{
                                         background: 'linear-gradient(to bottom, #f7f6f5, #EBE9E5)',
                                         color: '#1a1512',
                                         boxShadow: 'inset 0 1px 0 0 #FFFFFF, 0 0 0 1px #D1CDC7, 0 2px 4px rgba(0,0,0,0.06)',
                                     }}
                                 >
-                                    {card.title}
-                                </span>
+                                    <span className="text-[10px] font-semibold leading-tight tracking-tight text-[#1a1512]">{card.brand}</span>
+                                    <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0">
+                                        <span className="text-sm font-bold tracking-tight text-[#1a1512]">{card.stat}</span>
+                                        <span className="text-[10px] font-mono font-normal uppercase tracking-wide text-[#1a1512]/75">{card.label}</span>
+                                    </div>
+                                </div>
                             </div>
                             <div className="absolute inset-0">
                                 <Image
                                     src={card.image}
-                                    alt={card.title}
+                                    alt={`${card.brand} — SEO`}
                                     fill
                                     className="object-cover"
                                     unoptimized
@@ -179,12 +259,12 @@ const AccordionItem = ({
             onClick={onClick}
             className="w-full flex items-center justify-between p-6 md:p-8"
         >
-            <div className="flex items-center gap-4 md:gap-8">
-                <span className={`font-mono text-sm transition-colors duration-300 ${isOpen ? 'text-[#ff5501] font-bold' : 'text-[#1a1512]/40'}`}>
+            <div className="flex min-w-0 flex-1 items-start md:items-center gap-3 sm:gap-4 md:gap-8">
+                <span className={`shrink-0 font-mono text-sm transition-colors duration-300 ${isOpen ? 'text-[#ff5501] font-bold' : 'text-[#1a1512]/40'}`}>
                     {service.id}
                 </span>
                 <span
-                    className={`text-2xl md:text-4xl uppercase tracking-wide transition-colors duration-300 ${isOpen ? 'text-white font-medium' : 'text-[#1a1512]/60 group-hover:text-[#1a1512]'}`}
+                    className={`min-w-0 text-left text-lg leading-tight sm:text-xl md:text-4xl md:leading-none uppercase tracking-wide transition-colors duration-300 ${isOpen ? 'text-white font-medium' : 'text-[#1a1512]/60 group-hover:text-[#1a1512]'}`}
                     style={{ fontFamily: 'Nohemi, sans-serif' }}
                 >
                     {service.name}

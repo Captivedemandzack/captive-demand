@@ -3,6 +3,7 @@
 import React, { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
+import { usePlayVideoWhenVisible } from "@/hooks/usePlayVideoWhenVisible";
 import { Carousel } from "../ui/Carousel";
 import { ArrowThreeDots } from "../ui/ArrowThreeDots";
 
@@ -216,6 +217,8 @@ export function Hero() {
     const partnersRef = useRef<HTMLDivElement>(null);
     const headlineRef = useRef<HTMLHeadingElement>(null);
     const subtextRef = useRef<HTMLParagraphElement>(null);
+
+    usePlayVideoWhenVisible(videoRef);
 
     useLayoutEffect(() => {
         if (!videoRef.current || !partnersRef.current || !headlineRef.current || !subtextRef.current) return;
