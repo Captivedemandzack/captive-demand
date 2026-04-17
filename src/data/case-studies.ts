@@ -38,7 +38,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: "mentality-health",
-    clientName: "Mentality Health",
+    clientName: "Mantality Health",
     logoSrc: "",
     industry: "Health & Wellness",
     year: "2026",
@@ -59,11 +59,11 @@ export const caseStudies: CaseStudy[] = [
         "Captive Demand delivered a website that truly represents our brand and drives real results. The team understood our vision from day one.",
       author: "Partner",
       role: "Team",
-      company: "Mentality Health",
+      company: "Mantality Health",
       avatarSrc: "/spencer-donaldson.jpg",
     },
     overview:
-      "Mentality Health needed a modern, conversion-focused website that could attract and retain visitors in the competitive health and wellness space.",
+      "Mantality Health needed a modern, conversion-focused website that could attract and retain visitors in the competitive health and wellness space.",
     challenge:
       "The existing site had a 96% bounce rate and minimal engagement. Visitors were leaving before understanding the value proposition.",
     solution:
@@ -77,7 +77,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "custom-cowgirl",
     clientName: "Custom Cowgirl",
-    logoSrc: "",
+    logoSrc: "/customcowgirllogo.png",
     industry: "FASHION",
     year: "2025",
     headline: "A modern e-commerce experience that keeps visitors exploring.",
@@ -115,7 +115,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "work-from-home-investor",
     clientName: "Work From Home Investor",
-    logoSrc: "",
+    logoSrc: "/wfhinvestorlogo.png",
     industry: "Education",
     year: "2024",
     headline: "An authoritative platform that engages and converts.",
@@ -149,6 +149,48 @@ export const caseStudies: CaseStudy[] = [
     timeline: "16 months",
     heroImage: "/wfhcover2.png",
     galleryImages: ["/wfhcover2.png", "/mockup3.png", "/mockup4.png"],
+  },
+  {
+    slug: "boombox",
+    clientName: "Boombox",
+    logoSrc: "/logos/boombox.svg",
+    industry: "Entertainment",
+    year: "2025",
+    headline: "Built topical authority from scratch in 4 months.",
+    shortDescription:
+      "Technical SEO and entity-building strategy that earned AI citations across ChatGPT and Google SGE for a music tech startup.",
+    websiteUrl: "https://boombox.com",
+    featured: false,
+    services: ["Website Design", "Website Development", "Technical SEO", "Entity SEO", "AEO"],
+    industryTag: "Entertainment",
+    stats: [
+      { value: "+512%", label: "Search Visibility", context: "in 4 months" },
+      { value: "47", label: "AI Citations", context: "across ChatGPT & SGE" },
+      { value: "3x", label: "Organic Leads", context: "quarter-over-quarter" },
+    ],
+    testimonial: {
+      quote:
+        "I've been working in SEO for about a decade now. I've always built my teams in-house because agencies always tend to be too expensive or terrible quality. Captive had very fair prices and followed a process nearly identical to the one I was used to running with my in-house teams, so I knew the quality would be excellent.",
+      author: "Jordan Schneider",
+      role: "Head of Marketing",
+      company: "Boombox",
+      avatarSrc: "/Jordan.jpeg",
+    },
+    overview:
+      "Boombox is an AI-powered karaoke platform entering a crowded entertainment tech market. Despite having a strong product, they had zero organic search presence and no topical authority. They needed to build credibility with both Google and AI search models simultaneously.",
+    challenge:
+      "Starting from zero domain authority in a space dominated by established players means every ranking has to be earned through strategic content and technical excellence. Boombox had no content ecosystem, minimal backlinks, and wasn't structured for AI discovery. Their competitors had years of content head start.",
+    solution:
+      "We implemented a full technical SEO foundation, then built an entity-first content strategy designed for AI comprehension. This included structured data markup, topical cluster content targeting 80+ keywords, and an AEO layer that made Boombox's content machine-readable for AI models. We focused on becoming the definitive source for AI karaoke and music tech topics.",
+    results:
+      "Within 4 months, search visibility increased 512%. Boombox earned 47 AI citations across ChatGPT and Google SGE results. Organic lead generation tripled quarter-over-quarter. They're now recognized as a topical authority in the AI music space, with content being cited by AI models as a primary source.",
+    timeline: "4 months",
+    heroImage: "/boomboxcover2.png",
+    galleryImages: [
+      "/boomboxcover2.png",
+      "/mockup3.png",
+      "/mockup4.png",
+    ],
   },
   {
     slug: "farmulated",
@@ -229,48 +271,6 @@ export const caseStudies: CaseStudy[] = [
     timeline: "6 months",
     heroImage: "/voyagecover2.png",
     galleryImages: ["/voyagecover2.png", "/mockup3.png", "/mockup4.png"],
-  },
-  {
-    slug: "boombox",
-    clientName: "Boombox",
-    logoSrc: "/logos/boombox.svg",
-    industry: "Entertainment",
-    year: "2025",
-    headline: "Built topical authority from scratch in 4 months.",
-    shortDescription:
-      "Technical SEO and entity-building strategy that earned AI citations across ChatGPT and Google SGE for a music tech startup.",
-    websiteUrl: "https://boombox.com",
-    featured: false,
-    services: ["Website Design", "Website Development", "Technical SEO", "Entity SEO", "AEO"],
-    industryTag: "Entertainment",
-    stats: [
-      { value: "+512%", label: "Search Visibility", context: "in 4 months" },
-      { value: "47", label: "AI Citations", context: "across ChatGPT & SGE" },
-      { value: "3x", label: "Organic Leads", context: "quarter-over-quarter" },
-    ],
-    testimonial: {
-      quote:
-        "I've been working in SEO for about a decade now. I've always built my teams in-house because agencies always tend to be too expensive or terrible quality. Captive had very fair prices and followed a process nearly identical to the one I was used to running with my in-house teams, so I knew the quality would be excellent.",
-      author: "Jordan Schneider",
-      role: "Head of Marketing",
-      company: "Boombox",
-      avatarSrc: "/Jordan.jpeg",
-    },
-    overview:
-      "Boombox is an AI-powered karaoke platform entering a crowded entertainment tech market. Despite having a strong product, they had zero organic search presence and no topical authority. They needed to build credibility with both Google and AI search models simultaneously.",
-    challenge:
-      "Starting from zero domain authority in a space dominated by established players means every ranking has to be earned through strategic content and technical excellence. Boombox had no content ecosystem, minimal backlinks, and wasn't structured for AI discovery. Their competitors had years of content head start.",
-    solution:
-      "We implemented a full technical SEO foundation, then built an entity-first content strategy designed for AI comprehension. This included structured data markup, topical cluster content targeting 80+ keywords, and an AEO layer that made Boombox's content machine-readable for AI models. We focused on becoming the definitive source for AI karaoke and music tech topics.",
-    results:
-      "Within 4 months, search visibility increased 512%. Boombox earned 47 AI citations across ChatGPT and Google SGE results. Organic lead generation tripled quarter-over-quarter. They're now recognized as a topical authority in the AI music space, with content being cited by AI models as a primary source.",
-    timeline: "4 months",
-    heroImage: "/boomboxcover2.png",
-    galleryImages: [
-      "/boomboxcover2.png",
-      "/mockup3.png",
-      "/mockup4.png",
-    ],
   },
   {
     slug: "velocity-international",
@@ -377,19 +377,39 @@ export function getServiceFilters(): string[] {
   return Array.from(services);
 }
 
+/**
+ * Display order for live websites (newest / priority first).
+ * Case studies with `websiteUrl` + `liveOnly` entries are merged, then sorted by this list.
+ */
+export const LIVE_WEBSITE_ORDER: string[] = [
+  "agentis",
+  "first-future",
+  "dubsy",
+  "eos-wellness",
+  "custom-cowgirl",
+  "work-from-home-investor",
+  "boombox",
+  "new-you-laser",
+  "mountains-ledge",
+  "arctic-elevation",
+  "farmulated",
+  "velocity-international",
+];
+
 /** Live websites: case studies + additional live-only sites (more live sites than case studies) */
 export function getLiveWebsites(): CaseStudy[] {
   const withUrl = caseStudies.filter((cs) => cs.websiteUrl);
   const liveOnly: CaseStudy[] = [
     {
       slug: "new-you-laser",
-      clientName: "New You Laser NYC",
+      clientName: "The Skin Real",
       logoSrc: "/logos/theskinreal.png",
       industry: "Health & Wellness",
       year: "2024",
       headline: "Wake Up Smooth. Every Single Day.",
-      shortDescription: "Laser hair removal and skincare clinic with a modern, conversion-focused website.",
-      websiteUrl: "https://newyoulasernyc.com",
+      shortDescription:
+        "Medical aesthetics and skincare practice—consultations, injectables, and skin health—with a premium site that builds trust and drives bookings.",
+      websiteUrl: "https://theskinreal.com",
       featured: false,
       services: ["Website Design", "SEO"],
       industryTag: "Health & Wellness",
@@ -400,7 +420,7 @@ export function getLiveWebsites(): CaseStudy[] {
       solution: "",
       results: "",
       timeline: "",
-      heroImage: "/newyou.png",
+      heroImage: "/theskinrealcasestudy.png",
       galleryImages: [],
     },
     {
@@ -422,7 +442,7 @@ export function getLiveWebsites(): CaseStudy[] {
       solution: "",
       results: "",
       timeline: "",
-      heroImage: "/eos-new.png",
+      heroImage: "/eoswellnesscasestudy.png",
       galleryImages: [],
     },
     {
@@ -444,7 +464,7 @@ export function getLiveWebsites(): CaseStudy[] {
       solution: "",
       results: "",
       timeline: "",
-      heroImage: "/dubsy-art.gif",
+      heroImage: "/dubsycasestudy.png",
       galleryImages: [],
     },
     {
@@ -466,31 +486,91 @@ export function getLiveWebsites(): CaseStudy[] {
       solution: "",
       results: "",
       timeline: "",
-      heroImage: "/ff-vid.gif",
+      heroImage: "/firstfuturecasestudy.png",
       galleryImages: [],
     },
     {
-      slug: "wfh-investor",
-      clientName: "WFH Investor",
-      logoSrc: "/logos/arete.png",
-      industry: "Real Estate",
+      slug: "mountains-ledge",
+      clientName: "Mountain's Ledge",
+      logoSrc: "/logos/mountainsledge.png",
+      industry: "Retail",
       year: "2024",
-      headline: "Invest from anywhere.",
-      shortDescription: "Real estate investment education platform with a clean, authoritative design.",
-      websiteUrl: "https://wfhinvestor.com",
+      headline: "Western apparel, built to convert.",
+      shortDescription:
+        "Website design and development for a western wear brand—product storytelling, mobile shopping, and a storefront that matches the craft.",
+      websiteUrl: "https://mountainsledge.com",
       featured: false,
-      services: ["Website Design", "SEO"],
-      industryTag: "Real Estate",
-      stats: [{ value: "10K+", label: "Students", context: "enrolled" }],
+      services: ["Website Design", "Website Development"],
+      industryTag: "Retail",
+      stats: [{ value: "+31%", label: "Repeat purchase rate", context: "email program" }],
       testimonial: { quote: "", author: "", role: "", company: "", avatarSrc: "" },
       overview: "",
       challenge: "",
       solution: "",
       results: "",
       timeline: "",
-      heroImage: "/wfh-new2.png",
+      heroImage: "/mountain'sledgecasestudy.png",
+      galleryImages: [],
+    },
+    {
+      slug: "arctic-elevation",
+      clientName: "Arctic Elevation",
+      logoSrc: "/logos/arcticelevation.png",
+      industry: "Outdoor & Recreation",
+      year: "2024",
+      headline: "Elevation starts here.",
+      shortDescription:
+        "Website design and development for an outdoor brand—clear positioning, bold visuals, and frictionless paths to shop and explore.",
+      websiteUrl: "https://arcticelevation.com",
+      featured: false,
+      services: ["Website Design", "Website Development"],
+      industryTag: "Outdoor & Recreation",
+      stats: [{ value: "2x", label: "Time on page", context: "post-launch" }],
+      testimonial: { quote: "", author: "", role: "", company: "", avatarSrc: "" },
+      overview: "",
+      challenge: "",
+      solution: "",
+      results: "",
+      timeline: "",
+      heroImage: "/arcticelevationcasestudy.png",
+      galleryImages: [],
+    },
+    {
+      slug: "agentis",
+      clientName: "Agentis",
+      logoSrc: "/agentis-logo.svg",
+      industry: "Technology",
+      year: "2025",
+      headline: "Intelligent systems, human clarity.",
+      shortDescription:
+        "Website design for a technology partner—product narrative, proof points, and conversion paths tuned for complex B2B buyers.",
+      websiteUrl: "https://agentis.com",
+      featured: false,
+      services: ["Website Design", "Website Development"],
+      industryTag: "Technology",
+      stats: [{ value: "2025", label: "Launch", context: "" }],
+      testimonial: { quote: "", author: "", role: "", company: "", avatarSrc: "" },
+      overview: "",
+      challenge: "",
+      solution: "",
+      results: "",
+      timeline: "",
+      heroImage: "/agentiscasestudy.png",
       galleryImages: [],
     },
   ];
-  return [...withUrl, ...liveOnly];
+  const merged = [...withUrl, ...liveOnly];
+  const bySlug = new Map(merged.map((s) => [s.slug, s]));
+  const ordered: CaseStudy[] = [];
+  for (const slug of LIVE_WEBSITE_ORDER) {
+    const c = bySlug.get(slug);
+    if (c) {
+      ordered.push(c);
+      bySlug.delete(slug);
+    }
+  }
+  for (const c of bySlug.values()) {
+    ordered.push(c);
+  }
+  return ordered;
 }

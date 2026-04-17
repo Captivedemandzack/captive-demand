@@ -172,28 +172,29 @@ export function SEOCaseStudies() {
                                 boxShadow: '0 4px 20px rgba(26,21,18,0.04), 0 1px 3px rgba(26,21,18,0.06)',
                             }}
                         >
-                            {/* Image */}
-                            <div className="relative aspect-[16/10] overflow-hidden">
-                                {/* Browser Chrome */}
-                                <div className="absolute top-0 left-0 right-0 h-7 bg-[#f3f4f6] flex items-center px-3 z-10 rounded-t-2xl">
+                            {/* Chrome row is not overlaid on the image; hero PNGs should be exported ~16:10 so object-cover fills edge-to-edge */}
+                            <div className="relative flex aspect-[16/10] flex-col overflow-hidden bg-[#f3f4f6]">
+                                <div className="flex h-7 shrink-0 items-center px-3 border-b border-[#1a1512]/5">
                                     <div className="flex items-center gap-1.5">
                                         <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
                                         <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
                                         <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
                                     </div>
                                 </div>
-                                <Image
-                                    src={study.image}
-                                    alt={study.client}
-                                    fill
-                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                    unoptimized
-                                />
-                                {/* Metric Badge */}
-                                <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 bg-[rgba(247,247,247,0.17)] backdrop-blur-[10px] text-white px-3 py-1.5 rounded-[6px]">
-                                    <TrendingUp size={12} className="text-[#ff5501]" strokeWidth={2} />
-                                    <span className="text-sm font-bold tracking-tight">{study.metric}</span>
-                                    <span className="text-[10px] font-mono text-white/50 uppercase">{study.metricLabel}</span>
+                                <div className="relative min-h-0 flex-1">
+                                    <Image
+                                        src={study.image}
+                                        alt={study.client}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                        unoptimized
+                                    />
+                                    <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 bg-[rgba(247,247,247,0.17)] backdrop-blur-[10px] text-white px-3 py-1.5 rounded-[6px]">
+                                        <TrendingUp size={12} className="text-[#ff5501]" strokeWidth={2} />
+                                        <span className="text-sm font-bold tracking-tight">{study.metric}</span>
+                                        <span className="text-[10px] font-mono text-white/50 uppercase">{study.metricLabel}</span>
+                                    </div>
                                 </div>
                             </div>
 

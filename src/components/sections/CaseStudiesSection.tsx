@@ -196,7 +196,7 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
 const caseStudies: CaseStudy[] = [
   {
     id: 1,
-    client: "Mentality Health",
+    client: "Mantality Health",
     clientLogo: "/imgi_19_mh-logo-header.png.webp",
     year: "2026",
     headline: "A conversion-optimized website that drives engagement and reduces bounce.",

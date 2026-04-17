@@ -158,13 +158,28 @@ function CaseStudyHero({ study }: { study: CaseStudy }) {
           {study.headline}
         </h1>
 
-        <div ref={statsRef} className="cs-hero-text flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8 max-w-5xl mx-auto">
-          <div className="flex items-start gap-8 md:gap-12">
+        <div
+          ref={statsRef}
+          className="cs-hero-text mx-auto flex w-full max-w-5xl flex-col items-stretch gap-8 lg:flex-row lg:items-start lg:justify-between"
+        >
+          <div className="flex w-full min-w-0 items-stretch justify-between gap-2 sm:gap-4 md:gap-12 lg:justify-start lg:gap-12">
             {study.stats.map((stat, i) => (
-              <div key={i} className="flex flex-col items-center lg:items-start">
-                <span className="text-3xl md:text-4xl lg:text-5xl text-[#1a1512]" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>{stat.value}</span>
-                <span className="font-mono text-[10px] text-[#1a1512]/50 uppercase tracking-wider mt-1">{stat.label}</span>
-                <span className="font-mono text-[9px] text-[#1a1512]/30 uppercase tracking-wider">{stat.context}</span>
+              <div
+                key={i}
+                className="flex min-w-0 flex-1 basis-0 flex-col items-center text-center lg:basis-auto lg:flex-none lg:shrink-0 lg:items-start lg:text-left"
+              >
+                <span
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#ff5501] tabular-nums"
+                  style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
+                >
+                  {stat.value}
+                </span>
+                <span className="mt-1 font-mono text-[9px] text-[#1a1512]/50 uppercase tracking-wider sm:text-[10px]">
+                  {stat.label}
+                </span>
+                <span className="font-mono text-[8px] text-[#1a1512]/30 uppercase tracking-wider sm:text-[9px]">
+                  {stat.context}
+                </span>
               </div>
             ))}
           </div>

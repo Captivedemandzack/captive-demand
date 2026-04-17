@@ -26,17 +26,18 @@ export function PricingPageClient() {
   const ServicePricing = SERVICE_COMPONENTS[activeService];
 
   return (
-    <main className="min-h-screen w-full bg-[#FAFAFA]">
+    <div className="min-h-screen w-full min-w-0 bg-[#FAFAFA]">
       <PricingHero />
-      <section className="w-full bg-[#FAFAFA] px-4 pt-12 md:pt-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-20 flex flex-wrap items-center gap-2 md:mb-24">
+      <section className="w-full min-w-0 bg-[#FAFAFA] px-4 pt-12 md:pt-16">
+        <div className="mx-auto max-w-7xl min-w-0 w-full">
+          <div className="mb-20 w-full min-w-0 md:mb-24">
             <div
-              className="flex items-center rounded-[8px] p-1"
+              className="flex w-full max-w-full min-w-0 items-center gap-0 overflow-x-auto rounded-[8px] p-1 snap-x snap-mandatory scroll-px-1 md:snap-none md:overflow-visible [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,black_calc(100%-28px),transparent)] md:[mask-image:none]"
               style={{
                 background: 'linear-gradient(to bottom, #f7f6f5, #EBE9E5)',
                 boxShadow:
                   'inset 0 1px 0 0 #FFFFFF, 0 0 0 1px #D1CDC7, 0 2px 4px rgba(0,0,0,0.06)',
+                scrollbarWidth: 'none',
               }}
             >
               {SERVICE_TABS.map((tab) => (
@@ -44,7 +45,7 @@ export function PricingPageClient() {
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveService(tab.id)}
-                  className={`rounded-[6px] px-5 py-2.5 font-mono text-xs uppercase tracking-wider transition-all duration-300 ${
+                  className={`shrink-0 snap-start whitespace-nowrap rounded-[6px] px-3 py-2.5 font-mono text-[11px] uppercase tracking-wider transition-all duration-300 sm:px-5 sm:text-xs ${
                     activeService === tab.id
                       ? 'bg-[#1a1512] text-white shadow-sm'
                       : 'text-[#1a1512]/50 hover:text-[#1a1512]/70'
@@ -59,6 +60,7 @@ export function PricingPageClient() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeService}
+            className="w-full min-w-0"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
@@ -70,6 +72,6 @@ export function PricingPageClient() {
       </section>
       <PricingFAQ />
       <CTASection />
-    </main>
+    </div>
   );
 }

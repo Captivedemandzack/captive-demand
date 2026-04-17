@@ -435,7 +435,7 @@ export function AutomationHero() {
                                 </GlassBadge>
                             </div>
 
-                            <div className="auto-badge absolute -bottom-5 left-[24%] z-40">
+                            <div className="auto-badge absolute -bottom-5 left-[3%] sm:left-[24%] z-40">
                                 <GlassBadge>
                                     <div className="flex items-center gap-2.5">
                                         <BitmapIcon grid={ICON_CLOCK} />
@@ -444,7 +444,7 @@ export function AutomationHero() {
                                 </GlassBadge>
                             </div>
 
-                            <div className="auto-badge absolute top-[28%] -right-3 sm:-right-8 lg:-right-10 z-40">
+                            <div className="auto-badge hidden sm:block absolute top-[28%] -right-3 sm:-right-8 lg:-right-10 z-40">
                                 <GlassBadge>
                                     <div className="flex items-center gap-2.5">
                                         <BitmapIcon grid={ICON_PLUG} />
@@ -454,7 +454,7 @@ export function AutomationHero() {
                             </div>
 
                             {/* OUTCOME CARD — bottom right, glassmorphic */}
-                            <div className="auto-badge absolute -bottom-10 right-0 z-30 w-[44%] overflow-hidden rounded-[4px] bg-white/60 backdrop-blur-[12px] border border-white/50 shadow-[0_16px_42px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-[#d5d5d5]/40 sm:-bottom-14 sm:-right-3 sm:w-[50%] lg:-right-6">
+                            <div className="auto-badge absolute -bottom-12 right-0 z-30 w-[55%] overflow-hidden rounded-[4px] bg-white/60 backdrop-blur-[12px] border border-white/50 shadow-[0_16px_42px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-[#d5d5d5]/40 sm:-bottom-14 sm:-right-3 sm:w-[50%] lg:-right-6">
                                 <div className="absolute -top-[1px] -left-[1px] w-[12px] h-[12px] border-t-[2px] border-l-[2px] border-[#d5d5d5] rounded-tl-[4px] pointer-events-none z-20" />
                                 <div className="absolute -bottom-[1px] -right-[1px] w-[12px] h-[12px] border-b-[2px] border-r-[2px] border-[#d5d5d5] rounded-br-[4px] pointer-events-none z-20" />
                                 <div className="p-4 sm:p-5 relative z-10">

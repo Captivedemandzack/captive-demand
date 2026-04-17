@@ -102,7 +102,7 @@ function PricingFeatureRow({
             {tooltip ? (
                 <div
                     ref={wrapRef}
-                    className="relative min-w-0 flex-1"
+                    className="relative min-w-0 flex-1 overflow-visible"
                     onMouseEnter={() => {
                         clearHoverLeaveTimer();
                         setHovered(true);
@@ -112,7 +112,7 @@ function PricingFeatureRow({
                         hoverLeaveTimer.current = setTimeout(() => setHovered(false), 200);
                     }}
                 >
-                    <div className="relative inline-flex max-w-full flex-wrap items-baseline gap-1.5">
+                    <div className="inline-flex max-w-full flex-wrap items-baseline gap-1.5">
                         <span className={labelClass}>{label}</span>
                         <button
                             type="button"
@@ -126,14 +126,15 @@ function PricingFeatureRow({
                         >
                             <Info size={14} strokeWidth={1.5} aria-hidden />
                         </button>
-                        <div
-                            role="tooltip"
-                            className={`absolute left-0 top-full z-[100] mt-1.5 w-[min(calc(100vw-2rem),16rem)] rounded-lg px-3 py-2.5 text-left text-[11px] font-mono leading-relaxed transition-opacity duration-150 motion-reduce:transition-none ${tipSurface} ${
-                                showTip ? 'visible opacity-100' : 'invisible opacity-0 pointer-events-none'
-                            }`}
-                        >
-                            {tooltip}
-                        </div>
+                    </div>
+                    {/* Anchored to full row width: centered on mobile so tooltip stays in view; left-aligned on md+ */}
+                    <div
+                        role="tooltip"
+                        className={`absolute left-1/2 top-full z-[100] mt-1.5 w-max max-w-[min(18rem,100%)] -translate-x-1/2 rounded-lg px-3 py-2.5 text-left text-[11px] font-mono leading-relaxed transition-opacity duration-150 motion-reduce:transition-none md:left-0 md:max-w-[16rem] md:translate-x-0 ${tipSurface} ${
+                            showTip ? 'visible opacity-100' : 'invisible opacity-0 pointer-events-none'
+                        }`}
+                    >
+                        {tooltip}
                     </div>
                 </div>
             ) : (
@@ -166,7 +167,7 @@ const PricingCard = ({
     onCtaClick?: () => void;
 }) => (
     <div className={`
-        relative w-full rounded-3xl p-8 lg:p-10 flex flex-col h-full transition-all duration-300 overflow-hidden
+        relative w-full min-w-0 max-w-full rounded-3xl p-8 lg:p-10 flex flex-col h-full transition-all duration-300 overflow-visible
         ${isPro
             ? 'text-white'
             : 'bg-[#e8e8e8] border border-[#1a1512]/5 text-[#1a1512]'
@@ -181,7 +182,7 @@ const PricingCard = ({
     >
 
         {isPro && (
-            <div className="absolute top-0 right-0 bg-[#ff5501] text-white text-[10px] font-mono font-bold uppercase tracking-widest px-4 py-2 rounded-bl-xl z-10">
+            <div className="absolute top-0 right-0 max-w-[calc(100%-2rem)] bg-[#ff5501] text-white text-[10px] font-mono font-bold uppercase tracking-widest px-4 py-2 text-right rounded-tr-3xl rounded-bl-xl z-10">
                 Most Popular
             </div>
         )}
@@ -392,8 +393,8 @@ export function PricingAndAddons({ embedded, enablePricingModal }: PricingAndAdd
     }, []);
 
     return (
-        <section ref={sectionRef} className={`w-full bg-[#FAFAFA] px-4 ${embedded ? 'pt-0 pb-20 md:pb-32' : 'py-20 md:py-32'}`}>
-            <div className="max-w-7xl mx-auto">
+        <section ref={sectionRef} className={`w-full min-w-0 bg-[#FAFAFA] px-4 ${embedded ? 'pt-0 pb-20 md:pb-32' : 'py-20 md:py-32'}`}>
+            <div className="max-w-7xl mx-auto min-w-0 w-full">
 
                 {/* --- HEADER --- */}
                 <div className={embedded ? 'mb-8 md:mb-10' : 'mb-16 md:mb-24'}>
@@ -430,8 +431,8 @@ export function PricingAndAddons({ embedded, enablePricingModal }: PricingAndAdd
                 </div>
 
                 {/* --- PRICING CARDS --- */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-8 items-stretch">
-                    <div className="h-full">
+                <div className="grid min-w-0 grid-cols-1 lg:grid-cols-3 gap-3 mb-8 items-stretch">
+                    <div className="h-full min-w-0 w-full">
                         <PricingCard
                             title="Launch"
                             description="Your brand's digital storefront. Custom design, mobile-ready, built to convert."
@@ -444,7 +445,7 @@ export function PricingAndAddons({ embedded, enablePricingModal }: PricingAndAdd
                         />
                     </div>
 
-                    <div className="h-full">
+                    <div className="h-full min-w-0 w-full">
                         <PricingCard
                             title="Scale"
                             description="Full digital presence for brands ready to grow. E-commerce, custom features, ongoing optimization."
@@ -458,7 +459,7 @@ export function PricingAndAddons({ embedded, enablePricingModal }: PricingAndAdd
                         />
                     </div>
 
-                    <div className="h-full">
+                    <div className="h-full min-w-0 w-full">
                         <PricingCard
                             title="Enterprise"
                             description="Complex builds for serious operators. E-commerce, membership portals, custom platforms."

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState, useCallback, useLayoutEffect } from 'react';
+import React, { useRef, useEffect, useState, useCallback, useLayoutEffect, useSyncExternalStore } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -178,8 +178,8 @@ function WorkHero() {
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
             >
               Proof beats
-              <AccentBr />
-              <span className="relative inline-flex items-center justify-center px-5 pt-[0.12em] pb-[0.08em] -mx-5 z-10 overflow-hidden whitespace-nowrap rounded-[6px]">
+              <br />
+              <span className="relative inline-flex w-fit max-w-full items-center justify-center px-3 sm:px-5 pt-[0.12em] pb-[0.08em] -mx-3 sm:-mx-5 z-10 overflow-hidden whitespace-nowrap rounded-[6px]">
                 <span className="absolute inset-0 rounded-[6px] bg-white/55 border border-[#d5d5d5]/40 shadow-[0_6px_20px_rgba(15,15,15,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]" />
                 <span className="relative text-[#0f0d0a]" style={{ zIndex: 1 }}>
                   promises
@@ -275,9 +275,31 @@ function WorkHero() {
 
 /* ─── Section 2: Featured Projects Carousel ─── */
 
+/** Matches Tailwind `md:` — slide-from-behind card animation is desktop/tablet only. */
+const MOBILE_MAX_WIDTH_QUERY = '(max-width: 767px)';
+
+function useIsMobileViewport() {
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      const mq = window.matchMedia(MOBILE_MAX_WIDTH_QUERY);
+      mq.addEventListener('change', onStoreChange);
+      return () => mq.removeEventListener('change', onStoreChange);
+    },
+    () => window.matchMedia(MOBILE_MAX_WIDTH_QUERY).matches,
+    () => false
+  );
+}
+
 function FeaturedCarousel() {
   const featured = getFeaturedCaseStudies();
   const [activeIndex, setActiveIndex] = useState(0);
+  /** After user views slide 2+, the “card slides out from behind image” intro should not replay (including when returning to slide 1). */
+  const [hasLeftFirstSlide, setHasLeftFirstSlide] = useState(false);
+  const isMobile = useIsMobileViewport();
+
+  useEffect(() => {
+    if (activeIndex !== 0) setHasLeftFirstSlide(true);
+  }, [activeIndex]);
 
   const goTo = (i: number) => {
     setActiveIndex(i);
@@ -287,6 +309,7 @@ function FeaturedCarousel() {
   const next = () => setActiveIndex((p) => (p === featured.length - 1 ? 0 : p + 1));
 
   const study = featured[activeIndex];
+  const playCardReveal = activeIndex === 0 && !hasLeftFirstSlide && !isMobile;
 
   return (
     <section className="relative w-full bg-[#FAFAFA] pt-8 md:pt-16 pb-24 md:pb-40 px-4 overflow-hidden">
@@ -320,7 +343,7 @@ function FeaturedCarousel() {
             {/* Left — Image (separate box) — on top so card slides out from behind */}
             <Link href={`/work/${study.slug}`} className="block group relative z-10">
               <div
-                className="relative h-[300px] md:h-[420px] lg:h-[480px] overflow-hidden rounded-2xl border border-[#1a1512]/5"
+                className="relative w-full aspect-[16/10] min-h-0 md:aspect-auto md:h-[420px] lg:h-[480px] overflow-hidden rounded-2xl border border-[#1a1512]/5"
                 style={{ boxShadow: '0 4px 20px rgba(26,21,18,0.04), 0 1px 3px rgba(26,21,18,0.06)' }}
               >
                 <Image
@@ -333,12 +356,20 @@ function FeaturedCarousel() {
               </div>
             </Link>
 
-            {/* Right — Content Card — slides out from behind image when section in view */}
+            {/* Right — Content Card — slide-from-behind when viewport >= md and first slide / first visit; narrow mobile always static */}
             <motion.div
-              initial={{ x: '-100%' }}
-              whileInView={{ x: 0 }}
-              viewport={{ once: true, amount: 1 }}
-              transition={{ type: 'spring' as const, stiffness: 200, damping: 25 }}
+              initial={playCardReveal ? { x: '-100%' } : { x: 0 }}
+              {...(playCardReveal
+                ? {
+                    whileInView: { x: 0 },
+                    viewport: { once: true, amount: 1 },
+                  }
+                : { animate: { x: 0 } })}
+              transition={
+                playCardReveal
+                  ? { type: 'spring' as const, stiffness: 200, damping: 25 }
+                  : { duration: 0 }
+              }
               className="rounded-2xl p-6 md:p-8 flex flex-col justify-between relative overflow-hidden bg-[#0d0d0d]"
               style={{
                 boxShadow:
@@ -469,7 +500,6 @@ const FILTER_TABS = [
   'SEO',
   'Email Marketing',
   'Marketing Automation',
-  'Branding',
 ];
 
 function matchesFilter(study: CaseStudy, filter: string): boolean {
@@ -494,6 +524,23 @@ function FilterGrid() {
   const liveWebsitesList = getLiveWebsites().filter((s) => matchesFilter(s, activeFilter));
   const filtered = viewMode === 'case-studies' ? caseStudyList : liveWebsitesList;
 
+  /** Horizontal filter rail: keep the active chip centered-ish on mobile so the user always sees what's selected. */
+  const filterScrollRef = useRef<HTMLDivElement>(null);
+  const filterButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+  useEffect(() => {
+    const container = filterScrollRef.current;
+    const btn = filterButtonRefs.current[activeFilter];
+    if (!container || !btn) return;
+    // No-op on desktop (container isn't scrollable).
+    if (container.scrollWidth <= container.clientWidth) return;
+    const cRect = container.getBoundingClientRect();
+    const bRect = btn.getBoundingClientRect();
+    const target =
+      container.scrollLeft + (bRect.left - cRect.left) - (cRect.width - bRect.width) / 2;
+    container.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+  }, [activeFilter]);
+
   return (
     <section className="relative w-full bg-[#FAFAFA] py-20 md:py-32 px-4 overflow-hidden">
       <NoiseOverlay opacity={0.02} />
@@ -516,9 +563,9 @@ function FilterGrid() {
               </h2>
             </div>
 
-            {/* View toggle — squared, depth (rivets) */}
+            {/* View toggle — segmented control, 50/50 split on mobile, auto width on md+ */}
             <div
-              className="flex items-center p-1 rounded-[8px]"
+              className="flex items-center p-1 rounded-[8px] w-full md:w-auto self-stretch md:self-auto"
               style={{
                 background: 'linear-gradient(to bottom, #f7f6f5, #EBE9E5)',
                 boxShadow: 'inset 0 1px 0 0 #FFFFFF, 0 0 0 1px #D1CDC7, 0 2px 4px rgba(0,0,0,0.06)',
@@ -526,7 +573,7 @@ function FilterGrid() {
             >
               <button
                 onClick={() => setViewMode('case-studies')}
-                className={`px-5 py-2.5 rounded-[6px] font-mono text-xs uppercase tracking-wider transition-all duration-300 ${
+                className={`flex-1 md:flex-initial px-5 py-2.5 rounded-[6px] font-mono text-xs uppercase tracking-wider transition-all duration-300 ${
                   viewMode === 'case-studies'
                     ? 'bg-[#1a1512] text-white shadow-sm'
                     : 'text-[#1a1512]/50 hover:text-[#1a1512]/70'
@@ -536,24 +583,31 @@ function FilterGrid() {
               </button>
               <button
                 onClick={() => setViewMode('live-websites')}
-                className={`px-5 py-2.5 rounded-[6px] font-mono text-xs uppercase tracking-wider transition-all duration-300 ${
+                className={`flex-1 md:flex-initial px-5 py-2.5 rounded-[6px] font-mono text-xs uppercase tracking-wider transition-all duration-300 ${
                   viewMode === 'live-websites'
                     ? 'bg-[#1a1512] text-white shadow-sm'
                     : 'text-[#1a1512]/50 hover:text-[#1a1512]/70'
                 }`}
               >
-                See live websites
+                Live websites
               </button>
             </div>
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex flex-wrap gap-2">
+          {/* Filter Tabs — single-row horizontal rail on mobile (bleeds to screen edge + right-fade), wraps on md+ */}
+          <div
+            ref={filterScrollRef}
+            className="flex gap-2 overflow-x-auto md:flex-wrap md:overflow-visible snap-x snap-mandatory md:snap-none pb-1 md:pb-0 [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,black_calc(100%-32px),transparent)] md:[mask-image:none]"
+            style={{ scrollbarWidth: 'none' }}
+          >
             {FILTER_TABS.map((tab) => (
               <button
                 key={tab}
+                ref={(el) => {
+                  filterButtonRefs.current[tab] = el;
+                }}
                 onClick={() => setActiveFilter(tab)}
-                className={`px-5 py-2.5 rounded-[8px] font-mono text-xs uppercase tracking-wider transition-all duration-300 border ${
+                className={`shrink-0 snap-start whitespace-nowrap px-5 py-2.5 rounded-[8px] font-mono text-xs uppercase tracking-wider transition-all duration-300 border ${
                   activeFilter === tab
                     ? 'bg-[#1a1512] text-white border-[#1a1512]'
                     : 'bg-transparent text-[#1a1512]/50 border-[#1a1512]/10 hover:border-[#1a1512]/30'
@@ -614,31 +668,34 @@ function LiveWebsiteCard({ study, index }: { study: CaseStudy; index: number }) 
         href={study.websiteUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="block group"
+        className="block"
       >
         <div
-          className="rounded-2xl overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300"
+          className="rounded-2xl overflow-hidden bg-white"
           style={{ boxShadow: '0 4px 20px rgba(26,21,18,0.04), 0 1px 3px rgba(26,21,18,0.06)' }}
         >
-          {/* Wider aspect ratio (laptop-like 16/10) */}
-          <div className="relative aspect-[16/10] overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-7 bg-[#f3f4f6] flex items-center px-3 z-10 rounded-t-2xl">
+          <div className="relative flex aspect-[16/10] flex-col overflow-hidden bg-[#f3f4f6]">
+            <div className="flex h-7 shrink-0 items-center gap-1.5 px-3 border-b border-[#1a1512]/5">
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
                 <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
                 <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
               </div>
-              <div className="flex-1 mx-2 h-3.5 bg-white rounded-sm flex items-center px-2">
-                <span className="text-[7px] text-[#1a1512]/30 font-mono truncate">{study.websiteUrl.replace('https://', '')}</span>
+              <div className="mx-1 flex h-3.5 min-w-0 flex-1 items-center rounded-sm bg-white px-2">
+                <span className="truncate font-mono text-[7px] text-[#1a1512]/30">{study.websiteUrl.replace('https://', '')}</span>
               </div>
             </div>
-            <Image
-              src={study.heroImage}
-              alt={study.clientName}
-              fill
-              className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-              unoptimized
-            />
+            <div className="relative min-h-0 flex-1">
+              <Image
+                src={study.heroImage}
+                alt={study.clientName}
+                fill
+                className="object-cover object-top"
+                unoptimized
+                priority={index === 0}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+            </div>
           </div>
 
           <div className="p-5">
@@ -654,7 +711,7 @@ function LiveWebsiteCard({ study, index }: { study: CaseStudy; index: number }) 
                   />
                 </div>
               )}
-              <ExternalLink size={14} className="text-[#1a1512]/20 group-hover:text-[#ff5501] transition-colors" strokeWidth={1.5} />
+              <ExternalLink size={14} className="text-[#1a1512]/20" strokeWidth={1.5} />
             </div>
             <p className="font-mono text-[11px] text-[#1a1512]/50 leading-relaxed">
               {study.shortDescription}

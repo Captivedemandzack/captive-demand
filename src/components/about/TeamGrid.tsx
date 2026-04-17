@@ -12,9 +12,9 @@ interface TeamMember {
 }
 
 const TEAM: TeamMember[] = [
-    { name: 'Spencer Donaldson', role: 'Founder & CEO', photo: '/spencer-donaldson-2.png', tags: ['Strategy', 'Leadership', 'Growth'] },
-    { name: 'Zachary Creasy', role: 'Creative Director', photo: '/zack-creasy.png', tags: ['Brand', 'Design', 'Visual'] },
-    { name: 'Michael Turner', role: 'Client Success Manager', photo: '/michael-turner-2.png', tags: ['Onboarding', 'Client Relations', 'Support'] },
+    { name: 'Spencer Donaldson', role: 'Founder & CEO', photo: '/3.png', tags: ['Strategy', 'Leadership', 'Growth'] },
+    { name: 'Zachary Creasy', role: 'Creative Director', photo: '/2.png', tags: ['Brand', 'Design', 'Visual'] },
+    { name: 'Michael Turner', role: 'Client Success Manager', photo: '/4.png', tags: ['Onboarding', 'Client Relations', 'Support'] },
     { name: 'Jordan Schneider', role: 'CMO', photo: '/Jordan2.png', tags: ['Email', 'Automation', 'Analytics'] },
 ];
 

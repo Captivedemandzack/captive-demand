@@ -41,22 +41,26 @@ export function CaseStudyCard({ study, index, variant = 'default' }: CaseStudyCa
         onMouseLeave={() => setIsHovering(false)}
         whileHover={{ y: -4, transition: { type: 'spring', stiffness: 400, damping: 10 } }}
       >
-        {/* Image */}
-        <div className="relative aspect-[16/10] overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-7 bg-[#f3f4f6] flex items-center px-3 z-10 rounded-t-2xl">
+        {/* Export hero PNGs ~16:10 so object-cover fills the pane; chrome is not stacked on the image */}
+        <div className="relative flex aspect-[16/10] flex-col overflow-hidden bg-[#f3f4f6]">
+          <div className="flex h-7 shrink-0 items-center px-3 border-b border-[#1a1512]/5">
             <div className="flex items-center gap-1.5">
               <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
               <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
               <div className="w-2 h-2 rounded-full bg-[#1a1512]/15" />
             </div>
           </div>
-          <Image
-            src={study.heroImage}
-            alt={study.clientName}
-            fill
-            className="object-cover object-top"
-            unoptimized
-          />
+          <div className="relative min-h-0 flex-1">
+            <Image
+              src={study.heroImage}
+              alt={study.clientName}
+              fill
+              className="object-cover object-top"
+              unoptimized
+              priority={index === 0}
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
+            />
+          </div>
         </div>
 
         {/* Content */}

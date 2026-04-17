@@ -198,7 +198,7 @@ function LogoCard({ logo }: { logo: (typeof LOGOS)[number] }) {
                     />
                 </div>
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#E8480C] pb-1">
-                    {logo.caseStudySlug ? 'Case study' : 'View'}
+                    {logo.caseStudySlug ? 'Case study' : 'Quote'}
                 </span>
             </div>
 
