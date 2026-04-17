@@ -3,7 +3,6 @@
 import React, { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
-import { usePlayVideoWhenVisible } from "@/hooks/usePlayVideoWhenVisible";
 import { Carousel } from "../ui/Carousel";
 import { ArrowThreeDots } from "../ui/ArrowThreeDots";
 
@@ -219,8 +218,6 @@ export function Hero() {
     const headlineRef = useRef<HTMLHeadingElement>(null);
     const subtextRef = useRef<HTMLParagraphElement>(null);
 
-    usePlayVideoWhenVisible(videoRef);
-
     useLayoutEffect(() => {
         if (!videoRef.current || !partnersRef.current || !headlineRef.current || !subtextRef.current) return;
 
@@ -337,7 +334,11 @@ export function Hero() {
                                 loop
                                 muted
                                 playsInline
-                                className="w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] object-cover rounded-full will-change-transform"
+                                preload="auto"
+                                disableRemotePlayback
+                                disablePictureInPicture
+                                x-webkit-airplay="deny"
+                                className="pointer-events-none w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] object-cover rounded-full will-change-transform"
                             >
                                 <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps copy.mp4" type="video/mp4" />
                             </video>
