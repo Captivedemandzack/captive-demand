@@ -59,11 +59,20 @@ export default function Footer() {
         <>
             {/* INJECTED STYLES */}
             <style jsx global>{`
-                /* CRITICAL FIX: Forces body to be transparent so the footer (at z-index -10) is visible */
-                body, html {
-                    background-color: transparent !important;
+                /* Kill iOS rubber-band so the fixed footer never bleeds through the hero at the top,
+                   and mobile can't get stuck between nested scroll containers. */
+                html, body {
+                    overscroll-behavior: none;
                 }
-                
+
+                /* Desktop (md+): the reveal relies on a transparent body so the fixed footer behind
+                   -z-10 shows through the spacer. On mobile we keep body opaque (footer is static). */
+                @media (min-width: 768px) {
+                    body, html {
+                        background-color: transparent !important;
+                    }
+                }
+
                 @font-face {
                     font-family: 'Nohemi';
                     src: url('/fonts/Nohemi-Light.ttf') format('truetype');
@@ -87,18 +96,17 @@ export default function Footer() {
                 }
             `}</style>
 
-            {/* 1. THE SPACER:
-               This invisible div sits in the normal document flow at the bottom.
-               It acts as a "window" that you scroll into to see the fixed footer behind.
+            {/* 1. THE SPACER (desktop only):
+               Invisible div in the normal document flow. On md+ you scroll into it to reveal the
+               fixed footer behind. On mobile we hide it — the footer flows in normally below main.
             */}
-            <div className="relative w-full h-screen bg-transparent pointer-events-none" />
+            <div className="relative hidden md:block w-full h-screen bg-transparent pointer-events-none" />
 
-            {/* 2. THE REVEAL FOOTER:
-               - fixed: Locks it to the viewport.
-               - bottom-0: Sticks to the bottom.
-               - -z-10: Puts it BEHIND the rest of your content (Hero, About, etc).
+            {/* 2. THE FOOTER:
+               - Mobile: static in normal flow, auto height, no nested scroll container.
+               - Desktop (md+): fixed, bottom-0, full viewport height, -z-10 (reveal via spacer).
             */}
-            <footer className="fixed bottom-0 left-0 w-full h-screen bg-[#fafafa] text-brand-dark flex flex-col -z-10 pt-24 md:pt-32 font-nohemi-custom overflow-y-auto overflow-x-hidden">
+            <footer className="relative w-full bg-[#fafafa] text-brand-dark flex flex-col pt-16 pb-0 font-nohemi-custom overflow-x-hidden md:fixed md:bottom-0 md:left-0 md:h-screen md:-z-10 md:pt-32 md:overflow-y-auto">
 
                 {/* 1. Marquee Section */}
                 <div className="w-full py-4 relative z-20 shrink-0">
