@@ -16,6 +16,10 @@ const serviceSubMenu = [
   { text: 'Automation', href: '/services/automation' },
 ];
 
+const productSubMenu = [{ text: 'CalSync', href: '/products/calsync' }];
+
+type SubMenuKey = 'services' | 'products';
+
 /** Desktop: single frosted surface (md+). */
 const GLASS_DESKTOP =
   'md:border md:border-white/20 md:bg-white/30 md:shadow-[0_8px_32px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04),inset_0_1px_0_0_rgba(255,255,255,0.3)] md:backdrop-blur-md md:backdrop-saturate-150';
@@ -163,14 +167,14 @@ const SubMenuItem = ({
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [openSubMenu, setOpenSubMenu] = useState<SubMenuKey | null>(null);
   const [hoveredMainItem, setHoveredMainItem] = useState<string | null>(null);
   const [hoveredSubItem, setHoveredSubItem] = useState<string | null>(null);
 
   const toggleMenu = () => {
     setIsOpen((prev) => {
       if (prev) {
-        setIsServicesOpen(false);
+        setOpenSubMenu(null);
         setHoveredMainItem(null);
         setHoveredSubItem(null);
       }
@@ -180,13 +184,14 @@ export default function Navbar() {
 
   const closeAllMenus = () => {
     setIsOpen(false);
-    setIsServicesOpen(false);
+    setOpenSubMenu(null);
     setHoveredMainItem(null);
     setHoveredSubItem(null);
   };
 
-  const toggleServicesSubMenu = () => {
-    setIsServicesOpen((open) => !open);
+  /** Accordion exclusivity: opening one submenu closes the other — less visual noise, lower cognitive load. */
+  const toggleSubMenu = (key: SubMenuKey) => {
+    setOpenSubMenu((current) => (current === key ? null : key));
     setHoveredSubItem(null);
   };
 
@@ -228,7 +233,7 @@ export default function Navbar() {
         >
           <div aria-hidden className={MENU_BG_MOBILE} />
           <div className="relative z-10 flex w-full flex-col items-center">
-            {/* Equal 1fr side tracks so the logo stays optically centered (ABOUT/CLOSE widths differ). */}
+            {/* Equal 1fr side tracks so the logo stays optically centered (MENU/CLOSE widths differ). */}
             <div className="relative z-30 isolate grid h-[53px] w-full shrink-0 grid-cols-[1fr_auto_1fr] items-center px-8">
               <div className="relative flex min-h-[48px] min-w-0 items-center justify-self-start">
                 <Link
@@ -270,7 +275,7 @@ export default function Navbar() {
                   className="relative z-20 flex min-h-[48px] min-w-[4.5rem] cursor-pointer select-none items-center justify-end border-0 bg-transparent p-0 font-mono text-[13px] uppercase tracking-[0.2em] text-brand-dark/60 touch-manipulation"
                   style={{ WebkitTapHighlightColor: 'transparent' }}
                 >
-                  {isOpen ? 'CLOSE' : 'ABOUT'}
+                  {isOpen ? 'CLOSE' : 'MENU'}
                 </button>
               </div>
             </div>
@@ -289,21 +294,27 @@ export default function Navbar() {
                 exit="hidden"
               >
                 <div className="w-full border-t border-brand-dark/10">
+                  {/* Services + Products: side-by-side (same 2-col pattern as rows below). */}
                   <div className="flex w-full border-b border-brand-dark/10">
-                    <div className={`w-1/2 border-r border-brand-dark/10 ${isServicesOpen ? 'bg-brand-dark' : ''}`}>
+                    <div
+                      className={cn(
+                        'w-1/2 border-r border-brand-dark/10',
+                        openSubMenu === 'services' && 'bg-brand-dark',
+                      )}
+                    >
                       <MenuLinkItem
                         text="Services"
                         href="/services"
                         hasSubMenu
-                        isSubMenuOpen={isServicesOpen}
-                        toggleSubMenu={toggleServicesSubMenu}
+                        isSubMenuOpen={openSubMenu === 'services'}
+                        toggleSubMenu={() => toggleSubMenu('services')}
                         isFaded={isMainFaded('Services')}
                         onHoverStart={() => setHoveredMainItem('Services')}
                         onHoverEnd={() => setHoveredMainItem(null)}
                       />
 
                       <AnimatePresence>
-                        {isServicesOpen && (
+                        {openSubMenu === 'services' && (
                           <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
@@ -327,7 +338,46 @@ export default function Navbar() {
                       </AnimatePresence>
                     </div>
 
-                    <div className="w-1/2">
+                    <div className={cn('w-1/2', openSubMenu === 'products' && 'bg-brand-dark')}>
+                      <MenuLinkItem
+                        text="Products"
+                        href="/products"
+                        hasSubMenu
+                        isSubMenuOpen={openSubMenu === 'products'}
+                        toggleSubMenu={() => toggleSubMenu('products')}
+                        isFaded={isMainFaded('Products')}
+                        onHoverStart={() => setHoveredMainItem('Products')}
+                        onHoverEnd={() => setHoveredMainItem(null)}
+                      />
+
+                      <AnimatePresence>
+                        {openSubMenu === 'products' && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                            className="flex w-full flex-col overflow-hidden"
+                          >
+                            {productSubMenu.map((item) => (
+                              <SubMenuItem
+                                key={item.text}
+                                text={item.text}
+                                href={item.href}
+                                onClick={closeAllMenus}
+                                isFaded={isSubFaded(item.text)}
+                                onHoverStart={() => setHoveredSubItem(item.text)}
+                                onHoverEnd={() => setHoveredSubItem(null)}
+                              />
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+
+                  <div className="flex w-full border-b border-brand-dark/10">
+                    <div className="w-1/2 border-r border-brand-dark/10">
                       <MenuLinkItem
                         text="Pricing"
                         href="/pricing"
@@ -337,10 +387,7 @@ export default function Navbar() {
                         onHoverEnd={() => setHoveredMainItem(null)}
                       />
                     </div>
-                  </div>
-
-                  <div className="flex w-full border-b border-brand-dark/10">
-                    <div className="w-1/2 border-r border-brand-dark/10">
+                    <div className="w-1/2">
                       <MenuLinkItem
                         text="Case Studies"
                         href="/work"
@@ -350,7 +397,10 @@ export default function Navbar() {
                         onHoverEnd={() => setHoveredMainItem(null)}
                       />
                     </div>
-                    <div className="w-1/2">
+                  </div>
+
+                  <div className="flex w-full border-b border-brand-dark/10">
+                    <div className="w-1/2 border-r border-brand-dark/10">
                       <MenuLinkItem
                         text="Our Story"
                         href="/about"
@@ -360,10 +410,7 @@ export default function Navbar() {
                         onHoverEnd={() => setHoveredMainItem(null)}
                       />
                     </div>
-                  </div>
-
-                  <div className="flex w-full border-b border-brand-dark/10">
-                    <div className="w-1/2 border-r border-brand-dark/10">
+                    <div className="w-1/2">
                       <MenuLinkItem
                         text="Insights"
                         href="/insights"
@@ -373,21 +420,24 @@ export default function Navbar() {
                         onHoverEnd={() => setHoveredMainItem(null)}
                       />
                     </div>
-                    <div className="w-1/2">
-                      <MenuLinkItem
-                        text="Contact Us"
-                        href="/contact"
-                        onClick={closeAllMenus}
-                        isFaded={isMainFaded('Contact Us')}
-                        onHoverStart={() => setHoveredMainItem('Contact Us')}
-                        onHoverEnd={() => setHoveredMainItem(null)}
-                      />
-                    </div>
+                  </div>
+
+                  {/* Full-width closing row: Contact Us as the CTA "closer" (recency effect). */}
+                  <div className="w-full border-b border-brand-dark/10">
+                    <MenuLinkItem
+                      text="Contact Us"
+                      href="/contact"
+                      onClick={closeAllMenus}
+                      isFaded={isMainFaded('Contact Us')}
+                      onHoverStart={() => setHoveredMainItem('Contact Us')}
+                      onHoverEnd={() => setHoveredMainItem(null)}
+                    />
                   </div>
                 </div>
 
-                <div className="flex w-full flex-col gap-8 px-8 py-8">
-                  <div className="flex flex-col items-start gap-3">
+                {/* px-6 matches MenuLinkItem rows; gap-6 + centered rule = equal space text↔divider on both sides */}
+                <div className="flex w-full flex-col gap-6 px-6 py-8 md:flex-row md:items-stretch md:gap-6">
+                  <div className="flex min-w-0 flex-1 flex-col items-start gap-3">
                     <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-brand-dark/50">
                       GENERAL INQUIRIES
                     </span>
@@ -413,11 +463,16 @@ export default function Navbar() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col items-start gap-3">
+                  <div
+                    className="hidden w-px shrink-0 self-stretch bg-brand-dark/10 md:block"
+                    aria-hidden
+                  />
+
+                  <div className="flex min-w-0 flex-1 flex-col items-start gap-3 border-t border-brand-dark/10 pt-6 md:border-t-0 md:pt-0">
                     <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-brand-dark/50">VISIT</span>
                     <div className="flex flex-col items-start">
-                      <span className="text-[17px] font-normal text-brand-dark">901 Woodland St, Suite 104,</span>
-                      <span className="text-[17px] font-normal text-brand-dark">Nashville, TN 37206</span>
+                      <span className="text-[17px] font-normal text-brand-dark">1015 W Kirkland Ave</span>
+                      <span className="text-[17px] font-normal text-brand-dark">Nashville, TN 37216</span>
                     </div>
                   </div>
                 </div>
