@@ -1,3 +1,11 @@
+# Default Netlify hostname has no "redirect to primary" toggle in Domain settings
+# (unlike www). Force canonical domain for SEO and consistent analytics.
+[[redirects]]
+  from = "https://captiveredesign.netlify.app/*"
+  to = "https://captivedemand.com/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/web-design-development"
   to = "/services/website"
