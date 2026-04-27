@@ -287,8 +287,5 @@
   status = 301
   force = true
 
-[[redirects]]
-  from = "/*/"
-  to = "/:splat"
-  status = 301
-  force = true
+# Note: Do not add a global trailing-slash strip (/* → :splat). It can match the
+# apex path and produce 301 Location: / loops on Netlify with Next.js.
