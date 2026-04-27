@@ -48,9 +48,20 @@ export const metadata: Metadata = {
         url: "/",
         title: siteConfig.defaultTitle,
         description: siteConfig.description,
+        images: [
+            {
+                url: "/opengraph.png",
+                width: 1200,
+                height: 628,
+                alt: siteConfig.name,
+            },
+        ],
     },
     twitter: {
         card: "summary_large_image",
+        title: siteConfig.defaultTitle,
+        description: siteConfig.description,
+        images: ["/opengraph.png"],
     },
 };
 

@@ -32,7 +32,7 @@ export function PricingPageClient() {
         <div className="mx-auto max-w-7xl min-w-0 w-full">
           <div className="mb-20 w-full min-w-0 md:mb-24">
             <div
-              className="flex w-full max-w-full min-w-0 items-center gap-0 overflow-x-auto rounded-[8px] p-1 snap-x snap-mandatory scroll-px-1 md:snap-none md:overflow-visible [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,black_calc(100%-28px),transparent)] md:[mask-image:none]"
+              className="inline-flex max-w-full min-w-0 items-center gap-0 overflow-x-auto rounded-[8px] p-1 snap-x snap-mandatory scroll-px-1 md:snap-none md:overflow-visible [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,black_calc(100%-28px),transparent)] md:[mask-image:none]"
               style={{
                 background: 'linear-gradient(to bottom, #f7f6f5, #EBE9E5)',
                 boxShadow:

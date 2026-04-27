@@ -28,7 +28,7 @@ const faqData: FAQItem[] = [
     {
         question: 'How much do I pay upfront?',
         answer:
-            'We work on a 50% deposit to kick off, 50% on completion model. For larger Enterprise and Custom projects we can structure payments across milestones.',
+            'We work on a 50% deposit to kick off, 50% on completion model. For Premier-tier projects and larger scoped engagements we can structure payments across milestones.',
     },
     {
         question: 'Do you work with businesses outside Nashville?',

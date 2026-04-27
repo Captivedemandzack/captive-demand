@@ -21,7 +21,7 @@ function PricingSpotsUrgency({ isPro, projectByDate }: { isPro?: boolean; projec
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#ff5501]" />
             </span>
             <span
-                className={`max-w-[16rem] font-mono text-[11px] uppercase leading-snug tracking-[0.1em] sm:max-w-none ${isPro ? 'text-white/50' : 'text-[#1a1512]/50'}`}
+                className={`max-w-[18rem] font-mono text-xs uppercase leading-snug tracking-[0.1em] sm:max-w-none sm:text-[13px] ${isPro ? 'text-white/50' : 'text-[#1a1512]/50'}`}
             >
                 Live by {projectByDate}
             </span>
@@ -253,7 +253,7 @@ const AddOnCard = ({ icon: Icon, title, description }: { icon: React.ElementType
     </div>
 );
 
-const LAUNCH_FEATURES: PricingFeatureLine[] = [
+const BASE_FEATURES: PricingFeatureLine[] = [
     {
         label: '1-Hour Strategy Workshop',
         tooltip:
@@ -276,8 +276,8 @@ const LAUNCH_FEATURES: PricingFeatureLine[] = [
     },
 ];
 
-const SCALE_FEATURES: PricingFeatureLine[] = [
-    { label: 'Everything in Launch, plus:' },
+const PRO_FEATURES: PricingFeatureLine[] = [
+    { label: 'Everything in Base, plus:' },
     { label: '8-10 pages' },
     { label: 'Blog setup' },
     { label: 'Custom Illustrations & Imagery' },
@@ -287,8 +287,8 @@ const SCALE_FEATURES: PricingFeatureLine[] = [
     { label: 'Site speed & performance' },
 ];
 
-const ENTERPRISE_FEATURES: PricingFeatureLine[] = [
-    { label: 'Everything in Scale, plus:' },
+const PREMIER_FEATURES: PricingFeatureLine[] = [
+    { label: 'Everything in Pro, plus:' },
     { label: '10+ Pages' },
     { label: 'Funnel strategy' },
     { label: 'E-commerce or Member portal' },
@@ -434,11 +434,11 @@ export function PricingAndAddons({ embedded, enablePricingModal }: PricingAndAdd
                 <div className="grid min-w-0 grid-cols-1 lg:grid-cols-3 gap-3 mb-8 items-stretch">
                     <div className="h-full min-w-0 w-full">
                         <PricingCard
-                            title="Launch"
-                            description="Your brand's digital storefront. Custom design, mobile-ready, built to convert."
+                            title="Base"
+                            description="For businesses that need to look credible fast—up to 5 pages, custom design, copy, CMS, and a conversion-ready structure."
                             price="$2,500+"
                             priceLabel="One-time / 5-page site"
-                            features={LAUNCH_FEATURES}
+                            features={BASE_FEATURES}
                             buttonText="GET STARTED"
                             projectByDate={projectByDate}
                             onCtaClick={open ? () => lead.openModal('launch') : undefined}
@@ -447,12 +447,12 @@ export function PricingAndAddons({ embedded, enablePricingModal }: PricingAndAdd
 
                     <div className="h-full min-w-0 w-full">
                         <PricingCard
-                            title="Scale"
-                            description="Full digital presence for brands ready to grow. E-commerce, custom features, ongoing optimization."
+                            title="Pro"
+                            description="For brands that need more trust and search surface—8–10 pages, a blog, richer visuals, integrations, and technical SEO."
                             price="$5,000+"
                             priceLabel="One-time / 8-10 pages"
                             isPro={true}
-                            features={SCALE_FEATURES}
+                            features={PRO_FEATURES}
                             buttonText="GET STARTED"
                             projectByDate={projectByDate}
                             onCtaClick={open ? () => lead.openModal('scale') : undefined}
@@ -461,11 +461,11 @@ export function PricingAndAddons({ embedded, enablePricingModal }: PricingAndAdd
 
                     <div className="h-full min-w-0 w-full">
                         <PricingCard
-                            title="Enterprise"
-                            description="Complex builds for serious operators. E-commerce, membership portals, custom platforms."
+                            title="Premier"
+                            description="For sites that need to do more than explain—10+ pages with room for commerce, portals, booking, payments, and complex integrations."
                             price="$8,000+"
                             priceLabel="One-time / 10+ pages"
-                            features={ENTERPRISE_FEATURES}
+                            features={PREMIER_FEATURES}
                             buttonText="GET STARTED"
                             projectByDate={projectByDate}
                             onCtaClick={open ? () => lead.openModal('enterprise') : undefined}

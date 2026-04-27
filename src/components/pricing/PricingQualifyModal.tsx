@@ -347,7 +347,7 @@ export function PricingQualifyModal() {
                       <GhlBookingCardContent
                         iframeId="ghl-booking-widget-pricing"
                         className="absolute inset-0 flex min-h-0 flex-col"
-                        iframeClassName="h-full min-h-0 w-full flex-1 rounded-none border-0 bg-transparent sm:rounded-lg"
+                        iframeClassName="h-full min-h-0 w-full flex-1 border-0 bg-transparent"
                       />
                     </BookingCalendarShell>
                   </div>

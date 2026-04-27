@@ -43,11 +43,11 @@ export function mapMidpointToTier(mid: number): EstimatorTierHint {
 export function tierLineLabel(hint: EstimatorTierHint): string {
   switch (hint) {
     case 'launch':
-      return 'LAUNCH';
+      return 'BASE';
     case 'scale':
-      return 'SCALE';
+      return 'PRO';
     case 'enterprise':
-      return 'ENTERPRISE';
+      return 'PREMIER';
     default:
       return 'CUSTOM';
   }

@@ -28,7 +28,7 @@ function BookingCalendarShell({
 }: BookingCalendarShellProps) {
   return (
     <div
-      className={`flex w-full max-w-full flex-col overflow-hidden rounded-3xl bg-[#1a1512] p-4 text-white shadow-2xl ring-1 ring-black/20 sm:p-6 md:p-8 ${className}`}
+      className={`flex w-full max-w-full flex-col overflow-hidden rounded-[24px] bg-[#1a1512] p-4 text-white shadow-2xl ring-1 ring-black/20 sm:p-6 md:p-8 ${className}`}
     >
       <div className="flex shrink-0 flex-col gap-4 border-b border-white/10 pb-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
         <div className="flex min-w-0 items-start gap-3">
@@ -62,7 +62,8 @@ function BookingCalendarShell({
           </li>
         </ul>
       </div>
-      <div className="mt-4 flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl bg-[#0f0d0b] ring-1 ring-white/10">
+      {/* Uniform radius + overflow clip so the iframe matches top/bottom corners (no mixed rounded-none / sm:rounded-* on the embed). */}
+      <div className="mt-4 min-h-0 flex-1 overflow-hidden rounded-[20px] bg-[#0f0d0b] ring-1 ring-white/10">
         <div className="relative min-h-[min(42vh,320px)] w-full flex-1 sm:min-h-[min(44vh,380px)]">
           {children}
         </div>
