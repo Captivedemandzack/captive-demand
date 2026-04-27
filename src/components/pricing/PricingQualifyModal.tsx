@@ -16,6 +16,7 @@ import {
   qualifiesForBookingCalendar,
   type AnnualCompanyRevenue,
 } from '@/lib/annual-company-revenue';
+import { pushDataLayerEvent } from '@/lib/analytics';
 
 const sans = { fontFamily: 'var(--font-pricing-sans), system-ui, sans-serif' } as const;
 const mono = { fontFamily: 'var(--font-pricing-mono), ui-monospace, monospace' } as const;
@@ -145,6 +146,12 @@ export function PricingQualifyModal() {
         typeof data.qualifiesForBooking === 'boolean'
           ? data.qualifiesForBooking
           : qualifiesForBookingCalendar(annualRevenue);
+      pushDataLayerEvent({
+        event: 'generate_lead',
+        form_name: 'pricing_modal',
+        annual_company_revenue: annualRevenue,
+        qualifies_for_booking: book,
+      });
       setStep(book ? 'booking' : 'thanks');
     } catch {
       setSubmitError('Something went wrong. Please try again.');

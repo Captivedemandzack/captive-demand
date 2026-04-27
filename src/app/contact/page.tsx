@@ -5,9 +5,16 @@ import { TrustBar } from '@/components/contact/TrustBar';
 import { ContactFAQ } from '@/components/contact/ContactFAQ';
 
 export const metadata: Metadata = {
-  title: 'Contact | Captive Demand',
+  title: 'Contact Captive Demand',
   description:
-    'Start your project with Captive Demand. Tell us about your goals — we respond within 1 hour.',
+    'Start your project with Captive Demand. Tell us about your website, SEO, software, automation, or email marketing goals.',
+  alternates: { canonical: '/contact' },
+  openGraph: {
+    title: 'Contact Captive Demand',
+    description:
+      'Start your project with Captive Demand. Tell us about your growth goals.',
+    url: '/contact',
+  },
 };
 
 export default function ContactPage() {

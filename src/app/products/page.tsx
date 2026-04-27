@@ -3,10 +3,16 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: 'Products | Captive Demand',
+    title: 'Products Built by Captive Demand',
     description:
         'Purpose-built tools from Captive Demand. Currently: CalSync — automatic Google Calendar sync for freelancers and agency operators.',
-    alternates: { canonical: 'https://captivedemand.com/products' },
+    alternates: { canonical: '/products' },
+    openGraph: {
+        title: 'Products Built by Captive Demand',
+        description:
+            'Purpose-built tools from Captive Demand, starting with CalSync for automatic Google Calendar sync.',
+        url: '/products',
+    },
 };
 
 const products = [

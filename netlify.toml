@@ -1,0 +1,294 @@
+[[redirects]]
+  from = "/web-design-development"
+  to = "/services/website"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/web-design-development/"
+  to = "/services/website"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/search-engine-optimization"
+  to = "/services/seo"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/search-engine-optimization/"
+  to = "/services/seo"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/marketing-automation"
+  to = "/services/automation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/marketing-automation/"
+  to = "/services/automation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/web-analytics-reporting"
+  to = "/services/software"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/web-analytics-reporting/"
+  to = "/services/software"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact-us-today"
+  to = "/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact-us-today/"
+  to = "/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services"
+  to = "/services/website"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/"
+  to = "/services/website"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/home/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/home-4"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/home-4/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/author/*"
+  to = "/insights"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog"
+  to = "/insights"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/"
+  to = "/insights"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/insights/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/feed"
+  to = "/insights"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/feed/"
+  to = "/insights"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/our-work"
+  to = "/work"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/our-work/"
+  to = "/work"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/our-work/boombox-project"
+  to = "/work/boombox"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/our-work/boombox-project/"
+  to = "/work/boombox"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/our-work/verity-project"
+  to = "/work/endura-commerce"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/our-work/verity-project/"
+  to = "/work/endura-commerce"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/our-work/*"
+  to = "/work/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/agency-calendar-management"
+  to = "/insights/agency-calendar-management"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/agency-calendar-management/"
+  to = "/insights/agency-calendar-management"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions-for-website-design-franklin-tn"
+  to = "/insights/solutions-for-website-design-franklin-tn"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/solutions-for-website-design-franklin-tn/"
+  to = "/insights/solutions-for-website-design-franklin-tn"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/a-michigan-seo-company-to-boost-your-digital-presence"
+  to = "/insights/a-michigan-seo-company-to-boost-your-digital-presence"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/a-michigan-seo-company-to-boost-your-digital-presence/"
+  to = "/insights/a-michigan-seo-company-to-boost-your-digital-presence"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/digital-marketing-nashville-tn"
+  to = "/insights/digital-marketing-nashville-tn"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/digital-marketing-nashville-tn/"
+  to = "/insights/digital-marketing-nashville-tn"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/detroit-seo"
+  to = "/insights/detroit-seo"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/detroit-seo/"
+  to = "/insights/detroit-seo"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ai-seo-tools"
+  to = "/insights/ai-seo-tools"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ai-seo-tools/"
+  to = "/insights/ai-seo-tools"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/website-designer-nashville"
+  to = "/insights/website-designer-nashville"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/website-designer-nashville/"
+  to = "/insights/website-designer-nashville"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/one-big-change-you-need-cro-marketing"
+  to = "/insights/one-big-change-you-need-cro-marketing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/one-big-change-you-need-cro-marketing/"
+  to = "/insights/one-big-change-you-need-cro-marketing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/results-driven-nashville-seo"
+  to = "/insights/results-driven-nashville-seo"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/results-driven-nashville-seo/"
+  to = "/insights/results-driven-nashville-seo"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/"
+  query = {p = ":id"}
+  to = "/insights"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/*/"
+  to = "/:splat"
+  status = 301
+  force = true

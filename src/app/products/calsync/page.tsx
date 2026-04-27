@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { CalSyncPage } from '@/components/products/calsync/CalSyncPage';
+import { siteConfig } from '@/lib/site';
 
-const PAGE_URL = 'https://captivedemand.com/products/calsync';
+const PAGE_URL = '/products/calsync';
 
 export const metadata: Metadata = {
     title: 'How to Merge Google Calendars Automatically | CalSync by Captive Demand',
@@ -52,7 +53,7 @@ const softwareApplicationSchema = {
     provider: {
         '@type': 'Organization',
         name: 'Captive Demand',
-        url: 'https://captivedemand.com',
+        url: siteConfig.url,
     },
 };
 

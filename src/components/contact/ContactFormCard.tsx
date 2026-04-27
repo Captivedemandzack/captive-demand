@@ -5,6 +5,7 @@ import { CTAButton } from '@/components/ui/CTAButton';
 import { Check } from 'lucide-react';
 import { ANNUAL_COMPANY_REVENUE_OPTIONS, type AnnualCompanyRevenue } from '@/lib/annual-company-revenue';
 import { CalEmbed } from './CalEmbed';
+import { pushDataLayerEvent } from '@/lib/analytics';
 
 type Tab = 'message' | 'call';
 
@@ -40,6 +41,12 @@ export function ContactFormCard() {
         }),
       });
       if (res.ok) {
+        pushDataLayerEvent({
+          event: 'generate_lead',
+          form_name: 'contact_form',
+          service: formData.service,
+          budget: formData.budget || undefined,
+        });
         setSubmitted(true);
       } else {
         // Fallback: open mailto and show success
@@ -48,6 +55,12 @@ export function ContactFormCard() {
           `Name: ${formData.fullName}\nEmail: ${formData.email}\nBusiness: ${formData.businessName}\nRevenue: ${formData.annualCompanyRevenue}\nService: ${formData.service}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`
         );
         window.location.href = `mailto:hello@captivedemand.com?subject=${subject}&body=${body}`;
+        pushDataLayerEvent({
+          event: 'generate_lead',
+          form_name: 'contact_form_mailto_fallback',
+          service: formData.service,
+          budget: formData.budget || undefined,
+        });
         setSubmitted(true);
       }
     } catch {
@@ -56,6 +69,12 @@ export function ContactFormCard() {
         `Name: ${formData.fullName}\nEmail: ${formData.email}\nBusiness: ${formData.businessName}\nRevenue: ${formData.annualCompanyRevenue}\nService: ${formData.service}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`
       );
       window.location.href = `mailto:hello@captivedemand.com?subject=${subject}&body=${body}`;
+      pushDataLayerEvent({
+        event: 'generate_lead',
+        form_name: 'contact_form_mailto_fallback',
+        service: formData.service,
+        budget: formData.budget || undefined,
+      });
       setSubmitted(true);
     }
   };

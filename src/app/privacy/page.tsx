@@ -4,6 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Privacy Policy | Captive Demand',
   description: 'Privacy policy for Captive Demand.',
+  alternates: { canonical: '/privacy' },
 };
 
 export default function PrivacyPage() {

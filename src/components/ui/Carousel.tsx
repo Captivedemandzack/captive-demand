@@ -157,6 +157,8 @@ export function Carousel({ items }: CarouselProps) {
                                 if (el) cardsRef.current[index] = el;
                             }}
                             className="absolute will-change-transform"
+                            aria-hidden={index >= items.length}
+                            role={index >= items.length ? "presentation" : undefined}
                             style={{
                                 width: `${config.cardWidth}px`,
                                 left: `-${config.cardWidth / 2}px`,
@@ -167,6 +169,7 @@ export function Carousel({ items }: CarouselProps) {
                                 title={item.title}
                                 tags={item.tags}
                                 imageSrc={item.imageSrc}
+                                titleAs={index < items.length ? "h3" : "div"}
                             />
                         </div>
                     ))}

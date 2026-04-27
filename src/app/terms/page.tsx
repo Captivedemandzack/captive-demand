@@ -4,6 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Terms of Service | Captive Demand',
   description: 'Terms of service for Captive Demand.',
+  alternates: { canonical: '/terms' },
 };
 
 export default function TermsPage() {

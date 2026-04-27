@@ -23,9 +23,11 @@ export async function generateMetadata({
   return {
     title: `${insight.title} | Captive Demand Insights`,
     description: insight.excerpt,
+    alternates: { canonical: `/insights/${slug}` },
     openGraph: {
       title: `${insight.title} | Captive Demand Insights`,
       description: insight.excerpt,
+      url: `/insights/${slug}`,
       images: insight.coverImage ? [insight.coverImage] : undefined,
     },
   };

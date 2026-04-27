@@ -6,9 +6,16 @@ import { CTASection } from '@/components/sections/CTASection';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Insights | Captive Demand',
+  title: 'Digital Marketing and SEO Insights',
   description:
-    'Strategy, design, and marketing perspectives from Captive Demand.',
+    'Read Captive Demand insights on SEO, AEO, web design, email marketing, automation, and growth strategy for ambitious companies.',
+  alternates: { canonical: '/insights' },
+  openGraph: {
+    title: 'Digital Marketing and SEO Insights | Captive Demand',
+    description:
+      'Strategy, design, SEO, and marketing perspectives from Captive Demand.',
+    url: '/insights',
+  },
 };
 
 export default function InsightsPage() {

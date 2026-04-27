@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { usePlayVideoWhenVisible } from '@/hooks/usePlayVideoWhenVisible';
 import { AnimatedCTAButton } from '../sections/Hero';
+import { siteConfig } from '@/lib/site';
 
 /** Marquee clip — same visibility resume as hero so loops don’t stall after scroll/tab. */
 const FooterVideo = () => {
@@ -91,7 +92,12 @@ export default function Footer() {
                         }}
                     >
                         {[...Array(6)].map((_, i) => (
-                            <div key={i} className="flex items-center gap-6 md:gap-12 pr-6 md:pr-12">
+                            <div
+                                key={i}
+                                className="flex items-center gap-6 md:gap-12 pr-6 md:pr-12"
+                                aria-hidden={i > 0}
+                                role={i > 0 ? 'presentation' : undefined}
+                            >
                                 <span className="text-[14vw] md:text-[11vw] font-[600] leading-none tracking-tighter text-brand-dark font-nohemi-custom">
                                     CAPTIVE DEMAND
                                 </span>
@@ -138,7 +144,7 @@ export default function Footer() {
                                 <ul className="flex flex-col gap-3">
                                     <li><a href="https://linkedin.com/company/captive-demand" target="_blank" rel="noopener noreferrer" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">LinkedIn</a></li>
                                     <li><a href="https://instagram.com/captivedemand" target="_blank" rel="noopener noreferrer" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Instagram</a></li>
-                                    <li><a href="mailto:info@captivedemand.com" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors truncate font-nohemi-custom">Email</a></li>
+                                    <li><a href={`mailto:${siteConfig.email}`} className="text-lg md:text-xl hover:text-[#ff5500] transition-colors truncate font-nohemi-custom">Email</a></li>
                                 </ul>
                             </div>
 
@@ -149,6 +155,20 @@ export default function Footer() {
                                     <li><Link href="/terms" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Terms</Link></li>
                                 </ul>
                             </div>
+
+                            <address className="col-span-2 md:col-span-3 flex flex-col gap-1 border-t border-brand-dark/10 pt-6 text-sm leading-relaxed text-brand-dark/60 not-italic font-nohemi-custom">
+                                <span className="font-[600] text-brand-dark">{siteConfig.name}</span>
+                                <span>{siteConfig.address.streetAddress}</span>
+                                <span>
+                                    {siteConfig.address.addressLocality}, {siteConfig.address.addressRegion} {siteConfig.address.postalCode}
+                                </span>
+                                <a href={`tel:${siteConfig.phone}`} className="hover:text-[#ff5500] transition-colors">
+                                    {siteConfig.phoneDisplay}
+                                </a>
+                                <a href={`mailto:${siteConfig.email}`} className="hover:text-[#ff5500] transition-colors">
+                                    {siteConfig.email}
+                                </a>
+                            </address>
                         </div>
 
                     </div>

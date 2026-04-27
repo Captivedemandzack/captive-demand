@@ -4,6 +4,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { GoogleTagManager } from "@/components/analytics/GoogleTagManager";
+import { OrganizationSchema } from "@/components/schema/OrganizationSchema";
+import { siteConfig } from "@/lib/site";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -29,8 +32,26 @@ const nohemi = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "Captive Demand",
-    description: "Dev Toolkit Built to Flex",
+    metadataBase: new URL(siteConfig.url),
+    title: {
+        default: siteConfig.defaultTitle,
+        template: siteConfig.titleTemplate,
+    },
+    description: siteConfig.description,
+    alternates: {
+        canonical: "/",
+    },
+    openGraph: {
+        type: "website",
+        siteName: siteConfig.name,
+        locale: "en_US",
+        url: "/",
+        title: siteConfig.defaultTitle,
+        description: siteConfig.description,
+    },
+    twitter: {
+        card: "summary_large_image",
+    },
 };
 
 export default function RootLayout({
@@ -41,6 +62,8 @@ export default function RootLayout({
     return (
         <html lang="en" className="h-full">
             <body className={`${inter.variable} ${syne.variable} ${jetBrainsMono.variable} ${nohemi.variable} antialiased h-full relative`}>
+                <GoogleTagManager />
+                <OrganizationSchema />
                 <Navbar />
                 <main className="relative z-10 bg-[#fafafa] w-full overflow-x-hidden">
                     {children}

@@ -9,6 +9,7 @@ interface CardProps {
     tags: string[];
     imageSrc: string;
     className?: string;
+    titleAs?: "h3" | "div";
 }
 
 interface TagStyle {
@@ -75,7 +76,7 @@ const TAG_STYLES: Record<string, TagStyle> = {
     }
 };
 
-export function Card({ title, tags, imageSrc, className }: CardProps) {
+export function Card({ title, tags, imageSrc, className, titleAs = "h3" }: CardProps) {
     // Data Cleaning Helper:
     // If your data still says "Web Design" or "Web Dev", we map it to "Website" for display.
     // If it's already updated in the data, it just passes through.
@@ -120,9 +121,15 @@ export function Card({ title, tags, imageSrc, className }: CardProps) {
                 </div>
 
                 {/* 2. TITLE (Bottom) */}
-                <h3 className="text-left text-[16px] font-normal text-[#121212] leading-none m-0 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
+                {titleAs === "h3" ? (
+                    <h3 className="text-left text-[16px] font-normal text-[#121212] leading-none m-0 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
+                        {title}
+                    </h3>
+                ) : (
+                    <div className="text-left text-[16px] font-normal text-[#121212] leading-none m-0 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
                     {title}
-                </h3>
+                    </div>
+                )}
             </div>
         </div>
     );
