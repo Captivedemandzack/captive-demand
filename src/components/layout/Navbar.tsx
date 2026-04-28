@@ -256,6 +256,7 @@ export default function Navbar() {
                     src="/captive-demand-logo.png"
                     alt="Captive Demand"
                     fill
+                    sizes="120px"
                     className="object-contain"
                     priority
                   />

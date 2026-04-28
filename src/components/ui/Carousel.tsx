@@ -25,7 +25,7 @@ export function Carousel({ items }: CarouselProps) {
         gap: 100
     });
 
-    const [duplicationCount, setDuplicationCount] = useState(3);
+    const [duplicationCount, setDuplicationCount] = useState(2);
 
     const extendedItems = React.useMemo(() => {
         return Array(duplicationCount).fill(items).flat();

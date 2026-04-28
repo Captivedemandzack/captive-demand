@@ -104,8 +104,8 @@ export function Card({ title, tags, imageSrc, className, titleAs = "h3" }: CardP
                     src={imageSrc}
                     alt={title}
                     fill
-                    sizes="(max-width: 768px) 320px, 720px"
-                    quality={90}
+                    sizes="(max-width: 768px) 280px, 360px"
+                    quality={75}
                     className="object-cover object-top"
                 />
             </div>

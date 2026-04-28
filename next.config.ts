@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  compress: true,
   images: {
     remotePatterns: [
       {
@@ -11,7 +12,6 @@ const nextConfig: NextConfig = {
     // Disable image optimization in development for instant updates
     unoptimized: process.env.NODE_ENV === 'development',
   },
-  // Prevent caching of static files in development
   async headers() {
     if (process.env.NODE_ENV === 'development') {
       return [
@@ -26,7 +26,17 @@ const nextConfig: NextConfig = {
         },
       ];
     }
-    return [];
+    return [
+      {
+        source: '/:path*.(jpg|jpeg|png|webp|avif|gif|svg|mp4|webm|woff|woff2)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
   },
 };
 

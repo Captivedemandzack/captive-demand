@@ -223,10 +223,11 @@ export function Hero() {
 
         const ctx = gsap.context(() => {
             const video = videoRef.current!;
+            const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
             const videoState = { rate: 8, blur: 10 };
 
             video.playbackRate = videoState.rate;
-            if (!window.matchMedia("(max-width: 768px)").matches) {
+            if (!isMobileViewport) {
                 video.style.filter = `blur(${videoState.blur}px)`;
             }
 
@@ -238,7 +239,7 @@ export function Hero() {
                 onUpdate: () => {
                     if (videoRef.current) {
                         videoRef.current.playbackRate = videoState.rate;
-                        if (!window.matchMedia("(max-width: 768px)").matches) {
+                        if (!isMobileViewport) {
                             videoRef.current.style.filter = `blur(${videoState.blur}px)`;
                         }
                     }
@@ -296,19 +297,19 @@ export function Hero() {
                 <div ref={partnersRef} className="mb-8 hidden md:flex flex-wrap items-center justify-center gap-3">
                     <div className="partner-pill flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[11px] tracking-[0.15em] text-[#121212]/70" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
                         <div className="relative h-4 w-4">
-                            <Image src="/Elementor-Logo-Symbol-Red (1).svg" alt="Elementor" fill className="object-contain" />
+                            <Image src="/Elementor-Logo-Symbol-Red (1).svg" alt="Elementor" fill sizes="16px" className="object-contain" />
                         </div>
                         <span>Elementor Agency Partner</span>
                     </div>
                     <div className="partner-pill flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[11px] tracking-[0.15em] text-[#121212]/70" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
                         <div className="relative h-4 w-4">
-                            <Image src="/shopify_glyph.svg" alt="Shopify" fill className="object-contain" />
+                            <Image src="/shopify_glyph.svg" alt="Shopify" fill sizes="16px" className="object-contain" />
                         </div>
                         <span>Shopify Partner</span>
                     </div>
                     <div className="partner-pill flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[11px] tracking-[0.15em] text-[#121212]/70" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
                         <div className="relative h-4 w-4">
-                            <Image src="/CUBE_2D_LIGHT.svg" alt="Cursor" fill className="object-contain" />
+                            <Image src="/CUBE_2D_LIGHT.svg" alt="Cursor" fill sizes="16px" className="object-contain" />
                         </div>
                         <span>Cursor Experts</span>
                     </div>
@@ -334,7 +335,7 @@ export function Hero() {
                                 loop
                                 muted
                                 playsInline
-                                preload="auto"
+                                preload="metadata"
                                 disableRemotePlayback
                                 disablePictureInPicture
                                 x-webkit-airplay="deny"
