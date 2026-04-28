@@ -11,17 +11,20 @@ import { siteConfig } from "@/lib/site";
 const inter = Inter({
     subsets: ["latin"],
     variable: "--font-sans",
+    display: "swap",
 });
 
 const syne = Syne({
     subsets: ["latin"],
     variable: "--font-syne",
     weight: ["400", "500", "600", "700", "800"],
+    display: "swap",
 });
 
 const jetBrainsMono = JetBrains_Mono({
     subsets: ["latin"],
     variable: "--font-mono",
+    display: "swap",
 });
 
 const nohemi = localFont({

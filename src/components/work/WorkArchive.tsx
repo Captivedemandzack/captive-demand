@@ -237,8 +237,15 @@ function WorkHero() {
                   className="inline-flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[10px] tracking-[0.1em] text-[#121212]/70 whitespace-nowrap w-fit"
                   style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={badge.icon} alt="" className="w-4 h-4 shrink-0 object-contain" />
+                  <Image
+                    src={badge.icon}
+                    alt=""
+                    width={16}
+                    height={16}
+                    sizes="16px"
+                    unoptimized={badge.icon.endsWith('.svg')}
+                    className="w-4 h-4 shrink-0 object-contain"
+                  />
                   {badge.label}
                 </span>
               ))}

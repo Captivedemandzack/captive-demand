@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -72,13 +73,22 @@ export function InsightBody({ content }: InsightBodyProps) {
               {children}
             </blockquote>
           ),
-          img: ({ src, alt }) => (
-            <img
-              src={src}
-              alt={alt ?? ''}
-              className="w-full rounded-[10px] my-8"
-            />
-          ),
+          img: ({ src, alt }) => {
+            if (!src || typeof src !== 'string') return null;
+            const remote = src.startsWith('http://') || src.startsWith('https://');
+            const svg = src.endsWith('.svg');
+            return (
+              <Image
+                src={src}
+                alt={alt ?? ''}
+                width={1200}
+                height={675}
+                sizes="(max-width: 768px) 100vw, 816px"
+                className="w-full h-auto max-w-full rounded-[10px] my-8"
+                unoptimized={remote || svg}
+              />
+            );
+          },
           hr: () => (
             <hr className="border-none border-t border-[#e8e8e8] my-10" />
           ),

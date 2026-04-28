@@ -1,10 +1,6 @@
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
-import { AboutSection } from "@/components/sections/AboutSection";
-import { FeaturesSection } from "@/components/sections/FeaturesSection";
-import { IndustriesFolderSection } from "@/components/sections/IndustriesFolderSection";
-import { BentoGridSection } from "@/components/sections/BentoGridSection";
 import { FAQSchema } from "@/components/schema/FAQSchema";
 import { homeFaqs } from "@/lib/home-faqs";
 
@@ -21,6 +17,18 @@ export const metadata: Metadata = {
     },
 };
 
+const AboutSection = dynamic(() =>
+    import("@/components/sections/AboutSection").then(m => ({ default: m.AboutSection }))
+);
+const FeaturesSection = dynamic(() =>
+    import("@/components/sections/FeaturesSection").then(m => ({ default: m.FeaturesSection }))
+);
+const IndustriesFolderSection = dynamic(() =>
+    import("@/components/sections/IndustriesFolderSection").then(m => ({ default: m.IndustriesFolderSection }))
+);
+const BentoGridSection = dynamic(() =>
+    import("@/components/sections/BentoGridSection").then(m => ({ default: m.BentoGridSection }))
+);
 const TestimonialsSection = dynamic(() =>
     import("@/components/sections/TestimonialsSection").then(m => ({ default: m.TestimonialsSection }))
 );

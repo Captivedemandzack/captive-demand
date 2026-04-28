@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
+import Image from 'next/image';
 import { AccentBr } from '@/components/ui/accent-br';
 
 type Testimonial = {
@@ -132,10 +133,12 @@ function LogoCard({ logo }: { logo: (typeof LOGOS)[number] }) {
                 &ldquo;{t.quote}&rdquo;
             </p>
             <div className="flex items-center gap-3 mb-4">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                     src={t.image}
                     alt={t.author}
+                    width={40}
+                    height={40}
+                    sizes="40px"
                     className={`w-10 h-10 rounded-full flex-shrink-0 ${t.useLogoAsAvatar ? 'object-contain bg-white p-1.5 border border-[#1a1512]/10' : 'object-cover object-top'}`}
                 />
                 <div>
@@ -186,10 +189,13 @@ function LogoCard({ logo }: { logo: (typeof LOGOS)[number] }) {
                 <div className="absolute -top-[1px] -left-[1px] w-[16px] h-[16px] border-t-[2px] border-l-[2px] border-[#d5d5d5] rounded-tl-[6px] pointer-events-none z-10" />
                 <div className="absolute -bottom-[1px] -right-[1px] w-[16px] h-[16px] border-b-[2px] border-r-[2px] border-[#d5d5d5] rounded-br-[6px] pointer-events-none z-10" />
                 <div className="relative w-20 h-10 md:w-24 md:h-12 flex items-center justify-center opacity-90 transition-opacity duration-300 group-hover:opacity-100 flex-1">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                         src={logo.src}
                         alt={logo.name}
+                        width={96}
+                        height={48}
+                        sizes="(min-width: 768px) 96px, 80px"
+                        unoptimized={logo.src.endsWith('.svg')}
                         className="max-w-full max-h-full w-auto h-auto object-contain"
                         style={{
                             filter: 'grayscale(100%) brightness(0) saturate(100%) opacity(0.55)',
@@ -246,8 +252,15 @@ export function ClientLogos() {
                                     className="flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[11px] tracking-[0.15em] text-[#121212]/70"
                                     style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}
                                 >
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img src={badge.icon} alt="" className="w-4 h-4 shrink-0 object-contain" />
+                                    <Image
+                                        src={badge.icon}
+                                        alt=""
+                                        width={16}
+                                        height={16}
+                                        sizes="16px"
+                                        unoptimized={badge.icon.endsWith('.svg')}
+                                        className="w-4 h-4 shrink-0 object-contain"
+                                    />
                                     {badge.label}
                                 </span>
                             ))}
