@@ -239,8 +239,18 @@ export function Carousel({ items }: CarouselProps) {
                                 imageSrc={item.imageSrc}
                                 titleAs={index < items.length ? "h3" : "div"}
                                 renderImage={renderedImageIndexes.has(index)}
-                                imageLoading={index < 2 ? "eager" : "lazy"}
-                                imageFetchPriority={index === 0 ? "high" : "low"}
+                                /* All carousel cards lazy-load. The first card
+                                 * used to be eager + fetchPriority="high", which
+                                 * caused Next.js to inject <link rel="preload"
+                                 * as="image" fetchpriority="high"> in <head>.
+                                 * Chrome's LCP algorithm treats prioritized
+                                 * images as preferred LCP candidates - and that
+                                 * image lives below the hero, never paints in
+                                 * viewport before the H1, and confuses LCP
+                                 * commit. Removing the priority hint lets the
+                                 * H1 text win as LCP normally. */
+                                imageLoading="lazy"
+                                imageFetchPriority="auto"
                             />
                         </div>
                     ))}
