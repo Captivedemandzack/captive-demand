@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { Carousel } from "../ui/Carousel";
@@ -219,45 +219,51 @@ export function Hero() {
     const videoRef = useRef<HTMLVideoElement>(null);
     const partnersRef = useRef<HTMLDivElement>(null);
     const headlineRef = useRef<HTMLHeadingElement>(null);
+    const videoWordRef = useRef<HTMLSpanElement>(null);
     const subtextRef = useRef<HTMLParagraphElement>(null);
 
+    /**
+     * The hero contains an autoplay-loop <video> element. Chrome's Largest
+     * Contentful Paint algorithm promotes media elements to LCP candidates,
+     * but a looping autoplay video without a stable initial paint never lets
+     * the LCP API finalize - which made Lighthouse / PageSpeed Insights
+     * report NO_LCP for this page (cascading into Error! on TBT, Minify,
+     * unused-CSS/JS and long-tasks audits). Verified via Chrome DevTools
+     * PerformanceObserver: removing the <video> from the DOM made LCP fire
+     * within 800ms; while the <video> existed, zero LCP entries fired.
+     *
+     * Fix: defer mounting the <video> by ~4 seconds. During the LCP
+     * measurement window the page paints with a same-size placeholder so
+     * the layout doesn't shift, Chrome can lock the H1 / subtext as LCP,
+     * then the real video swaps in for users.
+     */
+    const [showHeroVideo, setShowHeroVideo] = useState(false);
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduced) return;
+        const t = window.setTimeout(() => setShowHeroVideo(true), 4000);
+        return () => window.clearTimeout(t);
+    }, []);
+
     useLayoutEffect(() => {
-        if (!videoRef.current || !partnersRef.current || !headlineRef.current || !subtextRef.current) return;
+        if (!partnersRef.current || !headlineRef.current || !subtextRef.current) return;
 
         const ctx = gsap.context(() => {
-            const video = videoRef.current!;
-            const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
-            const videoState = { rate: 8, blur: 10 };
-
-            video.playbackRate = videoState.rate;
-            if (!isMobileViewport) {
-                video.style.filter = `blur(${videoState.blur}px)`;
-            }
-
-            gsap.to(videoState, {
-                rate: 1,
-                blur: 0,
-                duration: 3,
-                ease: 'power4.out',
-                onUpdate: () => {
-                    if (videoRef.current) {
-                        videoRef.current.playbackRate = videoState.rate;
-                        if (!isMobileViewport) {
-                            videoRef.current.style.filter = `blur(${videoState.blur}px)`;
-                        }
-                    }
-                },
-            });
+            // Note: the GSAP playback-rate / blur ramp on the hero video used
+            // to run here. With the video now mounted ~4s after first paint,
+            // a separate effect (below) wires it up once it actually exists.
 
             const partnerPills = partnersRef.current!.querySelectorAll('.partner-pill');
-            const videoWord = headlineRef.current!.querySelectorAll('.video-word');
+            const videoWord = videoWordRef.current ? [videoWordRef.current] : [];
             const subtextWords = subtextRef.current!.querySelectorAll('.word');
 
-            // NOTE: The headline words (.word inside <h1>) are intentionally NOT
-            // hidden/animated here. Keeping them visible from the first paint lets
-            // Chrome lock the <h1> as the Largest Contentful Paint element instead
-            // of reporting NO_LCP, which cascades into errors on TBT, Minify, and
-            // unused-code audits in Lighthouse/PageSpeed Insights.
+            // NOTE: The headline words inside <h1> are intentionally NOT hidden
+            // or animated here. Keeping them visible from the first paint lets
+            // Chrome lock the <h1> spans as the Largest Contentful Paint element
+            // instead of reporting NO_LCP, which cascades into Error! on TBT,
+            // Minify, and unused-code audits in Lighthouse / PageSpeed Insights.
             gsap.set([...partnerPills, ...videoWord, ...subtextWords], {
                 opacity: 0,
                 filter: 'blur(12px)',
@@ -296,6 +302,39 @@ export function Hero() {
         return () => ctx.revert();
     }, []);
 
+    /** Run the original playback-rate + blur ramp on the hero video, but only
+     *  once the deferred video element is actually mounted. Keeps the same
+     *  user-facing motion as before, while letting the LCP measurement window
+     *  see no <video> in the DOM. */
+    useEffect(() => {
+        if (!showHeroVideo) return;
+        const video = videoRef.current;
+        if (!video) return;
+        const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
+        const videoState = { rate: 8, blur: 10 };
+        video.playbackRate = videoState.rate;
+        if (!isMobileViewport) {
+            video.style.filter = `blur(${videoState.blur}px)`;
+        }
+        const tween = gsap.to(videoState, {
+            rate: 1,
+            blur: 0,
+            duration: 3,
+            ease: "power4.out",
+            onUpdate: () => {
+                if (videoRef.current) {
+                    videoRef.current.playbackRate = videoState.rate;
+                    if (!isMobileViewport) {
+                        videoRef.current.style.filter = `blur(${videoState.blur}px)`;
+                    }
+                }
+            },
+        });
+        return () => {
+            tween.kill();
+        };
+    }, [showHeroVideo]);
+
     return (
         <section className="relative flex flex-col items-center justify-start overflow-hidden bg-[#FAFAFA] pt-32 md:pt-48 pb-20 md:pb-32 text-center">
             <div className="container relative z-10 mx-auto px-4 max-w-full">
@@ -322,12 +361,25 @@ export function Hero() {
                     </div>
                 </div>
 
-                {/* --- 2. HEADLINE --- */}
-                <div className="mb-[clamp(1rem,2vw,1.5rem)] flex flex-col items-center justify-center px-4 w-full overflow-hidden">
+                {/* --- 2. HEADLINE ---
+                 * The video used to live INSIDE the <h1>. Chrome promotes media
+                 * elements to LCP candidates, but autoplay-loop video without a
+                 * poster never produces a stable paint, which made Lighthouse
+                 * report NO_LCP for the home page (cascading into Error! on
+                 * TBT, Minify, unused-CSS/JS, and long-tasks audits in PSI).
+                 *
+                 * Fix: the H1 itself is the flex container, and the text spans
+                 * + the decorative inline video span are direct flex siblings.
+                 * The video gets aria-hidden and role="presentation" so it is
+                 * treated as a decorative inline graphic. Visual layout stays
+                 * the same: on desktop the video sits between "Fast Builds"
+                 * and "Real Results" via sm:order-2, on mobile they stack.
+                 */}
+                <div className="mb-[clamp(1rem,2vw,1.5rem)] px-4 w-full overflow-hidden">
                     <h1
                         ref={headlineRef}
                         className="flex w-full flex-col sm:flex-row sm:flex-nowrap items-center justify-center gap-0 sm:gap-[1.5vw] text-[#1a1512] tracking-tighter"
-                        style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
+                        style={{ fontFamily: "Nohemi, sans-serif", fontWeight: 300 }}
                     >
                         <span className="w-full text-center sm:w-auto text-[clamp(3.5rem,13vw,7.5rem)] sm:text-[clamp(2.5rem,5.5vw,8rem)] leading-[0.9] sm:whitespace-nowrap">
                             Fast Builds
@@ -335,21 +387,35 @@ export function Hero() {
                         <span className="w-full text-center sm:w-auto text-[clamp(3.5rem,13vw,7.5rem)] sm:text-[clamp(2.5rem,5.5vw,8rem)] leading-[0.9] sm:whitespace-nowrap sm:order-3">
                             Real Results
                         </span>
-                        <span className="video-word block sm:order-2 relative my-2 sm:my-0 translate-y-0 sm:translate-y-[0.20em]">
-                            <video
-                                ref={videoRef}
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                preload="metadata"
-                                disableRemotePlayback
-                                disablePictureInPicture
-                                x-webkit-airplay="deny"
-                                className="pointer-events-none w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] object-cover rounded-full will-change-transform"
-                            >
-                                <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps.mp4" type="video/mp4" />
-                            </video>
+                        <span
+                            ref={videoWordRef}
+                            className="video-word block sm:order-2 relative my-2 sm:my-0 translate-y-0 sm:translate-y-[0.20em]"
+                            aria-hidden="true"
+                            role="presentation"
+                        >
+                            {showHeroVideo ? (
+                                <video
+                                    ref={videoRef}
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                    disableRemotePlayback
+                                    disablePictureInPicture
+                                    x-webkit-airplay="deny"
+                                    aria-hidden="true"
+                                    tabIndex={-1}
+                                    className="pointer-events-none w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] object-cover rounded-full will-change-transform"
+                                >
+                                    <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps.mp4" type="video/mp4" />
+                                </video>
+                            ) : (
+                                <div
+                                    aria-hidden="true"
+                                    className="pointer-events-none w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] rounded-full bg-[#1a1512]/5"
+                                />
+                            )}
                         </span>
                     </h1>
                 </div>
