@@ -250,10 +250,15 @@ export function Hero() {
             });
 
             const partnerPills = partnersRef.current!.querySelectorAll('.partner-pill');
-            const headlineWords = headlineRef.current!.querySelectorAll('.word, .video-word');
+            const videoWord = headlineRef.current!.querySelectorAll('.video-word');
             const subtextWords = subtextRef.current!.querySelectorAll('.word');
 
-            gsap.set([...partnerPills, ...headlineWords, ...subtextWords], {
+            // NOTE: The headline words (.word inside <h1>) are intentionally NOT
+            // hidden/animated here. Keeping them visible from the first paint lets
+            // Chrome lock the <h1> as the Largest Contentful Paint element instead
+            // of reporting NO_LCP, which cascades into errors on TBT, Minify, and
+            // unused-code audits in Lighthouse/PageSpeed Insights.
+            gsap.set([...partnerPills, ...videoWord, ...subtextWords], {
                 opacity: 0,
                 filter: 'blur(12px)',
                 y: 20,
@@ -270,13 +275,12 @@ export function Hero() {
                 stagger: 0.1,
             });
 
-            masterTl.to(headlineWords, {
+            masterTl.to(videoWord, {
                 opacity: 1,
                 filter: 'blur(0px)',
                 y: 0,
                 duration: 0.8,
                 ease: 'power3.out',
-                stagger: 0.04,
             }, '-=0.5');
 
             masterTl.to(subtextWords, {
