@@ -19,6 +19,11 @@ const FooterVideo = () => {
             loop
             muted
             playsInline
+            preload="none"
+            disableRemotePlayback
+            disablePictureInPicture
+            aria-hidden="true"
+            tabIndex={-1}
             className="w-full h-full object-cover"
         >
             <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps.mp4" type="video/mp4" />
@@ -85,7 +90,25 @@ export default function Footer() {
                                 </span>
 
                                 <div className="relative w-[10vw] h-[10vw] md:w-[7vw] md:h-[7vw] rounded-full overflow-hidden shrink-0">
-                                    <FooterVideo />
+                                    {/* Only the first marquee tile mounts the
+                                     * actual <video>. The other 5 copies are
+                                     * presentation duplicates for the horizontal
+                                     * scroll, so they get a static circle
+                                     * placeholder instead. Mounting six <video>
+                                     * elements all pointing at the same .mp4
+                                     * caused six overlapping Range fetches
+                                     * (~25 s each on Slow 4G), which kept the
+                                     * network busy past Lighthouse's max wait
+                                     * and prevented LCP from ever committing.
+                                     */}
+                                    {i === 0 ? (
+                                        <FooterVideo />
+                                    ) : (
+                                        <div
+                                            aria-hidden="true"
+                                            className="w-full h-full bg-[#1a1512]/10 rounded-full"
+                                        />
+                                    )}
                                 </div>
                             </div>
                         ))}
