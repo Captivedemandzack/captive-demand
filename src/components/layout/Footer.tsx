@@ -45,24 +45,6 @@ export default function Footer() {
                     }
                 }
 
-                @font-face {
-                    font-family: 'Nohemi';
-                    src: url('/fonts/Nohemi-Light.ttf') format('truetype');
-                    font-weight: 300;
-                    font-style: normal;
-                }
-                @font-face {
-                    font-family: 'Nohemi';
-                    src: url('/fonts/Nohemi-Regular.ttf') format('truetype');
-                    font-weight: 400;
-                    font-style: normal;
-                }
-                @font-face {
-                    font-family: 'Nohemi';
-                    src: url('/fonts/Nohemi-SemiBold.ttf') format('truetype');
-                    font-weight: 600;
-                    font-style: normal;
-                }
                 .font-nohemi-custom {
                     font-family: 'Nohemi', sans-serif !important;
                 }
@@ -117,7 +99,7 @@ export default function Footer() {
                         {/* Left Side */}
                         <div className="flex-1 max-w-2xl">
                             <p className="text-2xl md:text-3xl lg:text-4xl font-[300] leading-[1.2] mb-10 md:mb-14 tracking-wide text-brand-dark/90 font-nohemi-custom">
-                                We bring the "Owner Mentality" because we are owners. 50+ times over. We apply that same obsession to your business, treating your budget exactly like we treat our own.
+                                We bring the &quot;Owner Mentality&quot; because we are owners. 50+ times over. We apply that same obsession to your business, treating your budget exactly like we treat our own.
                             </p>
 
                             <div className="transform origin-left scale-100 md:scale-110">

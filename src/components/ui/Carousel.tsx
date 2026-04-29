@@ -12,12 +12,21 @@ interface CarouselProps {
     }[];
 }
 
+const INITIAL_RENDERED_IMAGE_COUNT = 6;
+const VISIBLE_CARD_ANGLE = 60;
+const NEAR_VISIBLE_IMAGE_ANGLE = 90;
+const TRANSFORM_UPDATE_ANGLE = 100;
+
+const createInitialRenderedImageIndexes = () =>
+    new Set<number>(Array.from({ length: INITIAL_RENDERED_IMAGE_COUNT }, (_, index) => index));
+
 export function Carousel({ items }: CarouselProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const outerRef = useRef<HTMLDivElement>(null);
     const cardsRef = useRef<HTMLDivElement[]>([]);
     const isVisibleRef = useRef(true);
     const tickerFnRef = useRef<(() => void) | null>(null);
+    const renderedImageIndexesRef = useRef(createInitialRenderedImageIndexes());
 
     const [config, setConfig] = useState({
         radius: 2025,
@@ -26,6 +35,7 @@ export function Carousel({ items }: CarouselProps) {
     });
 
     const [duplicationCount, setDuplicationCount] = useState(2);
+    const [renderedImageIndexes, setRenderedImageIndexes] = useState(createInitialRenderedImageIndexes);
 
     const extendedItems = React.useMemo(() => {
         return Array(duplicationCount).fill(items).flat();
@@ -78,6 +88,7 @@ export function Carousel({ items }: CarouselProps) {
 
             const cards = cardsRef.current;
             let globalRotation = 0;
+            let lastContainerFilter = "";
 
             const progress = { speed: 2.0, blur: 10 };
 
@@ -108,31 +119,44 @@ export function Carousel({ items }: CarouselProps) {
                 globalRotation -= progress.speed;
 
                 if (!isMobile && containerRef.current) {
-                    containerRef.current.style.filter = `blur(${progress.blur}px)`;
+                    const nextFilter = progress.blur > 0.01 ? `blur(${progress.blur}px)` : "";
+                    if (nextFilter !== lastContainerFilter) {
+                        containerRef.current.style.filter = nextFilter;
+                        lastContainerFilter = nextFilter;
+                    }
                 }
+
+                let shouldSyncRenderedImages = false;
 
                 cards.forEach((card, index) => {
                     if (!card) return;
 
                     const rawAngle = globalRotation + (index * angleStep);
                     const angle = wrapAngle(rawAngle);
+                    const isNearVisible = Math.abs(angle) <= NEAR_VISIBLE_IMAGE_ANGLE;
 
-                    if (Math.abs(angle) > 60) {
-                        card.style.visibility = 'hidden';
-                    } else {
-                        card.style.visibility = 'visible';
+                    if (isNearVisible && !renderedImageIndexesRef.current.has(index)) {
+                        renderedImageIndexesRef.current.add(index);
+                        shouldSyncRenderedImages = true;
                     }
 
-                    if (Math.abs(angle) > 100) {
+                    const visibility = Math.abs(angle) > VISIBLE_CARD_ANGLE ? 'hidden' : 'visible';
+                    if (card.style.visibility !== visibility) {
+                        card.style.visibility = visibility;
+                    }
+
+                    if (Math.abs(angle) > TRANSFORM_UPDATE_ANGLE) {
                         return;
                     }
 
-                    gsap.set(card, {
-                        transformOrigin: `50% ${config.radius}px`,
-                        rotation: angle,
-                        zIndex: Math.round(10000 - Math.abs(angle))
-                    });
+                    card.style.transformOrigin = `50% ${config.radius}px`;
+                    card.style.transform = `rotate(${angle}deg)`;
+                    card.style.zIndex = `${Math.round(10000 - Math.abs(angle))}`;
                 });
+
+                if (shouldSyncRenderedImages) {
+                    setRenderedImageIndexes(new Set(renderedImageIndexesRef.current));
+                }
             };
 
             tickerFnRef.current = animate;
@@ -170,6 +194,9 @@ export function Carousel({ items }: CarouselProps) {
                                 tags={item.tags}
                                 imageSrc={item.imageSrc}
                                 titleAs={index < items.length ? "h3" : "div"}
+                                renderImage={renderedImageIndexes.has(index)}
+                                imageLoading={index < 2 ? "eager" : "lazy"}
+                                imageFetchPriority={index === 0 ? "high" : "low"}
                             />
                         </div>
                     ))}

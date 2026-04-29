@@ -344,7 +344,7 @@ export function Hero() {
                                 x-webkit-airplay="deny"
                                 className="pointer-events-none w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] object-cover rounded-full will-change-transform"
                             >
-                                <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps copy.mp4" type="video/mp4" />
+                                <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps.mp4" type="video/mp4" />
                             </video>
                         </span>
                     </h1>

@@ -10,6 +10,9 @@ interface CardProps {
     imageSrc: string;
     className?: string;
     titleAs?: "h3" | "div";
+    renderImage?: boolean;
+    imageLoading?: "eager" | "lazy";
+    imageFetchPriority?: "high" | "low" | "auto";
 }
 
 interface TagStyle {
@@ -76,7 +79,16 @@ const TAG_STYLES: Record<string, TagStyle> = {
     }
 };
 
-export function Card({ title, tags, imageSrc, className, titleAs = "h3" }: CardProps) {
+export function Card({
+    title,
+    tags,
+    imageSrc,
+    className,
+    titleAs = "h3",
+    renderImage = true,
+    imageLoading = "lazy",
+    imageFetchPriority = "auto",
+}: CardProps) {
     // Data Cleaning Helper:
     // If your data still says "Web Design" or "Web Dev", we map it to "Website" for display.
     // If it's already updated in the data, it just passes through.
@@ -100,14 +112,18 @@ export function Card({ title, tags, imageSrc, className, titleAs = "h3" }: CardP
         >
             {/* Image Container */}
             <div className="relative h-[180px] w-[calc(100%-10px)] mx-auto mt-[5px] overflow-hidden rounded-lg bg-gray-200 shrink-0">
-                <Image
-                    src={imageSrc}
-                    alt={title}
-                    fill
-                    sizes="(max-width: 768px) 280px, 360px"
-                    quality={75}
-                    className="object-cover object-top"
-                />
+                {renderImage ? (
+                    <Image
+                        src={imageSrc}
+                        alt={title}
+                        fill
+                        sizes="(max-width: 768px) 280px, 360px"
+                        quality={75}
+                        loading={imageLoading}
+                        fetchPriority={imageFetchPriority}
+                        className="object-cover object-top"
+                    />
+                ) : null}
             </div>
 
             {/* Content Container */}
