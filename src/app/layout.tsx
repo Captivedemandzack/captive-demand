@@ -75,6 +75,22 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className="h-full">
+            <head>
+                {/*
+                 * Preload the H1 font weight (Nohemi 300) used by the homepage hero.
+                 * Nohemi is loaded via @font-face in globals.css, so Next.js can't
+                 * auto-detect it and inject a preload. Without this, the H1 paints
+                 * in the system fallback font and reflows when Nohemi loads, which
+                 * was preventing Lighthouse from settling on a stable LCP element.
+                 */}
+                <link
+                    rel="preload"
+                    href="/fonts/Nohemi-Light-BF6438cc5899919.ttf"
+                    as="font"
+                    type="font/ttf"
+                    crossOrigin="anonymous"
+                />
+            </head>
             <body className={`${inter.variable} ${syne.variable} ${jetBrainsMono.variable} ${nohemi.variable} antialiased h-full relative`}>
                 <GoogleTagManager />
                 <OrganizationSchema />
