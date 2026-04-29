@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus } from 'lucide-react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import { AccentBr } from '@/components/ui/accent-br';
 import { homeFaqs } from '@/lib/home-faqs';
-
-gsap.registerPlugin(ScrollTrigger);
+import { useGsapScrollTrigger } from '@/hooks/useGsapScrollTrigger';
 
 // Data
 interface FAQItem {
@@ -123,10 +121,9 @@ export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const labelRef = useRef<HTMLSpanElement>(null);
 
-  useLayoutEffect(() => {
+  useGsapScrollTrigger(() => {
     if (!labelRef.current) return;
 
-    const ctx = gsap.context(() => {
       const originalText = "FAQ";
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -160,9 +157,6 @@ export function FAQSection() {
           }
         }
       });
-    });
-
-    return () => ctx.revert();
   }, []);
 
   const handleToggle = (index: number) => {
@@ -198,7 +192,7 @@ export function FAQSection() {
             </h2>
 
             <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed mb-8 max-w-sm">
-              Don't find what you are looking for?{' '}
+              Don&apos;t find what you are looking for?{' '}
               <a
                 href="/contact"
                 className="text-[#1a1512] underline underline-offset-2 hover:text-[#ff5501] transition-colors"

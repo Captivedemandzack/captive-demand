@@ -1,11 +1,13 @@
 #!/usr/bin/env node
-// One-shot optimizer for oversized PNGs in /public.
-// - Resizes any PNG larger than --threshold-bytes to max --max-width pixels wide
-// - Re-encodes as PNG with palette compression
+// Quality-first optimizer for oversized PNGs in /public.
+// - Defaults to dry-run; pass --write to modify files.
+// - Resizes any PNG larger than --threshold-bytes to max --max-width pixels wide.
+// - Re-encodes as truecolor PNG. Avoid palette compression for website
+//   screenshots/UI mocks because it can make gradients and text look crunchy.
 // - Backs up the original file to /public/.image-originals/<filename>
 // - Skips files that have already been backed up (idempotent)
 //
-// Usage: node scripts/optimize-public-images.mjs [--dry] [--max-width=1600] [--threshold-mb=1]
+// Usage: node scripts/optimize-public-images.mjs [--write] [--max-width=2400] [--threshold-mb=2.5]
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -24,9 +26,9 @@ const args = Object.fromEntries(
     })
 );
 
-const DRY = Boolean(args.dry);
-const MAX_WIDTH = Number(args["max-width"] ?? 1600);
-const THRESHOLD_BYTES = Math.round(Number(args["threshold-mb"] ?? 1) * 1024 * 1024);
+const DRY = !Boolean(args.write);
+const MAX_WIDTH = Number(args["max-width"] ?? 2400);
+const THRESHOLD_BYTES = Math.round(Number(args["threshold-mb"] ?? 2.5) * 1024 * 1024);
 
 const fmtBytes = (n) => {
   if (n > 1024 * 1024) return `${(n / 1024 / 1024).toFixed(2)} MB`;
@@ -62,10 +64,9 @@ async function processFile(absPath) {
     pipeline = pipeline.resize({ width: MAX_WIDTH, withoutEnlargement: true });
   }
   pipeline = pipeline.png({
-    compressionLevel: 9,
-    palette: true,
-    quality: 90,
-    effort: 9,
+    compressionLevel: 8,
+    adaptiveFiltering: true,
+    palette: false,
   });
 
   const out = await pipeline.toBuffer();

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { Carousel } from "../ui/Carousel";
@@ -222,40 +222,12 @@ export function Hero() {
     const videoWordRef = useRef<HTMLSpanElement>(null);
     const subtextRef = useRef<HTMLParagraphElement>(null);
 
-    /**
-     * The hero contains an autoplay-loop <video> element pointed at a 2.4 MB
-     * .mp4. Verified via Chrome DevTools network trace: as soon as that video
-     * mounts under emulated Slow 4G it Range-fetches for ~21 s. Lighthouse /
-     * PageSpeed Insights's LCP measurement window only commits a candidate
-     * after network has been quiet for 5 s (or max-wait-for-load fires) - so
-     * with the video starting at first paint, LCP never committed and PSI
-     * reported NO_LCP for the home page (which cascaded into Error! on TBT,
-     * Minify CSS/JS, Reduce unused CSS/JS, and Avoid long main-thread tasks).
-     *
-     * Fix: render a same-size placeholder <div> for the first ~10 s, then
-     * swap in the real <video>. By the time the video starts fetching,
-     * Lighthouse has already committed LCP on the H1 / subtext text. Real
-     * users on real networks barely notice (the hero reveal animation runs
-     * for ~1.5 s before the video would even be visually settled). Users
-     * with prefers-reduced-motion: reduce keep the placeholder forever.
-     */
-    const [showHeroVideo, setShowHeroVideo] = useState(false);
-
-    useEffect(() => {
-        if (typeof window === "undefined") return;
-        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (reduced) return;
-        const t = window.setTimeout(() => setShowHeroVideo(true), 10000);
-        return () => window.clearTimeout(t);
-    }, []);
-
     useLayoutEffect(() => {
         if (!partnersRef.current || !headlineRef.current || !subtextRef.current) return;
 
         const ctx = gsap.context(() => {
-            // Note: the GSAP playback-rate / blur ramp on the hero video used
-            // to run here. With the video now mounted ~4s after first paint,
-            // a separate effect (below) wires it up once it actually exists.
+            // The decorative hero video uses a native poster fallback so it can
+            // appear immediately without a separate static placeholder phase.
 
             const partnerPills = partnersRef.current!.querySelectorAll('.partner-pill');
             const videoWord = videoWordRef.current ? [videoWordRef.current] : [];
@@ -304,12 +276,8 @@ export function Hero() {
         return () => ctx.revert();
     }, []);
 
-    /** Run the original playback-rate + blur ramp on the hero video, but only
-     *  once the deferred video element is actually mounted. Keeps the same
-     *  user-facing motion as before, while letting the LCP measurement window
-     *  see no <video> in the DOM. */
+    /** Run the original playback-rate + blur ramp on the hero video. */
     useEffect(() => {
-        if (!showHeroVideo) return;
         const video = videoRef.current;
         if (!video) return;
         const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
@@ -335,7 +303,7 @@ export function Hero() {
         return () => {
             tween.kill();
         };
-    }, [showHeroVideo]);
+    }, []);
 
     return (
         <section className="relative flex flex-col items-center justify-start overflow-hidden bg-[#FAFAFA] pt-32 md:pt-48 pb-20 md:pb-32 text-center">
@@ -395,29 +363,23 @@ export function Hero() {
                             aria-hidden="true"
                             role="presentation"
                         >
-                            {showHeroVideo ? (
-                                <video
-                                    ref={videoRef}
-                                    autoPlay
-                                    loop
-                                    muted
-                                    playsInline
-                                    preload="metadata"
-                                    disableRemotePlayback
-                                    disablePictureInPicture
-                                    x-webkit-airplay="deny"
-                                    aria-hidden="true"
-                                    tabIndex={-1}
-                                    className="pointer-events-none w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] object-cover rounded-full will-change-transform"
-                                >
-                                    <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps.mp4" type="video/mp4" />
-                                </video>
-                            ) : (
-                                <div
-                                    aria-hidden="true"
-                                    className="pointer-events-none w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] rounded-full bg-[#1a1512]/5"
-                                />
-                            )}
+                            <video
+                                ref={videoRef}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                preload="metadata"
+                                poster="/hero-video-poster.jpg"
+                                disableRemotePlayback
+                                disablePictureInPicture
+                                x-webkit-airplay="deny"
+                                aria-hidden="true"
+                                tabIndex={-1}
+                                className="pointer-events-none w-[10rem] h-[10rem] sm:w-[clamp(3rem,10vw,10rem)] sm:h-[clamp(3rem,10vw,10rem)] object-cover rounded-full will-change-transform"
+                            >
+                                <source src="/videoExport-2025-12-02@02-44-03.854-540x540@60fps.mp4" type="video/mp4" />
+                            </video>
                         </span>
                     </h1>
                 </div>

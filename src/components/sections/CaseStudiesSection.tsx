@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useRef, useLayoutEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { useGsapScrollTrigger } from '@/hooks/useGsapScrollTrigger';
 
 import { CTAButton } from '@/components/ui/CTAButton';
 
@@ -229,10 +227,9 @@ export function CaseStudiesSection() {
   const labelRef = useRef<HTMLSpanElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
-  useLayoutEffect(() => {
+  useGsapScrollTrigger(() => {
     if (!labelRef.current) return;
 
-    const ctx = gsap.context(() => {
       const originalText = "CASE STUDIES";
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -266,9 +263,6 @@ export function CaseStudiesSection() {
           }
         }
       });
-    });
-
-    return () => ctx.revert();
   }, []);
 
   return (

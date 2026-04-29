@@ -118,7 +118,7 @@ export function Card({
                         alt={title}
                         fill
                         sizes="(max-width: 768px) 280px, 360px"
-                        quality={75}
+                        quality={85}
                         loading={imageLoading}
                         fetchPriority={imageFetchPriority}
                         className="object-cover object-top"

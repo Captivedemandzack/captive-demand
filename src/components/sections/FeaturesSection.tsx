@@ -1,14 +1,9 @@
 "use client";
 
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Register GSAP plugins
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-}
+import { useGsapScrollTrigger } from "@/hooks/useGsapScrollTrigger";
 
 import { CTAButton } from '@/components/ui/CTAButton';
 
@@ -16,9 +11,7 @@ export function FeaturesSection() {
     const headingRef = useRef<HTMLHeadingElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
-        // PERF FIX: Use gsap.context() for safe cleanup
-        let ctx = gsap.context(() => {
+    useGsapScrollTrigger(() => {
             const lineMasks = document.querySelectorAll('.line-mask');
 
             lineMasks.forEach((mask) => {
@@ -36,10 +29,7 @@ export function FeaturesSection() {
                     });
                 }
             });
-        }, containerRef);
-
-        return () => ctx.revert();
-    }, []);
+    }, [], containerRef);
 
     // Animated dots pattern
     const centerX = 90;
@@ -112,13 +102,13 @@ export function FeaturesSection() {
                                     <span className="font-mono text-sm text-[#ff5501] tracking-wider block">01.</span>
                                     <div className="line-mask overflow-hidden inline-block">
                                         <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-tighter text-black uppercase">
-                                            / IT'S NOT ART. IT'S MATH.
+                                            / IT&apos;S NOT ART. IT&apos;S MATH.
                                         </h3>
                                     </div>
                                 </div>
                                 <div className="line-mask overflow-hidden block">
                                     <p className="reveal-text block font-mono text-sm text-black/60 leading-relaxed uppercase tracking-wide">
-                                        "Vibes" don't pay the bills. Conversion does. Using data from our 50+ previous builds, every layout is engineered to force specific user actions. The focus is on tracking eyes, clicks, and revenue—not chasing design awards.
+                                        &quot;Vibes&quot; don&apos;t pay the bills. Conversion does. Using data from our 50+ previous builds, every layout is engineered to force specific user actions. The focus is on tracking eyes, clicks, and revenue—not chasing design awards.
                                     </p>
                                 </div>
                             </div>
@@ -129,13 +119,13 @@ export function FeaturesSection() {
                                     <span className="font-mono text-sm text-[#ff5501] tracking-wider block">02.</span>
                                     <div className="line-mask overflow-hidden inline-block">
                                         <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-tighter text-black uppercase">
-                                            / WE DON'T COPY YOUR RIVALS.
+                                            / WE DON&apos;T COPY YOUR RIVALS.
                                         </h3>
                                     </div>
                                 </div>
                                 <div className="line-mask overflow-hidden block">
                                     <p className="reveal-text block font-mono text-sm text-black/60 leading-relaxed uppercase tracking-wide">
-                                        Niche agencies tend to recycle the same playbook for everyone. It’s time to break the pattern. By stealing winning tactics from outside sectors (like SaaS and Luxury), you get a strategic edge your competitors won't even understand.
+                                        Niche agencies tend to recycle the same playbook for everyone. It’s time to break the pattern. By stealing winning tactics from outside sectors (like SaaS and Luxury), you get a strategic edge your competitors won&apos;t even understand.
                                     </p>
                                 </div>
                             </div>
@@ -152,7 +142,7 @@ export function FeaturesSection() {
                                 </div>
                                 <div className="line-mask overflow-hidden block">
                                     <p className="reveal-text block font-mono text-sm text-black/60 leading-relaxed uppercase tracking-wide">
-                                        Founders see things differently than creatives. Every design decision gets filtered through the lens of an owner: "Will this make money?" If the answer is no, it gets cut. Treating your budget like our own is the only way to operate.
+                                        Founders see things differently than creatives. Every design decision gets filtered through the lens of an owner: &quot;Will this make money?&quot; If the answer is no, it gets cut. Treating your budget like our own is the only way to operate.
                                     </p>
                                 </div>
                             </div>

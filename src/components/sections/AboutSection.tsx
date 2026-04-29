@@ -1,14 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Register GSAP plugins
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-}
+import { useGsapScrollTrigger } from "@/hooks/useGsapScrollTrigger";
 
 import { CTAButton } from '@/components/ui/CTAButton';
 
@@ -29,10 +24,9 @@ export function AboutSection() {
     const topBracketRef = useRef<HTMLDivElement>(null);
     const bottomBracketRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    useGsapScrollTrigger(() => {
         if (!containerRef.current || !textRef.current || !teamRef.current || !buttonRef.current || !topBracketRef.current || !bottomBracketRef.current) return;
 
-        const ctx = gsap.context(() => {
             const words = textRef.current!.querySelectorAll('.word');
             const elements = [teamRef.current!, ...words, buttonRef.current!];
 
@@ -59,10 +53,7 @@ export function AboutSection() {
                 opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'power2.out',
                 scrollTrigger: { trigger: containerRef.current!, start: 'center 65%', end: 'center 50%', scrub: 1 }
             });
-        }, containerRef);
-
-        return () => ctx.revert();
-    }, []);
+    }, [], containerRef);
 
     const text = "The market is full, the timeline is tight, and the standard is high. We build the digital experience that bridges the gap between where you are and where you belong.";
     const words = text.split(' ');

@@ -12,13 +12,29 @@ interface CarouselProps {
     }[];
 }
 
-const INITIAL_RENDERED_IMAGE_COUNT = 6;
+const INITIAL_RENDERED_IMAGE_COUNT = 10;
+const EAGER_IMAGE_COUNT = 5;
 const VISIBLE_CARD_ANGLE = 60;
 const NEAR_VISIBLE_IMAGE_ANGLE = 90;
 const TRANSFORM_UPDATE_ANGLE = 100;
 
-const createInitialRenderedImageIndexes = () =>
-    new Set<number>(Array.from({ length: INITIAL_RENDERED_IMAGE_COUNT }, (_, index) => index));
+const createInitialRenderedImageIndexes = (totalCount = 0) => {
+    const indexes = new Set<number>();
+    const count = Math.min(INITIAL_RENDERED_IMAGE_COUNT, Math.max(totalCount, INITIAL_RENDERED_IMAGE_COUNT));
+
+    for (let index = 0; index < count; index += 1) {
+        indexes.add(index);
+    }
+
+    // The carousel wraps around a circle. On first paint, cards on the left side
+    // can be the final duplicate items in extendedItems, not just indexes 0..N.
+    // Render those immediately too so visible edge cards never pop in blank.
+    for (let index = Math.max(0, totalCount - count); index < totalCount; index += 1) {
+        indexes.add(index);
+    }
+
+    return indexes;
+};
 
 export function Carousel({ items }: CarouselProps) {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -40,6 +56,11 @@ export function Carousel({ items }: CarouselProps) {
     const extendedItems = React.useMemo(() => {
         return Array(duplicationCount).fill(items).flat();
     }, [items, duplicationCount]);
+
+    const initialRenderedImageIndexes = React.useMemo(
+        () => createInitialRenderedImageIndexes(extendedItems.length),
+        [extendedItems.length]
+    );
 
     /** Pause the GSAP ticker when the carousel scrolls out of view.
      *  This frees the main thread so touch events work on the rest of the page. */
@@ -86,16 +107,11 @@ export function Carousel({ items }: CarouselProps) {
             "(prefers-reduced-motion: reduce)"
         ).matches;
 
-        let tickerStartTimeout: ReturnType<typeof setTimeout> | null = null;
-
         const ctx = gsap.context(() => {
             if (!containerRef.current) return;
 
             const cards = cardsRef.current;
             let globalRotation = 0;
-            let lastContainerFilter = "";
-
-            const progress = { speed: 0, blur: isMobile ? 0 : 10 };
 
             const circumference = 2 * Math.PI * config.radius;
             const arcLength = config.cardWidth + config.gap;
@@ -110,6 +126,11 @@ export function Carousel({ items }: CarouselProps) {
             const MOBILE_SPEED = 0.05;
             const DESKTOP_SPEED = 0.05;
             const targetSpeed = isMobile ? MOBILE_SPEED : DESKTOP_SPEED;
+            const progress = {
+                speed: prefersReducedMotion ? 0 : targetSpeed * 9,
+                blur: !isMobile && !prefersReducedMotion ? 10 : 0,
+            };
+            let lastContainerFilter = "";
 
             // Position every card once at globalRotation = 0. This puts the cards
             // in their resting arc layout WITHOUT requiring the GSAP ticker to be
@@ -134,9 +155,11 @@ export function Carousel({ items }: CarouselProps) {
             // already painted, so we keep the container fully opaque from the start.
             if (containerRef.current) {
                 containerRef.current.style.opacity = "1";
-                if (!isMobile) {
+                if (progress.blur > 0) {
                     containerRef.current.style.filter = `blur(${progress.blur}px)`;
                     lastContainerFilter = containerRef.current.style.filter;
+                } else {
+                    containerRef.current.style.filter = "";
                 }
             }
 
@@ -146,7 +169,7 @@ export function Carousel({ items }: CarouselProps) {
                 globalRotation -= progress.speed;
 
                 if (!isMobile && containerRef.current) {
-                    const nextFilter = progress.blur > 0.01 ? `blur(${progress.blur}px)` : "";
+                    const nextFilter = progress.blur > 0.1 ? `blur(${progress.blur}px)` : "";
                     if (nextFilter !== lastContainerFilter) {
                         containerRef.current.style.filter = nextFilter;
                         lastContainerFilter = nextFilter;
@@ -188,27 +211,23 @@ export function Carousel({ items }: CarouselProps) {
 
             tickerFnRef.current = animate;
 
-            // Defer starting the rotation until after the Largest Contentful Paint
-            // measurement window. With the carousel ticker continuously mutating
-            // visibility / transform / z-index on dozens of cards, Lighthouse never
-            // sees a stable paint and reports NO_LCP. A short hold also lifts
-            // Speed Index by giving the page time to settle before content moves.
+            // Start the intro on the first visible frame so the carousel never
+            // appears static before the speed/blur entrance begins. Keep it short
+            // so Lighthouse can still settle after the initial above-fold paint.
             if (!prefersReducedMotion) {
-                tickerStartTimeout = setTimeout(() => {
-                    gsap.to(progress, {
-                        speed: targetSpeed,
-                        blur: 0,
-                        duration: 2.5,
-                        ease: "power4.out",
-                    });
-                    gsap.ticker.add(animate);
-                }, 3500);
+                gsap.ticker.add(animate);
+                animate();
+                gsap.to(progress, {
+                    speed: targetSpeed,
+                    blur: 0,
+                    duration: 0.9,
+                    ease: "power4.out",
+                });
             }
         }, containerRef);
 
         return () => {
             window.removeEventListener('resize', updateConfig);
-            if (tickerStartTimeout) clearTimeout(tickerStartTimeout);
             if (tickerFnRef.current) gsap.ticker.remove(tickerFnRef.current);
             ctx.revert();
         };
@@ -238,18 +257,8 @@ export function Carousel({ items }: CarouselProps) {
                                 tags={item.tags}
                                 imageSrc={item.imageSrc}
                                 titleAs={index < items.length ? "h3" : "div"}
-                                renderImage={renderedImageIndexes.has(index)}
-                                /* All carousel cards lazy-load. The first card
-                                 * used to be eager + fetchPriority="high", which
-                                 * caused Next.js to inject <link rel="preload"
-                                 * as="image" fetchpriority="high"> in <head>.
-                                 * Chrome's LCP algorithm treats prioritized
-                                 * images as preferred LCP candidates - and that
-                                 * image lives below the hero, never paints in
-                                 * viewport before the H1, and confuses LCP
-                                 * commit. Removing the priority hint lets the
-                                 * H1 text win as LCP normally. */
-                                imageLoading="lazy"
+                                renderImage={initialRenderedImageIndexes.has(index) || renderedImageIndexes.has(index)}
+                                imageLoading={initialRenderedImageIndexes.has(index) || index < EAGER_IMAGE_COUNT ? "eager" : "lazy"}
                                 imageFetchPriority="auto"
                             />
                         </div>

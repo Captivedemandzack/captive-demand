@@ -3,7 +3,7 @@ import { Inter, Syne, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import { DeferredFooter } from "@/components/layout/DeferredFooter";
 import { GoogleTagManager } from "@/components/analytics/GoogleTagManager";
 import { OrganizationSchema } from "@/components/schema/OrganizationSchema";
 import { siteConfig } from "@/lib/site";
@@ -98,7 +98,7 @@ export default function RootLayout({
                 <main className="relative z-10 bg-[#fafafa] w-full overflow-x-hidden">
                     {children}
                 </main>
-                <Footer />
+                <DeferredFooter />
             </body>
         </html>
     );

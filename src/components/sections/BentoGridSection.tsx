@@ -1,22 +1,17 @@
 "use client";
 
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Clock, Shield, Zap, Search, TrendingUp, BarChart2, BarChart3, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// Register GSAP plugins
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { useGsapScrollTrigger } from '@/hooks/useGsapScrollTrigger';
 
 export function BentoGridSection() {
   const servicesLabelRef = useRef<HTMLSpanElement>(null);
 
-  useLayoutEffect(() => {
+  useGsapScrollTrigger(() => {
     if (!servicesLabelRef.current) return;
 
     const element = servicesLabelRef.current;
@@ -32,7 +27,6 @@ export function BentoGridSection() {
 
     const state = { progress: 0 };
 
-    const ctx = gsap.context(() => {
       gsap.to(state, {
         progress: 1,
         duration: 1.5,
@@ -63,9 +57,6 @@ export function BentoGridSection() {
           });
         },
       });
-    });
-
-    return () => ctx.revert();
   }, []);
 
   return (
@@ -127,7 +118,7 @@ export function BentoGridSection() {
               className="text-3xl md:text-4xl lg:text-5xl tracking-wide text-[#1a1512]"
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300, letterSpacing: '0.05em' }}
             >
-              Everything you need. Nothing you don't.
+              Everything you need. Nothing you don&apos;t.
             </motion.h2>
           </div>
 
@@ -164,7 +155,7 @@ export function BentoGridSection() {
             <div className="mb-6">
               <h3 className="text-[16px] font-normal text-[#1a1512] mb-3 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>Website Design & Development</h3>
               <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                <b>The Closer.</b> We don't build digital brochures. We build sites that do one job: turn strangers into customers. If it doesn't convert, we don't ship it.
+                <b>The Closer.</b> We don&apos;t build digital brochures. We build sites that do one job: turn strangers into customers. If it doesn&apos;t convert, we don&apos;t ship it.
               </p>
             </div>
 

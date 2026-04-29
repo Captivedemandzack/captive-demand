@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { AccentBr } from '@/components/ui/accent-br';
 import { Check } from 'lucide-react';
 import Image from 'next/image';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { useGsapScrollTrigger } from '@/hooks/useGsapScrollTrigger';
 
 // Helper Shapes
 const DecorativeShapeWithLine = ({ shapeColor = "#e5e5e5", lineColor = "#e5e5e5" }: { shapeColor?: string; lineColor?: string }) => (
@@ -204,10 +202,9 @@ const ProcessCard = ({
 export function ProcessSection() {
   const labelRef = useRef<HTMLSpanElement>(null);
 
-  useLayoutEffect(() => {
+  useGsapScrollTrigger(() => {
     if (!labelRef.current) return;
 
-    const ctx = gsap.context(() => {
       const originalText = "OUR PROCESS";
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -241,9 +238,6 @@ export function ProcessSection() {
           }
         }
       });
-    });
-
-    return () => ctx.revert();
   }, []);
 
   const processSteps = [
@@ -299,9 +293,9 @@ export function ProcessSection() {
 
             <div className="md:max-w-md md:text-right">
               <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                We're on a mission to help local businesses dominate their digital presence...{' '}
+                We&apos;re on a mission to help local businesses dominate their digital presence...{' '}
                 <Link href="/contact" className="text-[#1a1512] underline underline-offset-2 hover:text-[#ff5501] transition-colors">
-                  let's build together.
+                  let&apos;s build together.
                 </Link>
               </p>
             </div>
