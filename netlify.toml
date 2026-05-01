@@ -176,6 +176,19 @@
   status = 301
   force = true
 
+# Placeholder until Shore Capital Partnership landing ships; send traffic home.
+[[redirects]]
+  from = "/shore-capital-partnership"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/shore-capital-partnership/"
+  to = "/"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/author/*"
   to = "/insights"
