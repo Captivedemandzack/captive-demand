@@ -54,4 +54,4 @@ Navigating the intricate landscape of SEO is no small feat, especially when aimi
 
 ## Ready to elevate your online presence?
 
-Partner with Captive Demand today, and together, let's chart a path to unparalleled business growth and visibility! [Contact us](/contact) to learn more about how we can help.
+Partner with Captive Demand today, and together, let's chart a path to unparalleled business growth and visibility! [Click here](/) to learn more about how we can help.

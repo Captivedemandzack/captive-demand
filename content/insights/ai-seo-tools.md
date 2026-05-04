@@ -57,6 +57,6 @@ Technical SEO can be complex and time-consuming. AI-assisted tools audit a websi
 
 ## Partner with a Top Nashville SEO Firm
 
-If you're looking to elevate your digital presence and drive more traffic to your business, partnering with a forward-thinking marketing firm makes all the difference. At Captive Demand, we pride ourselves on being an industry leader, consistently adapting to new technologies like AI to deliver exceptional results.
+If you're looking to elevate your digital presence and drive more traffic to your business, partnering with a forward-thinking marketing firm makes all the difference. As your [full-service marketing](/) partner in Nashville, we pride ourselves on being an industry leader, consistently adapting to new technologies like AI to deliver exceptional results.
 
-Let’s work together to boost your search engine rankings and grow your brand. [Contact us](/contact) today to learn more about how our digital marketing services can transform your business.
+Let’s work together to boost your search engine rankings, improve [conversion rates](/), and grow your brand. [Contact us today](/contact) to learn more about how our digital marketing services can transform your business.

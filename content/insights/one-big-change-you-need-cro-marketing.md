@@ -16,15 +16,15 @@ tags:
   - "Nashville"
 ---
 
-Conversion rate optimization (CRO) marketing is the process in digital marketing of increasing the percentage of visitors to your website who take a desired action. This action could be anything from making a purchase to signing up for a newsletter to downloading a white paper. CRO services are vital because they can help turn a website that may be struggling to generate leads into a well-oiled machine that consistently produces new business opportunities. As you can imagine, we’ve turned many of our marketing efforts to CRO due to its enormous success.
+Conversion rate optimization (CRO)—often called [CRO marketing](/)—is the process in digital marketing of increasing the percentage of visitors to your website who take a desired action. This action could be anything from making a purchase to signing up for a newsletter to downloading a white paper. CRO services are vital because they can help turn a website that may be struggling to generate leads into a well-oiled machine that consistently produces new business opportunities. As you can imagine, we’ve turned many of our marketing efforts to CRO due to its enormous success.
 
 ## What is the Difference Between SEO and CRO?
 
-Search engine optimization (SEO) optimizes your website to rank higher in search engine results pages (SERPs) to drive more organic traffic to your site. On the other hand, conversion optimization focuses on increasing the percentage of visitors who take a desired action once they reach your site. While SEO and CRO marketing both have the ultimate goal of driving more website visitors, they do it differently. CRO agencies use SEO strategies, enabling your business to convert traffic from search engines to valuable new paying customers.
+Search engine optimization (SEO) optimizes your website to rank higher in search engine results pages (SERPs) to drive more organic traffic to your site. On the other hand, conversion optimization focuses on increasing the percentage of visitors who take a desired action once they reach your site. While SEO and [CRO marketing](/) both have the ultimate goal of driving more website visitors, they do it differently. CRO agencies use [SEO strategies](/services/seo), enabling your business to convert traffic from search engines to valuable new paying customers.
 
 ## Why is a CRO Marketing Strategy so Important?
 
-CRO works as an algorithm for improving the conversion rate in websites and mobile apps. It’s mainly about developing ideas for elements of your site that need improvement and evaluating these assumptions through A/B and Multivariate Testing. CRO is essential because it takes your SEO strategies one step further by not only bringing visitors to your site but also maximizing the number of those visitors that take a desired action. These strategies correlate with new customers and an ever-growing business.
+CRO works as an algorithm for improving the conversion rate in websites and mobile apps. It’s mainly about developing ideas for elements of your site that need improvement and evaluating these assumptions through A/B and Multivariate Testing. CRO is essential because it takes your [SEO strategies](/services/seo) one step further by not only bringing visitors to your site but also maximizing the number of those visitors that take a desired action. These strategies correlate with new customers and an ever-growing business.
 
 ## What is the Conversion Rate?
 
@@ -56,7 +56,7 @@ While the CRO process is important, it’s only part of the puzzle. You’re lik
 
 ### Running tests on your landing pages
 
-Your landing page is often the first interaction a potential customer has with your brand. As such, it’s vital to make sure that it's as effective as possible. A/B testing is a successful way to do this, as it allows you to test different versions of your landing page to see which version performs better. As a result, it’s an integral part of CRO marketing.
+Your landing page is often the first interaction a potential customer has with your brand. As such, it’s vital to make sure that it's as effective as possible. A/B testing is a successful way to do this, as it allows you to test different versions of your landing page to see which version performs better. As a result, it’s an integral part of [CRO marketing](/).
 
 ### Create workflows for your team
 

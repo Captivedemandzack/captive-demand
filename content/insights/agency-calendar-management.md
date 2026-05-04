@@ -20,6 +20,8 @@ You know the drill. Monday morning, you open your calendar and it looks like som
 
 This is the default state for most multi-client digital marketing and SEO agencies. But it doesn't have to be.
 
+If you run multiple Google Workspace accounts, tools that let you [merge Google Calendars](https://www.calsync.party/) automatically can cut down scheduling conflicts before the week even starts.
+
 Managing an agency calendar requires a shift from viewing time as an infinite resource to treating it as a structured inventory. Here are the structural moves that change how the week feels and what it produces.
 
 ## 1. Use a Zone Defense Calendar Structure
