@@ -1,3 +1,6 @@
+/** Production origin for analytics, OG, and AI “tell me about …” deep links (never localhost). */
+export const canonicalProductionOrigin = "https://captivedemand.com";
+
 export const siteConfig = {
   name: "Captive Demand",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://captivedemand.com",

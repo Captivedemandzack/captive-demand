@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },
   images: {
+    // Allow `quality={85}` used across portfolio / homepage `<Image>` components (Next 16 default is [75] only).
+    qualities: [75, 85],
     remotePatterns: [
       {
         protocol: "https",

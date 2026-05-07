@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { usePlayVideoWhenVisible } from '@/hooks/usePlayVideoWhenVisible';
 import { AnimatedCTAButton } from '../sections/Hero';
+import { AskAiAboutFooter } from '@/components/layout/AskAiAboutFooter';
 import { siteConfig } from '@/lib/site';
 
 /** Marquee clip — same visibility resume as hero so loops don’t stall after scroll/tab. */
@@ -128,6 +129,8 @@ export default function Footer() {
                             <div className="transform origin-left scale-100 md:scale-110">
                                 <AnimatedCTAButton />
                             </div>
+
+                            <AskAiAboutFooter />
                         </div>
 
                         {/* Right Side */}
