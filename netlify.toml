@@ -176,7 +176,7 @@
   status = 301
   force = true
 
-# Placeholder until Shore Capital Partnership landing ships; send traffic home.
+# Legacy slug: partnership landing lives at /shore-partnership; keep short URL pointed at home.
 [[redirects]]
   from = "/shore-capital-partnership"
   to = "/"

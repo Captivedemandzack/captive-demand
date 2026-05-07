@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
@@ -166,10 +167,15 @@ const SubMenuItem = ({
 };
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState<SubMenuKey | null>(null);
   const [hoveredMainItem, setHoveredMainItem] = useState<string | null>(null);
   const [hoveredSubItem, setHoveredSubItem] = useState<string | null>(null);
+
+  if (pathname === '/shore-partnership' || pathname === '/shore-partnership/') {
+    return null;
+  }
 
   const toggleMenu = () => {
     setIsOpen((prev) => {

@@ -1,12 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Footer from "@/components/layout/Footer";
 
 export function DeferredFooter() {
+    const pathname = usePathname();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        if (pathname === "/shore-partnership" || pathname === "/shore-partnership/") {
+            return;
+        }
         if (mounted) return;
 
         const mountFooter = () => setMounted(true);
@@ -22,7 +27,11 @@ export function DeferredFooter() {
         return () => {
             window.removeEventListener("scroll", onScroll);
         };
-    }, [mounted]);
+    }, [pathname, mounted]);
+
+    if (pathname === "/shore-partnership" || pathname === "/shore-partnership/") {
+        return null;
+    }
 
     return mounted ? <Footer /> : null;
 }

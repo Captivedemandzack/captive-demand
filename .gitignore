@@ -33,12 +33,20 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# OAuth (local credentials and tokens; never commit)
+oauth_credentials.json
+token.json
+
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python
+**/__pycache__/
+*.py[cod]
 
 # Pre-optimization image backups (kept locally for rollback only)
 /public/.image-originals/

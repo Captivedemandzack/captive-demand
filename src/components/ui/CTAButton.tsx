@@ -36,7 +36,7 @@ const IconBlobShape = ({ className }: { className?: string }) => (
 export type CTAButtonVariant =
   | "grey" // Grey label + grey blob → orange on hover (CaseStudies, About, ExampleWork)
   | "dark" // Dark label + orange blob (FeaturesSection)
-  | "bookCall" // Dark label + gray blob → dark on hover (ProcessSection default)
+  | "bookCall" // Grey label + grey blob → orange on hover (aligned with `grey`; intro-call pattern)
   | "bookCallOrange" // White label + black blob → white on hover (ProcessSection onOrange)
   | "pricing"; // Dark or light based on isDarkBg, full width
 
@@ -86,11 +86,11 @@ const variantConfig: Record<
   },
   bookCall: {
     labelClasses:
-      "bg-[#1a1512] text-white group-hover:bg-[#332D2A]",
-    cornerClasses: "text-[#1a1512] group-hover:text-[#332D2A]",
-    blobClasses: "text-[#f3f4f6] group-hover:text-[#1a1512]",
-    iconDefault: "#1a1512",
-    iconHover: "#FFFFFF",
+      'bg-[#e8e8e8] text-[#1a1512] group-hover:bg-[#ff5501] group-hover:text-white',
+    cornerClasses: 'text-[#e8e8e8] group-hover:text-[#ff5501]',
+    blobClasses: 'text-[#e8e8e8] group-hover:text-[#ff5501]',
+    iconDefault: '#1a1512',
+    iconHover: '#FFFFFF',
   },
   bookCallOrange: {
     labelClasses: "bg-white text-[#1a1512]",

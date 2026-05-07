@@ -19,6 +19,11 @@ type Body = {
   source?: string;
 };
 
+/** Shore partnership landing — skips revenue gate; routes like Spencer brief */
+function isShorePartnershipSource(source: string | undefined): boolean {
+  return source?.trim() === 'shore_partnership';
+}
+
 /** Always CC this address on lead emails (override with LEAD_CC_EMAIL). */
 const DEFAULT_LEAD_CC = 'zachary@captivedemand.com';
 
@@ -113,6 +118,7 @@ export async function POST(request: Request) {
     const businessName = body.businessName?.trim();
     const revenueParsed = parseAnnualCompanyRevenue(body.annualCompanyRevenue);
     const isPricingModal = body.source === 'pricing_modal';
+    const isShorePartnership = isShorePartnershipSource(body.source);
 
     if (!displayName || !email) {
       return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
@@ -122,11 +128,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Business name is required' }, { status: 400 });
     }
 
-    if (!revenueParsed) {
+    if (!isShorePartnership && !revenueParsed) {
       return NextResponse.json({ error: 'Annual company revenue is required' }, { status: 400 });
     }
 
-    const annualRevenueLabel = revenueLabel(revenueParsed);
+    const annualRevenueLabel = revenueParsed ? revenueLabel(revenueParsed) : 'Not collected (Shore partnership page)';
 
     const skipRecaptcha =
       process.env.SKIP_RECAPTCHA_VERIFICATION === 'true' ||
@@ -149,7 +155,26 @@ export async function POST(request: Request) {
     const transporter = getTransport();
 
     if (transporter) {
-      if (isPricingModal) {
+      if (isShorePartnership) {
+        const text = [
+          'Source: Shore Capital Partnership Page (captivedemand.com/shore-partnership)',
+          `Name: ${displayName}`,
+          `Portfolio company: ${businessName}`,
+          `Reply-to email: ${email}`,
+          body.message?.trim() ? `\nMessage:\n${body.message.trim()}` : '',
+        ]
+          .filter(Boolean)
+          .join('\n');
+        try {
+          await sendLeadToCeo(transporter, {
+            subject: `Shore partnership inquiry — ${displayName} (${businessName})`,
+            text,
+          });
+        } catch (mailErr) {
+          console.error('Shore partnership lead: email send failed:', mailErr);
+          return NextResponse.json({ error: 'Failed to send message' }, { status: 500 });
+        }
+      } else if (isPricingModal) {
         const text = formatLeadBody({
           name: displayName,
           businessName,
@@ -198,6 +223,13 @@ export async function POST(request: Request) {
         businessName,
         annualCompanyRevenue: annualRevenueLabel,
       });
+    } else if (isShorePartnership) {
+      console.log('Shore partnership lead (no SMTP):', {
+        displayName,
+        email,
+        businessName,
+        message: body.message?.slice(0, 500),
+      });
     } else {
       console.log('Contact form (no SMTP):', {
         displayName,
@@ -210,7 +242,11 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       ...(isPricingModal
-        ? { qualifiesForBooking: revenueParsed === '500k_1m' || revenueParsed === '1m_plus' }
+        ? {
+            qualifiesForBooking:
+              revenueParsed !== null &&
+              (revenueParsed === '500k_1m' || revenueParsed === '1m_plus'),
+          }
         : {}),
     });
   } catch {

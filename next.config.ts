@@ -11,23 +11,13 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        protocol: "https",
+        hostname: "media.brand.dev",
+      },
     ],
     // Disable image optimization in development for instant updates
     unoptimized: process.env.NODE_ENV === 'development',
-  },
-  async redirects() {
-    return [
-      {
-        source: "/shore-capital-partnership",
-        destination: "/",
-        permanent: true,
-      },
-      {
-        source: "/shore-capital-partnership/",
-        destination: "/",
-        permanent: true,
-      },
-    ];
   },
   async headers() {
     if (process.env.NODE_ENV === 'development') {

@@ -1,7 +1,19 @@
 import Script from "next/script";
 import { siteConfig } from "@/lib/site";
 
+/**
+ * GTM tags configured in the remote container sometimes inject legacy helpers (e.g. jQuery),
+ * which breaks local dev with uncaught ReferenceErrors. Opt back in with NEXT_PUBLIC_GTM_IN_DEV=true.
+ */
 export function GoogleTagManager() {
+  const skipInDev =
+    process.env.NODE_ENV === "development" &&
+    process.env.NEXT_PUBLIC_GTM_IN_DEV !== "true";
+
+  if (skipInDev) {
+    return null;
+  }
+
   return (
     <>
       <Script id="gtm-init" strategy="lazyOnload">
