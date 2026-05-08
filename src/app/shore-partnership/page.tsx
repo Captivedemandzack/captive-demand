@@ -195,30 +195,30 @@ export default function ShorePartnershipPage() {
         <div className="relative mx-auto max-w-6xl">
           <ShoreReveal>
             <div className="flex flex-col items-center gap-10 text-center">
-              <div className="flex flex-col items-center gap-6 md:flex-row md:gap-0 md:items-center">
-                <span className="relative block h-9 w-[164px] shrink-0">
+              <div className="flex flex-col items-center gap-6 md:flex-row md:gap-0 md:items-center md:justify-center">
+                <span className="relative block h-12 w-[204px] shrink-0 md:h-[52px] md:w-[228px]">
                   <Image
                     src={CAPTIVE_DEMAND_LOGO}
                     alt="Captive Demand"
                     fill
                     className="object-contain object-center"
-                    sizes="164px"
+                    sizes="(min-width: 768px) 228px, 204px"
                     priority
                   />
                 </span>
                 <span
-                  className="font-nohemi mx-6 text-3xl font-light italic text-brand-orange/70 md:mx-8 md:text-4xl"
+                  className="font-nohemi mx-2 text-3xl font-light italic text-brand-orange/70 md:mx-3 md:text-4xl"
                   aria-hidden
                 >
                   ×
                 </span>
-                <span className="relative block h-14 w-[140px] shrink-0 md:h-16 md:w-[156px]">
+                <span className="relative block h-[72px] w-[180px] shrink-0 md:h-20 md:w-[200px]">
                   <Image
                     src={SHORE_LOGOMARK_URL}
                     alt="Shore Capital Partners"
                     fill
                     className="object-contain object-center"
-                    sizes="156px"
+                    sizes="(min-width: 768px) 200px, 180px"
                     priority
                   />
                 </span>
@@ -248,15 +248,11 @@ export default function ShorePartnershipPage() {
                 >
                   the business grow.
                 </HeroAccentHighlight>
-                <br />
-                <span className="text-[#1a1512]">
-                  Captive Demand is Shore&apos;s vetted web partner.
-                </span>
               </h1>
 
               <p className="max-w-2xl text-pretty text-[1.125rem] leading-[1.7] text-neutral-700 md:text-[1.25rem]">
-                We are an agency built for PE. Our process and tech make rollouts simple and effective for portcos. And
-                the results, they speak for themselves.
+                Captive Demand is Shore&apos;s vetted web partner. We are an agency built for PE. Our process and tech
+                make rollouts simple and effective for portcos, and the results speak for themselves.
               </p>
 
               <div className="flex justify-center pt-2">

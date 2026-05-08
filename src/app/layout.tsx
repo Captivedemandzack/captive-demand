@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import { DeferredFooter } from "@/components/layout/DeferredFooter";
-import { GoogleTagManager } from "@/components/analytics/GoogleTagManager";
+import { SiteGoogleAnalytics } from "@/components/analytics/SiteGoogleAnalytics";
 import { OrganizationSchema } from "@/components/schema/OrganizationSchema";
 import { siteConfig } from "@/lib/site";
 
@@ -92,7 +92,7 @@ export default function RootLayout({
                 />
             </head>
             <body className={`${inter.variable} ${syne.variable} ${jetBrainsMono.variable} ${nohemi.variable} antialiased h-full relative`}>
-                <GoogleTagManager />
+                <SiteGoogleAnalytics />
                 <OrganizationSchema />
                 <Navbar />
                 <main className="relative z-10 bg-[#fafafa] w-full overflow-x-hidden">

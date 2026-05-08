@@ -26,8 +26,13 @@ export const siteConfig = {
     "https://linkedin.com/company/captive-demand",
     "https://instagram.com/captivedemand",
   ],
-  gtmId: "GTM-KDGH9S9",
-  ga4MeasurementId: "G-2PX5BV44GV",
+  /** GA4 property ID for captivedemand.com (Admin → Property settings). */
+  ga4PropertyId: "357177260",
+  /**
+   * GA4 Web Measurement ID for that property (Admin → Data streams → Web → Measurement ID).
+   * Override with NEXT_PUBLIC_GA4_MEASUREMENT_ID in Netlify env if this stream changes.
+   */
+  ga4MeasurementId: "G-N2HFM02GMY",
 } as const;
 
 export function absoluteUrl(path = "") {

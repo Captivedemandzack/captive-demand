@@ -221,7 +221,7 @@ export function SoftwarePricing({ embedded }: SoftwarePricingProps) {
                                 'User Auth & Database',
                                 'API Layer',
                                 'Responsive Frontend',
-                                'Cloud Deployment (Vercel/AWS)',
+                                'Cloud Deployment (Netlify/AWS)',
                                 '30 Days Bug Support'
                             ]}
                             buttonText="Get Started"

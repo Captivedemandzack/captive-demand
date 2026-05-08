@@ -11,16 +11,16 @@ interface ShoreStat {
 
 const STATS: ShoreStat[] = [
   {
-    value: '2',
-    suffix: '',
-    label: 'Active engagements',
-    sublabel: "Inside Shore's portfolio today",
+    value: '83',
+    suffix: '%',
+    label: 'Lead Capture Rate on Abandoned Bookings',
+    sublabel: 'Abandoned booking recovery',
   },
   {
-    value: '15',
-    suffix: '',
-    label: 'Brands consolidated',
-    sublabel: 'One accountable senior pod',
+    value: '16',
+    suffix: '+',
+    label: 'Active engagements',
+    sublabel: "Inside Shore's portfolio today",
   },
   {
     value: '1M',

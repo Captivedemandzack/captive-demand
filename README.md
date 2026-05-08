@@ -29,8 +29,8 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Production builds deploy on **[Netlify](https://www.netlify.com/)**. Use Netlify **Site configuration → Environment variables** for overrides such as `NEXT_PUBLIC_GA4_MEASUREMENT_ID` (defaults live in `src/lib/site.ts`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for general guidance.

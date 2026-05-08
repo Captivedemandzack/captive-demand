@@ -266,10 +266,10 @@ export function BentoGridSection() {
           </motion.div>
           </Link>
 
-          {/* Card 2 - Email Marketing (Top Right) */}
+          {/* Card 2 - SEO/AEO (Top Right) — copy-first layout matches Website card; graphic below */}
           <Link
-            href="/services/email-marketing"
-            aria-label="Email marketing — view service"
+            href="/services/seo"
+            aria-label="SEO and AEO — view service"
             className="col-span-2 md:col-span-3 block max-h-[400px] rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1a1512]"
           >
           <motion.div
@@ -277,101 +277,50 @@ export function BentoGridSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="bg-[#e8e8e8] rounded-3xl p-6 md:p-8 border border-[#1a1512]/5 transition-shadow h-full max-h-[400px] overflow-hidden group"
-            style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}
+            className="group h-full max-h-[400px] overflow-hidden rounded-3xl border border-[#1a1512]/5 bg-[#e8e8e8] p-6 transition-shadow md:p-8"
+            style={{
+              boxShadow:
+                '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)',
+            }}
           >
             <div className="mb-6">
-              <h3 className="text-[16px] font-normal text-[#1a1512] mb-3 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>Email Marketing</h3>
-              <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                <b>The Follow-Up.</b> 98% of people leave your site without buying. We build the automated emails that chase them down and bring them back until they do.
+              <h3
+                className="mb-3 text-[16px] font-normal uppercase text-[#1a1512]"
+                style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
+              >
+                SEO/AEO
+              </h3>
+              <p className="font-mono text-sm uppercase leading-relaxed tracking-wide text-[#1a1512]/60">
+                <b>The Compounder.</b> Paid ads are a treadmill. You have to keep spending to keep moving. We build an organic search strategy that gains momentum over time. We build the infrastructure. You collect the dividends.
               </p>
             </div>
 
-            {/* Email Marketing Graphic */}
-            <div className="relative w-full h-52 flex items-center justify-center">
-              {/* Background radial glow */}
-              <div className="absolute w-32 h-32 bg-[#ff5501]/10 blur-[50px] rounded-full" />
-
-              {/* Main Container */}
-              <div className="relative w-full max-w-md h-44">
-
-                {/* Card 1: Analytics Dashboard (Back Left - Symmetrical) */}
-                <div className="absolute top-1/2 -translate-y-1/2 left-0 w-32 h-32 bg-white border border-[#1a1512]/10 rounded-xl p-3 transform -rotate-3 opacity-80 scale-95 transition-all duration-500 group-hover:-translate-x-8 group-hover:-rotate-6 group-hover:opacity-95 overflow-hidden z-0 shadow-lg">
-                  <div className="text-[10px] text-[#1a1512] mb-2 font-semibold">Email Performance</div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[8px] text-[#1a1512]/60">Open Rate</span>
-                      <span className="text-[10px] text-[#ff5501] font-semibold">42.3%</span>
-                    </div>
-                    <div className="h-1 w-full bg-[#1a1512]/5 rounded-full overflow-hidden">
-                      <div className="h-full w-[42%] bg-[#ff5501]/50 rounded-full" />
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-[8px] text-[#1a1512]/60">Click Rate</span>
-                      <span className="text-[10px] text-[#8b5cf6] font-semibold">28.1%</span>
-                    </div>
-                    <div className="h-1 w-full bg-[#1a1512]/5 rounded-full overflow-hidden">
-                      <div className="h-full w-[28%] bg-[#8b5cf6]/50 rounded-full" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 2: Campaign Status (Back Right - Symmetrical) */}
-                <div className="absolute top-1/2 -translate-y-1/2 right-0 w-32 h-32 bg-white border border-[#1a1512]/10 rounded-xl p-3 transform rotate-3 opacity-80 scale-95 transition-all duration-500 group-hover:translate-x-8 group-hover:rotate-6 group-hover:opacity-95 overflow-hidden z-0 shadow-lg">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-2 h-2 rounded-full bg-[#ff5501] animate-pulse" />
-                    <span className="text-[9px] text-[#1a1512] font-semibold">Campaign Active</span>
-                  </div>
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between">
-                      <span className="text-[8px] text-[#1a1512]/60">Sent</span>
-                      <span className="text-[9px] text-[#1a1512]/90">12,451</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-[8px] text-[#1a1512]/60">Delivered</span>
-                      <span className="text-[9px] text-[#ff5501]">11,892</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-[8px] text-[#1a1512]/60">Revenue</span>
-                      <span className="text-[9px] text-[#ff5501]">$8,421</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 3: Email Example (Front Center - Scrolling Window) */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-44 bg-white border border-[#1a1512]/10 rounded-xl shadow-2xl overflow-hidden z-20 transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2">
-                  {/* Email Client Header */}
-                  <div className="bg-[#f8f9fa] border-b border-[#1a1512]/10 px-3 py-1.5 relative z-10">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <span className="text-[8px] text-[#1a1512]/40 font-medium">From:</span>
-                      <span className="text-[8px] text-[#1a1512]/70">info@farmulated.com</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[8px] text-[#1a1512]/40 font-medium">Subject:</span>
-                      <span className="text-[8px] text-[#1a1512]/70 truncate">Claim Your 30% Off Before Time Runs Out!</span>
-                    </div>
-                  </div>
-
-                  {/* Email Content - Hover Scroll Window */}
-                  <div className="relative w-full h-[calc(100%-42px)] overflow-hidden">
+            <div className="relative flex h-48 w-full items-center justify-center overflow-visible">
+              <div className="relative flex w-full max-w-xl flex-col items-center justify-center gap-4 px-1 md:px-2">
+                <div className="relative z-20 flex h-10 w-full max-w-md items-center gap-3 rounded-full border border-[#1a1512]/20 bg-[#1a1512] px-5 shadow-lg transition-colors group-hover:border-[#1a1512]/40">
+                  <Search size={14} className="shrink-0 text-white/60" />
+                  <div className="relative h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-white/20">
                     <motion.div
-                      className="relative w-full"
-                      initial={{ y: 0 }}
-                      whileHover={{ y: -120 }}
-                      transition={{
-                        duration: 0.8,
-                        ease: "easeOut"
-                      }}
-                    >
-                      <div className="relative w-full aspect-[9/16]">
-                        <Image
-                          src="/emailexample.png"
-                          alt="Email Marketing Example"
-                          fill
-                          className="object-contain object-top"
-                        />
-                      </div>
-                    </motion.div>
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                      animate={{ x: ['-100%', '200%'] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                    />
+                  </div>
+                </div>
+
+                <div className="relative z-10 flex w-full max-w-md flex-col gap-2 rounded-xl border border-[#1a1512]/10 bg-white p-3 shadow-xl md:p-3.5">
+                  <div className="flex items-center gap-3 rounded-lg border border-[#ff5501]/20 bg-[#ff5501]/10 p-2 transition-all duration-500 group-hover:translate-x-1 group-hover:border-[#ff5501]/40 group-hover:bg-[#ff5501]/20">
+                    <div className="text-[10px] font-bold text-[#ff5501]">#1</div>
+                    <div className="h-1.5 min-w-0 flex-1 rounded-full bg-[#ff5501]/30" />
+                    <TrendingUp size={12} className="shrink-0 text-[#ff5501]" />
+                  </div>
+                  <div className="flex items-center gap-3 rounded-lg border border-transparent p-2 opacity-60">
+                    <div className="text-[10px] font-bold text-[#1a1512]/40">#2</div>
+                    <div className="h-1.5 min-w-0 flex-1 rounded-full bg-[#1a1512]/10" />
+                  </div>
+                  <div className="flex items-center gap-3 rounded-lg border border-transparent p-2 opacity-40">
+                    <div className="text-[10px] font-bold text-[#1a1512]/30">#3</div>
+                    <div className="h-1.5 min-w-0 flex-1 rounded-full bg-[#1a1512]/10" />
                   </div>
                 </div>
               </div>
@@ -514,10 +463,10 @@ export function BentoGridSection() {
           </motion.div>
           </Link>
 
-          {/* Card 4 - SEO Services (No Background - Bottom Center) */}
+          {/* Card 4 - Email Marketing (Bottom Center) — visual panel first, title + body below (Workflow pattern) */}
           <Link
-            href="/services/seo"
-            aria-label="SEO and AEO — view service"
+            href="/services/email-marketing"
+            aria-label="Email marketing — view service"
             className="col-span-2 md:col-span-2 block rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1a1512]"
           >
           <motion.div
@@ -525,56 +474,99 @@ export function BentoGridSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
-            className="flex h-full flex-col items-start group"
+            className="group flex h-full flex-col items-start"
           >
-            <div className="bg-[#e8e8e8] rounded-3xl p-6 mb-6 w-full aspect-video flex items-center justify-center overflow-hidden" style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)' }}>
-              {/* SEO Graphic */}
-              <div className="relative w-full h-full flex flex-col items-center justify-center gap-4">
-
-                {/* Search Bar Abstract */}
-                <div className="w-56 h-10 bg-[#1a1512] rounded-full border border-[#1a1512]/20 flex items-center px-4 gap-3 shadow-lg relative z-20 group-hover:border-[#1a1512]/40 transition-colors">
-                  <Search size={14} className="text-white/60" />
-                  <div className="h-1.5 w-24 bg-white/20 rounded-full overflow-hidden relative">
-                    {/* Typing animation effect */}
+            <div
+              className="mb-6 flex aspect-video w-full items-center justify-center overflow-hidden rounded-3xl bg-[#e8e8e8] p-5 md:p-6"
+              style={{
+                boxShadow:
+                  '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)',
+              }}
+            >
+              <div className="relative h-[148px] w-full max-w-[340px] md:h-[168px]">
+                <div className="absolute left-1/2 top-1 z-10 h-32 w-44 max-w-[85%] -translate-x-1/2 overflow-hidden rounded-xl border border-[#1a1512]/10 bg-white shadow-2xl transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-[1.02] md:h-36 md:w-48">
+                  <div className="relative z-10 border-b border-[#1a1512]/10 bg-[#f8f9fa] px-3 py-1.5">
+                    <div className="mb-0.5 flex items-center gap-2">
+                      <span className="text-[8px] font-medium text-[#1a1512]/40">From:</span>
+                      <span className="text-[8px] text-[#1a1512]/70">info@farmulated.com</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[8px] font-medium text-[#1a1512]/40">Subject:</span>
+                      <span className="truncate text-[8px] text-[#1a1512]/70">Claim Your 30% Off Before Time Runs Out!</span>
+                    </div>
+                  </div>
+                  <div className="relative h-[calc(100%-40px)] w-full overflow-hidden">
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
-                      animate={{ x: ['-100%', '200%'] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                    />
+                      className="relative w-full"
+                      initial={{ y: 0 }}
+                      whileHover={{ y: -96 }}
+                      transition={{
+                        duration: 0.8,
+                        ease: 'easeOut',
+                      }}
+                    >
+                      <div className="relative aspect-[9/16] w-full">
+                        <Image
+                          src="/emailexample.png"
+                          alt="Email Marketing Example"
+                          fill
+                          className="object-contain object-top"
+                        />
+                      </div>
+                    </motion.div>
                   </div>
                 </div>
 
-                {/* Ranking List / Chart */}
-                <div className="w-56 bg-white border border-[#1a1512]/10 rounded-xl p-3 shadow-xl relative z-10 flex flex-col gap-2">
-
-                  {/* Item 1 - The Winner */}
-                  <div className="flex items-center gap-3 p-2 rounded-lg bg-[#ff5501]/10 border border-[#ff5501]/20 transition-all duration-500 group-hover:translate-x-1 group-hover:bg-[#ff5501]/20 group-hover:border-[#ff5501]/40">
-                    <div className="text-[10px] font-bold text-[#ff5501]">#1</div>
-                    <div className="flex-1 h-1.5 bg-[#ff5501]/30 rounded-full" />
-                    <TrendingUp size={12} className="text-[#ff5501]" />
-                  </div>
-
-                  {/* Item 2 */}
-                  <div className="flex items-center gap-3 p-2 rounded-lg border border-transparent opacity-60">
-                    <div className="text-[10px] font-bold text-[#1a1512]/40">#2</div>
-                    <div className="flex-1 h-1.5 bg-[#1a1512]/10 rounded-full" />
-                  </div>
-
-                  {/* Item 3 */}
-                  <div className="flex items-center gap-3 p-2 rounded-lg border border-transparent opacity-40">
-                    <div className="text-[10px] font-bold text-[#1a1512]/30">#3</div>
-                    <div className="flex-1 h-1.5 bg-[#1a1512]/10 rounded-full" />
+                <div className="absolute left-0 top-[42%] z-0 w-[128px] max-w-[38%] -translate-y-1/2 scale-[0.92] rotate-[-4deg] transform overflow-hidden rounded-xl border border-[#1a1512]/10 bg-white p-2.5 opacity-85 shadow-lg transition-all duration-500 group-hover:-translate-x-1 group-hover:-rotate-6 group-hover:opacity-95 md:top-[40%] md:p-3">
+                  <div className="mb-1.5 text-[9px] font-semibold text-[#1a1512]">Email Performance</div>
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-[7px] text-[#1a1512]/60">Open Rate</span>
+                      <span className="text-[9px] font-semibold text-[#ff5501]">42.3%</span>
+                    </div>
+                    <div className="h-1 w-full overflow-hidden rounded-full bg-[#1a1512]/5">
+                      <div className="h-full w-[42%] rounded-full bg-[#ff5501]/50" />
+                    </div>
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-[7px] text-[#1a1512]/60">Click Rate</span>
+                      <span className="text-[9px] font-semibold text-[#8b5cf6]">28.1%</span>
+                    </div>
+                    <div className="h-1 w-full overflow-hidden rounded-full bg-[#1a1512]/5">
+                      <div className="h-full w-[28%] rounded-full bg-[#8b5cf6]/50" />
+                    </div>
                   </div>
                 </div>
 
+                <div className="absolute right-0 top-[42%] z-0 w-[128px] max-w-[38%] -translate-y-1/2 scale-[0.92] rotate-[4deg] transform overflow-hidden rounded-xl border border-[#1a1512]/10 bg-white p-2.5 opacity-85 shadow-lg transition-all duration-500 group-hover:translate-x-1 group-hover:rotate-6 group-hover:opacity-95 md:top-[40%] md:p-3">
+                  <div className="mb-2 flex items-center gap-2">
+                    <div className="size-1.5 animate-pulse rounded-full bg-[#ff5501]" />
+                    <span className="text-[8px] font-semibold text-[#1a1512]">Campaign Active</span>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex justify-between gap-1">
+                      <span className="text-[7px] text-[#1a1512]/60">Sent</span>
+                      <span className="text-[8px] text-[#1a1512]/90">12,451</span>
+                    </div>
+                    <div className="flex justify-between gap-1">
+                      <span className="text-[7px] text-[#1a1512]/60">Delivered</span>
+                      <span className="text-[8px] text-[#ff5501]">11,892</span>
+                    </div>
+                    <div className="flex justify-between gap-1">
+                      <span className="text-[7px] text-[#1a1512]/60">Revenue</span>
+                      <span className="text-[8px] text-[#ff5501]">$8,421</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pointer-events-none absolute left-1/2 top-1/2 size-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff5501]/10 blur-[40px] md:size-32 md:blur-[48px]" />
               </div>
             </div>
 
-            <h4 className="text-[16px] font-normal text-[#1a1512] mb-2 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
-              SEO/AEO
-            </h4>
-            <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-              <b>The Compounder.</b> Paid ads are a treadmill. You have to keep spending to keep moving. We build an organic search strategy that gains momentum over time. We build the infrastructure. You collect the dividends.
+            <h3 className="mb-2 text-[16px] font-normal uppercase text-[#1a1512]" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
+              Email Marketing
+            </h3>
+            <p className="font-mono text-sm uppercase leading-relaxed tracking-wide text-[#1a1512]/60">
+              <b>The Follow-Up.</b> 98% of people leave your site without buying. We build the automated emails that chase them down and bring them back until they do.
             </p>
           </motion.div>
           </Link>
