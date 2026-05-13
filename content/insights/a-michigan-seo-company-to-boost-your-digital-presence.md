@@ -1,5 +1,5 @@
 ---
-title: "A Michigan SEO Company to Boost Your Digital Presence"
+title: "Michigan SEO Company Guide"
 slug: "a-michigan-seo-company-to-boost-your-digital-presence"
 excerpt: "Businesses in Michigan and beyond turn to SEO to grow visibility. Captive Demand combines keyword research, tools, and ongoing optimization for sustainable growth."
 category: "SEO/AEO"

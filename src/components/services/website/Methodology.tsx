@@ -141,9 +141,9 @@ const ServiceContent = ({ service }: { service: typeof servicesData[0] }) => (
                                     src={card.image}
                                     alt={card.title} 
                                     fill 
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                                     className="object-cover"
                                     key={card.image}
-                                    unoptimized
                                     priority={i === 0}
                                 />
                             </div>

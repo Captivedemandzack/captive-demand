@@ -239,7 +239,7 @@ function WorkHero() {
                 >
                   <Image
                     src={badge.icon}
-                    alt=""
+                    alt={badge.label}
                     width={16}
                     height={16}
                     sizes="16px"
@@ -357,8 +357,8 @@ function FeaturedCarousel() {
                   src={study.heroImage}
                   alt={study.clientName}
                   fill
+                sizes="(max-width: 1024px) 100vw, 70vw"
                   className="object-cover"
-                  unoptimized
                 />
               </div>
             </Link>
@@ -698,7 +698,6 @@ function LiveWebsiteCard({ study, index }: { study: CaseStudy; index: number }) 
                 alt={study.clientName}
                 fill
                 className="object-cover object-top"
-                unoptimized
                 priority={index === 0}
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />

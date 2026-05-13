@@ -1,5 +1,5 @@
 ---
-title: "One Big Change You Need, CRO Marketing…Conversion Rates will Skyrocket"
+title: "CRO Marketing Strategy Guide"
 slug: "one-big-change-you-need-cro-marketing"
 excerpt: "Conversion rate optimization (CRO) marketing is the process of increasing the percentage of visitors who take a desired action on your website."
 category: "SEO/AEO"

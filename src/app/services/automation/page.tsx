@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { AutomationHero } from '@/components/services/automation/AutomationHero';
 import { AutomationProblem } from '@/components/services/automation/AutomationProblem';
 import { AutomationSolutions } from '@/components/services/automation/AutomationSolutions';
@@ -10,19 +9,14 @@ import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
 import { FAQSection } from '@/components/sections/FAQSection';
 import { CTASection } from '@/components/sections/CTASection';
 import { ServiceSchema } from '@/components/schema/ServiceSchema';
+import { createSeoMetadata } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = createSeoMetadata({
     title: 'Workflow Automation Services for Growth Teams',
     description:
         'Captive Demand designs workflow automation, CRM systems, and operational processes that remove manual work and help teams scale.',
-    alternates: { canonical: '/services/automation' },
-    openGraph: {
-        title: 'Workflow Automation Services | Captive Demand',
-        description:
-            'Automation, CRM workflows, and operational systems for growth-stage teams.',
-        url: '/services/automation',
-    },
-};
+    path: '/services/automation',
+});
 
 export default function AutomationServicePage() {
     return (

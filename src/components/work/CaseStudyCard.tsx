@@ -56,7 +56,6 @@ export function CaseStudyCard({ study, index, variant = 'default' }: CaseStudyCa
               alt={study.clientName}
               fill
               className="object-cover object-top"
-              unoptimized
               priority={index === 0}
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
             />

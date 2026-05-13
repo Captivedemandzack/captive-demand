@@ -188,7 +188,6 @@ export function SEOCaseStudies() {
                                         fill
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                                        unoptimized
                                     />
                                     <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 bg-[rgba(247,247,247,0.17)] backdrop-blur-[10px] text-white px-3 py-1.5 rounded-[6px]">
                                         <TrendingUp size={12} className="text-[#ff5501]" strokeWidth={2} />

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { X } from 'lucide-react';
@@ -16,7 +16,7 @@ import {
   qualifiesForBookingCalendar,
   type AnnualCompanyRevenue,
 } from '@/lib/annual-company-revenue';
-import { pushDataLayerEvent } from '@/lib/analytics';
+import { trackGa4Event } from '@/lib/analytics';
 
 const sans = { fontFamily: 'var(--font-pricing-sans), system-ui, sans-serif' } as const;
 const mono = { fontFamily: 'var(--font-pricing-mono), ui-monospace, monospace' } as const;
@@ -44,13 +44,17 @@ export function PricingQualifyModal() {
   }>({});
   const [submitError, setSubmitError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const pricingEngagementTracked = useRef(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      pricingEngagementTracked.current = false;
+      return;
+    }
     setStep('form');
     setName('');
     setEmail('');
@@ -59,6 +63,9 @@ export function PricingQualifyModal() {
     setFieldErrors({});
     setSubmitError('');
     setSubmitting(false);
+    trackGa4Event('cd_pricing_modal_open', {
+      lead_source: 'pricing_modal',
+    });
   }, [isOpen]);
 
   useEffect(() => {
@@ -69,6 +76,15 @@ export function PricingQualifyModal() {
       document.body.style.overflow = prev;
     };
   }, [isOpen]);
+
+  const trackPricingFormEngagement = () => {
+    if (pricingEngagementTracked.current) return;
+    pricingEngagementTracked.current = true;
+    trackGa4Event('cd_pricing_form_start', {
+      form_name: 'pricing_modal',
+      lead_source: 'pricing_modal',
+    });
+  };
 
   const inputClass = (err: boolean) =>
     cn(
@@ -146,8 +162,8 @@ export function PricingQualifyModal() {
         typeof data.qualifiesForBooking === 'boolean'
           ? data.qualifiesForBooking
           : qualifiesForBookingCalendar(annualRevenue);
-      pushDataLayerEvent({
-        event: 'generate_lead',
+      trackGa4Event('generate_lead', {
+        lead_source: 'pricing_modal',
         form_name: 'pricing_modal',
         annual_company_revenue: annualRevenue,
         qualifies_for_booking: book,
@@ -230,6 +246,7 @@ export function PricingQualifyModal() {
                     style={mono}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    onFocus={trackPricingFormEngagement}
                   />
                   {fieldErrors.name && (
                     <p className="mt-1 text-xs text-red-400" style={mono}>
@@ -251,6 +268,7 @@ export function PricingQualifyModal() {
                     style={mono}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onFocus={trackPricingFormEngagement}
                   />
                   {fieldErrors.email && (
                     <p className="mt-1 text-xs text-red-400" style={mono}>
@@ -272,6 +290,7 @@ export function PricingQualifyModal() {
                     style={mono}
                     value={businessName}
                     onChange={(e) => setBusinessName(e.target.value)}
+                    onFocus={trackPricingFormEngagement}
                   />
                   {fieldErrors.businessName && (
                     <p className="mt-1 text-xs text-red-400" style={mono}>
@@ -290,6 +309,7 @@ export function PricingQualifyModal() {
                     style={mono}
                     value={annualRevenue}
                     onChange={(e) => setAnnualRevenue(e.target.value as AnnualCompanyRevenue)}
+                    onFocus={trackPricingFormEngagement}
                   >
                     {ANNUAL_COMPANY_REVENUE_OPTIONS.map((o) => (
                       <option key={o.value} value={o.value} className="bg-[#1a1512] text-white">

@@ -1,13 +1,115 @@
 'use client';
 
-import React from 'react';
+import React, { useId, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 import { usePlayVideoWhenVisible } from '@/hooks/usePlayVideoWhenVisible';
 import { AnimatedCTAButton } from '../sections/Hero';
 import { AskAiAboutFooter } from '@/components/layout/AskAiAboutFooter';
 import { siteConfig } from '@/lib/site';
+
+/** Aligned with `serviceSubMenu` in Navbar. */
+const FOOTER_SERVICE_LINKS = [
+    { label: 'Website', href: '/services/website' },
+    { label: 'SEO', href: '/services/seo' },
+    { label: 'Email', href: '/services/email-marketing' },
+    { label: 'Software', href: '/services/software' },
+    { label: 'Automation', href: '/services/automation' },
+] as const;
+
+function FooterServicesDisclosure() {
+    const panelId = useId();
+    const [open, setOpen] = useState(false);
+    const shouldReduceMotion = useReducedMotion();
+
+    React.useEffect(() => {
+        if (!open) return;
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') setOpen(false);
+        };
+        window.addEventListener('keydown', onKeyDown);
+        return () => window.removeEventListener('keydown', onKeyDown);
+    }, [open]);
+
+    return (
+        <li className="flex flex-col gap-1">
+            <button
+                type="button"
+                aria-expanded={open}
+                aria-controls={panelId}
+                id={`${panelId}-trigger`}
+                onClick={() => setOpen((v) => !v)}
+                className="inline-flex w-fit max-w-full min-h-11 cursor-pointer touch-manipulation items-center justify-start gap-[5px] rounded-md py-1 text-left text-lg md:text-xl font-nohemi-custom text-brand-dark outline-none ring-brand-dark transition-colors hover:text-[#ff5500] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fafafa]"
+            >
+                <span className="font-nohemi-custom">Services</span>
+                <ChevronDown
+                    size={22}
+                    strokeWidth={1.5}
+                    className={`shrink-0 text-brand-dark/50 transition-transform duration-200 ease-out motion-reduce:transition-none ${open ? '-rotate-180' : ''}`}
+                    aria-hidden
+                />
+            </button>
+
+            <AnimatePresence initial={false}>
+                {open && (
+                    <motion.ul
+                        id={panelId}
+                        key="footer-services-submenu"
+                        className="mt-2 flex flex-col gap-2 border-l-2 border-brand-dark/10 pl-4 list-none"
+                        initial={
+                            shouldReduceMotion
+                                ? { opacity: 1, y: 0 }
+                                : { opacity: 0, y: 8, filter: 'blur(4px)' }
+                        }
+                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        exit={
+                            shouldReduceMotion
+                                ? { opacity: 1, y: 0 }
+                                : { opacity: 0, y: 4, filter: 'blur(2px)' }
+                        }
+                        transition={
+                            shouldReduceMotion
+                                ? { duration: 0.01 }
+                                : {
+                                      type: 'spring',
+                                      duration: 0.45,
+                                      bounce: 0,
+                                  }
+                        }
+                    >
+                        {FOOTER_SERVICE_LINKS.map((item, i) => (
+                            <motion.li
+                                key={item.href}
+                                initial={
+                                    shouldReduceMotion
+                                        ? { opacity: 1, y: 0 }
+                                        : { opacity: 0, y: 6 }
+                                }
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    delay: shouldReduceMotion ? 0 : i * 0.06,
+                                    type: 'spring',
+                                    duration: 0.4,
+                                    bounce: 0,
+                                }}
+                            >
+                                <Link
+                                    href={item.href}
+                                    onClick={() => setOpen(false)}
+                                    className="block text-base md:text-lg text-brand-dark/80 hover:text-[#ff5500] transition-colors duration-150 font-nohemi-custom py-1"
+                                >
+                                    {item.label}
+                                </Link>
+                            </motion.li>
+                        ))}
+                    </motion.ul>
+                )}
+            </AnimatePresence>
+        </li>
+    );
+}
 
 /** Marquee clip — same visibility resume as hero so loops don’t stall after scroll/tab. */
 const FooterVideo = () => {
@@ -140,7 +242,7 @@ export default function Footer() {
                             <div className="flex flex-col gap-6">
                                 <h4 className="text-sm md:text-base font-[600] uppercase tracking-widest text-brand-dark/50 font-nohemi-custom">Explore</h4>
                                 <ul className="flex flex-col gap-3">
-                                    <li><Link href="/services" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Services</Link></li>
+                                    <FooterServicesDisclosure />
                                     <li><Link href="/work" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Work</Link></li>
                                     <li><Link href="/about" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">About</Link></li>
                                     <li><Link href="/insights" className="text-lg md:text-xl hover:text-[#ff5500] transition-colors font-nohemi-custom">Insights</Link></li>

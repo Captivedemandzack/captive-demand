@@ -206,8 +206,8 @@ const ServiceContent = ({ service }: { service: typeof methodologyData[0] }) => 
                                     src={card.image}
                                     alt={`${card.brand} — SEO`}
                                     fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                                     className="object-cover"
-                                    unoptimized
                                     priority={i === 0}
                                 />
                             </div>

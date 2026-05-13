@@ -1,5 +1,5 @@
 ---
-title: "Detroit SEO Powerhouse: Unleashing the Full Potential of Your Web Presence"
+title: "Detroit SEO Services Guide"
 slug: "detroit-seo"
 excerpt: "Detroit SEO services can help you increase visibility, supercharge your web presence, and reap the rewards of sustained business growth."
 category: "SEO/AEO"

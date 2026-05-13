@@ -77,6 +77,7 @@ export function ExampleWork() {
                         src={project.image}
                         alt={project.title}
                         fill
+                        sizes="(max-width: 1024px) 100vw, 58vw"
                         className="object-cover"
                         priority
                     />

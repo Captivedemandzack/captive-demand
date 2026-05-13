@@ -1,11 +1,13 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
+import { createSeoMetadata } from '@/lib/site';
 
-export const metadata: Metadata = {
-  title: 'Terms of Service | Captive Demand',
-  description: 'Terms of service for Captive Demand.',
-  alternates: { canonical: '/terms' },
-};
+export const metadata = createSeoMetadata({
+  title: 'Terms of Service',
+  description:
+    'Read the terms that govern use of Captive Demand services, website content, project agreements, and client communications.',
+  path: '/terms',
+  robots: { index: false, follow: true },
+});
 
 export default function TermsPage() {
   return (

@@ -224,7 +224,13 @@ function ImageCarousel({ images, clientName }: { images: string[]; clientName: s
         {duped.map((img, i) => (
           <div key={i} className="flex-shrink-0 w-[70vw] md:w-[380px]">
             <div className="relative aspect-[3/2] overflow-hidden rounded-[4px] border border-[#1a1512]/5">
-              <Image src={img} alt={`${clientName} project image ${(i % images.length) + 1}`} fill className="object-cover" unoptimized />
+              <Image
+                src={img}
+                alt={`${clientName} project image ${(i % images.length) + 1}`}
+                fill
+                sizes="(max-width: 768px) 70vw, 380px"
+                className="object-cover"
+              />
             </div>
           </div>
         ))}
@@ -385,7 +391,13 @@ function ChallengeSolutionSection({ study }: { study: CaseStudy }) {
             className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#1a1512]/5"
             style={{ boxShadow: '0 4px 20px rgba(26,21,18,0.04), 0 1px 3px rgba(26,21,18,0.06)' }}
           >
-            <Image src={challengeImg} alt={`${study.clientName} challenge`} fill className="object-cover" unoptimized />
+            <Image
+              src={challengeImg}
+              alt={`${study.clientName} challenge`}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
           </motion.div>
         </div>
 
@@ -399,7 +411,13 @@ function ChallengeSolutionSection({ study }: { study: CaseStudy }) {
             className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#1a1512]/5 order-2 lg:order-1"
             style={{ boxShadow: '0 4px 20px rgba(26,21,18,0.04), 0 1px 3px rgba(26,21,18,0.06)' }}
           >
-            <Image src={solutionImg} alt={`${study.clientName} solution`} fill className="object-cover" unoptimized />
+            <Image
+              src={solutionImg}
+              alt={`${study.clientName} solution`}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} viewport={{ once: true }} className="order-1 lg:order-2">
             <div className="mb-6 w-full"><DecorativeShapeWithLine /></div>
@@ -535,7 +553,13 @@ function GallerySection({ images, clientName }: { images: string[]; clientName: 
         {extraImages.map((img, i) => (
           <motion.div key={i} initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: i * 0.1 }} viewport={{ once: true }} className="flex-shrink-0 w-[55vw] md:w-[40vw] lg:w-[30vw] snap-start">
             <div className="relative aspect-[3/2] overflow-hidden rounded-[4px] border border-[#1a1512]/5">
-              <Image src={img} alt={`${clientName} gallery ${i + 1}`} fill className="object-cover" unoptimized />
+              <Image
+                src={img}
+                alt={`${clientName} gallery ${i + 1}`}
+                fill
+                sizes="(max-width: 768px) 55vw, (max-width: 1024px) 40vw, 30vw"
+                className="object-cover"
+              />
             </div>
           </motion.div>
         ))}

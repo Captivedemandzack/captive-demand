@@ -5,6 +5,7 @@ import {
   getRelatedInsights,
 } from '@/lib/insights';
 import { InsightPostPage } from '@/components/insights/InsightPostPage';
+import { createSeoMetadata } from '@/lib/site';
 import type { Metadata } from 'next';
 
 export function generateStaticParams() {
@@ -20,17 +21,14 @@ export async function generateMetadata({
   const insight = getInsightBySlug(slug);
   if (!insight) return { title: 'Insight | Captive Demand' };
 
-  return {
-    title: `${insight.title} | Captive Demand Insights`,
+  return createSeoMetadata({
+    title: insight.title,
     description: insight.excerpt,
-    alternates: { canonical: `/insights/${slug}` },
-    openGraph: {
-      title: `${insight.title} | Captive Demand Insights`,
-      description: insight.excerpt,
-      url: `/insights/${slug}`,
-      images: insight.coverImage ? [insight.coverImage] : undefined,
-    },
-  };
+    path: `/insights/${slug}`,
+    image: insight.coverImage,
+    imageAlt: insight.title,
+    type: 'article',
+  });
 }
 
 export default async function InsightSlugPage({

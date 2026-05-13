@@ -1,7 +1,7 @@
 ---
-title: "Digital Marketing Nashville TN: Pioneering Brand Growth in the Heart of Music City"
+title: "Digital Marketing Nashville TN"
 slug: "digital-marketing-nashville-tn"
-excerpt: "Captive Demand delivers innovative, data-driven digital marketing for Nashville businesses—SEO, CRO, web development, and content that helps you stand out."
+excerpt: "Digital marketing in Nashville takes clear positioning, SEO, content, and web development that help local businesses stand out."
 category: "SEO/AEO"
 author:
   name: "Spencer Donaldson"

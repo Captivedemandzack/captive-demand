@@ -254,7 +254,7 @@ export function ClientLogos() {
                                 >
                                     <Image
                                         src={badge.icon}
-                                        alt=""
+                                        alt={badge.label}
                                         width={16}
                                         height={16}
                                         sizes="16px"

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Check } from 'lucide-react';
 
 import { CTAButton } from '@/components/ui/CTAButton';
-import { pushDataLayerEvent } from '@/lib/analytics';
+import { trackGa4Event } from '@/lib/analytics';
 import {
   SITE_FORM_INPUT_CLASS,
   SITE_FORM_LABEL_CLASS,
@@ -48,8 +48,8 @@ export function ShorePartnershipLeadForm() {
         return;
       }
 
-      pushDataLayerEvent({
-        event: 'generate_lead',
+      trackGa4Event('generate_lead', {
+        lead_source: 'shore_partnership_page',
         form_name: 'shore_partnership',
       });
       setSubmitted(true);

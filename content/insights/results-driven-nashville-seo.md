@@ -1,7 +1,7 @@
 ---
-title: "A Results Driven Nashville SEO Agency"
+title: "Nashville SEO Agency Guide"
 slug: "results-driven-nashville-seo"
-excerpt: "Nashville, TN is a booming city with plenty of small businesses competing for attention. Getting your business noticed in such a crowded digital market can be challenging, but it's not impossible."
+excerpt: "Nashville businesses compete in a crowded search market. Learn how focused SEO strategy helps local brands earn visibility and leads."
 category: "SEO/AEO"
 author:
   name: "Spencer Donaldson"

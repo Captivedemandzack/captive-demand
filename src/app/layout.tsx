@@ -8,6 +8,23 @@ import { SiteGoogleAnalytics } from "@/components/analytics/SiteGoogleAnalytics"
 import { OrganizationSchema } from "@/components/schema/OrganizationSchema";
 import { siteConfig } from "@/lib/site";
 
+const crawlableSiteLinks = [
+    { href: "/work", label: "Case studies" },
+    { href: "/pricing", label: "Pricing" },
+    { href: "/about", label: "About Captive Demand" },
+    { href: "/contact", label: "Contact Captive Demand" },
+    { href: "/insights", label: "Digital marketing insights" },
+    { href: "/products", label: "Products" },
+    { href: "/products/calsync", label: "CalSync" },
+    { href: "/services/website", label: "Website design services" },
+    { href: "/services/seo", label: "SEO and AEO services" },
+    { href: "/services/email-marketing", label: "Email marketing services" },
+    { href: "/services/software", label: "Custom software services" },
+    { href: "/services/automation", label: "Workflow automation services" },
+    { href: "/privacy", label: "Privacy policy" },
+    { href: "/terms", label: "Terms of service" },
+];
+
 const inter = Inter({
     subsets: ["latin"],
     variable: "--font-sans",
@@ -98,6 +115,20 @@ export default function RootLayout({
                 <main className="relative z-10 bg-[#fafafa] w-full overflow-x-hidden">
                     {children}
                 </main>
+                <nav
+                    aria-label="Site links"
+                    className="sr-only focus-within:not-sr-only focus-within:fixed focus-within:bottom-4 focus-within:left-4 focus-within:z-[60] focus-within:max-w-sm focus-within:rounded-xl focus-within:border focus-within:border-brand-dark/10 focus-within:bg-[#fafafa] focus-within:p-4 focus-within:shadow-lg"
+                >
+                    <ul className="flex flex-col gap-2">
+                        {crawlableSiteLinks.map((link) => (
+                            <li key={link.href}>
+                                <a href={link.href} className="text-sm text-brand-dark underline underline-offset-2">
+                                    {link.label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
                 <DeferredFooter />
             </body>
         </html>

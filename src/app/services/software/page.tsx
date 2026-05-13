@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { SoftwareHero } from '@/components/services/software/SoftwareHero';
 import { Capabilities } from '@/components/services/software/Capabilities';
 import { ProcessTimeline } from '@/components/services/software/ProcessTimeline';
@@ -8,19 +7,14 @@ import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
 import { CTASection } from '@/components/sections/CTASection';
 import { FAQSection } from '@/components/sections/FAQSection';
 import { ServiceSchema } from '@/components/schema/ServiceSchema';
+import { createSeoMetadata } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = createSeoMetadata({
     title: 'Custom Software Development Services',
     description:
         'Captive Demand builds custom software, dashboards, APIs, and internal tools for companies that need faster operations and better systems.',
-    alternates: { canonical: '/services/software' },
-    openGraph: {
-        title: 'Custom Software Development | Captive Demand',
-        description:
-            'Custom dashboards, APIs, applications, and internal tools for scaling teams.',
-        url: '/services/software',
-    },
-};
+    path: '/services/software',
+});
 
 export default function SoftwareServicePage() {
     return (

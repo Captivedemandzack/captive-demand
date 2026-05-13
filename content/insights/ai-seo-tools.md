@@ -1,5 +1,5 @@
 ---
-title: "Cutting-Edge AI SEO Tools Elevate Nashville Marketing"
+title: "AI SEO Tools for Nashville"
 slug: "ai-seo-tools"
 excerpt: "Welcome to the future of search engine optimization, where AI-assisted SEO tools are transforming the way businesses approach their online presence."
 category: "SEO/AEO"

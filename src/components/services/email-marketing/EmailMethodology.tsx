@@ -42,7 +42,7 @@ const emailServicesData: Array<{
         tags: ["List Health Analysis", "Deliverability Audit", "Spam Score Check", "Past Campaign Review", "Competitor Benchmarks", "Tech Stack Assessment"],
         cards: [
             { brand: 'Pontoon Saloon', stat: '+38%', label: 'AVG. OPEN RATE', image: '/seo/pontoonseo.webp' },
-            { brand: 'WFH Investor', stat: '+42%', label: 'REPLY RATE', image: '/wfhinvestoremail.avif' },
+            { brand: 'WFH Investor', stat: '+42%', label: 'REPLY RATE', image: '/seo/wfhinvestoremail.avif' },
             { brand: 'North Star Nature Suites', stat: '+56%', label: 'BOOKING EMAIL CTR', image: '/seo/northstarseo.jpg' },
         ],
     },
@@ -139,8 +139,9 @@ const ServiceContent = ({ service }: { service: typeof emailServicesData[0] }) =
                                     src={card.image}
                                     alt={`${card.brand} — email marketing`}
                                     fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                                     className={card.image.endsWith('.svg') ? 'object-contain p-10' : 'object-cover'}
-                                    unoptimized
+                                    unoptimized={card.image.endsWith('.svg')}
                                     priority={i === 0}
                                 />
                             </div>

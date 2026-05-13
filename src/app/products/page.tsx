@@ -1,19 +1,13 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
+import { createSeoMetadata } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = createSeoMetadata({
     title: 'Products Built by Captive Demand',
     description:
         'Purpose-built tools from Captive Demand. Currently: CalSync — automatic Google Calendar sync for freelancers and agency operators.',
-    alternates: { canonical: '/products' },
-    openGraph: {
-        title: 'Products Built by Captive Demand',
-        description:
-            'Purpose-built tools from Captive Demand, starting with CalSync for automatic Google Calendar sync.',
-        url: '/products',
-    },
-};
+    path: '/products',
+});
 
 const products = [
     {

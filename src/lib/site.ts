@@ -1,4 +1,6 @@
-/** Production origin for analytics, OG, and AI “tell me about …” deep links (never localhost). */
+import type { Metadata } from "next";
+
+/** Production origin for analytics, OG, and AI "tell me about ..." deep links (never localhost). */
 export const canonicalProductionOrigin = "https://captivedemand.com";
 
 export const siteConfig = {
@@ -39,4 +41,69 @@ export function absoluteUrl(path = "") {
   if (/^https?:\/\//.test(path)) return path;
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   return `${siteConfig.url}${normalizedPath === "/" ? "" : normalizedPath}`;
+}
+
+const defaultOpenGraphImage = {
+  url: "/opengraph.png",
+  width: 1200,
+  height: 628,
+  alt: siteConfig.name,
+};
+
+interface SeoMetadataOptions {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+  imageAlt?: string;
+  type?: "website" | "article";
+  robots?: Metadata["robots"];
+}
+
+function titleWithBrand(title: string) {
+  return title.includes(siteConfig.name) ? title : `${title} | ${siteConfig.name}`;
+}
+
+export function createSeoMetadata({
+  title,
+  description,
+  path,
+  image,
+  imageAlt,
+  type = "website",
+  robots,
+}: SeoMetadataOptions): Metadata {
+  const imageUrl = image ?? defaultOpenGraphImage.url;
+  const brandedTitle = titleWithBrand(title);
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: path,
+    },
+    openGraph: {
+      type,
+      siteName: siteConfig.name,
+      locale: "en_US",
+      url: path,
+      title: brandedTitle,
+      description,
+      images: [
+        {
+          url: imageUrl,
+          width: defaultOpenGraphImage.width,
+          height: defaultOpenGraphImage.height,
+          alt: imageAlt ?? brandedTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: brandedTitle,
+      description,
+      images: [imageUrl],
+    },
+    robots,
+  };
 }

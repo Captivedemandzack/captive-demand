@@ -1,21 +1,15 @@
-import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { HomepageDeferredSections } from "@/components/sections/HomepageDeferredSections";
 import { FAQSchema } from "@/components/schema/FAQSchema";
 import { homeFaqs } from "@/lib/home-faqs";
+import { createSeoMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata = createSeoMetadata({
     title: "Nashville Web Design & SEO Agency",
     description:
         "Captive Demand builds websites, SEO/AEO systems, email marketing, automation, and software for growth-stage brands and Nashville businesses.",
-    alternates: { canonical: "/" },
-    openGraph: {
-        title: "Nashville Web Design & SEO Agency | Captive Demand",
-        description:
-            "Web design, SEO/AEO, email marketing, automation, and software for businesses ready to grow.",
-        url: "/",
-    },
-};
+    path: "/",
+});
 
 export default function Home() {
     return (

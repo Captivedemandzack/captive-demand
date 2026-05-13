@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getCaseStudyBySlug, getAllSlugs } from '@/data/case-studies';
 import { CaseStudyPageClient } from './client';
+import { createSeoMetadata } from '@/lib/site';
 import type { Metadata } from 'next';
 
 export function generateStaticParams() {
@@ -16,17 +17,13 @@ export async function generateMetadata({
   const study = getCaseStudyBySlug(slug);
   if (!study) return { title: 'Case Study' };
 
-  return {
+  return createSeoMetadata({
     title: `${study.clientName} Case Study`,
     description: study.shortDescription,
-    alternates: { canonical: `/work/${slug}` },
-    openGraph: {
-      title: `${study.clientName} Case Study | Captive Demand`,
-      description: study.shortDescription,
-      url: `/work/${slug}`,
-      images: study.heroImage ? [study.heroImage] : undefined,
-    },
-  };
+    path: `/work/${slug}`,
+    image: study.heroImage,
+    imageAlt: `${study.clientName} case study`,
+  });
 }
 
 export default async function CaseStudyRoute({

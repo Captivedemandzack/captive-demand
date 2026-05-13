@@ -247,6 +247,7 @@ export function WebsiteHero() {
                                         src="/eosblank3.png"
                                         alt="Website in development"
                                         fill
+                                        sizes="(max-width: 1024px) 100vw, 62vw"
                                         className="object-cover"
                                         style={{ objectPosition: 'left top' }}
                                         priority

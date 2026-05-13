@@ -1,11 +1,13 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
+import { createSeoMetadata } from '@/lib/site';
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy | Captive Demand',
-  description: 'Privacy policy for Captive Demand.',
-  alternates: { canonical: '/privacy' },
-};
+export const metadata = createSeoMetadata({
+  title: 'Privacy Policy',
+  description:
+    'Review how Captive Demand collects, uses, and protects information submitted through our website, analytics, and client inquiry forms.',
+  path: '/privacy',
+  robots: { index: false, follow: true },
+});
 
 export default function PrivacyPage() {
   return (

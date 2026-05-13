@@ -3,20 +3,14 @@ import { InsightHero } from '@/components/insights/InsightHero';
 import { FeaturedInsight } from '@/components/insights/FeaturedInsight';
 import { InsightGrid } from '@/components/insights/InsightGrid';
 import { CTASection } from '@/components/sections/CTASection';
-import type { Metadata } from 'next';
+import { createSeoMetadata } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = createSeoMetadata({
   title: 'Digital Marketing and SEO Insights',
   description:
     'Read Captive Demand insights on SEO, AEO, web design, email marketing, automation, and growth strategy for ambitious companies.',
-  alternates: { canonical: '/insights' },
-  openGraph: {
-    title: 'Digital Marketing and SEO Insights | Captive Demand',
-    description:
-      'Strategy, design, SEO, and marketing perspectives from Captive Demand.',
-    url: '/insights',
-  },
-};
+  path: '/insights',
+});
 
 export default function InsightsPage() {
   const insights = getAllInsights();

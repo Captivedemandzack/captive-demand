@@ -1,7 +1,7 @@
 ---
-title: "How to Manage Your Agency Calendar Across Multiple Clients"
+title: "Agency Calendar Management Tips"
 slug: "agency-calendar-management"
-excerpt: "Managing an agency calendar requires a shift from viewing time as an infinite resource to treating it as a structured inventory. Here are the structural moves that change how the week feels and what it produces."
+excerpt: "Managing an agency calendar starts with treating time as structured inventory. Use these moves to reduce conflicts and protect deep work."
 category: "SEO/AEO"
 author:
   name: "Spencer Donaldson"

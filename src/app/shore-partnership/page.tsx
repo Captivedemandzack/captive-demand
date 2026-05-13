@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, Clock, Instagram, Linkedin } from 'lucide-react';
@@ -23,20 +22,15 @@ import {
   shorePartnershipBookingUrl,
 } from '@/lib/shore-partnership';
 
+import { createSeoMetadata } from '@/lib/site';
 import { cn } from '@/lib/utils';
 
-export const metadata: Metadata = {
+export const metadata = createSeoMetadata({
   title: 'Captive Demand × Shore Capital Partners',
   description:
     'How Captive Demand ships web and measurement work alongside Shore portfolio companies — audit-first scoping, senior-led delivery, and timelines sponsors recognize.',
-  alternates: { canonical: '/shore-partnership' },
-  openGraph: {
-    title: 'Captive Demand × Shore Capital Partners',
-    description:
-      'Web partner hub for Shore operators: case studies, operating model, and a direct line to Spencer.',
-    url: '/shore-partnership',
-  },
-};
+  path: '/shore-partnership',
+});
 
 const operatingTabs = [
   {

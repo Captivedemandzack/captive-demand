@@ -1,47 +1,40 @@
 import type { Metadata } from 'next';
 import { CalSyncPage } from '@/components/products/calsync/CalSyncPage';
-import { siteConfig } from '@/lib/site';
+import { JsonLd } from '@/components/schema/JsonLd';
+import { absoluteUrl, createSeoMetadata, siteConfig } from '@/lib/site';
 
 const PAGE_URL = '/products/calsync';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createSeoMetadata({
     title: 'How to Merge Google Calendars Automatically | CalSync by Captive Demand',
     description:
         'Learn how to merge Google Calendars across Workspace accounts. CalSync copies events automatically every 5 minutes so you never double-book. Start a free trial.',
-    alternates: {
-        canonical: PAGE_URL,
-    },
-    openGraph: {
-        title: 'How to Merge Google Calendars Automatically | CalSync',
-        description:
-            'Stop double-booking across Google Workspace accounts. CalSync auto-syncs your calendars every 5 minutes.',
-        url: PAGE_URL,
-        type: 'website',
-        siteName: 'Captive Demand',
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'How to Merge Google Calendars Automatically | CalSync',
-        description:
-            'Auto-sync Google Calendars across Workspace accounts every 5 minutes. No double-booking.',
-    },
+    path: PAGE_URL,
     robots: { index: true, follow: true },
-};
+});
 
 const softwareApplicationSchema = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
+    '@id': absoluteUrl(`${PAGE_URL}#software-application`),
     name: 'CalSync',
     applicationCategory: 'BusinessApplication',
+    applicationSubCategory: 'Calendar synchronization software',
     operatingSystem: 'Web',
     url: 'https://www.calsync.party',
+    sameAs: absoluteUrl(PAGE_URL),
+    image: absoluteUrl('/opengraph.png'),
+    screenshot: absoluteUrl('/opengraph.png'),
     description:
         'Automatically merge Google Calendars across Workspace accounts. Events sync every 5 minutes.',
     offers: {
         '@type': 'Offer',
+        url: 'https://www.calsync.party',
         price: '2.99',
         priceCurrency: 'USD',
         priceValidUntil: '2027-12-31',
+        availability: 'https://schema.org/InStock',
+        category: 'Subscription',
     },
     featureList: [
         'Automatic sync every 5 minutes',
@@ -55,11 +48,15 @@ const softwareApplicationSchema = {
         name: 'Captive Demand',
         url: siteConfig.url,
     },
+    publisher: {
+        '@id': absoluteUrl('/#organization'),
+    },
 };
 
 const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    '@id': absoluteUrl(`${PAGE_URL}#faq`),
     mainEntity: [
         {
             '@type': 'Question',
@@ -123,14 +120,8 @@ const faqSchema = {
 export default function CalSyncProductPage() {
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-            />
+            <JsonLd data={softwareApplicationSchema} />
+            <JsonLd data={faqSchema} />
             <CalSyncPage />
         </>
     );

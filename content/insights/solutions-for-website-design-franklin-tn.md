@@ -1,7 +1,7 @@
 ---
-title: "Concept to Launch: Complete Solutions for Website Design, Franklin, TN"
+title: "Website Design in Franklin, TN"
 slug: "solutions-for-website-design-franklin-tn"
-excerpt: "In the heart of Tennessee, Franklin stands as a beacon of business growth and digital evolution. This guide sheds light on web design in Franklin and how businesses can leverage local expertise."
+excerpt: "Franklin businesses need websites that build trust quickly. This guide covers web design strategy, local visibility, and launch planning."
 category: "SEO/AEO"
 author:
   name: "Spencer Donaldson"
