@@ -11,7 +11,9 @@ import { CAPTIVE_DEMAND_LOGO, SHORE_LOGOMARK_URL } from '@/lib/shore-partnership
 const NAV_LINKS = [
   { label: 'Approach', href: '#approach' },
   { label: 'Services', href: '#services' },
+  { label: 'Integrations', href: '#integrations' },
   { label: 'Case studies', href: '#case-studies' },
+  { label: 'Free audit', href: '#free-audit' },
   { label: 'Engage', href: '#engage' },
 ];
 

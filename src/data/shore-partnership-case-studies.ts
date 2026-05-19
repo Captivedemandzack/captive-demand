@@ -67,7 +67,7 @@ export const shorePartnershipCaseStudies: ShoreCaseStudy[] = [
     engagementType: 'Email & lifecycle automation. Multi-brand portfolio.',
     tags: ['Shore portfolio', 'Email & lifecycle automation', 'Multi-brand portfolio'],
     challenge:
-      'Empower runs eleven medspa brands under one Shore portco. Each brand has its own audience, voice, and local market. We built the lifecycle programming that scales across all of them without flattening what makes each one work locally.',
+      'Empower runs eleven medspa brands under one Shore portfolio company. Each brand has its own audience, voice, and local market. We built the lifecycle programming that scales across all of them without flattening what makes each one work locally.',
     actions: [
       'Mapped customer journeys across all eleven brands with shared taxonomy and brand-specific guardrails',
       'Built the email and automation flows fueling buying cycles and compliance norms across the portfolio',
@@ -186,56 +186,5 @@ export const shorePartnershipCaseStudies: ShoreCaseStudy[] = [
         { label: 'Avg session duration (sec)', prior: 142, current: 182 },
       ],
     },
-  },
-  {
-    id: 'pack-me-happy',
-    name: 'Pack Me Happy',
-    tier: 'supporting',
-    engagementType: 'Client dashboard. GHL/HubSpot CRM integration.',
-    tags: ['Custom dashboard', 'CRM integration'],
-    challenge:
-      'Demonstrates non-medspa delivery. Custom dashboarding tied to CRM workflows for operators who live in the details.',
-    actions: [
-      'Designed dashboard UX around daily operator tasks',
-      'Integrated GHL objects and automations with clear ownership boundaries',
-      'Documented handoff so future vendors are not blocked',
-    ],
-    results: '[Placeholder. Add concrete usage or ROI metrics.]',
-    visualProof:
-      'Drop a dashboard hero shot or short Loom of the operator view. Annotate the workflow trigger if it is not obvious from the still.',
-  },
-  {
-    id: 'cast-board-pro',
-    name: 'Cast Board Pro',
-    tier: 'supporting',
-    engagementType: 'SaaS / product-style experience for Paul Brickman.',
-    tags: ['SaaS UX', 'Product-style build'],
-    challenge:
-      'Product-grade UX and messaging for a SaaS-style offer. Different buyer than aesthetic portfolios but same senior-led delivery model.',
-    actions: [
-      'Product storytelling and conversion paths tuned for software evaluations',
-      'Technical implementation aligned with roadmap and integrations',
-      'Instrumentation for funnel milestones',
-    ],
-    results: '[Placeholder. Add adoption or revenue proof points.]',
-    visualProof:
-      'Drop the product landing hero plus one product UI shot, or a short Loom highlighting the conversion path.',
-  },
-  {
-    id: 'pontoon-saloon',
-    name: 'Pontoon Saloon / Nashville Water Taxi',
-    tier: 'supporting',
-    engagementType: 'Landing pages. Paid acquisition takeover.',
-    tags: ['Landing pages', 'Paid takeover'],
-    challenge:
-      'SMB hospitality operators needing fast landing experiences and disciplined paid takeover. Proof we can move quickly outside healthcare.',
-    actions: [
-      'Landing architecture aligned to ad groups and seasonal pushes',
-      'Creative iteration loops with measurable CPA targets',
-      'Conversion-focused above-the-fold clarity',
-    ],
-    results: '[Placeholder. Add CPA or lead volume benchmarks.]',
-    visualProof:
-      'Drop a landing page set or a short Loom showing the campaign-to-page flow. Optional pending Spencer review of fit.',
   },
 ];

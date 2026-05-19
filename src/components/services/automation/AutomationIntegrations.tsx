@@ -175,6 +175,30 @@ function MarqueeGridRow({
     );
 }
 
+export function IntegrationsLogoMarquee({ footnote }: { footnote: string }) {
+  return (
+    <>
+      <div className="relative flex flex-col items-center overflow-hidden pb-5 pt-5">
+        <div
+          className="flex w-full flex-col items-center gap-[14px]"
+          style={{
+            maskImage:
+              'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 120px, black 280px, black calc(100% - 280px), rgba(0,0,0,0.4) calc(100% - 120px), transparent 100%)',
+            WebkitMaskImage:
+              'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 120px, black 280px, black calc(100% - 280px), rgba(0,0,0,0.4) calc(100% - 120px), transparent 100%)',
+          }}
+        >
+          <MarqueeGridRow items={row1} direction="right" rowIndex={0} />
+          <MarqueeGridRow items={row2} direction="left" rowIndex={1} />
+          <MarqueeGridRow items={row3} direction="right" rowIndex={2} />
+        </div>
+      </div>
+
+      <p className="mt-10 text-center font-mono text-sm text-[#1a1512]/40">{footnote}</p>
+    </>
+  );
+}
+
 export function AutomationIntegrations() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const labelRef = useRef<HTMLSpanElement>(null);
@@ -261,26 +285,7 @@ export function AutomationIntegrations() {
                     </h2>
                 </div>
 
-                {/* Infinite marquee with edge fade — mask only so section bg (#FAFAFA + noise) shows through */}
-                <div className="relative flex flex-col items-center pt-5 pb-5 overflow-hidden">
-                    <div
-                        className="flex flex-col items-center gap-[14px] w-full"
-                        style={{
-                            maskImage:
-                                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 120px, black 280px, black calc(100% - 280px), rgba(0,0,0,0.4) calc(100% - 120px), transparent 100%)',
-                            WebkitMaskImage:
-                                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 120px, black 280px, black calc(100% - 280px), rgba(0,0,0,0.4) calc(100% - 120px), transparent 100%)',
-                        }}
-                    >
-                        <MarqueeGridRow items={row1} direction="right" rowIndex={0} />
-                        <MarqueeGridRow items={row2} direction="left" rowIndex={1} />
-                        <MarqueeGridRow items={row3} direction="right" rowIndex={2} />
-                    </div>
-                </div>
-
-                <p className="text-center mt-10 font-mono text-sm text-[#1a1512]/40">
-                    + custom API integrations for any tool in your workflow
-                </p>
+                <IntegrationsLogoMarquee footnote="+ custom API integrations for any tool in your workflow" />
             </div>
         </section>
     );

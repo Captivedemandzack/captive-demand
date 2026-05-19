@@ -11,9 +11,16 @@ import {
 } from '@/components/layout/ask-ai-brand-glyphs';
 
 /** Always embed production URL in prompts so links work from localhost/staging builds. */
-function buildTellAboutPrompt(): string {
+function buildTellAboutPrompt(customPrompt?: string): string {
+  if (customPrompt?.trim()) return customPrompt.trim();
   const origin = canonicalProductionOrigin.replace(/\/$/, '');
   return `tell me about ${origin}/`;
+}
+
+export interface AskAiAboutFooterProps {
+  /** Override the default “tell me about …” prompt sent to each assistant. */
+  prompt?: string;
+  className?: string;
 }
 
 /**
@@ -53,8 +60,8 @@ type AssistantImageRow = {
 
 type AssistantRow = AssistantGlyphRow | AssistantImageRow;
 
-export function AskAiAboutFooter() {
-  const prompt = buildTellAboutPrompt();
+export function AskAiAboutFooter({ prompt: promptOverride, className }: AskAiAboutFooterProps = {}) {
+  const prompt = buildTellAboutPrompt(promptOverride);
   const encoded = encodeURIComponent(prompt);
 
   /** Claude → Gemini → Grok → ChatGPT → Perplexity */
@@ -105,7 +112,7 @@ export function AskAiAboutFooter() {
   const displaySite = `${canonicalProductionOrigin.replace(/\/$/, '')}/`;
 
   return (
-    <section className="mt-12 md:mt-14" aria-labelledby="ask-ai-footer-heading">
+    <section className={cn('mt-12 md:mt-14', className)} aria-labelledby="ask-ai-footer-heading">
       <div className="max-w-xl pb-6">
         <h3
           id="ask-ai-footer-heading"

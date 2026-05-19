@@ -14,6 +14,13 @@ import {
 } from '@/lib/site-surfaces';
 import { cn } from '@/lib/utils';
 
+const SITE_COUNT_OPTIONS = [
+  { value: '1', label: '1 site' },
+  { value: '2-5', label: '2–5 sites' },
+  { value: '6-11', label: '6–11 sites' },
+  { value: '12+', label: '12+ sites (portfolio roll-up)' },
+] as const;
+
 export function ShorePartnershipLeadForm() {
   const [submitted, setSubmitted] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
@@ -21,6 +28,7 @@ export function ShorePartnershipLeadForm() {
     fullName: '',
     email: '',
     portco: '',
+    siteCount: '',
     message: '',
     trap: '',
   });
@@ -39,6 +47,7 @@ export function ShorePartnershipLeadForm() {
           fullName: form.fullName.trim(),
           email: form.email.trim(),
           businessName: form.portco.trim(),
+          siteCount: form.siteCount,
           message: form.message.trim(),
         }),
       });
@@ -69,10 +78,10 @@ export function ShorePartnershipLeadForm() {
           <Check className="size-7 text-[#E8480C]" strokeWidth={2} aria-hidden />
         </div>
         <h3 className="mt-6 font-sans text-[20px] font-bold text-[#111]">
-          Got it. Spencer will pick this up directly.
+          Got it. Our Shore-dedicated team will pick this up directly.
         </h3>
         <p className="mx-auto mt-4 max-w-md font-mono text-sm text-[#666]">
-          We never sell your info. Your submission goes straight to Spencer&apos;s desk for a personal reply.
+          Senior leadership routes every Shore submission. Expect white-glove follow-up, not a generic sales sequence.
         </p>
         <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-[#999]">
           Typical reply within the same business day
@@ -86,6 +95,11 @@ export function ShorePartnershipLeadForm() {
       className={cn(siteMarketingWhiteCardClassName('p-8 md:p-10'))}
       style={SITE_MARKETING_WHITE_SHADOW}
     >
+      <p className="mb-6 font-mono text-[11px] uppercase leading-relaxed tracking-[0.1em] text-[#1a1512]/55">
+        Shore portfolio partners get a dedicated desk: senior strategists on routing and QC, with managed production
+        teams built to handle multi-site portfolio volume.
+      </p>
+
       <div className="sr-only" aria-live="polite">
         {status === 'error' ? 'Something went wrong. Try again or email hello@captivedemand.com.' : ''}
       </div>
@@ -132,10 +146,10 @@ export function ShorePartnershipLeadForm() {
               value={form.email}
               onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
               className={`${SITE_FORM_INPUT_CLASS} mt-2`}
-              placeholder="you@portco.com"
+              placeholder="you@portfolio-company.com"
             />
           </div>
-          <div className="md:col-span-2">
+          <div className="md:col-span-1">
             <label htmlFor="shore-portco" className={SITE_FORM_LABEL_CLASS}>
               Portfolio company
             </label>
@@ -149,6 +163,28 @@ export function ShorePartnershipLeadForm() {
               placeholder="e.g., Empower Aesthetics"
             />
           </div>
+          <div className="md:col-span-1">
+            <label htmlFor="shore-site-count" className={SITE_FORM_LABEL_CLASS}>
+              How many sites need help?
+            </label>
+            <select
+              id="shore-site-count"
+              required
+              name="siteCount"
+              value={form.siteCount}
+              onChange={(e) => setForm((f) => ({ ...f, siteCount: e.target.value }))}
+              className={`${SITE_FORM_INPUT_CLASS} mt-2`}
+            >
+              <option value="" disabled>
+                Select scope
+              </option>
+              {SITE_COUNT_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="md:col-span-2">
             <label htmlFor="shore-msg" className={SITE_FORM_LABEL_CLASS}>
               What should we know before we respond?
@@ -160,7 +196,7 @@ export function ShorePartnershipLeadForm() {
               value={form.message}
               onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
               className={`${SITE_FORM_INPUT_CLASS} mt-2 resize-y`}
-              placeholder="Timeline, scope hypotheses, internal stakeholders."
+              placeholder="Timeline, scope hypotheses, internal stakeholders, brands in scope."
             />
           </div>
         </div>
@@ -171,7 +207,7 @@ export function ShorePartnershipLeadForm() {
             <a className="underline underline-offset-2" href="mailto:hello@captivedemand.com">
               hello@captivedemand.com
             </a>{' '}
-            and we will respond from Spencer&apos;s desk.
+            and we will respond from our Shore partnership desk.
           </p>
         ) : null}
 
@@ -188,7 +224,7 @@ export function ShorePartnershipLeadForm() {
         </div>
 
         <p className="mt-4 font-mono text-[11px] text-[#999]">
-          We never sell your info. Your submission goes straight to Spencer&apos;s desk for a personal reply.
+          We never sell your info. Your submission goes straight to our Shore-dedicated team for a personal reply.
         </p>
       </form>
     </div>

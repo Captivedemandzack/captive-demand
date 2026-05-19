@@ -13,15 +13,16 @@ type Body = {
   service?: string;
   budget?: string;
   message?: string;
-  /** @deprecated pricing modal no longer sends tier */
-  tier?: string;
+  /** Shore partnership: how many sites need help */
+  siteCount?: string;
   recaptchaToken?: string;
   source?: string;
 };
 
 /** Shore partnership landing — skips revenue gate; routes like Spencer brief */
 function isShorePartnershipSource(source: string | undefined): boolean {
-  return source?.trim() === 'shore_partnership';
+  const s = source?.trim();
+  return s === 'shore_partnership' || s === 'shore_partnership_audit';
 }
 
 /** Always CC this address on lead emails (override with LEAD_CC_EMAIL). */
@@ -119,6 +120,7 @@ export async function POST(request: Request) {
     const revenueParsed = parseAnnualCompanyRevenue(body.annualCompanyRevenue);
     const isPricingModal = body.source === 'pricing_modal';
     const isShorePartnership = isShorePartnershipSource(body.source);
+    const isShoreAudit = body.source === 'shore_partnership_audit';
 
     if (!displayName || !email) {
       return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
@@ -156,18 +158,29 @@ export async function POST(request: Request) {
 
     if (transporter) {
       if (isShorePartnership) {
+        const siteCountLine = body.siteCount?.trim() ? `Sites in scope: ${body.siteCount.trim()}` : '';
+        const sourceLabel = isShoreAudit
+          ? 'Shore Capital Partnership Page — Free audit request (captivedemand.com/shore-partnership#free-audit)'
+          : 'Shore Capital Partnership Page (captivedemand.com/shore-partnership)';
         const text = [
-          'Source: Shore Capital Partnership Page (captivedemand.com/shore-partnership)',
+          `Source: ${sourceLabel}`,
           `Name: ${displayName}`,
           `Portfolio company: ${businessName}`,
+          siteCountLine,
           `Reply-to email: ${email}`,
-          body.message?.trim() ? `\nMessage:\n${body.message.trim()}` : '',
+          body.message?.trim()
+            ? isShoreAudit
+              ? `\nSite URLs / notes:\n${body.message.trim()}`
+              : `\nMessage:\n${body.message.trim()}`
+            : '',
         ]
           .filter(Boolean)
           .join('\n');
         try {
           await sendLeadToCeo(transporter, {
-            subject: `Shore partnership inquiry — ${displayName} (${businessName})`,
+            subject: isShoreAudit
+              ? `Shore free audit request — ${displayName} (${businessName})`
+              : `Shore partnership inquiry — ${displayName} (${businessName})`,
             text,
           });
         } catch (mailErr) {

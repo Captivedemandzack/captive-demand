@@ -31,8 +31,8 @@ const STATS: ShoreStat[] = [
   {
     value: '420',
     suffix: 'K+',
-    label: 'Paid impressions',
-    sublabel: 'Peak Shore campaigns',
+    label: 'Organic search impressions',
+    sublabel: 'Portfolio SEO & AEO reach',
   },
 ];
 

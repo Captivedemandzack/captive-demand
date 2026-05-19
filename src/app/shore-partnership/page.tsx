@@ -1,14 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, Clock, Instagram, Linkedin } from 'lucide-react';
+import { Clock, Instagram, Linkedin } from 'lucide-react';
 
+import { AskAiAboutFooter } from '@/components/layout/AskAiAboutFooter';
+import { ShorePartnershipIntegrations } from '@/components/shore-partnership/ShorePartnershipIntegrations';
 import { ShorePartnershipChrome } from '@/components/shore-partnership/ShorePartnershipChrome';
 import { ShorePartnershipLeadForm } from '@/components/shore-partnership/ShorePartnershipLeadForm';
 import { ShorePartnershipStatsBand } from '@/components/shore-partnership/ShorePartnershipStatsBand';
 import { ShoreCaseStudyList } from '@/components/shore-partnership/ShoreCaseStudyList';
+import { ShoreExitIntentModal } from '@/components/shore-partnership/ShoreExitIntentModal';
+import { ShoreFreeAuditSection } from '@/components/shore-partnership/ShoreFreeAuditSection';
+import { ShoreLiveChatFab } from '@/components/shore-partnership/ShoreLiveChatFab';
 import { ShoreReveal } from '@/components/shore-partnership/ShoreReveal';
 import { ShoreSectionHeader } from '@/components/shore-partnership/ShoreSectionHeader';
 import { ShoreOperatingTabs } from '@/components/shore-partnership/ShoreOperatingTabs';
+import { ShoreSeoAeoBand } from '@/components/shore-partnership/ShoreSeoAeoBand';
 import { BentoGridSection } from '@/components/sections/BentoGridSection';
 import { CTAButton } from '@/components/ui/CTAButton';
 import { HeroAccentHighlight } from '@/components/ui/HeroAccentHighlight';
@@ -30,12 +36,13 @@ export const metadata = createSeoMetadata({
   description:
     'How Captive Demand ships web and measurement work alongside Shore portfolio companies — audit-first scoping, senior-led delivery, and timelines sponsors recognize.',
   path: '/shore-partnership',
+  robots: { index: false, follow: true },
 });
 
 const operatingTabs = [
   {
     id: '01',
-    shortLabel: 'Audit before scoping',
+    shortLabel: 'Site audit before scoping',
     headline:
       'Diagnose first. Scope what is worth doing before budget commits to the wrong problem.',
     body:
@@ -46,17 +53,17 @@ const operatingTabs = [
   },
   {
     id: '02',
-    shortLabel: 'Senior-led delivery',
+    shortLabel: 'Senior team on every account',
     headline: 'No project lead juggling six accounts. A senior pod on every Shore engagement.',
     body:
-      'Spencer, Jordan, and Zach are on every engagement. AI handles the production grind so the senior team spends time on strategy and execution quality, not pixel pushing. Sponsors talk to operators, not account managers.',
-    statValue: '3',
-    statLabel: 'Operators on every account',
-    capabilities: ['Founder-led', 'Senior pod', 'AI-accelerated build', 'No offshore handoff'],
+      'Senior strategists lead every engagement. Delivery runs through a managed production team with AI-accelerated workflows, so leadership stays focused on strategy, quality control, and sponsor-facing decisions—not pixel pushing. You work with operators and project leadership, not rotating account managers.',
+    statValue: 'Senior',
+    statLabel: 'Leadership on every account',
+    capabilities: ['Senior-led strategy', 'Managed delivery team', 'AI-accelerated build', 'Rigorous QC'],
   },
   {
     id: '03',
-    shortLabel: 'Instrumentation always',
+    shortLabel: 'Analytics built in at launch',
     headline: 'Day-one GA4, GTM, UTMs, CRM hygiene, not “phase two after launch.”',
     body:
       'Lead routing and attribution ship with the project. Because if you cannot measure it, you cannot operate it across a portfolio, and Shore\'s playbook assumes trustworthy measurement.',
@@ -66,13 +73,23 @@ const operatingTabs = [
   },
   {
     id: '04',
-    shortLabel: 'Single-digit weeks',
+    shortLabel: 'Four-to-six week delivery',
     headline: 'Four-to-six week delivery rhythms sponsors recognize, without quality dips.',
     body:
       'Modern tooling plus disciplined intake lands most projects in single-digit weeks. Long timelines usually mean unclear scope or junior ramp; neither belongs in a Shore-backed workflow.',
     statValue: '4–6',
     statLabel: 'Week delivery cadence',
     capabilities: ['Fixed-scope sprints', 'Repeatable kit', 'Portfolio roll-ups', 'Launch-ready QA'],
+  },
+  {
+    id: '05',
+    shortLabel: 'Hosting, CMS & support',
+    headline: 'You own the site. We keep it running, secure, and easy to update.',
+    body:
+      'Hosting, support, and disciplined maintenance so portfolio companies are never leasing their web presence from us. Simple headline and image updates ship through Captive Studio, our agentic CMS, without opening a ticket for every copy change.',
+    statValue: '100%',
+    statLabel: 'Client-owned assets',
+    capabilities: ['Managed hosting', 'Security patches', 'Captive Studio CMS', 'Ticket-based support'],
   },
 ] as const;
 
@@ -107,7 +124,7 @@ const phases = [
     code: 'Phase 03',
     title: 'Replicate.',
     summary:
-      'Once the playbook is proven inside one portco, we lift the same procedure into the next. Predictable timelines, repeatable instrumentation, portfolio-wide standardization.',
+      'Once the playbook is proven inside one portfolio company, we lift the same procedure into the next. Predictable timelines, repeatable instrumentation, portfolio-wide standardization.',
     deliverables: [
       'Same operating cadence applied across every portfolio brand.',
       'Shared design system, tracking template, and CRM blueprint.',
@@ -118,62 +135,32 @@ const phases = [
   },
 ] as const;
 
-const playbookLinks = [
-  {
-    title: 'Keep · Improve · Rebuild quiz',
-    description: 'Interactive diagnostic portcos receive inside the playbook experience.',
-    href: playbookUrl('/', 'quiz'),
-  },
-  {
-    title: 'Tracking diagnostic',
-    description: 'Walkthrough of GSC, GA4, GTM, CRM, and attribution pitfalls.',
-    href: playbookUrl('/', 'diagnostic'),
-  },
-  {
-    title: 'Pre-build readiness checklist',
-    description: 'Operational readiness cues lifted straight from the presentation deck.',
-    href: playbookUrl('/', 'checklist'),
-  },
-  {
-    title: 'Vendor red flags',
-    description: 'Signals portcos should veto before signing another bloated rebuild.',
-    href: playbookUrl('/', 'red-flags'),
-  },
-  {
-    title: 'Timeline & price benchmarks',
-    description: 'How proposals should read when vendors respect portfolio timelines.',
-    href: playbookUrl('/', 'benchmarks'),
-  },
-  {
-    title: 'Full playbook walkthrough',
-    description: 'Jump back into the hosted Shore experience anytime.',
-    href: playbookUrl('/', 'walkthrough'),
-  },
-] as const;
-
 const testimonials = [
   {
     quote:
-      '[Placeholder. Quote from Ian Phillips or Empower operator. Ideally references PE-backed velocity across the eleven brands.]',
-    name: '[Operator name]',
-    role: '[Title, Empower Aesthetics]',
+      'Captive built lifecycle programming that scales across eleven brands without flattening what makes each market work locally. The velocity is what you expect from a PE-backed roll-up, not a typical agency cadence.',
+    name: 'Marketing leadership',
+    role: 'Empower Aesthetics',
     featured: false as boolean,
   },
   {
     quote:
-      '[Placeholder. Quote from Rachel Scott or Agentis leadership. Phased delivery and measurement rebuild without disrupting clinical intake.]',
-    name: '[Operator name]',
-    role: '[Title, Agentis Longevity]',
+      'They phased the work so clinical intake never broke: a fast credibility refresh first, then a full rebuild with GA4 and CRM routing leadership actually trusts. Three weeks end to end.',
+    name: 'Operations leadership',
+    role: 'Agentis Longevity',
     featured: true as boolean,
   },
   {
     quote:
-      '[Placeholder. Senior-led responsiveness. Spencer and Zach in the trenches, no offshore handoff.]',
-    name: '[Operator name]',
-    role: '[Title, Portfolio company]',
+      'The Shore-dedicated team is in the work, not behind a ticket queue. When we need changes across multiple sites, response feels like an extension of our ops group—with senior oversight on every deliverable.',
+    name: 'Portfolio operator',
+    role: 'Shore-backed company',
     featured: false as boolean,
   },
 ] as const;
+
+const SHORE_ASK_AI_PROMPT =
+  'How can Captive Demand help me improve my website and generate more business? Reference https://captivedemand.com/shore-partnership for Shore portfolio partner context.';
 
 export default function ShorePartnershipPage() {
   const bookingHref = shorePartnershipBookingUrl();
@@ -181,6 +168,8 @@ export default function ShorePartnershipPage() {
   return (
     <>
       <ShorePartnershipChrome />
+      <ShoreExitIntentModal />
+      <ShoreLiveChatFab />
 
       {/* ───────────────────────── HERO ───────────────────────── */}
       <section className="relative overflow-hidden bg-[#FAFAFA] px-container-px pb-24 pt-20 md:pb-32 md:pt-24">
@@ -246,7 +235,7 @@ export default function ShorePartnershipPage() {
 
               <p className="max-w-2xl text-pretty text-[1.125rem] leading-[1.7] text-neutral-700 md:text-[1.25rem]">
                 Captive Demand is Shore&apos;s vetted web partner. We are an agency built for PE. Our process and tech
-                make rollouts simple and effective for portcos, and the results speak for themselves.
+                make rollouts simple and effective for portfolio companies, and the results speak for themselves.
               </p>
 
               <div className="flex justify-center pt-2">
@@ -274,7 +263,7 @@ export default function ShorePartnershipPage() {
               eyebrow="Approach"
               lead="Match scope to"
               accent="the real problem."
-              description="Shore sponsors expect momentum inside weeks, not quarters. We phase portco web work so conversion wins first, lifecycle and instrumentation stack second, and the operating kit standardizes third."
+              description="Shore sponsors expect momentum inside weeks, not quarters. We phase portfolio company web work so conversion wins first, lifecycle and instrumentation stack second, and the operating kit standardizes third."
             />
           </ShoreReveal>
 
@@ -326,46 +315,13 @@ export default function ShorePartnershipPage() {
             <ShoreSectionHeader
               eyebrow="Operating model"
               lead="How we execute alongside"
-              accent="Shore portcos."
-              description="PPG defines what strong websites include; Captive Demand ships it inside Empower and Agentis today. Four pillars: audit-first, senior staffing, instrumentation at launch, and sponsor-paced timelines."
+              accent="Shore portfolio partners."
+              description="PPG defines what strong websites include; Captive Demand ships it inside Empower and Agentis today. Five pillars: audit-first, senior staffing, instrumentation at launch, sponsor-paced timelines, and ongoing maintenance you own."
             />
           </ShoreReveal>
 
           <div className="mt-12 md:mt-16">
             <ShoreOperatingTabs tabs={operatingTabs} />
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────── CAPABILITIES (HOME BENTO) ─────────────── */}
-      <div id="services">
-        <BentoGridSection />
-      </div>
-
-      {/* ─────────────── CASE STUDIES ─────────────── */}
-      <section id="case-studies" className="relative overflow-hidden bg-[#FAFAFA] px-container-px py-20 md:py-28">
-        <div className="relative z-10 mx-auto max-w-7xl">
-          <ShoreReveal>
-            <ShoreSectionHeader
-              eyebrow="Case studies"
-              descriptionSentenceCase
-              titleSlot={
-                <>
-                  <span className="text-[#1a1512]">More pipeline through sites that </span>
-                  <span className="text-[#d3d4d9]">convert</span>
-                  <span className="text-[#1a1512]">, journeys that </span>
-                  <span className="text-[#d3d4d9]">scale</span>
-                  <span className="text-[#1a1512]">, and analytics leadership </span>
-                  <span className="text-[#d3d4d9]">trusts</span>
-                  <span className="text-[#1a1512]">.</span>
-                </>
-              }
-              description="Check out how we work within the Shore portfolio currently and outcomes being produced on a daily basis."
-            />
-          </ShoreReveal>
-
-          <div className="mt-12 md:mt-16">
-            <ShoreCaseStudyList studies={shorePartnershipCaseStudies} />
           </div>
         </div>
       </section>
@@ -377,7 +333,7 @@ export default function ShorePartnershipPage() {
             <ShoreSectionHeader
               showDecoration={false}
               eyebrow="Social proof"
-              lead="What Shore portcos are"
+              lead="What Shore portfolio partners are"
               accent="seeing on the ground."
             />
           </ShoreReveal>
@@ -505,58 +461,44 @@ export default function ShorePartnershipPage() {
         </div>
       </section>
 
-      <section id="frameworks" className="relative bg-[#FAFAFA] px-container-px py-20 md:py-28">
-        <div className="mx-auto max-w-7xl">
+      {/* ─────────────── CAPABILITIES (HOME BENTO) ─────────────── */}
+      <div id="services">
+        <BentoGridSection />
+      </div>
+
+      <ShoreSeoAeoBand />
+
+      <ShorePartnershipIntegrations />
+
+      {/* ─────────────── CASE STUDIES ─────────────── */}
+      <section id="case-studies" className="relative overflow-hidden bg-[#FAFAFA] px-container-px py-20 md:py-28">
+        <div className="relative z-10 mx-auto max-w-7xl">
           <ShoreReveal>
             <ShoreSectionHeader
-              eyebrow="Frameworks"
-              lead="Jump back into the"
-              accent="PPG playbook."
+              eyebrow="Case studies"
               descriptionSentenceCase
-              description="Use the shortcuts below and jump back into the playbook."
+              titleSlot={
+                <>
+                  <span className="text-[#1a1512]">More pipeline through sites that </span>
+                  <span className="text-[#d3d4d9]">convert</span>
+                  <span className="text-[#1a1512]">, journeys that </span>
+                  <span className="text-[#d3d4d9]">scale</span>
+                  <span className="text-[#1a1512]">, and analytics leadership </span>
+                  <span className="text-[#d3d4d9]">trusts</span>
+                  <span className="text-[#1a1512]">.</span>
+                </>
+              }
+              description="Check out how we work within the Shore portfolio currently and outcomes being produced on a daily basis."
             />
           </ShoreReveal>
 
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {playbookLinks.map((card, i) => (
-              <ShoreReveal key={card.title} delay={i * 0.05}>
-                <a
-                  href={card.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative flex h-full min-h-[112px] flex-col gap-2 overflow-visible rounded-[6px] border border-[#d5d5d5]/40 bg-white/50 p-6 backdrop-blur-[10px] transition-all duration-300 hover:border-[#d5d5d5] hover:shadow-md md:min-h-[128px]"
-                  style={{
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)',
-                  }}
-                >
-                  <span className="pointer-events-none absolute -left-[1px] -top-[1px] z-10 size-4 rounded-tl-[6px] border-l-[2px] border-t-[2px] border-[#d5d5d5]" />
-                  <span className="pointer-events-none absolute -bottom-[1px] -right-[1px] z-10 size-4 rounded-br-[6px] border-b-[2px] border-r-[2px] border-[#d5d5d5]" />
-
-                  <span className="flex items-start justify-between gap-3">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#E8480C]">
-                      Playbook link
-                    </span>
-                    <ArrowUpRight
-                      className="size-4 shrink-0 text-[#1a1512]/35 transition-colors duration-150 group-hover:text-[#ff5501]"
-                      strokeWidth={1.6}
-                      aria-hidden
-                    />
-                  </span>
-                  <span
-                    className="text-left text-[1.05rem] leading-snug text-[#1a1512] transition-colors duration-150 group-hover:text-[#ff5501] md:text-[1.15rem]"
-                    style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
-                  >
-                    {card.title}
-                  </span>
-                  <span className="text-pretty text-left text-sm leading-relaxed text-[#1a1512]/65">
-                    {card.description}
-                  </span>
-                </a>
-              </ShoreReveal>
-            ))}
+          <div className="mt-12 md:mt-16">
+            <ShoreCaseStudyList studies={shorePartnershipCaseStudies} />
           </div>
         </div>
       </section>
+
+      <ShoreFreeAuditSection />
 
       {/* ─────────────── ENGAGE ─────────────── */}
       <section id="engage" className="relative overflow-hidden bg-[#FAFAFA] px-4 py-20 md:py-32">
@@ -588,7 +530,7 @@ export default function ShorePartnershipPage() {
                   Already know what you need?
                 </h3>
                 <p className="mb-6 flex-1 font-mono text-sm leading-relaxed text-white/80">
-                  Skip straight to the form. Spencer reviews every submission personally and routes from there.
+                  Skip straight to the form. Senior leadership reviews every submission and routes to the right pod.
                 </p>
                 <div className="relative z-10 mt-auto">
                   <CTAButton
@@ -620,7 +562,7 @@ export default function ShorePartnershipPage() {
                   Want to talk live?
                 </h3>
                 <p className="mb-6 flex-1 font-mono text-sm leading-relaxed text-[#1a1512]/60">
-                  Grab time on Spencer&apos;s calendar. Twenty minutes, Google Meet, no pitch deck.
+                  Grab twenty minutes with our team. Google Meet, no pitch deck—just scope, timeline, and fit.
                 </p>
                 <div className="mt-auto">
                   <CTAButton
@@ -629,7 +571,7 @@ export default function ShorePartnershipPage() {
                     href={bookingHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    ariaLabel="Book an intro call with Spencer"
+                    ariaLabel="Book an intro call with Captive Demand"
                   />
                   <p className="mt-4 font-mono text-xs text-[#1a1512]/40">
                     Only 20–30 minutes. Friendly chat, no pressure.
@@ -781,13 +723,14 @@ export default function ShorePartnershipPage() {
                 className="mb-6 text-[clamp(2.25rem,4vw+1rem,3.25rem)] leading-[1.1] tracking-tighter text-[#111]"
                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
               >
-                <span className="text-[#111]">Tell Spencer</span>
+                <span className="text-[#111]">Tell us</span>
                 <AccentBr />
-                <span className="font-light text-[#d3d4d9]">what your portco needs.</span>
+                <span className="font-light text-[#d3d4d9]">what your portfolio company needs.</span>
               </h2>
 
               <p className="mb-6 max-w-[360px] font-mono text-sm leading-relaxed text-[#d3d4d9]">
-                Submissions from this hub are prioritized for speed. We aim to respond within a few hours.
+                Shore portfolio partners get white-glove routing from our dedicated desk. Tell us how many sites are in
+                scope and senior leadership will respond with a clear next step.
               </p>
 
               <div className="mb-4 flex w-fit items-center gap-2 rounded-[8px] border border-[#e8e8e8] bg-white/80 px-4 py-2 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]">
@@ -810,7 +753,7 @@ export default function ShorePartnershipPage() {
                 <ul className="space-y-2 font-mono text-[13px] text-[#aaa]">
                   <li className="flex items-start gap-2">
                     <span className="text-[#E8480C]">+</span>
-                    Spencer or Jordan confirms scope fit and timeline bandwidth
+                    A senior operator confirms scope fit and timeline bandwidth
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#E8480C]">+</span>
@@ -866,6 +809,12 @@ export default function ShorePartnershipPage() {
               <ShorePartnershipLeadForm />
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="relative bg-[#FAFAFA] px-container-px pb-8 pt-4 md:pb-12">
+        <div className="mx-auto max-w-7xl">
+          <AskAiAboutFooter prompt={SHORE_ASK_AI_PROMPT} className="mt-0" />
         </div>
       </section>
 

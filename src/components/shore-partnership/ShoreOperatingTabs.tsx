@@ -62,10 +62,10 @@ export function ShoreOperatingTabs({ tabs }: ShoreOperatingTabsProps) {
                   aria-controls={`shore-operating-panel-${tab.id}`}
                   onClick={() => setActiveId(tab.id)}
                   className={cn(
-                    'relative min-h-[48px] shrink-0 cursor-pointer snap-start snap-always whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.12em] md:text-xs',
-                    isActive && 'industry-tab-active',
+                    'shore-operating-tab relative min-h-[48px] shrink-0 cursor-pointer snap-start snap-always whitespace-nowrap font-mono text-[11px] normal-case tracking-[0.04em] md:text-xs',
+                    isActive && 'industry-tab-active !font-medium',
                     isActive && idx === 0 && 'industry-tab-active-first',
-                    !isActive && 'industry-tab-inactive',
+                    !isActive && 'industry-tab-inactive !font-normal text-[#525252]',
                   )}
                 >
                   <span className="relative z-[1] block whitespace-nowrap">{tab.shortLabel}</span>

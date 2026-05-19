@@ -42,6 +42,19 @@ const jetBrainsMono = JetBrains_Mono({
     subsets: ["latin"],
     variable: "--font-mono",
     display: "swap",
+    // Default next/font metric fallback for mono fonts is Arial — proportional, so labels read as "wrong"
+    // sans until the woff2 loads. Use a real monospace stack during load instead (may add minor CLS).
+    adjustFontFallback: false,
+    fallback: [
+        "ui-monospace",
+        "SFMono-Regular",
+        "Menlo",
+        "Monaco",
+        "Consolas",
+        "Liberation Mono",
+        "Courier New",
+        "monospace",
+    ],
 });
 
 const nohemi = localFont({

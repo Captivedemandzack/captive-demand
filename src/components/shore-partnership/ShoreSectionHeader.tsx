@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { SHORE_SECTION_EYEBROW_CLASS } from '@/lib/shore-section-styles';
 
 interface ShoreSectionHeaderProps {
   /** Eyebrow label (no slash) — e.g. "Approach", "Operating Model" */
@@ -68,12 +69,7 @@ export function ShoreSectionHeader({
     <div className={cn('w-full', compact ? 'mb-10' : 'mb-12 md:mb-16', className)}>
       {showDecoration ? <DecorativeShapeLine variant={variant} /> : null}
 
-      <span
-        className={cn(
-          'mb-4 block font-mono text-sm uppercase tracking-wider',
-          isDark ? 'text-white/60' : 'text-[#1a1512]/70',
-        )}
-      >
+      <span className={cn(SHORE_SECTION_EYEBROW_CLASS, isDark && 'text-white/60')}>
         / {eyebrow}
       </span>
 
