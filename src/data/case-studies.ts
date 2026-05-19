@@ -207,12 +207,12 @@ export const caseStudies: CaseStudy[] = [
     industryTag: "Health & Wellness",
     stats: [
       { value: "+816%", label: "Organic Traffic", context: "1,200 → 11,000 Sessions/Mo" },
-      { value: "+40%", label: "Revenue Growth", context: "Year-over-Year" },
+      { value: "+50%", label: "Revenue Growth", context: "Year-over-Year" },
       { value: "6.61%", label: "Conversion Rate", context: "Up 145%" },
     ],
     testimonial: {
       quote:
-        "Spencer is knowledgeable, patient, and open to listen! He's willing to try anything to help move the needle, and he's easy to talk to... I feel like he really cares about our business. In addition, our traffic has grown from 1,200 users per month to 11,000 users per month and revenue has increased by 34% YOY.",
+        "Spencer is knowledgeable, patient, and open to listen! He's willing to try anything to help move the needle, and he's easy to talk to... I feel like he really cares about our business. In addition, our traffic has grown from 1,200 users per month to 11,000 users per month and revenue has increased by 50% YOY.",
       author: "Tricia Restifo",
       role: "VP Finance",
       company: "Farmulated",
@@ -225,7 +225,7 @@ export const caseStudies: CaseStudy[] = [
     solution:
       "We executed a three-phase approach: First, a full technical audit and rebuild — fixing crawlability, site speed, and schema markup. Second, a content strategy targeting 50+ high-intent keywords with pillar pages and supporting clusters. Third, an AEO layer that structured their content for AI citation in ChatGPT and Google SGE results. Every piece of content was built to serve both traditional search and AI discovery.",
     results:
-      "Within 6 months, Farmulated went from page 5 to position 1 for 34 high-intent keywords. Organic traffic increased by 427%, and revenue from organic channels grew 34% year-over-year. They're now consistently cited in AI overviews for CBD-related queries, driving a new channel of zero-click authority traffic.",
+      "Within 6 months, Farmulated went from page 5 to position 1 for 34 high-intent keywords. Organic traffic increased by 427%, and revenue from organic channels grew 50% year-over-year. They're now consistently cited in AI overviews for CBD-related queries, driving a new channel of zero-click authority traffic.",
     timeline: "6 months",
     heroImage: "/farmulatedcover2.png",
     galleryImages: [

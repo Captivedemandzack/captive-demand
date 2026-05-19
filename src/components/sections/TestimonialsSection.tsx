@@ -25,7 +25,7 @@ type PartnerLogo = {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    text: "Spencer is knowledgeable, patient, and open to listen! He's willing to try anything to help move the needle, and he's easy to talk to... I feel like he really cares about our business. In addition, our traffic has grown from 1,200 users per month to 11,000 users per month and revenue has increased by 34% YOY.",
+    text: "Spencer is knowledgeable, patient, and open to listen! He's willing to try anything to help move the needle, and he's easy to talk to... I feel like he really cares about our business. In addition, our traffic has grown from 1,200 users per month to 11,000 users per month and revenue has increased by 50% YOY.",
     author: "Tricia Restifo",
     role: "VP Finance",
     company: "Farmulated",

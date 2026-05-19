@@ -213,9 +213,9 @@ const caseStudies: CaseStudy[] = [
     year: "2025",
     headline: "Built topical authority from scratch in 6 months.",
     stats: [
-      { value: "34%", label: "INCREASE IN REVENUE" },
+      { value: "50%", label: "INCREASE IN REVENUE" },
       { value: "9x", label: "ORGANIC TRAFFIC" },
-      { value: "$2.1M", label: "ANNUAL REVENUE" }
+      { value: "6.6%", label: "CONVERSION RATE" }
     ],
     image: "/farmulatedcover2.png",
     slug: "farmulated",
