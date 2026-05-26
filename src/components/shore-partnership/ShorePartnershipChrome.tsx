@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import { CTAButton } from '@/components/ui/CTAButton';
 import { cn } from '@/lib/utils';
-import { CAPTIVE_DEMAND_LOGO, SHORE_LOGOMARK_URL } from '@/lib/shore-partnership';
+import { CAPTIVE_DEMAND_LOGO, SHORE_LOGO_ASPECT, SHORE_LOGOMARK_URL } from '@/lib/shore-partnership';
 
 const NAV_LINKS = [
   { label: 'Approach', href: '#approach' },
@@ -62,15 +62,20 @@ export function ShorePartnershipChrome() {
             ×
           </span>
           <span className={cn('relative shrink-0 transition-[filter] duration-300', scrolled && 'brightness-0 invert')}>
-            <Image
-              src={SHORE_LOGOMARK_URL}
-              alt="Shore Capital Partners"
-              width={48}
-              height={48}
-              className="h-8 w-auto max-h-8 object-contain"
-              sizes="48px"
-              priority
-            />
+            <span
+              className="relative block h-8 shrink-0 overflow-hidden"
+              style={{ width: Math.round(32 * SHORE_LOGO_ASPECT) }}
+            >
+              <Image
+                src={SHORE_LOGOMARK_URL}
+                alt="Shore Capital Partners"
+                fill
+                className="object-contain object-left"
+                sizes="120px"
+                quality={85}
+                priority
+              />
+            </span>
           </span>
         </Link>
 

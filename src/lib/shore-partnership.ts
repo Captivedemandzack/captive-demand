@@ -37,4 +37,7 @@ export const SHORE_PAGE_BG = '#FAFAF7';
 export const SHORE_LOGOMARK_URL =
   'https://media.brand.dev/80482689-3206-4471-9d7b-96af4a318b60.png';
 
+/** Remote Shore wordmark is ~884×240; use for header slot sizing. */
+export const SHORE_LOGO_ASPECT = 884 / 240;
+
 export const CAPTIVE_DEMAND_LOGO = '/captive-demand-logo.png';
