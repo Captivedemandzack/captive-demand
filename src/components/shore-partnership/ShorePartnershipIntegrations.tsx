@@ -49,13 +49,13 @@ export function ShorePartnershipIntegrations() {
       <div className="relative z-10 mx-auto max-w-7xl">
         <ShoreSectionHeader
           eyebrow="Integrations"
-          lead="Connect every portfolio brand"
-          accent="to the tools you already run."
-          description="CRMs, booking platforms, EMRs, and marketing stacks. We wire HubSpot, Salesforce, Jane, Zenoti, Klaviyo, and your existing systems into each site without a rip-and-replace."
+          lead="Plugs into"
+          accent="every tool your portfolio companies already use."
+          description="Booking platforms, CRMs, payment processors, marketing automation, custom APIs. Pick what your portfolio runs on. We integrate it. Every site we ship comes wired into the systems your operators already trust."
           descriptionSentenceCase
         />
 
-        <IntegrationsLogoMarquee footnote="Not on the wall? Custom API integrations for any system across your portfolio." />
+        <IntegrationsLogoMarquee footnote="Not seeing what you need? We integrate with anything with an API." />
       </div>
     </section>
   );

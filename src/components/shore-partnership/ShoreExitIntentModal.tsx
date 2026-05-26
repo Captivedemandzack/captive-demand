@@ -3,29 +3,31 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { X } from 'lucide-react';
-import Link from 'next/link';
 
-const STORAGE_KEY = 'shore-partnership-exit-intent-shown';
+import { ShoreAuditUrlInputs } from '@/components/shore-partnership/ShoreAuditUrlInputs';
+import { trackGa4Event } from '@/lib/analytics';
+import { submitShoreAuditForm } from '@/lib/shore-audit-form';
+import {
+  hasExitIntentShown,
+  hasShoreFormSubmitted,
+  markExitIntentShown,
+} from '@/lib/shore-form-session';
+import { SITE_FORM_INPUT_CLASS, SITE_FORM_LABEL_CLASS } from '@/lib/site-surfaces';
 
-function hasShownThisSession(): boolean {
-  try {
-    return sessionStorage.getItem(STORAGE_KEY) === '1';
-  } catch {
-    return false;
-  }
-}
+const LOAD_GUARD_MS = 5000;
 
-function markShownThisSession(): void {
-  try {
-    sessionStorage.setItem(STORAGE_KEY, '1');
-  } catch {
-    /* ignore */
-  }
+function isDesktopPointerDevice(): boolean {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia('(pointer: fine)').matches && window.innerWidth >= 768;
 }
 
 export function ShoreExitIntentModal() {
   const [open, setOpen] = useState(false);
+  const [siteUrls, setSiteUrls] = useState(['']);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'error' | 'success'>('idle');
   const reduceMotion = useReducedMotion();
+  const armedRef = useRef(false);
   const triggeredRef = useRef(false);
 
   const dismiss = useCallback(() => {
@@ -33,21 +35,31 @@ export function ShoreExitIntentModal() {
   }, []);
 
   useEffect(() => {
-    if (hasShownThisSession()) return;
+    if (!isDesktopPointerDevice()) return;
+    if (hasExitIntentShown() || hasShoreFormSubmitted()) return;
+
+    const timer = window.setTimeout(() => {
+      armedRef.current = true;
+    }, LOAD_GUARD_MS);
 
     const onMouseOut = (e: MouseEvent) => {
-      if (triggeredRef.current || hasShownThisSession()) return;
-      if (e.clientY > 8) return;
+      if (!armedRef.current || triggeredRef.current) return;
+      if (hasExitIntentShown() || hasShoreFormSubmitted()) return;
+      if (e.clientY > 0) return;
       if (e.relatedTarget instanceof Node) return;
 
       triggeredRef.current = true;
-      markShownThisSession();
+      markExitIntentShown();
       setOpen(true);
       document.documentElement.removeEventListener('mouseout', onMouseOut);
     };
 
     document.documentElement.addEventListener('mouseout', onMouseOut);
-    return () => document.documentElement.removeEventListener('mouseout', onMouseOut);
+
+    return () => {
+      window.clearTimeout(timer);
+      document.documentElement.removeEventListener('mouseout', onMouseOut);
+    };
   }, []);
 
   useEffect(() => {
@@ -67,12 +79,37 @@ export function ShoreExitIntentModal() {
     };
   }, [open, dismiss]);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('submitting');
+
+    const ok = await submitShoreAuditForm({
+      source: 'exit-intent',
+      email,
+      fullName: email.split('@')[0] || 'Shore visitor',
+      businessName: 'Exit intent audit request',
+      siteUrls,
+    });
+
+    if (!ok) {
+      setStatus('error');
+      return;
+    }
+
+    trackGa4Event('generate_lead', {
+      lead_source: 'shore_partnership_exit_intent',
+      form_name: 'exit-intent',
+    });
+    setStatus('success');
+  };
+
   return (
     <AnimatePresence>
       {open ? (
         <motion.div
           key="shore-exit-backdrop"
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/45 p-6 backdrop-blur-sm sm:p-8"
+          className="fixed inset-0 z-[80] flex items-center justify-center p-6 backdrop-blur-sm sm:p-8"
+          style={{ backgroundColor: 'rgba(15, 20, 25, 0.5)' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -85,7 +122,7 @@ export function ShoreExitIntentModal() {
             aria-modal="true"
             aria-labelledby="shore-exit-title"
             aria-describedby="shore-exit-desc"
-            className="relative w-full max-w-lg rounded-2xl border border-[#1a1512]/8 bg-[#FAFAFA] px-8 pb-8 pt-10 shadow-2xl sm:px-10 sm:pb-10 sm:pt-12"
+            className="relative w-full max-w-[480px] rounded-2xl border border-[#1a1512]/8 bg-[#FAF9F6] px-8 pb-8 pt-10 shadow-2xl sm:px-10 sm:pb-10 sm:pt-12"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 8, filter: reduceMotion ? 'none' : 'blur(4px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: reduceMotion ? 0 : 4, filter: reduceMotion ? 'none' : 'blur(2px)' }}
@@ -101,38 +138,88 @@ export function ShoreExitIntentModal() {
               <X size={18} strokeWidth={1.5} />
             </button>
 
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#E8480C]">Shore partners only</p>
-            <h2
-              id="shore-exit-title"
-              className="mt-4 max-w-[18ch] text-balance text-2xl leading-tight tracking-tight text-[#1a1512] sm:text-[1.75rem]"
-              style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
-            >
-              Before you go: free website audit
-            </h2>
-            <p
-              id="shore-exit-desc"
-              className="mt-6 max-w-prose text-pretty font-mono text-sm leading-relaxed text-[#1a1512]/65"
-            >
-              Complimentary for Shore portfolio partners only. List multiple sites and get a prioritized fix list, not a
-              pitch deck.
-            </p>
+            {status === 'success' ? (
+              <div className="text-center">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#1a1512]/55">You&apos;re all set</p>
+                <h2
+                  id="shore-exit-title"
+                  className="mt-4 text-balance text-2xl leading-tight tracking-tight text-[#1a1512]"
+                  style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
+                >
+                  Audit request received.
+                </h2>
+                <p id="shore-exit-desc" className="mt-4 font-mono text-sm text-[#1a1512]/65">
+                  We&apos;re on it. Expect your audit within 2 business days.
+                </p>
+                <button
+                  type="button"
+                  onClick={dismiss}
+                  className="mt-8 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#1a1512] px-8 font-mono text-xs uppercase tracking-[0.12em] text-white transition-transform duration-150 hover:scale-[1.02] active:scale-95"
+                >
+                  Continue browsing
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#1a1512]">Wait · before you go</p>
+                <h2
+                  id="shore-exit-title"
+                  className="mt-4 max-w-[18ch] text-balance text-[1.875rem] leading-tight tracking-tight text-[#1a1512]"
+                  style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
+                >
+                  Grab a free audit of every site in your portfolio.
+                </h2>
+                <p
+                  id="shore-exit-desc"
+                  className="mt-4 max-w-prose text-pretty text-[0.9375rem] leading-relaxed text-[#1a1512]/70"
+                >
+                  Just your email and your URLs. We&apos;ll send back a detailed audit within 2 business days. No
+                  follow-up sales call required.
+                </p>
 
-            <div className="mt-8 flex flex-col gap-3">
-              <Link
-                href="#free-audit"
-                onClick={dismiss}
-                className="inline-flex h-12 w-full items-center justify-center whitespace-nowrap rounded-full bg-[#1a1512] px-8 font-mono text-xs uppercase tracking-[0.12em] text-white transition-transform duration-150 hover:scale-[1.02] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a1512]/30 focus-visible:ring-offset-2"
-              >
-                Request free audit
-              </Link>
-              <button
-                type="button"
-                onClick={dismiss}
-                className="inline-flex h-12 w-full items-center justify-center whitespace-nowrap rounded-full border border-[#1a1512]/12 bg-white px-8 font-mono text-xs uppercase tracking-[0.12em] text-[#1a1512]/70 transition-colors duration-150 hover:bg-[#1a1512]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a1512]/20 focus-visible:ring-offset-2"
-              >
-                Continue browsing
-              </button>
-            </div>
+                <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+                  <div>
+                    <label htmlFor="exit-email" className={SITE_FORM_LABEL_CLASS}>
+                      Work email
+                    </label>
+                    <input
+                      id="exit-email"
+                      required
+                      type="email"
+                      autoComplete="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className={`${SITE_FORM_INPUT_CLASS} mt-2`}
+                    />
+                  </div>
+
+                  <ShoreAuditUrlInputs
+                    urls={siteUrls}
+                    onChange={setSiteUrls}
+                    idPrefix="exit-url"
+                    compact
+                  />
+
+                  {status === 'error' ? (
+                    <p className="text-sm text-red-700" role="alert">
+                      Something went wrong. Try again or email hello@captivedemand.com.
+                    </p>
+                  ) : null}
+
+                  <button
+                    type="submit"
+                    disabled={status === 'submitting'}
+                    className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#1a1512] px-8 font-mono text-xs uppercase tracking-[0.12em] text-white transition-transform duration-150 hover:scale-[1.02] active:scale-95 disabled:opacity-60"
+                  >
+                    {status === 'submitting' ? 'Sending...' : 'Send me the audit →'}
+                  </button>
+                </form>
+
+                <p className="mt-6 text-center font-mono text-[11px] text-[#888]">
+                  Already submitted? You&apos;re all set. We&apos;re on it.
+                </p>
+              </>
+            )}
           </motion.div>
         </motion.div>
       ) : null}

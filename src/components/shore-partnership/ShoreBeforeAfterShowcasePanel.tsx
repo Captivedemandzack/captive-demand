@@ -1,10 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 
 import type { ShoreBeforeAfterShowcase } from '@/data/shore-partnership-case-studies';
+import { prefetchBeforeAfterShowcase } from '@/lib/prefetch-media';
 import { SITE_MARKETING_WHITE_SHADOW } from '@/lib/site-surfaces';
 import { cn } from '@/lib/utils';
 
@@ -12,6 +13,10 @@ export interface ShoreBeforeAfterShowcaseProps {
   showcase: ShoreBeforeAfterShowcase;
   className?: string;
   variant?: 'light' | 'dark';
+}
+
+function isVideoSrc(src: string) {
+  return /\.(mov|mp4|webm)$/i.test(src);
 }
 
 export function ShoreBeforeAfterShowcasePanel({
@@ -22,11 +27,17 @@ export function ShoreBeforeAfterShowcasePanel({
   const [tab, setTab] = useState<'before' | 'after'>('before');
   const isDark = variant === 'dark';
   const isBefore = tab === 'before';
-  const src = isBefore ? showcase.beforeSrc : showcase.afterSrc;
-  const alt = isBefore ? showcase.imageAltBefore : showcase.imageAltAfter;
   const objectFit = showcase.imageObjectFit ?? 'cover';
-  const isVideoSrc = /\.(mov|mp4|webm)$/i.test(src);
   const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    prefetchBeforeAfterShowcase(showcase.beforeSrc, showcase.afterSrc);
+  }, [showcase.beforeSrc, showcase.afterSrc]);
+
+  const frames = [
+    { id: 'before' as const, src: showcase.beforeSrc, alt: showcase.imageAltBefore },
+    { id: 'after' as const, src: showcase.afterSrc, alt: showcase.imageAltAfter },
+  ];
 
   return (
     <div
@@ -114,33 +125,51 @@ export function ShoreBeforeAfterShowcasePanel({
             isDark ? 'border-white/10 bg-white/[0.06]' : 'border-neutral-200/80 bg-neutral-100',
           )}
         >
-          {isVideoSrc ? (
-            <video
-              key={src}
-              className={cn(
-                'absolute inset-0 h-full w-full',
-                objectFit === 'contain' ? 'object-contain object-center' : 'object-cover object-top',
-              )}
-              src={src}
-              autoPlay={!reduceMotion}
-              muted
-              loop
-              playsInline
-              controls={reduceMotion ? true : undefined}
-              aria-label={alt}
-            />
-          ) : (
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              unoptimized={/\.gif$/i.test(src)}
-              className={cn(
-                objectFit === 'contain' ? 'object-contain object-center' : 'object-cover object-top',
-              )}
-              sizes="(max-width: 768px) 100vw, 560px"
-            />
-          )}
+          {frames.map((frame) => {
+            const isActive = tab === frame.id;
+            const isVideo = isVideoSrc(frame.src);
+
+            if (isVideo) {
+              return (
+                <video
+                  key={frame.src}
+                  className={cn(
+                    'absolute inset-0 h-full w-full transition-opacity duration-200',
+                    objectFit === 'contain' ? 'object-contain object-center' : 'object-cover object-top',
+                    isActive ? 'z-10 opacity-100' : 'pointer-events-none z-0 opacity-0',
+                  )}
+                  src={frame.src}
+                  autoPlay={isActive && !reduceMotion}
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  controls={reduceMotion && isActive ? true : undefined}
+                  aria-label={isActive ? frame.alt : undefined}
+                  aria-hidden={!isActive}
+                />
+              );
+            }
+
+            return (
+              <Image
+                key={frame.src}
+                src={frame.src}
+                alt={isActive ? frame.alt : ''}
+                fill
+                unoptimized
+                priority
+                fetchPriority={isActive ? 'high' : 'low'}
+                className={cn(
+                  'transition-opacity duration-200',
+                  objectFit === 'contain' ? 'object-contain object-center' : 'object-cover object-top',
+                  isActive ? 'z-10 opacity-100' : 'pointer-events-none z-0 opacity-0',
+                )}
+                sizes="(max-width: 768px) 100vw, 1200px"
+                aria-hidden={!isActive}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

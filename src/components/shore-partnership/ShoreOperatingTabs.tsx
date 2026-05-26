@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 import { CTAButton } from '@/components/ui/CTAButton';
+import { ShoreOperatingTabIllustration } from '@/components/shore-partnership/ShoreOperatingTabIllustration';
 import { cn } from '@/lib/utils';
 
 const cardShadow =
@@ -23,6 +24,8 @@ interface ShoreOperatingTab {
   statLabel: string;
   /** Capability chips on the right */
   capabilities: readonly string[];
+  /** Optional bullet list rendered under body copy */
+  bullets?: readonly string[];
 }
 
 interface ShoreOperatingTabsProps {
@@ -95,8 +98,8 @@ export function ShoreOperatingTabs({ tabs }: ShoreOperatingTabsProps) {
             transition={{ duration: reduceMotion ? 0 : 0.14, ease: 'easeOut' }}
             className="p-6 md:p-10 lg:p-12"
           >
-            <div className="grid grid-cols-1 gap-8">
-              <div className="flex min-w-0 flex-col">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-center md:gap-10 lg:gap-12">
+              <div className="md:col-span-7 flex min-w-0 flex-col">
                 <h3
                   className="text-balance mb-5 text-2xl tracking-wide text-[#1a1512] md:text-3xl lg:text-4xl"
                   style={{
@@ -110,6 +113,17 @@ export function ShoreOperatingTabs({ tabs }: ShoreOperatingTabsProps) {
                 <p className="mb-8 text-pretty text-sm leading-[1.65] text-[#1a1512]/80 md:text-base">
                   {active.body}
                 </p>
+
+                {active.bullets?.length ? (
+                  <ul className="mb-8 space-y-2 text-pretty text-sm leading-relaxed text-[#1a1512]/80 md:text-base">
+                    {active.bullets.map((bullet) => (
+                      <li key={bullet} className="flex gap-3">
+                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#1a1512]" aria-hidden />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
 
                 <div className="mb-6 h-px w-full bg-[#1a1512]/10 md:mb-8" aria-hidden />
 
@@ -147,6 +161,12 @@ export function ShoreOperatingTabs({ tabs }: ShoreOperatingTabsProps) {
                         'drop-shadow(0px 2px 0px rgba(0,0,0,0.25)) drop-shadow(0 3px 6px rgba(0,0,0,0.1))',
                     }}
                   />
+                </div>
+              </div>
+
+              <div className="md:col-span-5 flex min-w-0 items-center">
+                <div className="relative aspect-[4/3] w-full max-h-[min(420px,55vh)]">
+                  <ShoreOperatingTabIllustration tabId={active.id} className="absolute inset-0" />
                 </div>
               </div>
             </div>

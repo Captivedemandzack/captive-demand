@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Plus } from 'lucide-react';
@@ -7,6 +8,7 @@ import { Plus } from 'lucide-react';
 import { ShoreBeforeAfterShowcasePanel } from '@/components/shore-partnership/ShoreBeforeAfterShowcasePanel';
 import { ShoreImpactBarChart } from '@/components/shore-partnership/ShoreImpactBarChart';
 import type { ShoreCaseStudy } from '@/data/shore-partnership-case-studies';
+import { prefetchBeforeAfterShowcase } from '@/lib/prefetch-media';
 import { cn } from '@/lib/utils';
 
 const easeInOutCubic = [0.04, 0.62, 0.23, 0.98] as [number, number, number, number];
@@ -40,17 +42,11 @@ function CaseStudyPanelBody({
     ) : null;
 
   const resultsSection =
-    study.results || study.impactChart ? (
-      <div
-        className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm md:p-7"
-        style={{
-          boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.06), 0 12px 32px rgba(0,0,0,0.25)',
-        }}
-      >
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff5501]">Results</p>
+    study.impactChart || study.results ? (
+      <div className="space-y-4">
         {study.impactChart ? (
           <div
-            className="mt-5 rounded-xl border border-white/10 bg-white/[0.04] p-5 md:p-6"
+            className="rounded-xl border border-white/10 bg-white/[0.04] p-5 md:p-6"
             style={{
               boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.06)',
             }}
@@ -59,7 +55,7 @@ function CaseStudyPanelBody({
           </div>
         ) : null}
         {study.results ? (
-          <p className="mt-4 text-pretty text-[15px] leading-relaxed text-white/85">{study.results}</p>
+          <p className="text-pretty text-[15px] leading-relaxed text-white/85">{study.results}</p>
         ) : null}
       </div>
     ) : null;
@@ -133,6 +129,7 @@ function CaseStudyPanelBody({
  */
 export function ShoreCaseStudyList({ studies }: ShoreCaseStudyListProps) {
   const reduceMotion = useReducedMotion();
+  const [prefetchedShowcaseIds, setPrefetchedShowcaseIds] = useState<Set<string>>(() => new Set());
   /** Initial: first study expanded; all others collapsed (static cards stay expanded). */
   const [openIds, setOpenIds] = useState<Set<string>>(() => {
     const first = studies[0];
@@ -140,17 +137,48 @@ export function ShoreCaseStudyList({ studies }: ShoreCaseStudyListProps) {
     return new Set([first.id]);
   });
 
+  const queueShowcasePrefetch = (study: ShoreCaseStudy) => {
+    if (!study.beforeAfterShowcase) return;
+    prefetchBeforeAfterShowcase(
+      study.beforeAfterShowcase.beforeSrc,
+      study.beforeAfterShowcase.afterSrc,
+    );
+    setPrefetchedShowcaseIds((prev) => {
+      if (prev.has(study.id)) return prev;
+      const next = new Set(prev);
+      next.add(study.id);
+      return next;
+    });
+  };
+
   const toggle = (id: string) => {
     setOpenIds((prev) => {
       if (prev.has(id)) {
         return new Set();
       }
+      const study = studies.find((s) => s.id === id);
+      if (study) queueShowcasePrefetch(study);
       return new Set([id]);
     });
   };
 
   return (
     <div className="flex flex-col gap-4">
+      {studies
+        .filter((study) => study.beforeAfterShowcase && prefetchedShowcaseIds.has(study.id))
+        .map((study) => {
+          const showcase = study.beforeAfterShowcase!;
+          return (
+            <div
+              key={`prefetch-${study.id}`}
+              aria-hidden
+              className="pointer-events-none fixed -left-[9999px] top-0 h-px w-px overflow-hidden opacity-0"
+            >
+              <Image src={showcase.beforeSrc} alt="" width={560} height={840} priority />
+              <Image src={showcase.afterSrc} alt="" width={560} height={840} priority />
+            </div>
+          );
+        })}
       {studies.map((study, index) => {
         const isStatic = study.variant === 'static';
         const isOpen = isStatic || openIds.has(study.id);
@@ -194,16 +222,22 @@ export function ShoreCaseStudyList({ studies }: ShoreCaseStudyListProps) {
                     {tag}
                   </span>
                 ))}
+                {study.deliveryTimeline ? (
+                  <span
+                    className={cn(
+                      'rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] transition-colors duration-300',
+                      isOpen
+                        ? 'border border-white/15 text-white/60'
+                        : 'border border-[#1a1512]/10 text-[#1a1512]/55',
+                    )}
+                  >
+                    {study.deliveryTimeline}
+                  </span>
+                ) : null}
               </span>
-              {study.deliveryTimeline ? (
-                <span className="col-start-2 row-start-2 block w-fit font-mono text-[10px] uppercase tracking-[0.2em] text-[#ff5501]">
-                  {study.deliveryTimeline}
-                </span>
-              ) : null}
               <span
                 className={cn(
-                  'col-start-2 block min-w-0 text-left text-lg uppercase leading-tight tracking-wide transition-colors duration-300 sm:text-xl md:text-3xl md:leading-none',
-                  study.deliveryTimeline ? 'row-start-3' : 'row-start-2',
+                  'col-start-2 row-start-2 block min-w-0 text-left text-lg uppercase leading-tight tracking-wide transition-colors duration-300 sm:text-xl md:text-3xl md:leading-none',
                   isOpen ? 'font-medium text-white' : 'text-[#1a1512]/65 group-hover:text-[#1a1512]',
                 )}
                 style={{ fontFamily: 'Nohemi, sans-serif' }}
@@ -212,20 +246,14 @@ export function ShoreCaseStudyList({ studies }: ShoreCaseStudyListProps) {
               </span>
               {!isOpen ? (
                 <span
-                  className={cn(
-                    'col-start-2 block text-pretty text-[14px] leading-relaxed text-[#1a1512]/60 md:text-[15px]',
-                    study.deliveryTimeline ? 'row-start-4' : 'row-start-3',
-                  )}
+                  className="col-start-2 row-start-3 block text-pretty text-[14px] leading-relaxed text-[#1a1512]/60 md:text-[15px]"
                 >
                   {study.challenge}
                 </span>
               ) : null}
               {study.pendingReview && !isOpen ? (
                 <span
-                  className={cn(
-                    'col-start-2 mt-1 inline-flex w-fit items-center gap-2 rounded-full border border-amber-300/70 bg-amber-50 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-700',
-                    study.deliveryTimeline ? 'row-start-5' : 'row-start-4',
-                  )}
+                  className="col-start-2 row-start-4 mt-1 inline-flex w-fit items-center gap-2 rounded-full border border-amber-300/70 bg-amber-50 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-700"
                 >
                   Pending review
                 </span>
@@ -269,6 +297,8 @@ export function ShoreCaseStudyList({ studies }: ShoreCaseStudyListProps) {
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggle(study.id)}
+                onMouseEnter={() => queueShowcasePrefetch(study)}
+                onFocus={() => queueShowcasePrefetch(study)}
                 className={headerClass}
               >
                 {headerBody}

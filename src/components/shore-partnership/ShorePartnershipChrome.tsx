@@ -10,11 +10,11 @@ import { CAPTIVE_DEMAND_LOGO, SHORE_LOGOMARK_URL } from '@/lib/shore-partnership
 
 const NAV_LINKS = [
   { label: 'Approach', href: '#approach' },
-  { label: 'Services', href: '#services' },
-  { label: 'Integrations', href: '#integrations' },
   { label: 'Case studies', href: '#case-studies' },
   { label: 'Free audit', href: '#free-audit' },
-  { label: 'Engage', href: '#engage' },
+  { label: 'Integrations', href: '#integrations' },
+  { label: 'How we execute', href: '#operating-model' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 /**
@@ -58,54 +58,44 @@ export function ShorePartnershipChrome() {
               priority
             />
           </span>
-          <span
-            className={cn(
-              'mx-4 hidden font-mono text-[12px] uppercase tracking-[0.18em] sm:inline',
-              scrolled ? 'text-white/35' : 'text-[#1a1512]/30',
-            )}
-            aria-hidden
-          >
+          <span className={cn('mx-2 font-nohemi text-lg font-light italic text-brand-orange/70', scrolled && 'text-brand-orange/90')}>
             ×
           </span>
-          <span className="relative hidden h-6 w-[58px] shrink-0 sm:block" aria-hidden>
+          <span className={cn('relative shrink-0 transition-[filter] duration-300', scrolled && 'brightness-0 invert')}>
             <Image
               src={SHORE_LOGOMARK_URL}
-              alt=""
-              fill
-              className={cn(
-                'object-contain object-center transition-[filter] duration-300',
-                scrolled ? 'opacity-90 brightness-0 invert' : 'opacity-85',
-              )}
-              sizes="58px"
+              alt="Shore Capital Partners"
+              width={48}
+              height={48}
+              className="h-8 w-auto max-h-8 object-contain"
+              sizes="48px"
+              priority
             />
           </span>
         </Link>
 
-        <nav aria-label="Partnership shortcuts" className="flex items-center gap-3 sm:gap-6">
-          <ul className="hidden items-center gap-6 lg:flex">
-            {NAV_LINKS.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className={cn(
-                    'font-mono text-[11px] uppercase tracking-[0.18em] transition-colors duration-150',
-                    scrolled
-                      ? 'text-white/75 hover:text-white'
-                      : 'text-[#1a1512]/70 hover:text-brand-orange',
-                  )}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <CTAButton
-            variant="dark"
-            text="START A PROJECT"
-            href="#contact"
-            ariaLabel="Start a project with Captive Demand"
-          />
+        <nav className="hidden items-center gap-6 lg:flex" aria-label="Shore partnership page sections">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className={cn(
+                'font-mono text-[10px] uppercase tracking-[0.14em] transition-colors duration-150',
+                scrolled ? 'text-white/75 hover:text-white' : 'text-[#1a1512]/60 hover:text-[#1a1512]',
+              )}
+            >
+              {link.label}
+            </a>
+          ))}
         </nav>
+
+        <CTAButton
+          variant={scrolled ? 'bookCallOrange' : 'dark'}
+          text="START A PROJECT"
+          href="#contact"
+          ariaLabel="Start a project: jump to the Shore lead form"
+          className="hidden sm:inline-flex"
+        />
       </div>
     </header>
   );

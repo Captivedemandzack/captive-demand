@@ -84,16 +84,22 @@ export const shorePartnershipCaseStudies: ShoreCaseStudy[] = [
         { label: 'Core campaigns shipped', prior: 80, current: 141 },
       ],
     },
-    visualProof:
-      'Grab empower.captivedemand.com Overview or Q1 Report PDF Spencer sends to Shore, OR a screenshot grid of 3 to 4 lifecycle templates plus automation builder context.',
+    beforeAfterShowcase: {
+      tabIdPrefix: 'empower-lifecycle',
+      beforeSrc: '/empower-lifecycle-before.webp',
+      afterSrc: '/empower-lifecycle-after.webp',
+      imageAltBefore: 'Empower lifecycle email before redesign, December savings promo',
+      imageAltAfter: 'Empower lifecycle email after Captive Demand redesign, Valentine lip filler promo',
+      tablistAriaLabel: 'Lifecycle email before and after comparison',
+    },
   },
   {
     id: 'agentis',
     name: 'Agentis Longevity',
     tier: 'shore',
     engagementType: 'Phased web work. Tracking infrastructure.',
-    tags: ['Shore portfolio', 'Phased web work', 'Tracking infrastructure'],
-    deliveryTimeline: 'Delivered end-to-end in 3 weeks',
+    tags: ['Shore portfolio', 'Website', 'CRO'],
+    deliveryTimeline: 'Delivered in 3 weeks',
     challenge:
       'Agentis needed credibility fast. Their existing site was holding back conversion and the data layer underneath it did not tell the truth. We delivered a phased rollout: a fast surface refresh first to stabilize lead flow, then a full rebuild plus tracking infrastructure that gave clinical and marketing leadership the same view.',
     actions: [
@@ -105,8 +111,8 @@ export const shorePartnershipCaseStudies: ShoreCaseStudy[] = [
     results: '',
     beforeAfterShowcase: {
       tabIdPrefix: 'agentis-hero',
-      beforeSrc: '/Agentis-home-before.png',
-      afterSrc: '/Agentis-Home-New.png',
+      beforeSrc: '/Agentis-home-before.webp',
+      afterSrc: '/Agentis-Home-New.webp',
       imageAltBefore: 'Agentis homepage before redesign, full-page crop from top',
       imageAltAfter: 'Agentis homepage after redesign, full-page crop from top',
     },
@@ -125,8 +131,8 @@ export const shorePartnershipCaseStudies: ShoreCaseStudy[] = [
     name: 'Mantality Health',
     tier: 'supporting',
     engagementType: 'Web design & development, CRO, and rapid turnaround.',
-    tags: ['Shore portfolio', 'Web design & development', 'CRO'],
-    deliveryTimeline: 'Delivered end-to-end in 2 weeks',
+    tags: ['Shore portfolio', 'Website', 'CRO'],
+    deliveryTimeline: 'Delivered in 2 weeks',
     challenge:
       'The legacy site lacked a clear brand and differentiation—visitors were not connecting with the practice. Mantality needed a fast turnaround on a full redesign. What we delivered is a modern, conversion-focused experience that can compete in a hyper-competitive TRT market without sacrificing clinical credibility.',
     actions: [
@@ -137,8 +143,8 @@ export const shorePartnershipCaseStudies: ShoreCaseStudy[] = [
     results: '',
     beforeAfterShowcase: {
       tabIdPrefix: 'mantality-hero',
-      beforeSrc: '/Mantality-home-old.png',
-      afterSrc: '/mantality-home-new.png',
+      beforeSrc: '/Mantality-home-old.webp',
+      afterSrc: '/mantality-home-new.webp',
       imageAltBefore: 'Mantality Health homepage before redesign, full-page crop from top',
       imageAltAfter: 'Mantality Health homepage after redesign, full-page crop from top',
     },
@@ -157,7 +163,7 @@ export const shorePartnershipCaseStudies: ShoreCaseStudy[] = [
     name: 'SLK Clinic',
     tier: 'shore',
     engagementType: 'Hosting, maintenance, CRO, and SEO for a Shore portfolio clinic.',
-    tags: ['Shore portfolio', 'Hosting & maintenance', 'CRO & SEO'],
+    tags: ['Shore portfolio', 'Hosting & maintenance', 'CRO', 'SEO'],
     panelLayout: 'showcaseBottom',
     challenge:
       'SLK Clinic needed dependable web operations inside Shore\'s portfolio while Zenoti\'s default booking experience buried clarity, especially across multiple service lines. The site needed standardized practices, cleaner measurement, and a booking path visitors could actually finish.',

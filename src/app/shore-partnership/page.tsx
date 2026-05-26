@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Clock, Instagram, Linkedin } from 'lucide-react';
+import { Clock, Instagram, LayoutGrid, Linkedin, MousePointerClick, Workflow } from 'lucide-react';
 
 import { AskAiAboutFooter } from '@/components/layout/AskAiAboutFooter';
 import { ShorePartnershipIntegrations } from '@/components/shore-partnership/ShorePartnershipIntegrations';
@@ -18,7 +18,6 @@ import { ShoreSeoAeoBand } from '@/components/shore-partnership/ShoreSeoAeoBand'
 import { BentoGridSection } from '@/components/sections/BentoGridSection';
 import { CTAButton } from '@/components/ui/CTAButton';
 import { HeroAccentHighlight } from '@/components/ui/HeroAccentHighlight';
-import { AccentBr } from '@/components/ui/accent-br';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 import { shorePartnershipCaseStudies } from '@/data/shore-partnership-case-studies';
 import {
@@ -34,7 +33,7 @@ import { cn } from '@/lib/utils';
 export const metadata = createSeoMetadata({
   title: 'Captive Demand × Shore Capital Partners',
   description:
-    'How Captive Demand ships web and measurement work alongside Shore portfolio companies — audit-first scoping, senior-led delivery, and timelines sponsors recognize.',
+    'How Captive Demand ships web and measurement work alongside Shore portfolio companies. Audit-first scoping, senior-led delivery, and timelines sponsors recognize.',
   path: '/shore-partnership',
   robots: { index: false, follow: true },
 });
@@ -56,17 +55,17 @@ const operatingTabs = [
     shortLabel: 'Senior team on every account',
     headline: 'No project lead juggling six accounts. A senior pod on every Shore engagement.',
     body:
-      'Senior strategists lead every engagement. Delivery runs through a managed production team with AI-accelerated workflows, so leadership stays focused on strategy, quality control, and sponsor-facing decisions—not pixel pushing. You work with operators and project leadership, not rotating account managers.',
+      'Senior strategists lead every engagement. Delivery runs through a managed production team with AI-accelerated workflows, so leadership stays focused on strategy, quality control, and sponsor-facing decisions, not pixel pushing. You work with operators and project leadership, not rotating account managers.',
     statValue: 'Senior',
     statLabel: 'Leadership on every account',
     capabilities: ['Senior-led strategy', 'Managed delivery team', 'AI-accelerated build', 'Rigorous QC'],
   },
   {
     id: '03',
-    shortLabel: 'Analytics built in at launch',
-    headline: 'Day-one GA4, GTM, UTMs, CRM hygiene, not “phase two after launch.”',
+    shortLabel: 'Analytics',
+    headline: 'Analytics wired at launch, reporting the same numbers across every brand.',
     body:
-      'Lead routing and attribution ship with the project. Because if you cannot measure it, you cannot operate it across a portfolio, and Shore\'s playbook assumes trustworthy measurement.',
+      'GA4, GTM, UTM strategy, CRM lead routing, and conversion event mapping ship at launch. Every brand in the portfolio reports on the same numbers, so leadership stops getting different answers from different agencies.',
     statValue: '24h',
     statLabel: 'Sales-handoff discipline target',
     capabilities: ['GA4', 'GTM', 'UTM discipline', 'Lead routing', 'Attribution'],
@@ -83,13 +82,20 @@ const operatingTabs = [
   },
   {
     id: '05',
-    shortLabel: 'Hosting, CMS & support',
-    headline: 'You own the site. We keep it running, secure, and easy to update.',
+    shortLabel: 'Ongoing Maintenance',
+    headline: 'Ongoing Maintenance',
     body:
-      'Hosting, support, and disciplined maintenance so portfolio companies are never leasing their web presence from us. Simple headline and image updates ship through Captive Studio, our agentic CMS, without opening a ticket for every copy change.',
+      'You own your website. You\'re not leasing it from us. You can make simple changes via Captive Demand Studios, our agentic CMS, without having to come through us at all. When you need real development work, our team is on call. Hosting, support, and management included.',
     statValue: '100%',
     statLabel: 'Client-owned assets',
     capabilities: ['Managed hosting', 'Security patches', 'Captive Studio CMS', 'Ticket-based support'],
+    bullets: [
+      'You own your code, content, and platform. Full ownership, no lock-in.',
+      'Simple edits via Captive Demand Studios, no developer needed',
+      'Real dev work on call when you need it, hours included with the engagement',
+      'Managed hosting, security updates, and uptime monitoring',
+      'No unconscionable contracts. Cancel any time, walk away with everything.',
+    ],
   },
 ] as const;
 
@@ -97,39 +103,45 @@ const phases = [
   {
     code: 'Phase 01',
     title: 'Convert.',
+    icon: MousePointerClick,
+    iconLabel: 'Conversion and UX',
     summary:
-      'Tune the web presence first. A facelift that earns trust on first scroll, scannable information, friction stripped out, every question answered before it is asked.',
+      'We tune the site you have today. Page-level CRO, conversion psychology, and quick-win tracking lift performance on your current stack. No rebuild required.',
     deliverables: [
-      'Web facelift on the existing stack. Credibility at first scroll.',
-      'UX/UI rewrites that cut friction and make next steps unmissable.',
-      'Trust signals, proof, and answers placed before the doubt arrives.',
-      'Foundational tracking and measurement so wins are provable.',
+      'Page-level CRO without touching the platform',
+      'Hero, headline, and CTA rewrites that move conversion in days',
+      'Quick-win tracking fixes so the wins are measurable',
+      'Holds the line while we plan the bigger play',
     ],
     outcome: 'A property that converts traffic the business already has.',
   },
   {
     code: 'Phase 02',
     title: 'Compound.',
+    icon: Workflow,
+    iconLabel: 'Lifecycle automation',
     summary:
-      'Now the funnel is honest, layer in the automation. Marketing, lifecycle, CRM, and ops choreography that capitalize on every opportunity. The business begins to run itself.',
+      'We layer systems that turn wins into a flywheel. Lifecycle email, funnel CRO, and ground-up rebuilds when the foundation needs it. Each layer multiplies the last.',
     deliverables: [
-      'Lifecycle email and SMS programs aligned to the buying motion.',
-      'CRM and sales handoff automation so leads never leak between teams.',
-      'Reactivation, retention, and upsell journeys earning revenue overnight.',
-      'Reporting cadences leadership actually trusts and acts on.',
+      'Lifecycle email and lead nurture flows',
+      'Full funnel CRO across acquisition and retention',
+      'Ground-up rebuild when the existing site caps growth',
+      'Reporting that makes compounding visible to leadership',
     ],
-    outcome: 'A system that compounds without a human pushing every button.',
+    outcome: 'A system that compounds without human intervention.',
   },
   {
     code: 'Phase 03',
     title: 'Replicate.',
+    icon: LayoutGrid,
+    iconLabel: 'Portfolio roll-out',
     summary:
-      'Once the playbook is proven inside one portfolio company, we lift the same procedure into the next. Predictable timelines, repeatable instrumentation, portfolio-wide standardization.',
+      'Once one brand is dialed, the playbook moves. We roll the same strategy, tooling, and reporting across every business on the platform with one consolidated leadership view.',
     deliverables: [
-      'Same operating cadence applied across every portfolio brand.',
-      'Shared design system, tracking template, and CRM blueprint.',
-      'Reporting rolled up so portfolio leadership sees one dashboard.',
-      'Talent and tooling that scale without re-onboarding agencies.',
+      'Strategy and learnings applied across every portfolio brand',
+      'Predictable timelines for every site we touch',
+      'Reporting consolidated into one leadership view',
+      'Our team and tooling scale with the portfolio, no new agency every time',
     ],
     outcome: 'One agency absorbing execution across the entire roll-up.',
   },
@@ -152,7 +164,7 @@ const testimonials = [
   },
   {
     quote:
-      'The Shore-dedicated team is in the work, not behind a ticket queue. When we need changes across multiple sites, response feels like an extension of our ops group—with senior oversight on every deliverable.',
+      'The Shore-dedicated team is in the work, not behind a ticket queue. When we need changes across multiple sites, response feels like an extension of our ops group, with senior oversight on every deliverable.',
     name: 'Portfolio operator',
     role: 'Shore-backed company',
     featured: false as boolean,
@@ -160,7 +172,7 @@ const testimonials = [
 ] as const;
 
 const SHORE_ASK_AI_PROMPT =
-  'How can Captive Demand help me improve my website and generate more business? Reference https://captivedemand.com/shore-partnership for Shore portfolio partner context.';
+  'How does Captive Demand help PE-backed businesses succeed with web, SEO, and AEO across a multi-brand portfolio? Reference https://captivedemand.com/shore-partnership for Shore portfolio partner context.';
 
 export default function ShorePartnershipPage() {
   const bookingHref = shorePartnershipBookingUrl();
@@ -178,30 +190,30 @@ export default function ShorePartnershipPage() {
         <div className="relative mx-auto max-w-6xl">
           <ShoreReveal>
             <div className="flex flex-col items-center gap-10 text-center">
-              <div className="flex flex-col items-center gap-6 md:flex-row md:gap-0 md:items-center md:justify-center">
-                <span className="relative block h-12 w-[204px] shrink-0 md:h-[52px] md:w-[228px]">
+              <div className="flex items-center justify-center gap-3 md:gap-4">
+                <span className="relative block h-12 w-[132px] shrink-0 overflow-hidden md:h-[54px] md:w-[148px]">
                   <Image
                     src={CAPTIVE_DEMAND_LOGO}
                     alt="Captive Demand"
                     fill
-                    className="object-contain object-center"
-                    sizes="(min-width: 768px) 228px, 204px"
+                    className="object-contain object-left"
+                    sizes="148px"
                     priority
                   />
                 </span>
                 <span
-                  className="font-nohemi mx-2 text-3xl font-light italic text-brand-orange/70 md:mx-3 md:text-4xl"
+                  className="flex w-8 shrink-0 items-center justify-center font-nohemi text-3xl font-light italic text-brand-orange/70 md:w-10 md:text-4xl"
                   aria-hidden
                 >
                   ×
                 </span>
-                <span className="relative block h-[72px] w-[180px] shrink-0 md:h-20 md:w-[200px]">
+                <span className="relative block h-[72px] w-[168px] shrink-0 md:h-20 md:w-[188px]">
                   <Image
                     src={SHORE_LOGOMARK_URL}
                     alt="Shore Capital Partners"
                     fill
-                    className="object-contain object-center"
-                    sizes="(min-width: 768px) 200px, 180px"
+                    className="object-contain object-left"
+                    sizes="188px"
                     priority
                   />
                 </span>
@@ -235,7 +247,10 @@ export default function ShorePartnershipPage() {
 
               <p className="max-w-2xl text-pretty text-[1.125rem] leading-[1.7] text-neutral-700 md:text-[1.25rem]">
                 Captive Demand is Shore&apos;s vetted web partner. We are an agency built for PE. Our process and tech
-                make rollouts simple and effective for portfolio companies, and the results speak for themselves.
+                make rollouts simple and effective for portfolio companies, and the results speak for themselves. One
+                team. One accountable partner. Every brand under your roof. Every site ships AEO and SEO ready from day
+                one. Built to be found in Google and cited in AI overviews. So portfolio value compounds instead of
+                decaying.
               </p>
 
               <div className="flex justify-center pt-2">
@@ -263,65 +278,81 @@ export default function ShorePartnershipPage() {
               eyebrow="Approach"
               lead="Match scope to"
               accent="the real problem."
-              description="Shore sponsors expect momentum inside weeks, not quarters. We phase portfolio company web work so conversion wins first, lifecycle and instrumentation stack second, and the operating kit standardizes third."
+              description="Momentum in weeks, not months. We phase portfolio work so conversion wins come first, full rebuilds come second, and the playbook gets replicated across every business under the platform."
             />
           </ShoreReveal>
 
           <div className="mt-12 grid min-w-0 grid-cols-1 gap-3 lg:grid-cols-3 lg:items-stretch">
-            {phases.map((phase, i) => (
-              <ShoreReveal key={phase.code} delay={i * 0.08}>
-                <article
-                  className={cn(
-                    'relative flex h-full min-h-0 w-full max-w-full flex-col rounded-3xl border border-[#1a1512]/5 bg-[#e8e8e8] p-8 text-[#1a1512] transition-all duration-300 lg:p-10',
-                  )}
-                  style={{
-                    boxShadow:
-                      'rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.05) 0px 4px 12px, rgba(0, 0, 0, 0.06) 0px 20px 48px, rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset',
-                  }}
-                >
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff5501]">{phase.code}</p>
-                  <h3
-                    className="mt-3 text-[2rem] leading-tight md:text-[2.25rem]"
-                    style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 400 }}
+            {phases.map((phase) => (
+              <article
+                key={phase.code}
+                className={cn(
+                  'relative flex h-full min-h-0 w-full max-w-full flex-col rounded-3xl border border-[#1a1512]/5 bg-[#e8e8e8] p-6 text-[#1a1512] lg:p-8',
+                )}
+                style={{
+                  boxShadow:
+                    'rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.05) 0px 4px 12px, rgba(0, 0, 0, 0.06) 0px 20px 48px, rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset',
+                }}
+              >
+                <div className="mb-4 flex items-center justify-between gap-4">
+                  <div
+                    className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-[#ff5501]/8"
+                    aria-hidden
                   >
-                    {phase.title}
-                  </h3>
-                  <p className="mt-4 text-pretty text-[15px] leading-relaxed text-[#1a1512]/80">{phase.summary}</p>
-                  <ul className="mt-6 space-y-3 border-t border-[#1a1512]/10 pt-6 text-[14px] leading-relaxed text-[#1a1512]/85">
-                    {phase.deliverables.map((d) => (
-                      <li key={d} className="flex gap-3">
-                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#1a1512]" aria-hidden />
-                        <span>{d}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto pt-8">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1a1512]/45">Outcome</p>
-                    <p className="mt-2 text-[1.05rem] italic leading-snug text-[#1a1512]" style={{ fontFamily: 'Nohemi, sans-serif' }}>
-                      {phase.outcome}
-                    </p>
+                    <phase.icon className="size-7 text-[#ff5501]" strokeWidth={1.5} />
+                    <span className="sr-only">{phase.iconLabel}</span>
                   </div>
-                </article>
-              </ShoreReveal>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff5501]">{phase.code}</p>
+                </div>
+                <h3
+                  className="mt-3 text-[2rem] leading-tight md:text-[2.25rem]"
+                  style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 400 }}
+                >
+                  {phase.title}
+                </h3>
+                <p className="mt-4 text-pretty text-[15px] leading-relaxed text-[#1a1512]/80">{phase.summary}</p>
+                <ul className="mt-6 space-y-3 border-t border-[#1a1512]/10 pt-6 text-[14px] leading-relaxed text-[#1a1512]/85">
+                  {phase.deliverables.map((d) => (
+                    <li key={d} className="flex gap-3">
+                      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#1a1512]" aria-hidden />
+                      <span>{d}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto pt-8">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1a1512]/45">Outcome</p>
+                  <p className="mt-2 text-[1.05rem] italic leading-snug text-[#1a1512]" style={{ fontFamily: 'Nohemi, sans-serif' }}>
+                    {phase.outcome}
+                  </p>
+                </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─────────────── OPERATING MODEL ─────────────── */}
-      <section id="operating-model" className="relative bg-[#FAFAFA] px-container-px py-20 md:py-28">
-        <div className="mx-auto max-w-7xl">
+      {/* ─────────────── CASE STUDIES ─────────────── */}
+      <section id="case-studies" className="relative overflow-hidden bg-[#FAFAFA] px-container-px py-20 md:py-28">
+        <div className="relative z-10 mx-auto max-w-7xl">
           <ShoreReveal>
             <ShoreSectionHeader
-              eyebrow="Operating model"
-              lead="How we execute alongside"
-              accent="Shore portfolio partners."
-              description="PPG defines what strong websites include; Captive Demand ships it inside Empower and Agentis today. Five pillars: audit-first, senior staffing, instrumentation at launch, sponsor-paced timelines, and ongoing maintenance you own."
+              eyebrow="Case studies"
+              titleSlot={
+                <>
+                  <span className="text-[#1a1512]">More pipeline through sites that </span>
+                  <span className="text-[#d3d4d9]">convert,</span>
+                  <span className="text-[#1a1512]"> journeys that </span>
+                  <span className="text-[#d3d4d9]">scale,</span>
+                  <span className="text-[#1a1512]"> and analytics leadership </span>
+                  <span className="text-[#d3d4d9]">trusts.</span>
+                </>
+              }
+              description="Check out how we work within the Shore portfolio currently and the outcomes being produced on a daily basis."
             />
           </ShoreReveal>
 
           <div className="mt-12 md:mt-16">
-            <ShoreOperatingTabs tabs={operatingTabs} />
+            <ShoreCaseStudyList studies={shorePartnershipCaseStudies} />
           </div>
         </div>
       </section>
@@ -342,7 +373,7 @@ export default function ShorePartnershipPage() {
             {testimonials.map((item, i) => {
               const isFeatured = item.featured;
               return (
-                <ShoreReveal key={`shore-testimonial-${i}`} delay={i * 0.06}>
+                <ShoreReveal key={`shore-testimonial-${item.role}-${i}`} delay={i * 0.06}>
                   <figure
                     className={`relative h-full overflow-hidden rounded-2xl p-6 md:p-8 ${isFeatured ? '' : 'border border-black/5 bg-[#f6f5f6]'}`}
                     style={
@@ -461,44 +492,34 @@ export default function ShorePartnershipPage() {
         </div>
       </section>
 
+      <ShoreFreeAuditSection />
+
+      <ShorePartnershipIntegrations />
+
+      {/* ─────────────── OPERATING MODEL ─────────────── */}
+      <section id="operating-model" className="relative bg-[#FAFAFA] px-container-px py-20 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <ShoreReveal>
+            <ShoreSectionHeader
+              eyebrow="Operating model"
+              lead="How we execute alongside"
+              accent="Shore portfolio partners."
+              description="PPG defines what strong websites include; Captive Demand ships it inside Empower and Agentis today. Five pillars: audit-first, senior staffing, instrumentation at launch, sponsor-paced timelines, and ongoing maintenance you own."
+            />
+          </ShoreReveal>
+
+          <div className="mt-12 md:mt-16">
+            <ShoreOperatingTabs tabs={operatingTabs} />
+          </div>
+        </div>
+      </section>
+
       {/* ─────────────── CAPABILITIES (HOME BENTO) ─────────────── */}
       <div id="services">
         <BentoGridSection />
       </div>
 
       <ShoreSeoAeoBand />
-
-      <ShorePartnershipIntegrations />
-
-      {/* ─────────────── CASE STUDIES ─────────────── */}
-      <section id="case-studies" className="relative overflow-hidden bg-[#FAFAFA] px-container-px py-20 md:py-28">
-        <div className="relative z-10 mx-auto max-w-7xl">
-          <ShoreReveal>
-            <ShoreSectionHeader
-              eyebrow="Case studies"
-              descriptionSentenceCase
-              titleSlot={
-                <>
-                  <span className="text-[#1a1512]">More pipeline through sites that </span>
-                  <span className="text-[#d3d4d9]">convert</span>
-                  <span className="text-[#1a1512]">, journeys that </span>
-                  <span className="text-[#d3d4d9]">scale</span>
-                  <span className="text-[#1a1512]">, and analytics leadership </span>
-                  <span className="text-[#d3d4d9]">trusts</span>
-                  <span className="text-[#1a1512]">.</span>
-                </>
-              }
-              description="Check out how we work within the Shore portfolio currently and outcomes being produced on a daily basis."
-            />
-          </ShoreReveal>
-
-          <div className="mt-12 md:mt-16">
-            <ShoreCaseStudyList studies={shorePartnershipCaseStudies} />
-          </div>
-        </div>
-      </section>
-
-      <ShoreFreeAuditSection />
 
       {/* ─────────────── ENGAGE ─────────────── */}
       <section id="engage" className="relative overflow-hidden bg-[#FAFAFA] px-4 py-20 md:py-32">
@@ -508,8 +529,7 @@ export default function ShorePartnershipPage() {
               eyebrow="Engagement"
               lead="Pick the path that matches"
               accent="your urgency."
-              descriptionSentenceCase
-              description="Know what you need? Need to talk it out with our team? Use the links below to get to the right place."
+              description="Know your gaps? Start with a free audit. Want to talk it through first? Book a call. The links below get you to the right place."
             />
           </ShoreReveal>
 
@@ -562,7 +582,7 @@ export default function ShorePartnershipPage() {
                   Want to talk live?
                 </h3>
                 <p className="mb-6 flex-1 font-mono text-sm leading-relaxed text-[#1a1512]/60">
-                  Grab twenty minutes with our team. Google Meet, no pitch deck—just scope, timeline, and fit.
+                  Grab twenty minutes with our team. Google Meet, no pitch deck. Just scope, timeline, and fit.
                 </p>
                 <div className="mt-auto">
                   <CTAButton
@@ -624,8 +644,8 @@ export default function ShorePartnershipPage() {
           <ShoreReveal>
             <ShoreSectionHeader
               eyebrow="Team"
-              lead="Nashville roots."
-              accent="Portfolio-aware delivery."
+              lead="Based in Nashville."
+              accent="Trusted at national scale."
             />
           </ShoreReveal>
 
@@ -702,8 +722,9 @@ export default function ShorePartnershipPage() {
 
           <ShoreReveal delay={0.12}>
             <p className="mx-auto mt-12 max-w-3xl text-center text-pretty text-[1.05rem] leading-[1.7] text-[#1a1512]/70">
-              We work primarily with PE-backed portfolios because the bar is not a hero launch; it&apos;s repeatable
-              systems that survive diligence-style scrutiny across an entire roll-up.
+              We work mainly with PE-backed portfolios because that is where our work compounds. Operators at that scale
+              reshape entire categories, and we are drawn to building the web, data, and marketing systems that let a
+              portfolio grow without reinventing the wheel with every brand.
             </p>
           </ShoreReveal>
         </div>
@@ -716,33 +737,24 @@ export default function ShorePartnershipPage() {
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[48%_52%] lg:gap-16">
             <div className="flex flex-col">
               <div className="mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-[#1a1512]/40">
-                [ SHORE PARTNERSHIP · START YOUR BUILD ]
+                [ START YOUR BUILD ]
               </div>
 
               <h2
-                className="mb-6 text-[clamp(2.25rem,4vw+1rem,3.25rem)] leading-[1.1] tracking-tighter text-[#111]"
+                className="mb-6 text-balance text-[clamp(2.25rem,4vw+1rem,3.25rem)] leading-[1.1] tracking-tighter text-[#111]"
                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
               >
-                <span className="text-[#111]">Tell us</span>
-                <AccentBr />
-                <span className="font-light text-[#d3d4d9]">what your portfolio company needs.</span>
+                Get in touch with the{' '}
+                <span className="font-light text-[#d3d4d9]">Shore-dedicated team.</span>
               </h2>
 
-              <p className="mb-6 max-w-[360px] font-mono text-sm leading-relaxed text-[#d3d4d9]">
-                Shore portfolio partners get white-glove routing from our dedicated desk. Tell us how many sites are in
-                scope and senior leadership will respond with a clear next step.
+              <p className="mb-6 font-mono text-sm leading-relaxed text-[#666]">
+                Tell us what you need. Our Shore-dedicated team will reach back with concrete next steps.
               </p>
-
-              <div className="mb-4 flex w-fit items-center gap-2 rounded-[8px] border border-[#e8e8e8] bg-white/80 px-4 py-2 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]">
-                <span className="size-2 rounded-full bg-[#E8480C]" />
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[#1a1512]/80">
-                  Shore + Captive routing · reviewed personally
-                </span>
-              </div>
 
               <p className="mb-8 flex items-center gap-2 font-mono text-[12px] text-[#888]">
                 <Clock size={14} strokeWidth={1.5} aria-hidden />
-                WE AIM TO RESPOND WITHIN THE SAME BUSINESS DAY
+                RESPONSE TIME · WITHIN ONE BUSINESS HOUR
               </p>
 
               <div className="mb-8 rounded-xl bg-[#1a1a1a] p-5 md:p-6">
@@ -753,15 +765,15 @@ export default function ShorePartnershipPage() {
                 <ul className="space-y-2 font-mono text-[13px] text-[#aaa]">
                   <li className="flex items-start gap-2">
                     <span className="text-[#E8480C]">+</span>
-                    A senior operator confirms scope fit and timeline bandwidth
+                    A senior operator confirms scope and timeline
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#E8480C]">+</span>
-                    If aligned we loop in PPG and begin the engagement
+                    We loop in PPG and plan the engagement
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#E8480C]">+</span>
-                    You receive a concise next-step note, never a black hole
+                    You receive a concise note with next steps
                   </li>
                 </ul>
               </div>
@@ -812,34 +824,33 @@ export default function ShorePartnershipPage() {
         </div>
       </section>
 
-      <section className="relative bg-[#FAFAFA] px-container-px pb-8 pt-4 md:pb-12">
-        <div className="mx-auto max-w-7xl">
-          <AskAiAboutFooter prompt={SHORE_ASK_AI_PROMPT} className="mt-0" />
-        </div>
-      </section>
-
       {/* ─────────────── FOOTER ─────────────── */}
       <footer className="bg-[#1a1512] px-container-px py-12 text-white/85">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 text-sm md:flex-row md:items-center md:justify-between">
-          <p className="max-w-xl text-pretty leading-relaxed text-white/85">
-            Captive Demand maintains this hub on captivedemand.com for Shore operators who want Captive context before
-            submitting the Portfolio Performance Group routing form. It complements the{' '}
-            <a
-              href={playbookUrl('/', 'footer')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-white underline underline-offset-4"
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+            <p className="max-w-xl text-pretty leading-relaxed text-white/85">
+              Captive Demand partners with Shore Capital and Portfolio Performance Group (PPG) to deliver web, SEO, and
+              AEO across the Shore portfolio. We build sites, improve conversion, and strengthen search visibility for
+              portfolio companies from audit through launch. Use this page to scope work or start an engagement. For the
+              full Shore program, visit the{' '}
+              <a
+                href={playbookUrl('/', 'footer')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-white underline underline-offset-4"
+              >
+                Shore-hosted playbook
+              </a>{' '}
+              at shoreppg.captivedemand.com.
+            </p>
+            <Link
+              href="/"
+              className="shrink-0 font-mono text-[11px] uppercase tracking-[0.22em] text-white/70 transition-colors duration-150 hover:text-white"
             >
-              Shore-hosted playbook experience
-            </a>{' '}
-            at shoreppg.captivedemand.com.
-          </p>
-          <Link
-            href="/"
-            className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/70 transition-colors duration-150 hover:text-white"
-          >
-            ← Back to captivedemand.com
-          </Link>
+              ← Back to captivedemand.com
+            </Link>
+          </div>
+          <AskAiAboutFooter prompt={SHORE_ASK_AI_PROMPT} variant="dark" className="mt-8 border-t border-white/10 pt-8" />
         </div>
       </footer>
     </>

@@ -21,6 +21,8 @@ export interface AskAiAboutFooterProps {
   /** Override the default “tell me about …” prompt sent to each assistant. */
   prompt?: string;
   className?: string;
+  /** Light (default) for beige backgrounds; dark for ink footer. */
+  variant?: 'light' | 'dark';
 }
 
 /**
@@ -60,9 +62,14 @@ type AssistantImageRow = {
 
 type AssistantRow = AssistantGlyphRow | AssistantImageRow;
 
-export function AskAiAboutFooter({ prompt: promptOverride, className }: AskAiAboutFooterProps = {}) {
+export function AskAiAboutFooter({
+  prompt: promptOverride,
+  className,
+  variant = 'light',
+}: AskAiAboutFooterProps = {}) {
   const prompt = buildTellAboutPrompt(promptOverride);
   const encoded = encodeURIComponent(prompt);
+  const isDark = variant === 'dark';
 
   /** Claude → Gemini → Grok → ChatGPT → Perplexity */
   const assistants: AssistantRow[] = [
@@ -116,7 +123,10 @@ export function AskAiAboutFooter({ prompt: promptOverride, className }: AskAiAbo
       <div className="max-w-xl pb-6">
         <h3
           id="ask-ai-footer-heading"
-          className="font-nohemi-custom text-base font-[400] tracking-tight text-brand-dark md:text-lg"
+          className={cn(
+            'font-nohemi-custom text-base font-[400] tracking-tight md:text-lg',
+            isDark ? 'text-white/90' : 'text-brand-dark',
+          )}
         >
           Ask AI about Captive Demand
         </h3>

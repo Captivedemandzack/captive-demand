@@ -6,6 +6,7 @@ import { Check } from 'lucide-react';
 
 import { CTAButton } from '@/components/ui/CTAButton';
 import { trackGa4Event } from '@/lib/analytics';
+import { markShoreFormSubmitted } from '@/lib/shore-form-session';
 import {
   SITE_FORM_INPUT_CLASS,
   SITE_FORM_LABEL_CLASS,
@@ -15,10 +16,11 @@ import {
 import { cn } from '@/lib/utils';
 
 const SITE_COUNT_OPTIONS = [
-  { value: '1', label: '1 site' },
-  { value: '2-5', label: '2–5 sites' },
-  { value: '6-11', label: '6–11 sites' },
-  { value: '12+', label: '12+ sites (portfolio roll-up)' },
+  { value: '1', label: 'One site' },
+  { value: '2-5', label: '2 to 5 sites' },
+  { value: '6-10', label: '6 to 10 sites' },
+  { value: '11-25', label: '11 to 25 sites' },
+  { value: '25+', label: 'More than 25 sites' },
 ] as const;
 
 export function ShorePartnershipLeadForm() {
@@ -27,7 +29,7 @@ export function ShorePartnershipLeadForm() {
   const [form, setForm] = useState({
     fullName: '',
     email: '',
-    portco: '',
+    portfolioCompany: '',
     siteCount: '',
     message: '',
     trap: '',
@@ -43,10 +45,10 @@ export function ShorePartnershipLeadForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          source: 'shore_partnership',
+          source: 'main-form',
           fullName: form.fullName.trim(),
           email: form.email.trim(),
-          businessName: form.portco.trim(),
+          businessName: form.portfolioCompany.trim(),
           siteCount: form.siteCount,
           message: form.message.trim(),
         }),
@@ -57,9 +59,10 @@ export function ShorePartnershipLeadForm() {
         return;
       }
 
+      markShoreFormSubmitted();
       trackGa4Event('generate_lead', {
         lead_source: 'shore_partnership_page',
-        form_name: 'shore_partnership',
+        form_name: 'main-form',
       });
       setSubmitted(true);
       setStatus('idle');
@@ -78,13 +81,13 @@ export function ShorePartnershipLeadForm() {
           <Check className="size-7 text-[#E8480C]" strokeWidth={2} aria-hidden />
         </div>
         <h3 className="mt-6 font-sans text-[20px] font-bold text-[#111]">
-          Got it. Our Shore-dedicated team will pick this up directly.
+          Got it. We will pick this up directly.
         </h3>
         <p className="mx-auto mt-4 max-w-md font-mono text-sm text-[#666]">
-          Senior leadership routes every Shore submission. Expect white-glove follow-up, not a generic sales sequence.
+          Our Shore-dedicated team will follow up with clear next steps, usually within one business hour.
         </p>
         <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-[#999]">
-          Typical reply within the same business day
+          Response time · within one business hour
         </p>
       </div>
     );
@@ -95,16 +98,26 @@ export function ShorePartnershipLeadForm() {
       className={cn(siteMarketingWhiteCardClassName('p-8 md:p-10'))}
       style={SITE_MARKETING_WHITE_SHADOW}
     >
-      <p className="mb-6 font-mono text-[11px] uppercase leading-relaxed tracking-[0.1em] text-[#1a1512]/55">
-        Shore portfolio partners get a dedicated desk: senior strategists on routing and QC, with managed production
-        teams built to handle multi-site portfolio volume.
+      <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#1a1512] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-white">
+        <span className="size-1.5 rounded-full bg-white" aria-hidden />
+        Shore dedicated team at Captive Demand
+      </span>
+
+      <h3
+        className="text-balance text-xl tracking-tight text-[#1a1512] md:text-2xl"
+        style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
+      >
+        Get in touch about your project
+      </h3>
+      <p className="mt-4 text-pretty font-mono text-sm leading-relaxed text-[#1a1512]/65">
+        Have a question about your project, or ready to get started? Fill out the form below and we will follow up.
       </p>
 
       <div className="sr-only" aria-live="polite">
         {status === 'error' ? 'Something went wrong. Try again or email hello@captivedemand.com.' : ''}
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="mt-8">
         <label className="hidden">
           Don&apos;t fill this out
           <input
@@ -130,7 +143,6 @@ export function ShorePartnershipLeadForm() {
               value={form.fullName}
               onChange={(e) => setForm((f) => ({ ...f, fullName: e.target.value }))}
               className={`${SITE_FORM_INPUT_CLASS} mt-2`}
-              placeholder="Jordan Rivera"
             />
           </div>
           <div className="md:col-span-1">
@@ -150,22 +162,22 @@ export function ShorePartnershipLeadForm() {
             />
           </div>
           <div className="md:col-span-1">
-            <label htmlFor="shore-portco" className={SITE_FORM_LABEL_CLASS}>
-              Portfolio company
+            <label htmlFor="shore-portfolio-company" className={SITE_FORM_LABEL_CLASS}>
+              Portfolio company name
             </label>
             <input
-              id="shore-portco"
+              id="shore-portfolio-company"
               required
               name="businessName"
-              value={form.portco}
-              onChange={(e) => setForm((f) => ({ ...f, portco: e.target.value }))}
+              value={form.portfolioCompany}
+              onChange={(e) => setForm((f) => ({ ...f, portfolioCompany: e.target.value }))}
               className={`${SITE_FORM_INPUT_CLASS} mt-2`}
-              placeholder="e.g., Empower Aesthetics"
+              placeholder="e.g. Empower Aesthetics"
             />
           </div>
           <div className="md:col-span-1">
             <label htmlFor="shore-site-count" className={SITE_FORM_LABEL_CLASS}>
-              How many sites need help?
+              How many sites do you need help with?
             </label>
             <select
               id="shore-site-count"
@@ -187,17 +199,20 @@ export function ShorePartnershipLeadForm() {
           </div>
           <div className="md:col-span-2">
             <label htmlFor="shore-msg" className={SITE_FORM_LABEL_CLASS}>
-              What should we know before we respond?
+              What&apos;s the most pressing need?
             </label>
             <textarea
               id="shore-msg"
               name="message"
-              rows={5}
+              rows={3}
               value={form.message}
               onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
               className={`${SITE_FORM_INPUT_CLASS} mt-2 resize-y`}
-              placeholder="Timeline, scope hypotheses, internal stakeholders, brands in scope."
+              placeholder="Timeline, scope, internal stakeholders, anything relevant"
             />
+            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#888]">
+              Response time · within one business hour
+            </p>
           </div>
         </div>
 
@@ -214,17 +229,17 @@ export function ShorePartnershipLeadForm() {
         <div className="pt-6">
           <CTAButton
             variant="dark"
-            text={status === 'submitting' ? 'SENDING...' : 'START CONVERSATION'}
+            text={status === 'submitting' ? 'SENDING...' : 'Get in touch with the Shore team →'}
             as="button"
             type="submit"
             disabled={status === 'submitting'}
             fullWidth
-            ariaLabel="Submit Shore partnership inquiry"
+            ariaLabel="Get in touch with the Shore team"
           />
         </div>
 
-        <p className="mt-4 font-mono text-[11px] text-[#999]">
-          We never sell your info. Your submission goes straight to our Shore-dedicated team for a personal reply.
+        <p className="mt-4 font-mono text-[11px] leading-relaxed text-[#999]">
+          No sales pitch. No obligation. Just a direct reply from our team.
         </p>
       </form>
     </div>

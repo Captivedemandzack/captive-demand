@@ -19,17 +19,32 @@ type Body = {
   source?: string;
 };
 
+const SHORE_FORM_SOURCES = new Set([
+  'main-form',
+  'audit-form',
+  'exit-intent',
+  'shore_partnership',
+  'shore_partnership_audit',
+]);
+
 /** Shore partnership landing — skips revenue gate; routes like Spencer brief */
 function isShorePartnershipSource(source: string | undefined): boolean {
-  const s = source?.trim();
-  return s === 'shore_partnership' || s === 'shore_partnership_audit';
+  return SHORE_FORM_SOURCES.has(source?.trim() ?? '');
 }
 
-/** Always CC this address on lead emails (override with LEAD_CC_EMAIL). */
-const DEFAULT_LEAD_CC = 'zachary@captivedemand.com';
+function isShoreAuditSource(source: string | undefined): boolean {
+  const s = source?.trim() ?? '';
+  return s === 'audit-form' || s === 'exit-intent' || s === 'shore_partnership_audit';
+}
 
-function leadCcEmail(): string {
-  return process.env.LEAD_CC_EMAIL?.trim() || DEFAULT_LEAD_CC;
+/** CC for non-Shore lead emails (override with LEAD_CC_EMAIL). */
+const DEFAULT_LEAD_CC = 'zachary@captivedemand.com';
+const DEFAULT_SHORE_LEAD_CC = 'hello@captivedemand.com';
+
+function leadCcEmail(isShore = false): string {
+  const override = process.env.LEAD_CC_EMAIL?.trim();
+  if (override) return override;
+  return isShore ? DEFAULT_SHORE_LEAD_CC : DEFAULT_LEAD_CC;
 }
 
 function getTransport() {
@@ -70,11 +85,11 @@ function formatLeadBody(params: {
 
 async function sendLeadToCeo(
   transporter: nodemailer.Transporter,
-  params: { subject: string; text: string },
+  params: { subject: string; text: string; isShore?: boolean },
 ): Promise<void> {
   const fromAddr = process.env.SMTP_FROM ?? process.env.SMTP_USER;
   const ceo = process.env.CEO_EMAIL?.trim();
-  const cc = leadCcEmail();
+  const cc = leadCcEmail(params.isShore);
 
   if (!ceo) {
     console.warn('CEO_EMAIL is not set; sending lead only to CC address.');
@@ -120,7 +135,8 @@ export async function POST(request: Request) {
     const revenueParsed = parseAnnualCompanyRevenue(body.annualCompanyRevenue);
     const isPricingModal = body.source === 'pricing_modal';
     const isShorePartnership = isShorePartnershipSource(body.source);
-    const isShoreAudit = body.source === 'shore_partnership_audit';
+    const isShoreAudit = isShoreAuditSource(body.source);
+    const shoreFormSource = body.source?.trim() ?? 'main-form';
 
     if (!displayName || !email) {
       return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
@@ -159,18 +175,15 @@ export async function POST(request: Request) {
     if (transporter) {
       if (isShorePartnership) {
         const siteCountLine = body.siteCount?.trim() ? `Sites in scope: ${body.siteCount.trim()}` : '';
-        const sourceLabel = isShoreAudit
-          ? 'Shore Capital Partnership Page — Free audit request (captivedemand.com/shore-partnership#free-audit)'
-          : 'Shore Capital Partnership Page (captivedemand.com/shore-partnership)';
         const text = [
-          `Source: ${sourceLabel}`,
+          `Form source: ${shoreFormSource}`,
           `Name: ${displayName}`,
           `Portfolio company: ${businessName}`,
           siteCountLine,
           `Reply-to email: ${email}`,
           body.message?.trim()
             ? isShoreAudit
-              ? `\nSite URLs / notes:\n${body.message.trim()}`
+              ? `\nSite URLs:\n${body.message.trim()}`
               : `\nMessage:\n${body.message.trim()}`
             : '',
         ]
@@ -178,10 +191,9 @@ export async function POST(request: Request) {
           .join('\n');
         try {
           await sendLeadToCeo(transporter, {
-            subject: isShoreAudit
-              ? `Shore free audit request — ${displayName} (${businessName})`
-              : `Shore partnership inquiry — ${displayName} (${businessName})`,
+            subject: `New Shore lead via ${shoreFormSource}: ${displayName} · ${businessName}`,
             text,
+            isShore: true,
           });
         } catch (mailErr) {
           console.error('Shore partnership lead: email send failed:', mailErr);
