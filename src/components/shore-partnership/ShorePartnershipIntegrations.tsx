@@ -49,10 +49,9 @@ export function ShorePartnershipIntegrations() {
       <div className="relative z-10 mx-auto max-w-7xl">
         <ShoreSectionHeader
           eyebrow="Integrations"
-          lead="Plugs into"
-          accent="every tool your portfolio companies already use."
+          lead="Plugs into every tool your portfolio companies"
+          accent="already use."
           description="Booking platforms, CRMs, payment processors, marketing automation, custom APIs. Pick what your portfolio runs on. We integrate it. Every site we ship comes wired into the systems your operators already trust."
-          descriptionSentenceCase
         />
 
         <IntegrationsLogoMarquee footnote="Not seeing what you need? We integrate with anything with an API." />

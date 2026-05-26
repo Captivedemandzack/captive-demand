@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Clock, Shield, Zap, Search, TrendingUp, BarChart2, BarChart3, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 import gsap from 'gsap';
+import { SHORE_SECTION_DESCRIPTION_CLASS } from '@/lib/shore-section-styles';
 import { useGsapScrollTrigger } from '@/hooks/useGsapScrollTrigger';
 
 export function BentoGridSection() {
@@ -98,19 +99,19 @@ export function BentoGridSection() {
 
         {/* Breadcrumb */}
         <div className="flex items-center gap-1 mb-6">
-          <span className="text-sm font-normal text-[#1a1512]">/</span>
+          <span className="text-[15px] font-normal text-[#1a1512]">/</span>
           <span
             ref={servicesLabelRef}
-            className="text-sm font-normal tracking-[0.02em] text-[#1a1512] uppercase"
+            className="text-[13px] font-normal tracking-[0.02em] text-[#1a1512] uppercase"
             style={{ fontFamily: '"Roboto Mono", monospace' }}
           >
             OUR SERVICES
           </span>
         </div>
 
-        <div className="relative flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-12 mb-16">
+        <div className="relative flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-12 mb-16">
           {/* Left Side - Heading */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -127,9 +128,9 @@ export function BentoGridSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="flex-1 md:max-w-xl"
+            className="flex-1 min-w-0 md:max-w-md md:text-right"
           >
-            <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
+            <p className={SHORE_SECTION_DESCRIPTION_CLASS}>
               Stop piecing your company together with isolated vendors. We align your design, tech, and traffic into one synchronized system. Every component on this list is chosen because it amplifies the others and drives hard revenue.
             </p>
           </motion.div>
@@ -154,7 +155,7 @@ export function BentoGridSection() {
           >
             <div className="mb-6">
               <h3 className="text-[16px] font-normal text-[#1a1512] mb-3 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>Website Design & Development</h3>
-              <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
+              <p className="font-mono text-[13px] text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
                 <b>The Closer.</b> We don&apos;t build digital brochures. We build sites that do one job: turn strangers into customers. If it doesn&apos;t convert, we don&apos;t ship it.
               </p>
             </div>
@@ -290,7 +291,7 @@ export function BentoGridSection() {
               >
                 SEO/AEO
               </h3>
-              <p className="font-mono text-sm uppercase leading-relaxed tracking-wide text-[#1a1512]/60">
+              <p className="font-mono text-[13px] uppercase leading-relaxed tracking-wide text-[#1a1512]/60">
                 <b>The Compounder.</b> Paid ads are a treadmill. You have to keep spending to keep moving. We build an organic search strategy that gains momentum over time. We build the infrastructure. You collect the dividends.
               </p>
             </div>
@@ -310,16 +311,16 @@ export function BentoGridSection() {
 
                 <div className="relative z-10 flex w-full max-w-md flex-col gap-2 rounded-xl border border-[#1a1512]/10 bg-white p-3 shadow-xl md:p-3.5">
                   <div className="flex items-center gap-3 rounded-lg border border-[#ff5501]/20 bg-[#ff5501]/10 p-2 transition-all duration-500 group-hover:translate-x-1 group-hover:border-[#ff5501]/40 group-hover:bg-[#ff5501]/20">
-                    <div className="text-[10px] font-bold text-[#ff5501]">#1</div>
+                    <div className="text-[15px] font-bold text-[#ff5501]">#1</div>
                     <div className="h-1.5 min-w-0 flex-1 rounded-full bg-[#ff5501]/30" />
                     <TrendingUp size={12} className="shrink-0 text-[#ff5501]" />
                   </div>
                   <div className="flex items-center gap-3 rounded-lg border border-transparent p-2 opacity-60">
-                    <div className="text-[10px] font-bold text-[#1a1512]/40">#2</div>
+                    <div className="text-[15px] font-bold text-[#1a1512]/40">#2</div>
                     <div className="h-1.5 min-w-0 flex-1 rounded-full bg-[#1a1512]/10" />
                   </div>
                   <div className="flex items-center gap-3 rounded-lg border border-transparent p-2 opacity-40">
-                    <div className="text-[10px] font-bold text-[#1a1512]/30">#3</div>
+                    <div className="text-[15px] font-bold text-[#1a1512]/30">#3</div>
                     <div className="h-1.5 min-w-0 flex-1 rounded-full bg-[#1a1512]/10" />
                   </div>
                 </div>
@@ -346,7 +347,7 @@ export function BentoGridSection() {
               <h4 className="text-[16px] font-normal text-white mb-3 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
                 Software Development
               </h4>
-              <p className="font-mono text-sm text-white/80 leading-relaxed uppercase tracking-wide">
+              <p className="font-mono text-[13px] text-white/80 leading-relaxed uppercase tracking-wide">
                 <b>The Custom Edge.</b> You can’t beat your competitors if you use the exact same tools as them. We build the custom tech that gives you an unfair advantage.
               </p>
             </div>
@@ -369,13 +370,13 @@ export function BentoGridSection() {
                       <div className="p-1 rounded bg-[#ff5501]/10">
                         <BarChart3 size={12} className="text-[#ff5501]" />
                       </div>
-                      <span className="text-[10px] font-medium text-white/80">Analytics</span>
+                      <span className="text-[15px] font-medium text-white/80">Analytics</span>
                     </div>
 
                     {/* Deploy Success Badge */}
                     <div className="flex items-center gap-1 bg-[#ff5501]/10 border border-[#ff5501]/20 px-1.5 py-0.5 rounded-full">
                       <CheckCircle2 size={8} className="text-[#ff5501]" />
-                      <span className="text-[8px] font-bold text-[#ff5501]">Deploy Success</span>
+                      <span className="text-[15px] font-bold text-[#ff5501]">Deploy Success</span>
                     </div>
                   </div>
 
@@ -440,7 +441,7 @@ export function BentoGridSection() {
                   </div>
 
                   {/* Code Content */}
-                  <div className="p-2 font-mono text-[8px] leading-relaxed text-white/70">
+                  <div className="p-2 font-mono text-[15px] leading-relaxed text-white/70">
                     <div className="flex"><span className="text-[#8b5cf6] mr-1">return</span> (</div>
                     <div className="pl-2 text-white/60">
                       {'<'}DashboardLayout{'>'}
@@ -487,12 +488,12 @@ export function BentoGridSection() {
                 <div className="absolute left-1/2 top-1 z-10 h-32 w-44 max-w-[85%] -translate-x-1/2 overflow-hidden rounded-xl border border-[#1a1512]/10 bg-white shadow-2xl transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-[1.02] md:h-36 md:w-48">
                   <div className="relative z-10 border-b border-[#1a1512]/10 bg-[#f8f9fa] px-3 py-1.5">
                     <div className="mb-0.5 flex items-center gap-2">
-                      <span className="text-[8px] font-medium text-[#1a1512]/40">From:</span>
-                      <span className="text-[8px] text-[#1a1512]/70">info@farmulated.com</span>
+                      <span className="text-[15px] font-medium text-[#1a1512]/40">From:</span>
+                      <span className="text-[15px] text-[#1a1512]/70">info@farmulated.com</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[8px] font-medium text-[#1a1512]/40">Subject:</span>
-                      <span className="truncate text-[8px] text-[#1a1512]/70">Claim Your 30% Off Before Time Runs Out!</span>
+                      <span className="text-[15px] font-medium text-[#1a1512]/40">Subject:</span>
+                      <span className="truncate text-[15px] text-[#1a1512]/70">Claim Your 30% Off Before Time Runs Out!</span>
                     </div>
                   </div>
                   <div className="relative h-[calc(100%-40px)] w-full overflow-hidden">
@@ -518,18 +519,18 @@ export function BentoGridSection() {
                 </div>
 
                 <div className="absolute left-0 top-[42%] z-0 w-[128px] max-w-[38%] -translate-y-1/2 scale-[0.92] rotate-[-4deg] transform overflow-hidden rounded-xl border border-[#1a1512]/10 bg-white p-2.5 opacity-85 shadow-lg transition-all duration-500 group-hover:-translate-x-1 group-hover:-rotate-6 group-hover:opacity-95 md:top-[40%] md:p-3">
-                  <div className="mb-1.5 text-[9px] font-semibold text-[#1a1512]">Email Performance</div>
+                  <div className="mb-1.5 text-[15px] font-semibold text-[#1a1512]">Email Performance</div>
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between gap-1">
                       <span className="text-[7px] text-[#1a1512]/60">Open Rate</span>
-                      <span className="text-[9px] font-semibold text-[#ff5501]">42.3%</span>
+                      <span className="text-[15px] font-semibold text-[#ff5501]">42.3%</span>
                     </div>
                     <div className="h-1 w-full overflow-hidden rounded-full bg-[#1a1512]/5">
                       <div className="h-full w-[42%] rounded-full bg-[#ff5501]/50" />
                     </div>
                     <div className="flex items-center justify-between gap-1">
                       <span className="text-[7px] text-[#1a1512]/60">Click Rate</span>
-                      <span className="text-[9px] font-semibold text-[#8b5cf6]">28.1%</span>
+                      <span className="text-[15px] font-semibold text-[#8b5cf6]">28.1%</span>
                     </div>
                     <div className="h-1 w-full overflow-hidden rounded-full bg-[#1a1512]/5">
                       <div className="h-full w-[28%] rounded-full bg-[#8b5cf6]/50" />
@@ -540,20 +541,20 @@ export function BentoGridSection() {
                 <div className="absolute right-0 top-[42%] z-0 w-[128px] max-w-[38%] -translate-y-1/2 scale-[0.92] rotate-[4deg] transform overflow-hidden rounded-xl border border-[#1a1512]/10 bg-white p-2.5 opacity-85 shadow-lg transition-all duration-500 group-hover:translate-x-1 group-hover:rotate-6 group-hover:opacity-95 md:top-[40%] md:p-3">
                   <div className="mb-2 flex items-center gap-2">
                     <div className="size-1.5 animate-pulse rounded-full bg-[#ff5501]" />
-                    <span className="text-[8px] font-semibold text-[#1a1512]">Campaign Active</span>
+                    <span className="text-[15px] font-semibold text-[#1a1512]">Campaign Active</span>
                   </div>
                   <div className="space-y-1">
                     <div className="flex justify-between gap-1">
                       <span className="text-[7px] text-[#1a1512]/60">Sent</span>
-                      <span className="text-[8px] text-[#1a1512]/90">12,451</span>
+                      <span className="text-[15px] text-[#1a1512]/90">12,451</span>
                     </div>
                     <div className="flex justify-between gap-1">
                       <span className="text-[7px] text-[#1a1512]/60">Delivered</span>
-                      <span className="text-[8px] text-[#ff5501]">11,892</span>
+                      <span className="text-[15px] text-[#ff5501]">11,892</span>
                     </div>
                     <div className="flex justify-between gap-1">
                       <span className="text-[7px] text-[#1a1512]/60">Revenue</span>
-                      <span className="text-[8px] text-[#ff5501]">$8,421</span>
+                      <span className="text-[15px] text-[#ff5501]">$8,421</span>
                     </div>
                   </div>
                 </div>
@@ -565,7 +566,7 @@ export function BentoGridSection() {
             <h3 className="mb-2 text-[16px] font-normal uppercase text-[#1a1512]" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
               Email Marketing
             </h3>
-            <p className="font-mono text-sm uppercase leading-relaxed tracking-wide text-[#1a1512]/60">
+            <p className="font-mono text-[13px] uppercase leading-relaxed tracking-wide text-[#1a1512]/60">
               <b>The Follow-Up.</b> 98% of people leave your site without buying. We build the automated emails that chase them down and bring them back until they do.
             </p>
           </motion.div>
@@ -652,7 +653,7 @@ export function BentoGridSection() {
             <h4 className="text-[16px] font-normal text-[#1a1512] mb-2 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>
               Workflow Automation
             </h4>
-            <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
+            <p className="font-mono text-[13px] text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
               <b>The Time Saver.</b> Stop copy-pasting data between spreadsheets. We wire your apps together to handle the busy work so you can get back to actual business.
             </p>
           </motion.div>

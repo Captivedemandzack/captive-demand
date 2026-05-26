@@ -83,10 +83,10 @@ export function ShorePartnershipLeadForm() {
         <h3 className="mt-6 font-sans text-[20px] font-bold text-[#111]">
           Got it. We will pick this up directly.
         </h3>
-        <p className="mx-auto mt-4 max-w-md font-mono text-sm text-[#666]">
+        <p className="mx-auto mt-4 max-w-md font-mono text-[15px] text-[#666]">
           Our Shore-dedicated team will follow up with clear next steps, usually within one business hour.
         </p>
-        <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-[#999]">
+        <p className="mt-6 font-mono text-[13px] uppercase tracking-[0.12em] text-[#999]">
           Response time · within one business hour
         </p>
       </div>
@@ -98,7 +98,7 @@ export function ShorePartnershipLeadForm() {
       className={cn(siteMarketingWhiteCardClassName('p-8 md:p-10'))}
       style={SITE_MARKETING_WHITE_SHADOW}
     >
-      <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#1a1512] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-white">
+      <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#1a1512] px-4 py-2 font-mono text-[14px] uppercase tracking-[0.14em] text-white">
         <span className="size-1.5 rounded-full bg-white" aria-hidden />
         Shore dedicated team at Captive Demand
       </span>
@@ -109,7 +109,7 @@ export function ShorePartnershipLeadForm() {
       >
         Get in touch about your project
       </h3>
-      <p className="mt-4 text-pretty font-mono text-sm leading-relaxed text-[#1a1512]/65">
+      <p className="mt-4 text-pretty font-mono text-[15px] leading-relaxed text-[#1a1512]/65">
         Have a question about your project, or ready to get started? Fill out the form below and we will follow up.
       </p>
 
@@ -210,14 +210,14 @@ export function ShorePartnershipLeadForm() {
               className={`${SITE_FORM_INPUT_CLASS} mt-2 resize-y`}
               placeholder="Timeline, scope, internal stakeholders, anything relevant"
             />
-            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#888]">
+            <p className="mt-3 font-mono text-[13px] uppercase tracking-[0.12em] text-[#888]">
               Response time · within one business hour
             </p>
           </div>
         </div>
 
         {status === 'error' ? (
-          <p className="mt-4 text-sm text-red-700" role="alert">
+          <p className="mt-4 text-[15px] text-red-700" role="alert">
             We could not send that right away. Email{' '}
             <a className="underline underline-offset-2" href="mailto:hello@captivedemand.com">
               hello@captivedemand.com
@@ -238,7 +238,7 @@ export function ShorePartnershipLeadForm() {
           />
         </div>
 
-        <p className="mt-4 font-mono text-[11px] leading-relaxed text-[#999]">
+        <p className="mt-4 font-mono text-[15px] leading-relaxed text-[#999]">
           No sales pitch. No obligation. Just a direct reply from our team.
         </p>
       </form>

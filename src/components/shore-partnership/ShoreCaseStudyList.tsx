@@ -29,7 +29,7 @@ function CaseStudyPanelBody({
   const actionsSection =
     study.actions.length > 0 ? (
       <div>
-        <h4 className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/50">What we did</h4>
+        <h4 className="font-mono text-[13px] uppercase tracking-[0.22em] text-white/50">What we did</h4>
         <ul className="mt-5 space-y-3 text-pretty text-[15px] leading-relaxed text-white/80">
           {study.actions.map((item) => (
             <li key={item} className="flex gap-3">
@@ -69,10 +69,10 @@ function CaseStudyPanelBody({
   ) : (
     <div className="aspect-[16/10] w-full rounded-2xl border border-dashed border-white/15 bg-white/[0.03] p-6 text-center">
       <div className="flex h-full flex-col items-center justify-center gap-2 text-white/55">
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#ff5501]/80">
+        <span className="font-mono text-[13px] uppercase tracking-[0.18em] text-[#ff5501]/80">
           16 : 9 · drop in
         </span>
-        <p className="text-pretty text-sm leading-snug">
+        <p className="text-pretty text-[15px] leading-snug">
           {study.visualProof ?? (
             <>
               Embed a screenshot, deck grab, or short Loom for{' '}
@@ -87,7 +87,7 @@ function CaseStudyPanelBody({
   return (
     <div className="px-6 pb-8 pt-0 md:px-8">
       <div className="mb-8 grid grid-cols-[auto_1fr] gap-x-3 sm:gap-x-4 md:gap-x-8">
-        <span aria-hidden className="shrink-0 select-none font-mono text-sm tabular-nums invisible">
+        <span aria-hidden className="shrink-0 select-none font-mono text-[15px] tabular-nums invisible">
           {numberLabel}
         </span>
         <p className="text-pretty text-[15px] leading-relaxed text-white/75">{study.challenge}</p>
@@ -198,7 +198,7 @@ export function ShoreCaseStudyList({ studies }: ShoreCaseStudyListProps) {
             <div className="grid min-w-0 flex-1 grid-cols-[auto_1fr] gap-x-3 gap-y-4 sm:gap-x-4 md:gap-x-8 md:gap-y-5">
               <span
                 className={cn(
-                  'row-start-1 shrink-0 self-center font-mono text-sm tabular-nums transition-colors duration-300',
+                  'row-start-1 shrink-0 self-center font-mono text-[15px] tabular-nums transition-colors duration-300',
                   isOpen ? 'font-bold text-[#ff5501]' : 'text-[#1a1512]/40',
                 )}
               >
@@ -209,7 +209,7 @@ export function ShoreCaseStudyList({ studies }: ShoreCaseStudyListProps) {
                   <span
                     key={tag}
                     className={cn(
-                      'rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] transition-colors duration-300',
+                      'rounded-full px-3 py-1 font-mono text-[13px] uppercase tracking-[0.16em] transition-colors duration-300',
                       isOpen
                         ? i === 0
                           ? 'bg-[#ff5501] text-white'
@@ -225,7 +225,7 @@ export function ShoreCaseStudyList({ studies }: ShoreCaseStudyListProps) {
                 {study.deliveryTimeline ? (
                   <span
                     className={cn(
-                      'rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] transition-colors duration-300',
+                      'rounded-full px-3 py-1 font-mono text-[13px] uppercase tracking-[0.16em] transition-colors duration-300',
                       isOpen
                         ? 'border border-white/15 text-white/60'
                         : 'border border-[#1a1512]/10 text-[#1a1512]/55',
@@ -246,14 +246,14 @@ export function ShoreCaseStudyList({ studies }: ShoreCaseStudyListProps) {
               </span>
               {!isOpen ? (
                 <span
-                  className="col-start-2 row-start-3 block text-pretty text-[14px] leading-relaxed text-[#1a1512]/60 md:text-[15px]"
+                  className="col-start-2 row-start-3 block text-pretty text-[15px] leading-relaxed text-[#1a1512]/60 md:text-[15px]"
                 >
                   {study.challenge}
                 </span>
               ) : null}
               {study.pendingReview && !isOpen ? (
                 <span
-                  className="col-start-2 row-start-4 mt-1 inline-flex w-fit items-center gap-2 rounded-full border border-amber-300/70 bg-amber-50 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-700"
+                  className="col-start-2 row-start-4 mt-1 inline-flex w-fit items-center gap-2 rounded-full border border-amber-300/70 bg-amber-50 px-3 py-1 font-mono text-[13px] uppercase tracking-[0.14em] text-amber-700"
                 >
                   Pending review
                 </span>

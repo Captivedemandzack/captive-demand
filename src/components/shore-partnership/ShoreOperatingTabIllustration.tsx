@@ -121,7 +121,7 @@ function AuditChecklist({ reduceMotion }: { reduceMotion: boolean | null }) {
   return (
     <div className="flex h-full flex-col">
       <div className="mb-3 flex items-center justify-between border-b border-white/10 pb-2">
-        <p className="font-mono text-[8px] uppercase tracking-[0.14em] text-white/55">Audit results</p>
+        <p className="font-mono text-[13px] uppercase tracking-[0.14em] text-white/55">Audit results</p>
         <span className="rounded border border-[#ff5501]/30 bg-[#ff5501]/10 px-2 py-0.5 font-mono text-[7px] uppercase tracking-wider text-[#ff5501]">
           {failCount} to fix
         </span>
@@ -144,7 +144,7 @@ function AuditChecklist({ reduceMotion }: { reduceMotion: boolean | null }) {
             }
             className="flex items-center justify-between gap-2 border-b border-white/[0.06] py-2 last:border-b-0"
           >
-            <span className="text-[9px] leading-snug text-white/75 sm:text-[10px]">{item.label}</span>
+            <span className="text-[15px] leading-snug text-white/75 sm:text-[15px]">{item.label}</span>
             <span
               className={cn(
                 'flex size-5 shrink-0 items-center justify-center rounded-full border',
@@ -238,7 +238,7 @@ function SiteAuditIllustration() {
           animate={{ opacity: 1 }}
           exit={reduceMotion ? undefined : { opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="mt-3 shrink-0 text-center font-mono text-[8px] uppercase tracking-wider text-white/40"
+          className="mt-3 shrink-0 text-center font-mono text-[13px] uppercase tracking-wider text-white/40"
         >
           {phase === 'scan' ? 'Auditing structure, conversion & tracking…' : `${AUDIT_CHECKS.length} areas reviewed`}
         </motion.p>
@@ -296,7 +296,7 @@ function TeamProcessIllustration() {
               <div key={step.id} className="flex flex-col items-center gap-2">
                 <motion.div
                   className={cn(
-                    'relative z-10 flex size-11 items-center justify-center rounded-full border-2 font-mono text-[9px] uppercase tracking-wider',
+                    'relative z-10 flex size-11 items-center justify-center rounded-full border-2 font-mono text-[13px] uppercase tracking-wider',
                     isActive
                       ? 'border-[#ff5501] bg-[#12100e] text-[#ff5501]'
                       : isPast
@@ -314,7 +314,7 @@ function TeamProcessIllustration() {
                 </motion.div>
                 <p
                   className={cn(
-                    'font-mono text-[8px] uppercase tracking-wider',
+                    'font-mono text-[13px] uppercase tracking-wider',
                     isActive ? 'text-white/80' : isPast ? 'text-white/55' : 'text-white/40',
                   )}
                 >
@@ -333,7 +333,7 @@ function TeamProcessIllustration() {
           animate={{ opacity: 1, y: 0 }}
           exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
           transition={{ duration: 0.2 }}
-          className="font-mono text-[9px] uppercase tracking-wider text-white/50"
+          className="font-mono text-[13px] uppercase tracking-wider text-white/50"
         >
           {TEAM_STEPS[active].detail}
         </motion.p>
@@ -354,7 +354,7 @@ function AnalyticsIllustration() {
       <div className="mb-2 flex items-center justify-between border-b border-white/10 pb-2">
         <div className="flex items-center gap-1.5">
           <div className="size-4 rounded bg-[#f9ab00]/20" />
-          <p className="font-mono text-[8px] uppercase tracking-wider text-white/60">Analytics</p>
+          <p className="font-mono text-[13px] uppercase tracking-wider text-white/60">Analytics</p>
         </div>
         <div className="flex gap-1">
           {['GA4', 'GTM'].map((tag) => (
@@ -369,7 +369,7 @@ function AnalyticsIllustration() {
         {metrics.map((m) => (
           <div key={m.label} className="rounded-lg border border-white/8 bg-white/[0.03] p-2">
             <p className="font-mono text-[7px] uppercase tracking-wider text-white/40">{m.label}</p>
-            <p className="mt-0.5 font-nohemi text-sm font-semibold tabular-nums text-white">{m.value}</p>
+            <p className="mt-0.5 font-nohemi text-[15px] font-semibold tabular-nums text-white">{m.value}</p>
             <p className="font-mono text-[7px] text-[#28c840]">{m.delta}</p>
           </div>
         ))}
@@ -407,7 +407,7 @@ function AnalyticsIllustration() {
 
 function StudioEditorIllustration() {
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-[#1a1816] text-[8px]">
+    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-[#1a1816] text-[15px]">
       {/* Top bar */}
       <div className="flex shrink-0 items-center justify-between border-b border-white/8 bg-[#141210] px-2 py-1.5">
         <span className="font-mono text-[7px] text-white/50">yourbusiness.co</span>
@@ -497,7 +497,7 @@ export function ShoreOperatingTabIllustration({ tabId, className }: ShoreOperati
         <div className="flex h-full flex-col justify-center gap-4 p-5">
           {[1, 2, 3, 4].map((week) => (
             <div key={week} className="flex items-center gap-3">
-              <span className="font-mono text-[9px] text-white/35">W{week}</span>
+              <span className="font-mono text-[15px] text-white/35">W{week}</span>
               <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/10">
                 <div className="h-full rounded-full bg-[#ff5501]" style={{ width: `${week * 25}%` }} />
               </div>

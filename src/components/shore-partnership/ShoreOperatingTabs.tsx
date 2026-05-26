@@ -65,7 +65,7 @@ export function ShoreOperatingTabs({ tabs }: ShoreOperatingTabsProps) {
                   aria-controls={`shore-operating-panel-${tab.id}`}
                   onClick={() => setActiveId(tab.id)}
                   className={cn(
-                    'shore-operating-tab relative min-h-[48px] shrink-0 cursor-pointer snap-start snap-always whitespace-nowrap font-mono text-[11px] normal-case tracking-[0.04em] md:text-xs',
+                    'shore-operating-tab relative min-h-[48px] shrink-0 cursor-pointer snap-start snap-always whitespace-nowrap font-mono text-[15px] normal-case tracking-[0.04em] md:text-[15px]',
                     isActive && 'industry-tab-active !font-medium',
                     isActive && idx === 0 && 'industry-tab-active-first',
                     !isActive && 'industry-tab-inactive !font-normal text-[#525252]',
@@ -110,12 +110,12 @@ export function ShoreOperatingTabs({ tabs }: ShoreOperatingTabsProps) {
                 >
                   {active.headline}
                 </h3>
-                <p className="mb-8 text-pretty text-sm leading-[1.65] text-[#1a1512]/80 md:text-base">
+                <p className="mb-8 text-pretty text-[15px] leading-[1.65] text-[#1a1512]/80 md:text-base">
                   {active.body}
                 </p>
 
                 {active.bullets?.length ? (
-                  <ul className="mb-8 space-y-2 text-pretty text-sm leading-relaxed text-[#1a1512]/80 md:text-base">
+                  <ul className="mb-8 space-y-2 text-pretty text-[15px] leading-relaxed text-[#1a1512]/80 md:text-base">
                     {active.bullets.map((bullet) => (
                       <li key={bullet} className="flex gap-3">
                         <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#1a1512]" aria-hidden />
@@ -135,14 +135,14 @@ export function ShoreOperatingTabs({ tabs }: ShoreOperatingTabsProps) {
                     >
                       {active.statValue}
                     </div>
-                    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1a1512]/55">
+                    <div className="font-mono text-[14px] uppercase tracking-[0.18em] text-[#1a1512]/55">
                       {active.statLabel}
                     </div>
                   </div>
                   <ul className="m-0 flex min-w-0 flex-1 list-none flex-wrap gap-2 p-0 md:pt-0.5">
                     {active.capabilities.map((cap) => (
                       <li key={cap}>
-                        <span className="inline-block rounded-lg bg-[#eceae8] px-2.5 py-1 text-xs font-medium text-[#525252]">
+                        <span className="inline-block rounded-lg bg-[#eceae8] px-2.5 py-1 text-[15px] font-medium text-[#525252]">
                           {cap}
                         </span>
                       </li>

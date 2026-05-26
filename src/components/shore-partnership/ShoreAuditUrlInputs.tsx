@@ -47,7 +47,7 @@ export function ShoreAuditUrlInputs({
             <button
               type="button"
               onClick={() => removeUrl(index)}
-              className="shrink-0 font-mono text-[11px] text-[#1a1512]/50 underline-offset-2 transition-colors duration-150 hover:text-[#1a1512] hover:underline"
+              className="shrink-0 font-mono text-[15px] text-[#1a1512]/50 underline-offset-2 transition-colors duration-150 hover:text-[#1a1512] hover:underline"
             >
               Remove
             </button>
@@ -59,7 +59,7 @@ export function ShoreAuditUrlInputs({
         onClick={addUrl}
         className={cn(
           'inline-flex items-center rounded-full border border-[#1a1512] bg-transparent font-mono uppercase tracking-[0.1em] text-[#1a1512] transition-colors duration-150 hover:bg-[#1a1512]/5',
-          compact ? 'px-3 py-1.5 text-[10px]' : 'px-4 py-2 text-[11px]',
+          compact ? 'px-3 py-1.5 text-[13px]' : 'px-4 py-2 text-[13px]',
         )}
       >
         + Add another site

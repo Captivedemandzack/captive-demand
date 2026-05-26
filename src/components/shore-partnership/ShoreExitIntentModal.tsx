@@ -140,7 +140,7 @@ export function ShoreExitIntentModal() {
 
             {status === 'success' ? (
               <div className="text-center">
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#1a1512]/55">You&apos;re all set</p>
+                <p className="font-mono text-[13px] uppercase tracking-[0.2em] text-[#1a1512]/55">You&apos;re all set</p>
                 <h2
                   id="shore-exit-title"
                   className="mt-4 text-balance text-2xl leading-tight tracking-tight text-[#1a1512]"
@@ -148,20 +148,20 @@ export function ShoreExitIntentModal() {
                 >
                   Audit request received.
                 </h2>
-                <p id="shore-exit-desc" className="mt-4 font-mono text-sm text-[#1a1512]/65">
+                <p id="shore-exit-desc" className="mt-4 font-mono text-[15px] text-[#1a1512]/65">
                   We&apos;re on it. Expect your audit within 2 business days.
                 </p>
                 <button
                   type="button"
                   onClick={dismiss}
-                  className="mt-8 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#1a1512] px-8 font-mono text-xs uppercase tracking-[0.12em] text-white transition-transform duration-150 hover:scale-[1.02] active:scale-95"
+                  className="mt-8 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#1a1512] px-8 font-mono text-[13px] uppercase tracking-[0.12em] text-white transition-transform duration-150 hover:scale-[1.02] active:scale-95"
                 >
                   Continue browsing
                 </button>
               </div>
             ) : (
               <>
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#1a1512]">Wait · before you go</p>
+                <p className="font-mono text-[13px] uppercase tracking-[0.2em] text-[#1a1512]">Wait · before you go</p>
                 <h2
                   id="shore-exit-title"
                   className="mt-4 max-w-[18ch] text-balance text-[1.875rem] leading-tight tracking-tight text-[#1a1512]"
@@ -201,7 +201,7 @@ export function ShoreExitIntentModal() {
                   />
 
                   {status === 'error' ? (
-                    <p className="text-sm text-red-700" role="alert">
+                    <p className="text-[15px] text-red-700" role="alert">
                       Something went wrong. Try again or email hello@captivedemand.com.
                     </p>
                   ) : null}
@@ -209,13 +209,13 @@ export function ShoreExitIntentModal() {
                   <button
                     type="submit"
                     disabled={status === 'submitting'}
-                    className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#1a1512] px-8 font-mono text-xs uppercase tracking-[0.12em] text-white transition-transform duration-150 hover:scale-[1.02] active:scale-95 disabled:opacity-60"
+                    className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#1a1512] px-8 font-mono text-[13px] uppercase tracking-[0.12em] text-white transition-transform duration-150 hover:scale-[1.02] active:scale-95 disabled:opacity-60"
                   >
                     {status === 'submitting' ? 'Sending...' : 'Send me the audit →'}
                   </button>
                 </form>
 
-                <p className="mt-6 text-center font-mono text-[11px] text-[#888]">
+                <p className="mt-6 text-center font-mono text-[15px] text-[#888]">
                   Already submitted? You&apos;re all set. We&apos;re on it.
                 </p>
               </>

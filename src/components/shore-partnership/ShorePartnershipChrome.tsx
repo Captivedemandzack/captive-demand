@@ -10,11 +10,8 @@ import { CAPTIVE_DEMAND_LOGO, SHORE_LOGO_ASPECT, SHORE_LOGOMARK_URL } from '@/li
 
 const NAV_LINKS = [
   { label: 'Approach', href: '#approach' },
-  { label: 'Case studies', href: '#case-studies' },
+  { label: 'Results', href: '#case-studies' },
   { label: 'Free audit', href: '#free-audit' },
-  { label: 'Integrations', href: '#integrations' },
-  { label: 'How we execute', href: '#operating-model' },
-  { label: 'Contact', href: '#contact' },
 ];
 
 /**
@@ -79,13 +76,13 @@ export function ShorePartnershipChrome() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex" aria-label="Shore partnership page sections">
+        <nav className="hidden items-center gap-10 lg:flex xl:gap-12" aria-label="Shore partnership page sections">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
               className={cn(
-                'font-mono text-[10px] uppercase tracking-[0.14em] transition-colors duration-150',
+                'font-mono text-[13px] uppercase tracking-[0.18em] transition-colors duration-150',
                 scrolled ? 'text-white/75 hover:text-white' : 'text-[#1a1512]/60 hover:text-[#1a1512]',
               )}
             >

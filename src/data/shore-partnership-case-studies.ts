@@ -7,6 +7,18 @@ export interface ShoreBeforeAfterShowcase {
   imageAltAfter: string;
   /** Defaults to cover; use contain when GIFs must stay fully visible (letterboxed). */
   imageObjectFit?: 'cover' | 'contain';
+  /**
+   * `scroll` (default): tall assets scroll inside the panel at full width.
+   * `crop`: legacy object-cover hero crop (use for wide homepage screenshots if preferred).
+   */
+  imageDisplayMode?: 'scroll' | 'crop';
+  /** Intrinsic dimensions for scroll-mode images (reduces layout shift). */
+  scrollImageSize?: {
+    before: { width: number; height: number };
+    after: { width: number; height: number };
+  };
+  /** Zoom scroll previews from the top. Width always fills the panel. */
+  scrollImageScale?: { before?: number; after?: number };
   /** Accessible name for the Before / After tab strip. */
   tablistAriaLabel?: string;
 }
@@ -86,11 +98,16 @@ export const shorePartnershipCaseStudies: ShoreCaseStudy[] = [
     },
     beforeAfterShowcase: {
       tabIdPrefix: 'empower-lifecycle',
-      beforeSrc: '/empower-lifecycle-before.webp',
-      afterSrc: '/empower-lifecycle-after.webp',
+      beforeSrc: '/empower-lifecycle-before.png',
+      afterSrc: '/empower-lifecycle-after.png',
       imageAltBefore: 'Empower lifecycle email before redesign, December savings promo',
       imageAltAfter: 'Empower lifecycle email after Captive Demand redesign, Valentine lip filler promo',
       tablistAriaLabel: 'Lifecycle email before and after comparison',
+      imageDisplayMode: 'scroll',
+      scrollImageSize: {
+        before: { width: 991, height: 4916 },
+        after: { width: 991, height: 7814 },
+      },
     },
   },
   {
@@ -113,8 +130,13 @@ export const shorePartnershipCaseStudies: ShoreCaseStudy[] = [
       tabIdPrefix: 'agentis-hero',
       beforeSrc: '/Agentis-home-before.webp',
       afterSrc: '/Agentis-Home-New.webp',
-      imageAltBefore: 'Agentis homepage before redesign, full-page crop from top',
-      imageAltAfter: 'Agentis homepage after redesign, full-page crop from top',
+      imageAltBefore: 'Agentis homepage before redesign, full scroll capture',
+      imageAltAfter: 'Agentis homepage after redesign, full scroll capture',
+      imageDisplayMode: 'scroll',
+      scrollImageSize: {
+        before: { width: 1200, height: 3200 },
+        after: { width: 1200, height: 3200 },
+      },
     },
     impactChart: {
       comparisonLabels: ['Earlier 30 days', 'Latest 30 days'],
@@ -147,6 +169,7 @@ export const shorePartnershipCaseStudies: ShoreCaseStudy[] = [
       afterSrc: '/mantality-home-new.webp',
       imageAltBefore: 'Mantality Health homepage before redesign, full-page crop from top',
       imageAltAfter: 'Mantality Health homepage after redesign, full-page crop from top',
+      imageDisplayMode: 'crop',
     },
     impactChart: {
       comparisonLabels: ['Legacy baseline', 'Post-launch'],

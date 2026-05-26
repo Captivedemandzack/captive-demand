@@ -140,7 +140,7 @@ function AuditSkeleton() {
           <GlassBadge>
             <div className="flex items-center gap-2.5">
               <BitmapIcon grid={c.icon} color="#1a1512" size={14} />
-              <span className="whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.1em] text-[#1a1512]/70 sm:text-[10px]">
+              <span className="whitespace-nowrap font-mono text-[13px] uppercase tracking-[0.1em] text-[#1a1512]/70 sm:text-[13px]">
                 {c.label}
               </span>
             </div>
@@ -155,7 +155,7 @@ export function ShoreAuditPreviewIllustration({ className }: { className?: strin
   return (
     <div className={cn('relative w-full px-2 sm:px-4', className)}>
       <AuditSkeleton />
-      <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-[#888]">
+      <p className="mt-4 text-center font-mono text-[13px] uppercase tracking-[0.14em] text-[#888]">
         100% free · no sales pitch · no lock-in
       </p>
     </div>

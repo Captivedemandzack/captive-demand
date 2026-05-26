@@ -35,6 +35,7 @@ const IconBlobShape = ({ className }: { className?: string }) => (
 
 export type CTAButtonVariant =
   | "grey" // Grey label + grey blob → orange on hover (CaseStudies, About, ExampleWork)
+  | "secondary" // White label on light/grey surfaces → orange on hover
   | "dark" // Dark label + orange blob (FeaturesSection)
   | "bookCall" // Grey label + grey blob → orange on hover (aligned with `grey`; intro-call pattern)
   | "bookCallOrange" // White label + black blob → white on hover (ProcessSection onOrange)
@@ -75,6 +76,13 @@ const variantConfig: Record<
     cornerClasses: "text-[#e8e8e8] group-hover:text-[#ff5501]",
     blobClasses: "text-[#e8e8e8] group-hover:text-[#ff5501]",
     iconDefault: "#1a1512",
+    iconHover: "#FFFFFF",
+  },
+  secondary: {
+    labelClasses: "bg-[#1a1512] text-white group-hover:bg-[#1a1512] group-hover:text-white",
+    cornerClasses: "text-[#1a1512] group-hover:text-[#1a1512]",
+    blobClasses: "text-[#1a1512] group-hover:text-[#1a1512]",
+    iconDefault: "#FFFFFF",
     iconHover: "#FFFFFF",
   },
   dark: {
@@ -152,7 +160,7 @@ export function CTAButton({
     <span
       className={`
         relative flex items-center h-12 pl-5 pr-2 ${fullWidth ? "flex-grow mr-4" : "mr-4"}
-        rounded-l-xl font-mono text-sm uppercase tracking-normal whitespace-nowrap
+        rounded-l-xl font-mono text-[13px] uppercase tracking-normal whitespace-nowrap
         transition-colors duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]
         ${baseConfig.labelClasses}
       `}

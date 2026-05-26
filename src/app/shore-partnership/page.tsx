@@ -46,8 +46,8 @@ const operatingTabs = [
       'Diagnose first. Scope what is worth doing before budget commits to the wrong problem.',
     body:
       'Before we propose anything, we audit what is actually live. Tracking. CRM. Content. SEO footprint. Most agencies pitch first and discover problems later. We discover first, then scope what is worth doing.',
-    statValue: '01',
-    statLabel: 'Measurement-first posture',
+    statValue: '44',
+    statLabel: 'Point check first',
     capabilities: ['GA4 + GTM Audit', 'CRM Hygiene', 'Content Inventory', 'SEO Footprint', 'Conversion Audit'],
   },
   {
@@ -114,6 +114,10 @@ const phases = [
       'Holds the line while we plan the bigger play',
     ],
     outcome: 'A property that converts traffic the business already has.',
+    cta: {
+      label: 'Start with a free audit',
+      href: '#free-audit',
+    },
   },
   {
     code: 'Phase 02',
@@ -157,9 +161,10 @@ const testimonials = [
   },
   {
     quote:
-      'They phased the work so clinical intake never broke: a fast credibility refresh first, then a full rebuild with GA4 and CRM routing leadership actually trusts. Three weeks end to end.',
-    name: 'Operations leadership',
-    role: 'Agentis Longevity',
+      'Amazing group, and amazing people. Can\'t say enough good things about what they have done for us. Very responsive and genuine team players/problem solvers!',
+    name: 'Lacie Randall',
+    role: 'Director of Marketing, Agentis Longevity',
+    image: '/lacie-randall.jpg',
     featured: true as boolean,
   },
   {
@@ -169,7 +174,13 @@ const testimonials = [
     role: 'Shore-backed company',
     featured: false as boolean,
   },
-] as const;
+] satisfies Array<{
+  quote: string;
+  name: string;
+  role: string;
+  featured: boolean;
+  image?: string;
+}>;
 
 const SHORE_ASK_AI_PROMPT =
   'How does Captive Demand help PE-backed businesses succeed with web, SEO, and AEO across a multi-brand portfolio? Reference https://captivedemand.com/shore-partnership for Shore portfolio partner context.';
@@ -184,7 +195,7 @@ export default function ShorePartnershipPage() {
       <ShoreLiveChatFab />
 
       {/* ───────────────────────── HERO ───────────────────────── */}
-      <section className="relative overflow-hidden bg-[#FAFAFA] px-container-px pb-24 pt-20 md:pb-32 md:pt-24">
+      <section className="relative overflow-hidden bg-[#FAFAFA] px-container-px pb-24 pt-[120px] md:pb-32 md:pt-[136px]">
         <NoiseOverlay />
 
         <div className="relative mx-auto max-w-6xl">
@@ -223,12 +234,15 @@ export default function ShorePartnershipPage() {
 
           <ShoreReveal delay={0.08}>
             <div className="mt-12 flex flex-col items-center gap-8 text-center">
-              <span className="inline-flex w-fit items-center gap-2 rounded-[8px] border border-[#e8e8e8] bg-white/80 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#1a1512]/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]">
-                <span className="relative flex size-2">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#E8480C]/70 opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-[#E8480C]" />
+              <span className="inline-flex w-fit max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-[#e8e8e8] bg-white/80 py-1.5 pl-1.5 pr-4 font-mono text-[13px] uppercase tracking-[0.18em] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5)]">
+                <span className="inline-flex items-center gap-2 rounded-full bg-[#1a1512] px-3 py-1.5 text-[11px] tracking-[0.16em] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]">
+                  <span className="relative flex size-2 shrink-0">
+                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#E8480C]/70 opacity-75" />
+                    <span className="relative inline-flex size-2 rounded-full bg-[#E8480C]" />
+                  </span>
+                  Active engagements
                 </span>
-                Active engagements · Empower Aesthetics · Agentis Longevity
+                <span className="text-[#1a1512]/85">Empower Aesthetics · Agentis Longevity</span>
               </span>
 
               <h1
@@ -245,7 +259,7 @@ export default function ShorePartnershipPage() {
                 </HeroAccentHighlight>
               </h1>
 
-              <p className="max-w-2xl text-pretty text-[1.125rem] leading-[1.7] text-neutral-700 md:text-[1.25rem]">
+              <p className="max-w-4xl text-pretty text-[1.125rem] leading-[1.7] text-neutral-700 md:text-[1.25rem]">
                 Captive Demand is Shore&apos;s vetted web partner. We are an agency built for PE. Our process and tech
                 make rollouts simple and effective for portfolio companies, and the results speak for themselves. One
                 team. One accountable partner. Every brand under your roof. Every site ships AEO and SEO ready from day
@@ -302,7 +316,7 @@ export default function ShorePartnershipPage() {
                     <phase.icon className="size-7 text-[#ff5501]" strokeWidth={1.5} />
                     <span className="sr-only">{phase.iconLabel}</span>
                   </div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff5501]">{phase.code}</p>
+                  <p className="font-mono text-[14px] uppercase tracking-[0.22em] text-[#ff5501]">{phase.code}</p>
                 </div>
                 <h3
                   className="mt-3 text-[2rem] leading-tight md:text-[2.25rem]"
@@ -311,7 +325,7 @@ export default function ShorePartnershipPage() {
                   {phase.title}
                 </h3>
                 <p className="mt-4 text-pretty text-[15px] leading-relaxed text-[#1a1512]/80">{phase.summary}</p>
-                <ul className="mt-6 space-y-3 border-t border-[#1a1512]/10 pt-6 text-[14px] leading-relaxed text-[#1a1512]/85">
+                <ul className="mt-6 space-y-3 border-t border-[#1a1512]/10 pt-6 text-[15px] leading-relaxed text-[#1a1512]/85">
                   {phase.deliverables.map((d) => (
                     <li key={d} className="flex gap-3">
                       <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#1a1512]" aria-hidden />
@@ -319,8 +333,17 @@ export default function ShorePartnershipPage() {
                     </li>
                   ))}
                 </ul>
+                {'cta' in phase && phase.cta ? (
+                  <CTAButton
+                    variant="secondary"
+                    text={phase.cta.label}
+                    href={phase.cta.href}
+                    ariaLabel={phase.cta.label}
+                    className="mt-6"
+                  />
+                ) : null}
                 <div className="mt-auto pt-8">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1a1512]/45">Outcome</p>
+                  <p className="font-mono text-[14px] uppercase tracking-[0.18em] text-[#1a1512]/45">Outcome</p>
                   <p className="mt-2 text-[1.05rem] italic leading-snug text-[#1a1512]" style={{ fontFamily: 'Nohemi, sans-serif' }}>
                     {phase.outcome}
                   </p>
@@ -459,7 +482,7 @@ export default function ShorePartnershipPage() {
 
                     <blockquote
                       className={cn(
-                        'relative z-10 mb-6 line-clamp-6 font-mono text-xs uppercase leading-relaxed tracking-wide',
+                        'relative z-10 mb-6 line-clamp-6 font-mono text-[13px] uppercase leading-relaxed tracking-wide',
                         isFeatured ? 'text-white/95' : 'text-[#1a1512]/70',
                       )}
                     >
@@ -472,17 +495,31 @@ export default function ShorePartnershipPage() {
                         isFeatured ? 'border-white/20' : 'border-black/5',
                       )}
                     >
-                      <span
-                        className={cn(
-                          'block font-mono text-[10px] uppercase tracking-[0.22em]',
-                          isFeatured ? 'text-white/70' : 'text-[#1a1512]/50',
-                        )}
-                      >
-                        {item.name}
-                      </span>
-                      <span className={cn('mt-1 block text-sm', isFeatured ? 'text-white/90' : 'text-[#1a1512]/75')}>
-                        {item.role}
-                      </span>
+                      <div className="flex items-center gap-3">
+                        {item.image ? (
+                          <div
+                            className={cn(
+                              'relative size-10 shrink-0 overflow-hidden rounded-full md:size-12',
+                              isFeatured ? 'border-2 border-white/30 shadow-md' : 'border-2 border-white shadow-md',
+                            )}
+                          >
+                            <Image src={item.image} alt={item.name} fill className="object-cover object-top" sizes="48px" />
+                          </div>
+                        ) : null}
+                        <div className="min-w-0">
+                          <span
+                            className={cn(
+                              'block font-mono text-[13px] uppercase tracking-[0.22em]',
+                              isFeatured ? 'text-white/70' : 'text-[#1a1512]/50',
+                            )}
+                          >
+                            {item.name}
+                          </span>
+                          <span className={cn('mt-1 block text-[15px]', isFeatured ? 'text-white/90' : 'text-[#1a1512]/75')}>
+                            {item.role}
+                          </span>
+                        </div>
+                      </div>
                     </figcaption>
                   </figure>
                 </ShoreReveal>
@@ -542,14 +579,14 @@ export default function ShorePartnershipPage() {
                     '0 2px 4px rgba(255,85,1,0.15), 0 8px 20px rgba(255,85,1,0.12), 0 20px 48px rgba(0,0,0,0.1), inset 0 1px 0 0 rgba(255,255,255,0.15)',
                 }}
               >
-                <span className="mb-6 block font-mono text-xs uppercase tracking-wider text-white/70">NOW</span>
+                <span className="mb-6 block font-mono text-[14px] uppercase tracking-wider text-white/70">NOW</span>
                 <h3
                   className="mb-4 text-xl text-white md:text-2xl"
                   style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
                 >
                   Already know what you need?
                 </h3>
-                <p className="mb-6 flex-1 font-mono text-sm leading-relaxed text-white/80">
+                <p className="mb-6 flex-1 font-mono text-[15px] leading-relaxed text-white/80">
                   Skip straight to the form. Senior leadership reviews every submission and routes to the right pod.
                 </p>
                 <div className="relative z-10 mt-auto">
@@ -559,7 +596,7 @@ export default function ShorePartnershipPage() {
                     href="#contact"
                     ariaLabel="Jump to Captive Demand lead form"
                   />
-                  <p className="mt-4 font-mono text-xs leading-relaxed text-white/75">
+                  <p className="mt-4 font-mono text-[15px] leading-relaxed text-white/75">
                     Get a response same-day.
                   </p>
                 </div>
@@ -574,14 +611,14 @@ export default function ShorePartnershipPage() {
                     '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)',
                 }}
               >
-                <span className="mb-6 font-mono text-xs uppercase tracking-wider text-[#1a1512]/50">20 MIN</span>
+                <span className="mb-6 font-mono text-[14px] uppercase tracking-wider text-[#1a1512]/50">20 MIN</span>
                 <h3
                   className="mb-4 text-xl text-[#1a1512] md:text-2xl"
                   style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
                 >
                   Want to talk live?
                 </h3>
-                <p className="mb-6 flex-1 font-mono text-sm leading-relaxed text-[#1a1512]/60">
+                <p className="mb-6 flex-1 font-mono text-[15px] leading-relaxed text-[#1a1512]/60">
                   Grab twenty minutes with our team. Google Meet, no pitch deck. Just scope, timeline, and fit.
                 </p>
                 <div className="mt-auto">
@@ -593,7 +630,7 @@ export default function ShorePartnershipPage() {
                     rel="noopener noreferrer"
                     ariaLabel="Book an intro call with Captive Demand"
                   />
-                  <p className="mt-4 font-mono text-xs text-[#1a1512]/40">
+                  <p className="mt-4 font-mono text-[15px] text-[#1a1512]/40">
                     Only 20–30 minutes. Friendly chat, no pressure.
                   </p>
                 </div>
@@ -608,14 +645,14 @@ export default function ShorePartnershipPage() {
                     '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)',
                 }}
               >
-                <span className="mb-6 font-mono text-xs uppercase tracking-wider text-[#1a1512]/50">PLAYBOOK</span>
+                <span className="mb-6 font-mono text-[14px] uppercase tracking-wider text-[#1a1512]/50">PLAYBOOK</span>
                 <h3
                   className="mb-4 text-xl text-[#1a1512] md:text-2xl"
                   style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
                 >
                   Still in discovery mode?
                 </h3>
-                <p className="mb-6 flex-1 font-mono text-sm leading-relaxed text-[#1a1512]/60">
+                <p className="mb-6 flex-1 font-mono text-[15px] leading-relaxed text-[#1a1512]/60">
                   Still trying to figure out where you are at in the process? Jump back into the playbook before
                   committing.
                 </p>
@@ -628,7 +665,7 @@ export default function ShorePartnershipPage() {
                     rel="noopener noreferrer"
                     ariaLabel="Open the Shore Portfolio Performance Group playbook"
                   />
-                  <p className="mt-4 font-mono text-xs leading-relaxed text-[#1a1512]/55">
+                  <p className="mt-4 font-mono text-[15px] leading-relaxed text-[#1a1512]/55">
                     Explore at your own pace.
                   </p>
                 </div>
@@ -694,7 +731,7 @@ export default function ShorePartnershipPage() {
                     >
                       {member.name}
                     </p>
-                    <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.1em] text-[#1a1512]/40">
+                    <p className="mt-1 font-mono text-[13px] uppercase tracking-[0.1em] text-[#1a1512]/40">
                       {member.role}
                     </p>
                     <div className="my-3 h-px bg-[#e8e8e8]" />
@@ -702,7 +739,7 @@ export default function ShorePartnershipPage() {
                       {member.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-lg px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider"
+                          className="rounded-lg px-3 py-1.5 text-[13px] font-medium uppercase tracking-wider"
                           style={{
                             background: 'linear-gradient(to bottom, #f7f6f5, #EBE9E5)',
                             color: '#1a1512',
@@ -736,7 +773,7 @@ export default function ShorePartnershipPage() {
         <div className="relative z-10 mx-auto max-w-7xl px-[15px] pb-20 pt-28 sm:px-container-px md:pb-32 md:pt-40">
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[48%_52%] lg:gap-16">
             <div className="flex flex-col">
-              <div className="mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-[#1a1512]/40">
+              <div className="mb-6 font-mono text-[14px] uppercase tracking-[0.2em] text-[#1a1512]/40">
                 [ START YOUR BUILD ]
               </div>
 
@@ -748,21 +785,21 @@ export default function ShorePartnershipPage() {
                 <span className="font-light text-[#d3d4d9]">Shore-dedicated team.</span>
               </h2>
 
-              <p className="mb-6 font-mono text-sm leading-relaxed text-[#666]">
+              <p className="mb-6 font-mono text-[15px] leading-relaxed text-[#666]">
                 Tell us what you need. Our Shore-dedicated team will reach back with concrete next steps.
               </p>
 
-              <p className="mb-8 flex items-center gap-2 font-mono text-[12px] text-[#888]">
+              <p className="mb-8 flex items-center gap-2 font-mono text-[15px] text-[#888]">
                 <Clock size={14} strokeWidth={1.5} aria-hidden />
                 RESPONSE TIME · WITHIN ONE BUSINESS HOUR
               </p>
 
               <div className="mb-8 rounded-xl bg-[#1a1a1a] p-5 md:p-6">
-                <span className="mb-3 block font-mono text-[10px] uppercase tracking-wider text-[#E8480C]">
+                <span className="mb-3 block font-mono text-[14px] uppercase tracking-wider text-[#E8480C]">
                   / WHAT HAPPENS NEXT
                 </span>
                 <h3 className="mb-4 font-sans text-base font-bold text-white">After you submit</h3>
-                <ul className="space-y-2 font-mono text-[13px] text-[#aaa]">
+                <ul className="space-y-2 font-mono text-[15px] text-[#aaa]">
                   <li className="flex items-start gap-2">
                     <span className="text-[#E8480C]">+</span>
                     A senior operator confirms scope and timeline
@@ -779,19 +816,19 @@ export default function ShorePartnershipPage() {
               </div>
 
               <div className="mb-6">
-                <span className="mb-2 block font-mono text-[10px] uppercase tracking-wider text-[#999]">
+                <span className="mb-2 block font-mono text-[14px] uppercase tracking-wider text-[#999]">
                   / PREFER EMAIL?
                 </span>
                 <a
                   href="mailto:hello@captivedemand.com"
-                  className="font-mono text-sm text-[#E8480C] hover:underline"
+                  className="font-mono text-[15px] text-[#E8480C] hover:underline"
                 >
                   hello@captivedemand.com
                 </a>
               </div>
 
               <div>
-                <span className="mb-3 block font-mono text-[10px] uppercase tracking-wider text-[#999]">
+                <span className="mb-3 block font-mono text-[14px] uppercase tracking-wider text-[#999]">
                   / FIND US
                 </span>
                 <div className="flex gap-4">
@@ -845,7 +882,7 @@ export default function ShorePartnershipPage() {
             </p>
             <Link
               href="/"
-              className="shrink-0 font-mono text-[11px] uppercase tracking-[0.22em] text-white/70 transition-colors duration-150 hover:text-white"
+              className="shrink-0 font-mono text-[13px] uppercase tracking-[0.22em] text-white/70 transition-colors duration-150 hover:text-white"
             >
               ← Back to captivedemand.com
             </Link>

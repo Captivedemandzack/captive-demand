@@ -35,7 +35,7 @@ export function ShoreImpactBarChart({ chart, className, variant = 'light' }: Sho
       {chart.subtitle?.trim() ? (
         <p
           className={cn(
-            'text-pretty text-[13px] leading-relaxed md:text-sm',
+            'text-pretty text-[15px] leading-relaxed md:text-[15px]',
             isDark ? 'text-white/70' : 'text-neutral-600',
           )}
         >
@@ -45,7 +45,7 @@ export function ShoreImpactBarChart({ chart, className, variant = 'light' }: Sho
 
       <div
         className={cn(
-          'flex justify-between gap-4 border-b pb-3 font-mono text-[9px] uppercase tracking-[0.2em]',
+          'flex justify-between gap-4 border-b pb-3 font-mono text-[13px] uppercase tracking-[0.2em]',
           isDark ? 'border-white/10 text-white/55' : 'border-[#e8e8e8] text-neutral-500',
         )}
       >
@@ -61,7 +61,7 @@ export function ShoreImpactBarChart({ chart, className, variant = 'light' }: Sho
 
           return (
             <div key={row.label}>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#ff5501]">
+              <p className="font-mono text-[13px] uppercase tracking-[0.18em] text-[#ff5501]">
                 {row.label}
               </p>
               <div className="mt-3 space-y-2.5">
@@ -79,7 +79,7 @@ export function ShoreImpactBarChart({ chart, className, variant = 'light' }: Sho
                   </div>
                   <span
                     className={cn(
-                      'w-[4.5rem] shrink-0 text-right font-mono text-xs tabular-nums',
+                      'w-[4.5rem] shrink-0 text-right font-mono text-[15px] tabular-nums',
                       isDark ? 'text-white/60' : 'text-neutral-600',
                     )}
                   >
@@ -103,7 +103,7 @@ export function ShoreImpactBarChart({ chart, className, variant = 'light' }: Sho
                   </div>
                   <span
                     className={cn(
-                      'w-[4.5rem] shrink-0 text-right font-mono text-xs font-semibold tabular-nums',
+                      'w-[4.5rem] shrink-0 text-right font-mono text-[15px] font-semibold tabular-nums',
                       isDark ? 'text-white' : 'text-[#1a1512]',
                     )}
                   >
@@ -119,7 +119,7 @@ export function ShoreImpactBarChart({ chart, className, variant = 'light' }: Sho
       {chart.footnote ? (
         <p
           className={cn(
-            'border-t pt-4 text-pretty text-[11px] leading-relaxed md:text-xs',
+            'border-t pt-4 text-pretty text-[15px] leading-relaxed md:text-[15px]',
             isDark ? 'border-white/10 text-white/50' : 'border-[#e8e8e8] text-neutral-500',
           )}
         >

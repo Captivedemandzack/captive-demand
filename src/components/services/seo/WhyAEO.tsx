@@ -129,6 +129,16 @@ export function WhyAEO({ content = DEFAULT_WHY_AEO_CONTENT }: WhyAEOProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
   const eyebrowText = content.eyebrow;
+  const isShore = Boolean(content.useShoreEyebrow);
+  const cardLabelClass = isShore
+    ? 'mb-3 block font-mono text-[13px] uppercase tracking-[0.2em]'
+    : 'mb-3 block font-mono text-[9px] uppercase tracking-[0.2em]';
+  const cardSublabelClass = isShore
+    ? 'block text-pretty font-mono text-[15px] leading-snug'
+    : 'block text-pretty font-mono text-[10px] leading-snug';
+  const painPointClass = isShore
+    ? 'text-[15px] leading-relaxed text-[#1a1512]/50'
+    : 'text-sm leading-relaxed text-[#1a1512]/50';
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -227,7 +237,7 @@ export function WhyAEO({ content = DEFAULT_WHY_AEO_CONTENT }: WhyAEOProps) {
                     strokeWidth={1.5}
                     aria-hidden
                   />
-                  <span className="text-sm leading-relaxed text-[#1a1512]/50">{point}</span>
+                  <span className={painPointClass}>{point}</span>
                 </motion.div>
               ))}
             </div>
@@ -247,7 +257,7 @@ export function WhyAEO({ content = DEFAULT_WHY_AEO_CONTENT }: WhyAEOProps) {
                   className="min-w-0 rounded-2xl border border-[#1a1512]/[0.06] bg-[#f3f4f6] p-5 md:p-6"
                   style={{ boxShadow: '0 1px 3px rgba(26,21,18,0.04)' }}
                 >
-                  <span className="mb-3 block font-mono text-[9px] uppercase tracking-[0.2em] text-[#1a1512]/25">
+                  <span className={cn(cardLabelClass, 'text-[#1a1512]/25')}>
                     {row.theirs.label}
                   </span>
                   <span
@@ -256,7 +266,7 @@ export function WhyAEO({ content = DEFAULT_WHY_AEO_CONTENT }: WhyAEOProps) {
                   >
                     {row.theirs.value}
                   </span>
-                  <span className="block text-pretty font-mono text-[10px] leading-snug text-[#1a1512]/20">
+                  <span className={cn(cardSublabelClass, 'text-[#1a1512]/20')}>
                     {row.theirs.sublabel}
                   </span>
                 </div>
@@ -269,7 +279,7 @@ export function WhyAEO({ content = DEFAULT_WHY_AEO_CONTENT }: WhyAEOProps) {
                       'inset 0 1px 0 0 rgba(255,255,255,0.2), 0 8px 32px -8px rgba(255,85,1,0.25), 0 2px 4px rgba(255,85,1,0.1)',
                   }}
                 >
-                  <span className="mb-3 block font-mono text-[9px] uppercase tracking-[0.2em] text-white/60">
+                  <span className={cn(cardLabelClass, 'text-white/60')}>
                     {row.ours.label}
                   </span>
                   <span
@@ -278,7 +288,7 @@ export function WhyAEO({ content = DEFAULT_WHY_AEO_CONTENT }: WhyAEOProps) {
                   >
                     {row.ours.value}
                   </span>
-                  <span className="block text-pretty font-mono text-[10px] leading-snug text-white/50">
+                  <span className={cn(cardSublabelClass, 'text-white/50')}>
                     {row.ours.sublabel}
                   </span>
                 </div>

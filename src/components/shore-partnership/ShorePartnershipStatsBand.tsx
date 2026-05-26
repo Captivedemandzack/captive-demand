@@ -54,7 +54,7 @@ export function ShorePartnershipStatsBand() {
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="mb-8 text-center md:mb-10">
-          <span className="block font-mono text-sm uppercase tracking-wider text-white/30">/ At a glance</span>
+          <span className="block font-mono text-[14px] uppercase tracking-wider text-white/30">/ At a glance</span>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -89,7 +89,7 @@ export function ShorePartnershipStatsBand() {
               >
                 {stat.label}
               </h3>
-              <p className="font-mono text-[11px] uppercase tracking-wider text-white/30">
+              <p className="font-mono text-[13px] uppercase tracking-wider text-white/30">
                 {stat.sublabel}
               </p>
             </div>

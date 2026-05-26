@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { SHORE_SECTION_EYEBROW_CLASS } from '@/lib/shore-section-styles';
+import { SHORE_SECTION_DESCRIPTION_CLASS, SHORE_SECTION_EYEBROW_CLASS } from '@/lib/shore-section-styles';
 
 interface ShoreSectionHeaderProps {
   /** Eyebrow label (no slash) — e.g. "Approach", "Operating Model" */
@@ -16,7 +16,7 @@ interface ShoreSectionHeaderProps {
   trail?: string;
   /** Full headline replacement (mutually exclusive with lead/accent/trail composition) */
   titleSlot?: ReactNode;
-  /** Right-column mono description, will render UPPERCASE unless descriptionSentenceCase */
+  /** Right-column mono description */
   description?: string;
   variant?: 'light' | 'dark';
   className?: string;
@@ -24,8 +24,6 @@ interface ShoreSectionHeaderProps {
   compact?: boolean;
   /** SVG shape + rule above eyebrow (default true) */
   showDecoration?: boolean;
-  /** Sentence case description with relaxed tracking (no uppercase transform) */
-  descriptionSentenceCase?: boolean;
 }
 
 const DecorativeShapeLine = ({ variant }: { variant: 'light' | 'dark' }) => {
@@ -61,7 +59,6 @@ export function ShoreSectionHeader({
   className,
   compact = false,
   showDecoration = true,
-  descriptionSentenceCase = false,
 }: ShoreSectionHeaderProps) {
   const isDark = variant === 'dark';
 
@@ -121,16 +118,8 @@ export function ShoreSectionHeader({
           >
             <p
               className={cn(
-                'font-mono text-sm leading-relaxed text-pretty',
-                descriptionSentenceCase
-                  ? cn(
-                      'tracking-normal normal-case',
-                      isDark ? 'text-white/75' : 'text-[#1a1512]/70',
-                    )
-                  : cn(
-                      'uppercase tracking-wide',
-                      isDark ? 'text-white/55' : 'text-[#1a1512]/60',
-                    ),
+                SHORE_SECTION_DESCRIPTION_CLASS,
+                isDark && 'text-white/55',
               )}
             >
               {description}

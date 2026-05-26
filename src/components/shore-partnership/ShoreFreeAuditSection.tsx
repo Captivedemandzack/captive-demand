@@ -79,7 +79,7 @@ export function ShoreFreeAuditSection() {
                   <Check className="size-7 text-[#E8480C]" strokeWidth={2} aria-hidden />
                 </div>
                 <h3 className="mt-6 font-sans text-[20px] font-bold text-[#111]">Audit request received.</h3>
-                <p className="mx-auto mt-4 max-w-md font-mono text-sm text-[#666]">
+                <p className="mx-auto mt-4 max-w-md font-mono text-[15px] text-[#666]">
                   We will review each URL you listed and send a Shore-branded summary with ranked priorities within 2
                   business days.
                 </p>
@@ -149,7 +149,7 @@ export function ShoreFreeAuditSection() {
                   </div>
 
                   {status === 'error' ? (
-                    <p className="mt-4 text-sm text-red-700" role="alert">
+                    <p className="mt-4 text-[15px] text-red-700" role="alert">
                       Something went wrong. Email hello@captivedemand.com and we will queue your audit manually.
                     </p>
                   ) : null}
@@ -164,7 +164,7 @@ export function ShoreFreeAuditSection() {
                       fullWidth
                       ariaLabel="Send me the free portfolio audit"
                     />
-                    <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.12em] text-[#888]">
+                    <p className="mt-4 text-center font-mono text-[13px] uppercase tracking-[0.12em] text-[#888]">
                       Audit delivered · within 2 business days
                     </p>
                   </div>
