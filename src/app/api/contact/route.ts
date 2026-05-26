@@ -39,12 +39,27 @@ function isShoreAuditSource(source: string | undefined): boolean {
 
 /** CC for non-Shore lead emails (override with LEAD_CC_EMAIL). */
 const DEFAULT_LEAD_CC = 'zachary@captivedemand.com';
-const DEFAULT_SHORE_LEAD_CC = 'hello@captivedemand.com';
 
-function leadCcEmail(isShore = false): string {
-  const override = process.env.LEAD_CC_EMAIL?.trim();
-  if (override) return override;
-  return isShore ? DEFAULT_SHORE_LEAD_CC : DEFAULT_LEAD_CC;
+/** Shore partnership forms (contact, audit, exit intent) notify this list. */
+const DEFAULT_SHORE_LEAD_RECIPIENTS = [
+  'spencer@captivedemand.com',
+  'jordan@captivedemand.com',
+  'zachary@captivedemand.com',
+] as const;
+
+function leadCcEmail(): string {
+  return process.env.LEAD_CC_EMAIL?.trim() || DEFAULT_LEAD_CC;
+}
+
+function shoreLeadRecipients(): string[] {
+  const override = process.env.SHORE_LEAD_EMAILS?.trim();
+  if (override) {
+    return override
+      .split(',')
+      .map((email) => email.trim())
+      .filter(Boolean);
+  }
+  return [...DEFAULT_SHORE_LEAD_RECIPIENTS];
 }
 
 function getTransport() {
@@ -88,8 +103,24 @@ async function sendLeadToCeo(
   params: { subject: string; text: string; isShore?: boolean },
 ): Promise<void> {
   const fromAddr = process.env.SMTP_FROM ?? process.env.SMTP_USER;
+
+  if (params.isShore) {
+    const recipients = shoreLeadRecipients();
+    if (recipients.length === 0) {
+      console.warn('No Shore lead recipients configured; email not sent.');
+      return;
+    }
+    await transporter.sendMail({
+      from: fromAddr,
+      to: recipients.join(', '),
+      subject: params.subject,
+      text: params.text,
+    });
+    return;
+  }
+
   const ceo = process.env.CEO_EMAIL?.trim();
-  const cc = leadCcEmail(params.isShore);
+  const cc = leadCcEmail();
 
   if (!ceo) {
     console.warn('CEO_EMAIL is not set; sending lead only to CC address.');
