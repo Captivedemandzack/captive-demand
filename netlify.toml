@@ -1,3 +1,8 @@
+# reCAPTCHA site keys are public client config (NEXT_PUBLIC_*). Next.js inlines them
+# into JS bundles, which Netlify's secrets scanner would otherwise block.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_RECAPTCHA_SITE_KEY"
+
 # Long-lived caching for static assets in /public.
 # Next.js's `headers()` config does NOT apply to /public files on Netlify -
 # those bypass the Next runtime. Lighthouse "Use efficient cache lifetimes"
