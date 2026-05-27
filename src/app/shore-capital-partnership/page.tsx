@@ -170,9 +170,11 @@ const testimonials = [
   },
   {
     quote:
-      'The Shore-dedicated team is in the work, not behind a ticket queue. When we need changes across multiple sites, response feels like an extension of our ops group, with senior oversight on every deliverable.',
-    name: 'Portfolio operator',
-    role: 'Shore-backed company',
+      'Captive has been easy to work with from day one. Whenever something comes up, they\'re quick to respond, clear about what needs to happen, and they actually get it handled. It\'s been nice having a team we can trust with that side of the business.',
+    name: 'Van Hunt',
+    role: 'Cofounder, Arete Wellness',
+    image: '/arete-wellness-logo.png',
+    imageClassName: 'object-contain bg-white p-1.5',
     featured: false as boolean,
   },
 ] satisfies Array<{
@@ -181,6 +183,7 @@ const testimonials = [
   role: string;
   featured: boolean;
   image?: string;
+  imageClassName?: string;
 }>;
 
 const SHORE_ASK_AI_PROMPT =
@@ -504,7 +507,13 @@ export default function ShorePartnershipPage() {
                               isFeatured ? 'border-2 border-white/30 shadow-md' : 'border-2 border-white shadow-md',
                             )}
                           >
-                            <Image src={item.image} alt={item.name} fill className="object-cover object-top" sizes="48px" />
+                            <Image
+                              src={item.image}
+                              alt={item.name}
+                              fill
+                              className={cn('object-cover object-top', item.imageClassName)}
+                              sizes="48px"
+                            />
                           </div>
                         ) : null}
                         <div className="min-w-0">

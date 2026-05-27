@@ -13,6 +13,7 @@ import { submitShoreAuditForm } from '@/lib/shore-audit-form';
 import {
   SITE_FORM_INPUT_CLASS,
   SITE_FORM_LABEL_CLASS,
+  SITE_FORM_ANCHOR_TEXT_CLASS,
   SITE_MARKETING_WHITE_SHADOW,
   siteMarketingWhiteCardClassName,
 } from '@/lib/site-surfaces';
@@ -176,7 +177,7 @@ export function ShoreFreeAuditSection() {
                       fullWidth
                       ariaLabel="Send me the free portfolio audit"
                     />
-                    <p className="mt-4 text-center font-mono text-[13px] uppercase tracking-[0.12em] text-[#888]">
+                    <p className={cn(SITE_FORM_ANCHOR_TEXT_CLASS, 'text-center uppercase tracking-[0.12em]')}>
                       Audit delivered · within 2 business days
                     </p>
                   </div>

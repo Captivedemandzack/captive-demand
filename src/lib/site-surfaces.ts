@@ -49,5 +49,9 @@ export const SITE_FORM_LABEL_CLASS =
 export const SITE_FORM_INPUT_CLASS =
   'w-full bg-[#fafafa] border border-[#e0e0e0] rounded-lg px-3.5 py-3 font-mono text-[13px] text-[#111] outline-none transition-colors focus:border-[#E8480C] focus:bg-white';
 
+/** Muted reassurance copy directly beneath form submit buttons */
+export const SITE_FORM_ANCHOR_TEXT_CLASS =
+  'mt-3 font-mono text-[11px] leading-relaxed text-[#1a1512]/55';
+
 /** Primary marketing accent (hero pills, focus rings). */
 export const SITE_ORANGE = '#ff5501';

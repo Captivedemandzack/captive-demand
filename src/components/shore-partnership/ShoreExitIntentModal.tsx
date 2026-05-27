@@ -13,7 +13,8 @@ import {
   hasShoreFormSubmitted,
   markExitIntentShown,
 } from '@/lib/shore-form-session';
-import { SITE_FORM_INPUT_CLASS, SITE_FORM_LABEL_CLASS } from '@/lib/site-surfaces';
+import { SITE_FORM_INPUT_CLASS, SITE_FORM_LABEL_CLASS, SITE_FORM_ANCHOR_TEXT_CLASS } from '@/lib/site-surfaces';
+import { cn } from '@/lib/utils';
 
 const LOAD_GUARD_MS = 5000;
 
@@ -171,7 +172,13 @@ export function ShoreExitIntentModal() {
               </div>
             ) : (
               <>
-                <p className="font-mono text-[13px] uppercase tracking-[0.2em] text-[#1a1512]">Wait · before you go</p>
+                <p className="flex items-center gap-2 font-mono text-[14px] uppercase tracking-[0.12em] text-[#1a1512]">
+                  <span className="relative flex size-2 shrink-0">
+                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#E8480C]/70 opacity-75" />
+                    <span className="relative inline-flex size-2 rounded-full bg-[#E8480C]" />
+                  </span>
+                  Before you go
+                </p>
                 <h2
                   id="shore-exit-title"
                   className="mt-4 max-w-[18ch] text-balance text-[1.875rem] leading-tight tracking-tight text-[#1a1512]"
@@ -183,8 +190,8 @@ export function ShoreExitIntentModal() {
                   id="shore-exit-desc"
                   className="mt-4 max-w-prose text-pretty text-[0.9375rem] leading-relaxed text-[#1a1512]/70"
                 >
-                  Just your email and your URLs. We&apos;ll send back a detailed audit within 2 business days. No
-                  follow-up sales call required.
+                  Add as many site URLs as you want, we&apos;ll send you back individual audits on each within 2
+                  business days.
                 </p>
 
                 <form onSubmit={handleSubmit} className="mt-8 space-y-5">
@@ -225,7 +232,7 @@ export function ShoreExitIntentModal() {
                   </button>
                 </form>
 
-                <p className="mt-6 text-center font-mono text-[15px] text-[#888]">
+                <p className={cn(SITE_FORM_ANCHOR_TEXT_CLASS, 'mt-6 text-center')}>
                   Already submitted? You&apos;re all set. We&apos;re on it.
                 </p>
               </>

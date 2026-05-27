@@ -11,6 +11,7 @@ import { markShoreFormSubmitted } from '@/lib/shore-form-session';
 import {
   SITE_FORM_INPUT_CLASS,
   SITE_FORM_LABEL_CLASS,
+  SITE_FORM_ANCHOR_TEXT_CLASS,
   SITE_MARKETING_WHITE_SHADOW,
   siteMarketingWhiteCardClassName,
 } from '@/lib/site-surfaces';
@@ -221,9 +222,6 @@ export function ShorePartnershipLeadForm() {
               className={`${SITE_FORM_INPUT_CLASS} mt-2 resize-y`}
               placeholder="Timeline, scope, internal stakeholders, anything relevant"
             />
-            <p className="mt-3 font-mono text-[13px] uppercase tracking-[0.12em] text-[#888]">
-              Response time · within one business hour
-            </p>
           </div>
         </div>
 
@@ -246,8 +244,8 @@ export function ShorePartnershipLeadForm() {
           />
         </div>
 
-        <p className="mt-4 font-mono text-[15px] leading-relaxed text-[#999]">
-          No sales pitch. No obligation. Just a direct reply from our team.
+        <p className={SITE_FORM_ANCHOR_TEXT_CLASS}>
+          No obligation. Just a conversation.
         </p>
       </form>
     </div>

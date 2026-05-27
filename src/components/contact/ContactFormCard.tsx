@@ -7,6 +7,7 @@ import { ANNUAL_COMPANY_REVENUE_OPTIONS, type AnnualCompanyRevenue } from '@/lib
 import { CalEmbed } from './CalEmbed';
 import { trackGa4Event } from '@/lib/analytics';
 import { recaptchaErrorMessage } from '@/lib/recaptcha-errors';
+import { SITE_FORM_ANCHOR_TEXT_CLASS } from '@/lib/site-surfaces';
 import { useRecaptchaToken } from '@/hooks/useRecaptchaToken';
 
 type Tab = 'message' | 'call';
@@ -316,7 +317,7 @@ export function ContactFormCard() {
                 fullWidth
               />
             </div>
-            <p className="font-mono text-[11px] text-[#999]">
+            <p className={SITE_FORM_ANCHOR_TEXT_CLASS}>
               No spam. No sales calls. We respond within 1 hour.
             </p>
           </form>
