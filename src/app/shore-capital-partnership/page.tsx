@@ -155,9 +155,10 @@ const phases = [
 const testimonials = [
   {
     quote:
-      'Captive built lifecycle programming that scales across eleven brands without flattening what makes each market work locally. The velocity is what you expect from a PE-backed roll-up, not a typical agency cadence.',
-    name: 'Marketing leadership',
-    role: 'Empower Aesthetics',
+      'We\'ve had a great experience working with Captive Demand. As a company with several different brands, we needed a partner who could handle a variety of needs. Spencer handles our email marketing and Zachary works on several of our websites. What really sets them apart is that they\'re true strategic thought partners. They bring a lot to the table, and they\'re easy to work with, understanding, and genuinely invested in your success. Their designs are always beautiful as well. Highly recommend!',
+    name: 'Sophia Sparrgrove',
+    role: 'Marketing Manager, Empower Aesthetics',
+    image: '/sophia-sparrgrove.png',
     featured: false as boolean,
   },
   {
