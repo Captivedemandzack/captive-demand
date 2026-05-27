@@ -181,16 +181,16 @@
   status = 301
   force = true
 
-# Legacy slug: partnership landing lives at /shore-partnership; keep short URL pointed at home.
+# Former slug → canonical partnership landing page
 [[redirects]]
-  from = "/shore-capital-partnership"
-  to = "/"
+  from = "/shore-partnership"
+  to = "/shore-capital-partnership"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/shore-capital-partnership/"
-  to = "/"
+  from = "/shore-partnership/"
+  to = "/shore-capital-partnership"
   status = 301
   force = true
 

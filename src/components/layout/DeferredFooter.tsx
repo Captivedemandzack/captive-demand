@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Footer from "@/components/layout/Footer";
+import { isShorePartnershipPath } from "@/lib/shore-partnership";
 
 export function DeferredFooter() {
     const pathname = usePathname();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        if (pathname === "/shore-partnership" || pathname === "/shore-partnership/") {
+        if (isShorePartnershipPath(pathname)) {
             return;
         }
         if (mounted) return;
@@ -29,7 +30,7 @@ export function DeferredFooter() {
         };
     }, [pathname, mounted]);
 
-    if (pathname === "/shore-partnership" || pathname === "/shore-partnership/") {
+    if (isShorePartnershipPath(pathname)) {
         return null;
     }
 

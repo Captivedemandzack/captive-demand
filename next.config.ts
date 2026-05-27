@@ -21,6 +21,20 @@ const nextConfig: NextConfig = {
     // Disable image optimization in development for instant updates
     unoptimized: process.env.NODE_ENV === 'development',
   },
+  async redirects() {
+    return [
+      {
+        source: "/shore-partnership",
+        destination: "/shore-capital-partnership",
+        permanent: true,
+      },
+      {
+        source: "/shore-partnership/",
+        destination: "/shore-capital-partnership",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     if (process.env.NODE_ENV === 'development') {
       return [

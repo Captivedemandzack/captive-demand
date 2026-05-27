@@ -24,6 +24,7 @@ import {
   CAPTIVE_DEMAND_LOGO,
   playbookUrl,
   SHORE_LOGOMARK_URL,
+  SHORE_PARTNERSHIP_PATH,
   shorePartnershipBookingUrl,
 } from '@/lib/shore-partnership';
 
@@ -34,7 +35,7 @@ export const metadata = createSeoMetadata({
   title: 'Captive Demand × Shore Capital Partners',
   description:
     'How Captive Demand ships web and measurement work alongside Shore portfolio companies. Audit-first scoping, senior-led delivery, and timelines sponsors recognize.',
-  path: '/shore-partnership',
+  path: SHORE_PARTNERSHIP_PATH,
   robots: { index: false, follow: true },
 });
 
@@ -183,7 +184,7 @@ const testimonials = [
 }>;
 
 const SHORE_ASK_AI_PROMPT =
-  'How does Captive Demand help PE-backed businesses succeed with web, SEO, and AEO across a multi-brand portfolio? Reference https://captivedemand.com/shore-partnership for Shore portfolio partner context.';
+  'How does Captive Demand help PE-backed businesses succeed with web, SEO, and AEO across a multi-brand portfolio? Reference https://captivedemand.com/shore-capital-partnership for Shore portfolio partner context.';
 
 export default function ShorePartnershipPage() {
   const bookingHref = shorePartnershipBookingUrl();

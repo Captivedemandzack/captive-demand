@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import { isShorePartnershipPath } from '@/lib/shore-partnership';
 
 const serviceSubMenu = [
   { text: 'Website', href: '/services/website' },
@@ -173,7 +174,7 @@ export default function Navbar() {
   const [hoveredMainItem, setHoveredMainItem] = useState<string | null>(null);
   const [hoveredSubItem, setHoveredSubItem] = useState<string | null>(null);
 
-  if (pathname === '/shore-partnership' || pathname === '/shore-partnership/') {
+  if (isShorePartnershipPath(pathname)) {
     return null;
   }
 

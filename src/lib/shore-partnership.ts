@@ -1,3 +1,13 @@
+/** Public URL for the Shore × Captive Demand partnership landing page */
+export const SHORE_PARTNERSHIP_PATH = '/shore-capital-partnership';
+
+export function isShorePartnershipPath(pathname: string | null | undefined): boolean {
+  if (!pathname) return false;
+  const normalized =
+    pathname.endsWith('/') && pathname.length > 1 ? pathname.slice(0, -1) : pathname;
+  return normalized === SHORE_PARTNERSHIP_PATH;
+}
+
 /** UTM source/medium pair shared across every outbound playbook link */
 export const SHORE_PLAYBOOK_UTM_BASE = 'utm_source=shore&utm_medium=partnership-page';
 
