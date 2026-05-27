@@ -7,6 +7,7 @@ import { ShoreAuditUrlInputs } from '@/components/shore-partnership/ShoreAuditUr
 import { ShoreReveal } from '@/components/shore-partnership/ShoreReveal';
 import { ShoreSectionHeader } from '@/components/shore-partnership/ShoreSectionHeader';
 import { CTAButton } from '@/components/ui/CTAButton';
+import { useRecaptchaToken } from '@/hooks/useRecaptchaToken';
 import { trackGa4Event } from '@/lib/analytics';
 import { submitShoreAuditForm } from '@/lib/shore-audit-form';
 import {
@@ -20,8 +21,10 @@ import { cn } from '@/lib/utils';
 import { ShoreAuditPreviewIllustration } from '@/components/shore-partnership/ShoreAuditPreviewIllustration';
 
 export function ShoreFreeAuditSection() {
+  const { getToken } = useRecaptchaToken();
   const [submitted, setSubmitted] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
+  const [submitError, setSubmitError] = useState('');
   const [siteUrls, setSiteUrls] = useState(['']);
   const [form, setForm] = useState({
     fullName: '',
@@ -33,6 +36,13 @@ export function ShoreFreeAuditSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (form.trap) return;
+    setSubmitError('');
+
+    const recaptcha = await getToken('shore_audit_form');
+    if (!recaptcha.ok) {
+      setSubmitError(recaptcha.error);
+      return;
+    }
 
     setStatus('submitting');
     const ok = await submitShoreAuditForm({
@@ -41,6 +51,7 @@ export function ShoreFreeAuditSection() {
       fullName: form.fullName,
       businessName: form.portfolioCompany,
       siteUrls,
+      recaptchaToken: recaptcha.token,
     });
 
     if (!ok) {
@@ -148,9 +159,10 @@ export function ShoreFreeAuditSection() {
                     </div>
                   </div>
 
-                  {status === 'error' ? (
+                  {submitError || status === 'error' ? (
                     <p className="mt-4 text-[15px] text-red-700" role="alert">
-                      Something went wrong. Email hello@captivedemand.com and we will queue your audit manually.
+                      {submitError ||
+                        'Something went wrong. Email hello@captivedemand.com and we will queue your audit manually.'}
                     </p>
                   ) : null}
 

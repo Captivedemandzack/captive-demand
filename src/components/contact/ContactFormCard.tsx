@@ -6,12 +6,17 @@ import { Check } from 'lucide-react';
 import { ANNUAL_COMPANY_REVENUE_OPTIONS, type AnnualCompanyRevenue } from '@/lib/annual-company-revenue';
 import { CalEmbed } from './CalEmbed';
 import { trackGa4Event } from '@/lib/analytics';
+import { recaptchaErrorMessage } from '@/lib/recaptcha-errors';
+import { useRecaptchaToken } from '@/hooks/useRecaptchaToken';
 
 type Tab = 'message' | 'call';
 
 export function ContactFormCard() {
+  const { getToken } = useRecaptchaToken();
   const [activeTab, setActiveTab] = useState<Tab>('message');
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -26,6 +31,15 @@ export function ContactFormCard() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.website) return; // honeypot: reject if filled (bot)
+    setSubmitError('');
+
+    const recaptcha = await getToken('contact_form');
+    if (!recaptcha.ok) {
+      setSubmitError(recaptcha.error);
+      return;
+    }
+
+    setSubmitting(true);
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -38,6 +52,7 @@ export function ContactFormCard() {
           service: formData.service,
           budget: formData.budget,
           message: formData.message,
+          recaptchaToken: recaptcha.token,
         }),
       });
       if (res.ok) {
@@ -49,6 +64,17 @@ export function ContactFormCard() {
         });
         setSubmitted(true);
       } else {
+        let message: string | null = null;
+        try {
+          const data = (await res.json()) as { error?: string };
+          message = recaptchaErrorMessage(data.error);
+        } catch {
+          /* fall through to mailto */
+        }
+        if (message) {
+          setSubmitError(message);
+          return;
+        }
         // Fallback: open mailto and show success
         const subject = encodeURIComponent(`Project inquiry from ${formData.fullName}`);
         const body = encodeURIComponent(
@@ -76,6 +102,8 @@ export function ContactFormCard() {
         budget: formData.budget || undefined,
       });
       setSubmitted(true);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -277,9 +305,12 @@ export function ContactFormCard() {
             </div>
 
             <div className="pt-2">
+              {submitError ? (
+                <p className="mb-3 font-mono text-[12px] text-red-600">{submitError}</p>
+              ) : null}
               <CTAButton
                 variant="dark"
-                text="SEND MESSAGE"
+                text={submitting ? 'SENDING…' : 'SEND MESSAGE'}
                 as="button"
                 type="submit"
                 fullWidth

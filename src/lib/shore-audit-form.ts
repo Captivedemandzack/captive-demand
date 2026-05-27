@@ -8,6 +8,7 @@ export type SubmitShoreAuditParams = {
   fullName: string;
   businessName: string;
   siteUrls: string[];
+  recaptchaToken?: string;
 };
 
 export function normalizeSiteUrls(urls: string[]): string[] {
@@ -33,6 +34,7 @@ export async function submitShoreAuditForm(params: SubmitShoreAuditParams): Prom
       email: params.email.trim(),
       businessName: params.businessName.trim(),
       message: formatSiteUrlsMessage(urls),
+      recaptchaToken: params.recaptchaToken,
     }),
   });
 

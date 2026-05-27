@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { X } from 'lucide-react';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 import { BookingCalendarShell } from '@/components/booking/BookingCalendarShell';
 import { GhlBookingCardContent } from '@/components/booking/GhlLeadConnectorBooking';
@@ -17,6 +16,8 @@ import {
   type AnnualCompanyRevenue,
 } from '@/lib/annual-company-revenue';
 import { trackGa4Event } from '@/lib/analytics';
+import { recaptchaErrorMessage } from '@/lib/recaptcha-errors';
+import { useRecaptchaToken } from '@/hooks/useRecaptchaToken';
 
 const sans = { fontFamily: 'var(--font-pricing-sans), system-ui, sans-serif' } as const;
 const mono = { fontFamily: 'var(--font-pricing-mono), ui-monospace, monospace' } as const;
@@ -28,7 +29,7 @@ type ModalStep = 'form' | 'booking' | 'thanks';
 export function PricingQualifyModal() {
   const { isOpen, closeModal } = usePricingLead();
   const shouldReduceMotion = useReducedMotion();
-  const { executeRecaptcha } = useGoogleReCaptcha();
+  const { getToken } = useRecaptchaToken();
   const [mounted, setMounted] = useState(false);
 
   const [step, setStep] = useState<ModalStep>('form');
@@ -109,24 +110,10 @@ export function PricingQualifyModal() {
     setSubmitError('');
     if (!validate()) return;
 
-    const skipRecaptcha = process.env.NEXT_PUBLIC_SKIP_RECAPTCHA === 'true';
-    const hasKey = Boolean(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
-    let token = '';
-    if (!skipRecaptcha && hasKey) {
-      if (!executeRecaptcha) {
-        setSubmitError('Security check is still loading. Try again in a moment.');
-        return;
-      }
-      try {
-        token = await executeRecaptcha('pricing_modal');
-      } catch {
-        setSubmitError('Something went wrong. Please try again.');
-        return;
-      }
-      if (!token) {
-        setSubmitError('Something went wrong. Please try again.');
-        return;
-      }
+    const recaptcha = await getToken('pricing_modal');
+    if (!recaptcha.ok) {
+      setSubmitError(recaptcha.error);
+      return;
     }
 
     setSubmitting(true);
@@ -139,7 +126,7 @@ export function PricingQualifyModal() {
           email: email.trim(),
           businessName: businessName.trim(),
           annualCompanyRevenue: annualRevenue,
-          recaptchaToken: token,
+          recaptchaToken: recaptcha.token,
           source: 'pricing_modal',
         }),
       });
@@ -147,10 +134,7 @@ export function PricingQualifyModal() {
         let message = 'Something went wrong. Please try again.';
         try {
           const data = (await res.json()) as { error?: string };
-          if (data.error === 'reCAPTCHA failed' || data.error === 'reCAPTCHA required') {
-            message =
-              'Security check failed. Confirm your reCAPTCHA keys in .env.local match this domain, then refresh and try again.';
-          }
+          message = recaptchaErrorMessage(data.error) ?? message;
         } catch {
           /* keep generic message */
         }

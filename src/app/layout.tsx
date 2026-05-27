@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import { DeferredFooter } from "@/components/layout/DeferredFooter";
+import { SiteReCaptchaProvider } from "@/components/providers/SiteReCaptchaProvider";
 import { SiteGoogleAnalytics } from "@/components/analytics/SiteGoogleAnalytics";
 import { OrganizationSchema } from "@/components/schema/OrganizationSchema";
 import { siteConfig } from "@/lib/site";
@@ -122,6 +123,7 @@ export default function RootLayout({
                 />
             </head>
             <body className={`${inter.variable} ${syne.variable} ${jetBrainsMono.variable} ${nohemi.variable} antialiased h-full relative`}>
+                <SiteReCaptchaProvider>
                 <SiteGoogleAnalytics />
                 <OrganizationSchema />
                 <Navbar />
@@ -143,6 +145,7 @@ export default function RootLayout({
                     </ul>
                 </nav>
                 <DeferredFooter />
+                </SiteReCaptchaProvider>
             </body>
         </html>
     );

@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
 
 import { parseAnnualCompanyRevenue, revenueLabel } from '@/lib/annual-company-revenue';
+import { isRecaptchaVerificationEnabled } from '@/lib/recaptcha-config';
 
 type Body = {
   fullName?: string;
@@ -157,6 +158,22 @@ async function verifyRecaptcha(token: string): Promise<{ ok: boolean }> {
   return { ok: true };
 }
 
+async function rejectIfRecaptchaInvalid(token: string | undefined) {
+  if (!isRecaptchaVerificationEnabled()) return null;
+
+  const trimmed = token?.trim() ?? '';
+  if (!trimmed) {
+    return NextResponse.json({ error: 'reCAPTCHA required' }, { status: 400 });
+  }
+
+  const verification = await verifyRecaptcha(trimmed);
+  if (!verification.ok) {
+    return NextResponse.json({ error: 'reCAPTCHA failed' }, { status: 400 });
+  }
+
+  return null;
+}
+
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as Body;
@@ -183,23 +200,8 @@ export async function POST(request: Request) {
 
     const annualRevenueLabel = revenueParsed ? revenueLabel(revenueParsed) : 'Not collected (Shore partnership page)';
 
-    const skipRecaptcha =
-      process.env.SKIP_RECAPTCHA_VERIFICATION === 'true' ||
-      process.env.NEXT_PUBLIC_SKIP_RECAPTCHA === 'true';
-
-    if (isPricingModal && !skipRecaptcha) {
-      const secret = process.env.RECAPTCHA_SECRET_KEY;
-      const token = body.recaptchaToken?.trim() ?? '';
-      if (secret) {
-        if (!token) {
-          return NextResponse.json({ error: 'reCAPTCHA required' }, { status: 400 });
-        }
-        const v = await verifyRecaptcha(token);
-        if (!v.ok) {
-          return NextResponse.json({ error: 'reCAPTCHA failed' }, { status: 400 });
-        }
-      }
-    }
+    const recaptchaFailure = await rejectIfRecaptchaInvalid(body.recaptchaToken);
+    if (recaptchaFailure) return recaptchaFailure;
 
     const transporter = getTransport();
 

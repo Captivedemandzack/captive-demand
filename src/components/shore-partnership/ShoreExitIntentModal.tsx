@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { X } from 'lucide-react';
 
 import { ShoreAuditUrlInputs } from '@/components/shore-partnership/ShoreAuditUrlInputs';
+import { useRecaptchaToken } from '@/hooks/useRecaptchaToken';
 import { trackGa4Event } from '@/lib/analytics';
 import { submitShoreAuditForm } from '@/lib/shore-audit-form';
 import {
@@ -22,6 +23,7 @@ function isDesktopPointerDevice(): boolean {
 }
 
 export function ShoreExitIntentModal() {
+  const { getToken } = useRecaptchaToken();
   const [open, setOpen] = useState(false);
   const [siteUrls, setSiteUrls] = useState(['']);
   const [email, setEmail] = useState('');
@@ -81,6 +83,13 @@ export function ShoreExitIntentModal() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const recaptcha = await getToken('shore_exit_intent');
+    if (!recaptcha.ok) {
+      setStatus('error');
+      return;
+    }
+
     setStatus('submitting');
 
     const ok = await submitShoreAuditForm({
@@ -89,6 +98,7 @@ export function ShoreExitIntentModal() {
       fullName: email.split('@')[0] || 'Shore visitor',
       businessName: 'Exit intent audit request',
       siteUrls,
+      recaptchaToken: recaptcha.token,
     });
 
     if (!ok) {

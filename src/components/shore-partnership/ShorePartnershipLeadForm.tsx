@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Check } from 'lucide-react';
 
 import { CTAButton } from '@/components/ui/CTAButton';
+import { useRecaptchaToken } from '@/hooks/useRecaptchaToken';
 import { trackGa4Event } from '@/lib/analytics';
 import { markShoreFormSubmitted } from '@/lib/shore-form-session';
 import {
@@ -24,8 +25,10 @@ const SITE_COUNT_OPTIONS = [
 ] as const;
 
 export function ShorePartnershipLeadForm() {
+  const { getToken } = useRecaptchaToken();
   const [submitted, setSubmitted] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
+  const [submitError, setSubmitError] = useState('');
   const [form, setForm] = useState({
     fullName: '',
     email: '',
@@ -38,6 +41,13 @@ export function ShorePartnershipLeadForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (form.trap) return;
+    setSubmitError('');
+
+    const recaptcha = await getToken('shore_partnership_form');
+    if (!recaptcha.ok) {
+      setSubmitError(recaptcha.error);
+      return;
+    }
 
     setStatus('submitting');
     try {
@@ -51,6 +61,7 @@ export function ShorePartnershipLeadForm() {
           businessName: form.portfolioCompany.trim(),
           siteCount: form.siteCount,
           message: form.message.trim(),
+          recaptchaToken: recaptcha.token,
         }),
       });
 
@@ -216,13 +227,10 @@ export function ShorePartnershipLeadForm() {
           </div>
         </div>
 
-        {status === 'error' ? (
+        {submitError || status === 'error' ? (
           <p className="mt-4 text-[15px] text-red-700" role="alert">
-            We could not send that right away. Email{' '}
-            <a className="underline underline-offset-2" href="mailto:hello@captivedemand.com">
-              hello@captivedemand.com
-            </a>{' '}
-            and we will respond from our Shore partnership desk.
+            {submitError ||
+              'We could not send that right away. Email hello@captivedemand.com and we will respond from our Shore partnership desk.'}
           </p>
         ) : null}
 
