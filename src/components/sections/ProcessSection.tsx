@@ -283,11 +283,12 @@ export function ProcessSection() {
                 / OUR PROCESS
               </span>
               <h2
-                className="text-4xl md:text-5xl lg:text-6xl text-[#1a1512]"
+                className="text-4xl md:text-5xl lg:text-6xl"
                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
               >
-                From intro to impact<AccentBr />
-                <span className="text-[#1a1512]/40">in record time.</span>
+                <span className="text-[#d5d5d5]">From intro to impact</span>
+                <AccentBr />
+                <span className="text-[#1a1512]">in record time.</span>
               </h2>
             </div>
 
