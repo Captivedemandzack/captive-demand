@@ -25,14 +25,30 @@ type PartnerLogo = {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    text: "Spencer is knowledgeable, patient, and open to listen! He's willing to try anything to help move the needle, and he's easy to talk to... I feel like he really cares about our business. In addition, our traffic has grown from 1,200 users per month to 11,000 users per month and revenue has increased by 50% YOY.",
-    author: "Tricia Restifo",
-    role: "VP Finance",
-    company: "Farmulated",
-    image: "/tricia.webp"
+    text: "Amazing group, and amazing people. Can't say enough good things about what they have done for us. Very responsive and genuine team players/problem solvers!",
+    author: "Lacie Randall",
+    role: "Director of Marketing",
+    company: "Agentis Longevity",
+    image: "/lacie-randall.jpg"
   },
   {
     id: 2,
+    text: "We've had a great experience working with Captive Demand. As a company with several different brands, we needed a partner who could handle a variety of needs. Spencer handles our email marketing and Zachary works on several of our websites. What really sets them apart is that they're true strategic thought partners. They bring a lot to the table, and they're easy to work with, understanding, and genuinely invested in your success. Their designs are always beautiful as well. Highly recommend!",
+    author: "Sophia Sparrgrove",
+    role: "Marketing Manager",
+    company: "Empower Aesthetics",
+    image: "/sophia-sparrgrove.png"
+  },
+  {
+    id: 3,
+    text: "Captive has been easy to work with from day one. Whenever something comes up, they're quick to respond, clear about what needs to happen, and they actually get it handled. It's been nice having a team we can trust with that side of the business.",
+    author: "Van Hunt",
+    role: "Cofounder",
+    company: "Arete Wellness",
+    image: "/arete-wellness-logo.png"
+  },
+  {
+    id: 4,
     text: "I've been working in SEO for about a decade now. I've always built my teams in-house because agencies always tend to be too expensive or terrible quality. Captive had very fair prices and followed a process nearly identical to the one I was used to running with my in-house teams, so I knew the quality would be excellent.",
     author: "Jordan Schneider",
     role: "Head of Marketing",
@@ -40,7 +56,15 @@ const testimonials: Testimonial[] = [
     image: "/Jordan.jpeg"
   },
   {
-    id: 3,
+    id: 5,
+    text: "Spencer is knowledgeable, patient, and open to listen! He's willing to try anything to help move the needle, and he's easy to talk to... I feel like he really cares about our business. In addition, our traffic has grown from 1,200 users per month to 11,000 users per month and revenue has increased by 50% YOY.",
+    author: "Tricia Restifo",
+    role: "VP Finance",
+    company: "Farmulated",
+    image: "/tricia.webp"
+  },
+  {
+    id: 6,
     text: "Our business went from only referral-based clients to having an entire authoritative online presence that allowed us to grow by over 1,000% in our first true year of business. It opened doors to partnerships that we did not believe were possible.",
     author: "Matthew Ford",
     role: "Founder",
@@ -48,7 +72,7 @@ const testimonials: Testimonial[] = [
     image: "/matthew.webp"
   },
   {
-    id: 4,
+    id: 7,
     text: "They are always on time and they're always willing to listen to my non-tech vision and translate the vision into core pieces of my business. They are responsive, have a high quality of work, and always listen to my goals.",
     author: "Bonnie Paik",
     role: "Owner",
@@ -56,7 +80,7 @@ const testimonials: Testimonial[] = [
     image: "/bonnie.webp"
   },
   {
-    id: 5,
+    id: 8,
     text: "Captive Demand is different than any other agency we have worked with. They take a genuine interest in your success and back up their promises with results. Our website is everything we wanted and more.",
     author: "Ben Elizer",
     role: "CEO",
@@ -64,7 +88,7 @@ const testimonials: Testimonial[] = [
     image: "/ben.webp"
   },
   {
-    id: 6,
+    id: 9,
     text: "Spencer is the best. He has helped us with our website needs and is always responsive. He is also great to collaborate with when it comes to marketing strategies. Highly recommend.",
     author: "Michael Scott",
     role: "CEO",
@@ -72,13 +96,13 @@ const testimonials: Testimonial[] = [
     image: "/michael.jpg"
   },
   {
-    id: 7,
+    id: 10,
     text: "I cannot say enough amazing things about this team and the work they deliver. I worked with Zachary and Spencer to build my dream Wordpress website plus a custom-built, member-only dashboard that exceeded my expectations.",
     author: "Amy Schols",
     role: "CEO",
     company: "Modern Mentor",
     image: "/amy.jpg"
-  }
+  },
 ];
 
 const logos: PartnerLogo[] = [
@@ -237,7 +261,7 @@ export function TestimonialsSection() {
               <CardBorder />
               <GradientQuoteIcon />
 
-              <div className="flex-1 relative overflow-hidden">
+              <div className="flex min-h-0 flex-1 flex-col">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeIndex}
@@ -245,22 +269,24 @@ export function TestimonialsSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="h-full flex flex-col"
+                    className="flex h-full min-h-0 flex-col"
                   >
                     {/* Quote Text */}
-                    <p className="font-mono text-xs md:text-sm text-[#1a1512]/70 leading-relaxed uppercase tracking-wide mb-4 flex-1 overflow-y-auto">
+                    <p className="mb-4 min-h-0 flex-1 overflow-y-auto font-mono text-xs uppercase leading-relaxed tracking-wide text-[#1a1512]/70 md:text-sm">
                       &ldquo;{testimonials[activeIndex].text}&rdquo;
                     </p>
 
                     {/* Author Info */}
-                    <div className="flex items-center gap-4 mt-auto pt-4 border-t border-black/5">
-                      <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden flex-shrink-0 border-2 border-white shadow-md">
-                        <Image
-                          src={testimonials[activeIndex].image}
-                          alt={testimonials[activeIndex].author}
-                          fill
-                          className="object-cover"
-                        />
+                    <div className="mt-auto flex shrink-0 items-center gap-4 overflow-visible border-t border-black/5 pb-2 pl-1 pt-4">
+                      <div className="relative shrink-0 rounded-full shadow-md">
+                        <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-white md:h-12 md:w-12">
+                          <Image
+                            src={testimonials[activeIndex].image}
+                            alt={testimonials[activeIndex].author}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
                       </div>
                       <div>
                         <p className="font-semibold text-[#1a1512] text-sm">

@@ -90,6 +90,14 @@ export function AboutSection() {
                                 className="object-cover"
                             />
                         </div>
+                        <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white shadow-md bg-gray-200 z-0 -ml-3">
+                            <Image
+                                src="/Jordan2.png"
+                                alt="Jordan Schneider"
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
                     </div>
                     <div className="text-left">
                         <p className="font-mono text-[14px] text-[#121212] leading-tight">The team<br />Generating <span className="font-semibold">$100M+</span> in revenue</p>

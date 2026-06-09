@@ -244,21 +244,21 @@ export function ProcessSection() {
     {
       timeline: "NOW",
       title: "Let's have a chat",
-      description: "We'll talk through your goals, blockers, and what you actually need. No fluff. No 10-page briefs.",
+      description: "We'll talk through your portfolio, where the gaps are, and what each company actually needs. No fluff. No 10-page briefs.",
       hasButton: true,
       isOrange: true,
       headshot: "/spencer-donaldson.jpg"
     },
     {
       timeline: "1-2 DAYS",
-      title: "Receive your proposal",
-      description: "Get a clear, strategic plan within 1-2 days. No jargon. No guesswork. Just a clear path forward.",
+      title: "Get your free audit",
+      description: "We run your sites through Spectra and hand you a clear read on where they stand and what to fix. No jargon. No guesswork. Just a clear path forward.",
       wireframe: 'proposal' as const
     },
     {
       timeline: "WEEK 1",
-      title: "Kick off your project",
-      description: "We get moving fast with weekly check-ins, async updates, and zero black holes.",
+      title: "Kick off across the portfolio",
+      description: "We move fast with weekly check-ins and async updates, with one team carrying context across every company.",
       icon: <Check size={20} strokeWidth={2} />,
       wireframe: 'website' as const
     }
@@ -293,7 +293,7 @@ export function ProcessSection() {
 
             <div className="md:max-w-md md:text-right">
               <p className="font-mono text-sm text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                We&apos;re on a mission to help local businesses dominate their digital presence...{' '}
+                We&apos;re on a mission to give portfolios the marketing and software their companies actually need...{' '}
                 <Link href="/contact" className="text-[#1a1512] underline underline-offset-2 hover:text-[#ff5501] transition-colors">
                   let&apos;s build together.
                 </Link>

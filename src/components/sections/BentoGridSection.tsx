@@ -119,7 +119,8 @@ export function BentoGridSection() {
               className="text-3xl md:text-4xl lg:text-5xl tracking-wide text-[#1a1512]"
               style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300, letterSpacing: '0.05em' }}
             >
-              Everything you need. Nothing you don&apos;t.
+              <span className="block">Everything you need.</span>
+              <span className="block text-[#d3d4d9]">Nothing you don&apos;t.</span>
             </motion.h2>
           </div>
 
@@ -131,7 +132,7 @@ export function BentoGridSection() {
             className="flex-1 min-w-0 md:max-w-md md:text-right"
           >
             <p className={SHORE_SECTION_DESCRIPTION_CLASS}>
-              Stop piecing your company together with isolated vendors. We align your design, tech, and traffic into one synchronized system. Every component on this list is chosen because it amplifies the others and drives hard revenue.
+              Stop running a different vendor at every company you own. We bring design, tech, and traffic into one system across your whole portfolio, so the work compounds instead of starting from zero each time. Every piece here is on the list because it makes the others stronger and drives real revenue.
             </p>
           </motion.div>
         </div>
@@ -156,7 +157,7 @@ export function BentoGridSection() {
             <div className="mb-6">
               <h3 className="text-[16px] font-normal text-[#1a1512] mb-3 uppercase" style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}>Website Design & Development</h3>
               <p className="font-mono text-[13px] text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-                <b>The Closer.</b> We don&apos;t build digital brochures. We build sites that do one job: turn strangers into customers. If it doesn&apos;t convert, we don&apos;t ship it.
+                <b>The Closer.</b> We don&apos;t build digital brochures. We build sites that turn strangers into customers, then roll the same proven system across every brand in your portfolio. If it doesn&apos;t convert, we don&apos;t ship it.
               </p>
             </div>
 
@@ -278,13 +279,13 @@ export function BentoGridSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="group h-full max-h-[400px] overflow-hidden rounded-3xl border border-[#1a1512]/5 bg-[#e8e8e8] p-6 transition-shadow md:p-8"
+            className="group flex h-full max-h-[400px] flex-col overflow-hidden rounded-3xl border border-[#1a1512]/5 bg-[#e8e8e8] p-6 transition-shadow md:p-8"
             style={{
               boxShadow:
                 '0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.06), inset 0 1px 0 0 rgba(255,255,255,0.4)',
             }}
           >
-            <div className="mb-6">
+            <div className="mb-4">
               <h3
                 className="mb-3 text-[16px] font-normal uppercase text-[#1a1512]"
                 style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 500 }}
@@ -292,13 +293,13 @@ export function BentoGridSection() {
                 SEO/AEO
               </h3>
               <p className="font-mono text-[13px] uppercase leading-relaxed tracking-wide text-[#1a1512]/60">
-                <b>The Compounder.</b> Paid ads are a treadmill. You have to keep spending to keep moving. We build an organic search strategy that gains momentum over time. We build the infrastructure. You collect the dividends.
+                <b>The Compounder.</b> Paid ads are a treadmill: stop spending and you stop moving. We build organic search infrastructure that gains momentum across every company you own. You collect the dividends, portfolio wide.
               </p>
             </div>
 
-            <div className="relative flex h-48 w-full items-center justify-center overflow-visible">
-              <div className="relative flex w-full max-w-xl flex-col items-center justify-center gap-4 px-1 md:px-2">
-                <div className="relative z-20 flex h-10 w-full max-w-md items-center gap-3 rounded-full border border-[#1a1512]/20 bg-[#1a1512] px-5 shadow-lg transition-colors group-hover:border-[#1a1512]/40">
+            <div className="relative mt-auto flex h-40 w-full items-end justify-center overflow-visible">
+              <div className="relative flex w-full max-w-xl flex-col items-center justify-center gap-2.5 px-1 md:px-2">
+                <div className="relative z-20 flex h-9 w-full max-w-md items-center gap-3 rounded-full border border-[#1a1512]/20 bg-[#1a1512] px-5 shadow-lg transition-colors group-hover:border-[#1a1512]/40">
                   <Search size={14} className="shrink-0 text-white/60" />
                   <div className="relative h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-white/20">
                     <motion.div
@@ -309,17 +310,17 @@ export function BentoGridSection() {
                   </div>
                 </div>
 
-                <div className="relative z-10 flex w-full max-w-md flex-col gap-2 rounded-xl border border-[#1a1512]/10 bg-white p-3 shadow-xl md:p-3.5">
-                  <div className="flex items-center gap-3 rounded-lg border border-[#ff5501]/20 bg-[#ff5501]/10 p-2 transition-all duration-500 group-hover:translate-x-1 group-hover:border-[#ff5501]/40 group-hover:bg-[#ff5501]/20">
+                <div className="relative z-10 flex w-full max-w-md flex-col gap-1.5 rounded-xl border border-[#1a1512]/10 bg-white p-2.5 shadow-xl md:p-3">
+                  <div className="flex items-center gap-3 rounded-lg border border-[#ff5501]/20 bg-[#ff5501]/10 p-1.5 transition-all duration-500 group-hover:translate-x-1 group-hover:border-[#ff5501]/40 group-hover:bg-[#ff5501]/20">
                     <div className="text-[15px] font-bold text-[#ff5501]">#1</div>
                     <div className="h-1.5 min-w-0 flex-1 rounded-full bg-[#ff5501]/30" />
                     <TrendingUp size={12} className="shrink-0 text-[#ff5501]" />
                   </div>
-                  <div className="flex items-center gap-3 rounded-lg border border-transparent p-2 opacity-60">
+                  <div className="flex items-center gap-3 rounded-lg border border-transparent p-1.5 opacity-60">
                     <div className="text-[15px] font-bold text-[#1a1512]/40">#2</div>
                     <div className="h-1.5 min-w-0 flex-1 rounded-full bg-[#1a1512]/10" />
                   </div>
-                  <div className="flex items-center gap-3 rounded-lg border border-transparent p-2 opacity-40">
+                  <div className="flex items-center gap-3 rounded-lg border border-transparent p-1.5 opacity-40">
                     <div className="text-[15px] font-bold text-[#1a1512]/30">#3</div>
                     <div className="h-1.5 min-w-0 flex-1 rounded-full bg-[#1a1512]/10" />
                   </div>
@@ -348,7 +349,7 @@ export function BentoGridSection() {
                 Software Development
               </h4>
               <p className="font-mono text-[13px] text-white/80 leading-relaxed uppercase tracking-wide">
-                <b>The Custom Edge.</b> You can’t beat your competitors if you use the exact same tools as them. We build the custom tech that gives you an unfair advantage.
+                <b>The Custom Edge.</b> You can&apos;t outrun competitors using the same off-the-shelf tools they use. We build the custom software that runs your portfolio and gives every company an advantage they can&apos;t buy.
               </p>
             </div>
 
@@ -567,7 +568,7 @@ export function BentoGridSection() {
               Email Marketing
             </h3>
             <p className="font-mono text-[13px] uppercase leading-relaxed tracking-wide text-[#1a1512]/60">
-              <b>The Follow-Up.</b> 98% of people leave your site without buying. We build the automated emails that chase them down and bring them back until they do.
+              <b>The Follow-Up.</b> Most visitors leave without buying. We build the automated emails that chase them down and bring them back, running across every brand from one place. We&apos;ve sent over a million.
             </p>
           </motion.div>
           </Link>
@@ -654,7 +655,7 @@ export function BentoGridSection() {
               Workflow Automation
             </h4>
             <p className="font-mono text-[13px] text-[#1a1512]/60 leading-relaxed uppercase tracking-wide">
-              <b>The Time Saver.</b> Stop copy-pasting data between spreadsheets. We wire your apps together to handle the busy work so you can get back to actual business.
+              <b>The Time Saver.</b> Stop paying people to copy-paste between tools at every company. We wire your apps together so the busywork runs itself, and we do it once for the whole portfolio.
             </p>
           </motion.div>
           </Link>

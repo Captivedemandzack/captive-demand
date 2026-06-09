@@ -6,33 +6,39 @@ export interface HomeFAQItem extends FAQSchemaItem {
 
 export const homeFaqs: HomeFAQItem[] = [
   {
-    question: "What services do you offer?",
+    question: "How do you work across a portfolio of companies?",
     answer:
-      "We offer comprehensive digital marketing solutions including website design and development, SEO/AEO optimization, email marketing, software development, and workflow automation. Each service is tailored to help local businesses grow their online presence and drive revenue.",
-    tags: ["Services", "Overview"],
+      "We operate as one team across every company you own. Shared playbooks, one consolidated stack, and a single knowledge base, so a win at one company becomes the standard for the next. You get consistency across the portfolio without flattening what makes each brand work locally.",
+    tags: ["Portfolio", "Scale"],
   },
   {
-    question: "How long does a typical project take?",
+    question: "Do we own what you build?",
     answer:
-      "Timeline varies by project scope. Website projects typically launch within 4-8 weeks. SEO results begin showing within 3-6 months. Email marketing campaigns can generate revenue within days of launch. We'll set clear expectations during our initial consultation.",
-    tags: ["Timeline", "Process"],
+      "Yes. Sites, ad accounts, data, and domains stay yours. We never train on your data. If you ever move on, we help you transition out cleanly instead of holding your accounts hostage.",
+    tags: ["Ownership", "IP"],
   },
   {
-    question: "What's your pricing structure?",
+    question: "How fast can you move after an acquisition?",
     answer:
-      "We offer flexible pricing based on your needs, from one-time projects to ongoing retainers. Every engagement starts with a discovery call where we understand your goals and provide a transparent quote. No hidden fees, no surprises.",
+      "We start with an audit and an access sweep, then move fast. Sites typically launch in two to six weeks, three on average, and we run the consolidation in parallel so the company is producing while the rest gets cleaned up.",
+    tags: ["Speed", "Onboarding"],
+  },
+  {
+    question: "How do you handle multiple stakeholders and approvals?",
+    answer:
+      "A portfolio is dozens of stakeholders across companies and departments. We carry context across all of it, run an approval process for teams that need a paper trail, and act as the project managers so you get an owner's attention without managing the work yourself.",
+    tags: ["Process", "Stakeholders"],
+  },
+  {
+    question: "How is this priced?",
+    answer:
+      "Built for portfolio economics. Because AI and our own tooling absorb the repetitive work, we deliver senior-led marketing at over 50% less than a comparable agency, and the per-company cost drops as we standardize across the portfolio.",
     tags: ["Pricing", "Budget"],
   },
   {
-    question: "Do I need technical knowledge?",
+    question: "How do you report and measure success?",
     answer:
-      "Not at all. We handle all the technical aspects of your digital presence, from development to optimization. You focus on running your business while we take care of the digital side. We keep you informed with clear, jargon-free updates.",
-    tags: ["Technical", "Support"],
-  },
-  {
-    question: "How do you measure success?",
-    answer:
-      "We're obsessed with data. Every project includes clear KPIs, whether that's increased traffic, higher conversion rates, more qualified leads, or revenue growth. We provide regular reports and are always transparent about what's working.",
-    tags: ["Results", "Analytics"],
+      "Leadership-level reporting, visible by brand and by cohort, tied to the metrics owners underwrite: revenue, conversion, cost per outcome, and speed to value. No vanity dashboards.",
+    tags: ["Reporting", "Results"],
   },
 ];

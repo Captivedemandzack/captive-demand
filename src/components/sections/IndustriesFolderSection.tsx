@@ -49,7 +49,7 @@ const INDUSTRIES: IndustryTab[] = [
   },
   {
     id: 'vc',
-    shortLabel: 'Venture capital',
+    shortLabel: 'Holding companies',
     headline: 'Scale without the bloat.',
     body: 'Your founders need velocity. We provide elite digital infrastructure on demand. Ship faster. Burn less cash. Own the market.',
     statValue: '2x',
@@ -64,7 +64,7 @@ const INDUSTRIES: IndustryTab[] = [
   },
   {
     id: 'studios',
-    shortLabel: 'Startup studios',
+    shortLabel: 'Family offices',
     headline: 'Build the factory. Not just the product.',
     body: 'Repeatable frameworks for rapid spinouts. We handle the technical heavy lifting. You focus on validation and growth. Do it right the first time.',
     statValue: '80%',

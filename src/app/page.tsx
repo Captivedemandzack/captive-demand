@@ -1,3 +1,4 @@
+import { AuditRequestModalProvider } from "@/components/shore-partnership/AuditRequestModalProvider";
 import { Hero } from "@/components/sections/Hero";
 import { HomepageDeferredSections } from "@/components/sections/HomepageDeferredSections";
 import { FAQSchema } from "@/components/schema/FAQSchema";
@@ -5,18 +6,18 @@ import { homeFaqs } from "@/lib/home-faqs";
 import { createSeoMetadata } from "@/lib/site";
 
 export const metadata = createSeoMetadata({
-    title: "Nashville Web Design & SEO Agency",
+    title: "Portfolio Marketing for PE, Holding Companies & Family Offices",
     description:
-        "Captive Demand builds websites, SEO/AEO systems, email marketing, automation, and software for growth-stage brands and Nashville businesses.",
+        "Captive Demand is the in-house marketing and software team for portfolios. Senior US strategy, one consolidated stack, and proprietary software applied across every company you own.",
     path: "/",
 });
 
 export default function Home() {
     return (
-        <>
+        <AuditRequestModalProvider>
             <FAQSchema faqs={homeFaqs} />
             <Hero />
             <HomepageDeferredSections />
-        </>
+        </AuditRequestModalProvider>
     );
 }

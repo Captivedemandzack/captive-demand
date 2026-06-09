@@ -225,14 +225,14 @@ export default function Footer() {
                         {/* Left Side */}
                         <div className="flex-1 max-w-2xl">
                             <p className="text-2xl md:text-3xl lg:text-4xl font-[300] leading-[1.2] mb-10 md:mb-14 tracking-wide text-brand-dark/90 font-nohemi-custom">
-                                We bring the &quot;Owner Mentality&quot; because we are owners. 50+ times over. We apply that same obsession to your business, treating your budget exactly like we treat our own.
+                                We bring the &quot;Owner Mentality&quot; because we are owners. 50+ times over. We treat every company in your portfolio like our own, and we run your budget exactly like we run ours.
                             </p>
 
                             <div className="transform origin-left scale-100 md:scale-110">
                                 <AnimatedCTAButton />
                             </div>
 
-                            <AskAiAboutFooter />
+                            <AskAiAboutFooter prompt="Tell me how Captive Demand (captivedemand.com) can help me scale marketing across my portfolio companies." />
                         </div>
 
                         {/* Right Side */}

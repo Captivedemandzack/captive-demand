@@ -90,7 +90,7 @@ export function FeaturesSection() {
                         </div>
 
                         <p className="mb-10 font-mono text-sm tracking-wider text-black/70 uppercase md:mb-0 md:col-start-1 md:row-start-2 md:text-base">
-                            / Your Business<br />Is Our Business
+                            / Your Portfolio<br />Is Our Priority
                         </p>
 
                         {/* Right column on md: spans mono + dots rows */}
@@ -108,7 +108,7 @@ export function FeaturesSection() {
                                 </div>
                                 <div className="line-mask overflow-hidden block">
                                     <p className="reveal-text block font-mono text-sm text-black/60 leading-relaxed uppercase tracking-wide">
-                                        &quot;Vibes&quot; don&apos;t pay the bills. Conversion does. Using data from our 50+ previous builds, every layout is engineered to force specific user actions. The focus is on tracking eyes, clicks, and revenue—not chasing design awards.
+                                        &quot;Vibes&quot; don&apos;t drive returns. Conversion does. Every build runs on data from countless brands we&apos;ve grown for platform companies, engineered to move the metrics an owner underwrites: revenue, conversion, cost per outcome. Not design awards.
                                     </p>
                                 </div>
                             </div>
@@ -119,13 +119,13 @@ export function FeaturesSection() {
                                     <span className="font-mono text-sm text-[#ff5501] tracking-wider block">02.</span>
                                     <div className="line-mask overflow-hidden inline-block">
                                         <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-tighter text-black uppercase">
-                                            / WE DON&apos;T COPY YOUR RIVALS.
+                                            / ONE PLAYBOOK, EVERY COMPANY.
                                         </h3>
                                     </div>
                                 </div>
                                 <div className="line-mask overflow-hidden block">
                                     <p className="reveal-text block font-mono text-sm text-black/60 leading-relaxed uppercase tracking-wide">
-                                        Niche agencies tend to recycle the same playbook for everyone. It’s time to break the pattern. By stealing winning tactics from outside sectors (like SaaS and Luxury), you get a strategic edge your competitors won&apos;t even understand.
+                                        Most agencies relearn the basics at every company you own. We don&apos;t. Every win at one portfolio company becomes the playbook for the next, so the whole portfolio compounds instead of starting from zero each time.
                                     </p>
                                 </div>
                             </div>
@@ -136,13 +136,13 @@ export function FeaturesSection() {
                                     <span className="font-mono text-sm text-[#ff5501] tracking-wider block">03.</span>
                                     <div className="line-mask overflow-hidden inline-block">
                                         <h3 className="reveal-text block font-mono text-lg md:text-xl tracking-tighter text-black uppercase">
-                                            / PROFIT OVER PIXELS.
+                                            / WE TREAT YOUR BUDGET LIKE OURS.
                                         </h3>
                                     </div>
                                 </div>
                                 <div className="line-mask overflow-hidden block">
                                     <p className="reveal-text block font-mono text-sm text-black/60 leading-relaxed uppercase tracking-wide">
-                                        Founders see things differently than creatives. Every design decision gets filtered through the lens of an owner: &quot;Will this make money?&quot; If the answer is no, it gets cut. Treating your budget like our own is the only way to operate.
+                                        Every decision runs through an owner&apos;s lens: will this create value? If not, it gets cut. We drive growth up and cost down at the same time, because that&apos;s how you actually move a portfolio, not one brand at a time.
                                     </p>
                                 </div>
                             </div>

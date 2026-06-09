@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useLayoutEffect, useRef } from "react";
-import Image from "next/image";
 import { gsap } from "gsap";
 import { Carousel } from "../ui/Carousel";
 import { ArrowThreeDots } from "../ui/ArrowThreeDots";
+import { useOptionalAuditRequestModal } from "@/components/shore-partnership/AuditRequestModalProvider";
 
 // --- MAGIC PATH COMPONENTS START ---
 
@@ -20,16 +20,112 @@ const IconBlobShape = ({ className }: { className?: string }) => (
     </svg>
 );
 
-
-export const AnimatedCTAButton = () => {
-    const buttonText = "START YOUR BUILD";
-    const borderRadius = 12; // rounded-l-xl = 12px
-    // Button dimensions: text width (162px) + corner overlap
-    const buttonWidth = 180; // Total width including corner
-    const buttonHeight = 48;
-    
+function BitmapIcon({ grid, color = '#1a1512', size = 15 }: { grid: number[][]; color?: string; size?: number }) {
+    const rows = grid.length;
+    const cols = grid[0]?.length ?? 0;
     return (
-        <a href="/contact" className="group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none" aria-label="Start Your Build">
+        <svg
+            width={size}
+            height={size}
+            viewBox={`0 0 ${cols} ${rows}`}
+            className="shrink-0"
+            style={{ imageRendering: 'pixelated' }}
+            aria-hidden
+        >
+            {grid.map((row, y) =>
+                row.map((cell, x) =>
+                    cell ? <rect key={`${y}-${x}`} x={x} y={y} width={1} height={1} fill={color} fillOpacity={0.55} /> : null
+                )
+            )}
+        </svg>
+    );
+}
+
+// Rasterized from Lucide TrendingUp, Network, ShieldCheck at 12×12 (stroke 2.25)
+const ICON_TRENDING_UP = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1],
+    [0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+    [1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+];
+
+const ICON_NETWORK = [
+    [0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1],
+    [1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1],
+    [1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1],
+    [0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0],
+];
+
+const ICON_SHIELD_CHECK = [
+    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+    [0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0],
+    [0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+    [0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0],
+    [0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0],
+    [0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0],
+    [0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0],
+    [0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+];
+
+const AUDIENCE_PILLS = [
+    { label: 'Private Equity', icon: ICON_TRENDING_UP },
+    { label: 'Holding Companies', icon: ICON_NETWORK },
+    { label: 'Family Offices', icon: ICON_SHIELD_CHECK },
+] as const;
+
+function AudienceGlassPill({ children }: { children: React.ReactNode }) {
+    return (
+        <div className="partner-pill relative overflow-hidden rounded-md border border-[#1a1512]/[0.08] bg-white/55 backdrop-blur-[12px]">
+            <div className="relative z-10 flex items-center gap-2.5 px-4 py-2.5">
+                {children}
+            </div>
+        </div>
+    );
+}
+
+
+export interface AnimatedCTAButtonProps {
+    buttonText?: string;
+    href?: string;
+    onClick?: () => void;
+    ariaLabel?: string;
+}
+
+export const AnimatedCTAButton = ({
+    buttonText = "START YOUR BUILD",
+    href = "/contact",
+    onClick,
+    ariaLabel,
+}: AnimatedCTAButtonProps = {}) => {
+    const borderRadius = 12; // rounded-l-xl = 12px
+    const buttonWidth = Math.max(180, buttonText.length * 9 + 24);
+    const buttonHeight = 48;
+    const label = ariaLabel ?? buttonText;
+    const sharedClassName =
+        "group relative inline-flex items-center text-left cursor-pointer no-underline focus:outline-none border-0 bg-transparent p-0";
+
+    const inner = (
+        <>
             {/* Container for button - sets dimensions and positioning */}
             <div className="relative flex items-center justify-center h-12 mr-1" style={{ width: `${buttonWidth}px` }}>
                 {/* Unified SVG Background - Single seamless path covering entire button */}
@@ -168,6 +264,20 @@ export const AnimatedCTAButton = () => {
                     </span>
                 </span>
             </i>
+        </>
+    );
+
+    if (onClick) {
+        return (
+            <button type="button" onClick={onClick} className={sharedClassName} aria-label={label}>
+                {inner}
+            </button>
+        );
+    }
+
+    return (
+        <a href={href} className={sharedClassName} aria-label={label}>
+            {inner}
         </a>
     );
 };
@@ -216,6 +326,7 @@ const splitIntoWords = (text: string) => {
 };
 
 export function Hero() {
+    const auditModal = useOptionalAuditRequestModal();
     const videoRef = useRef<HTMLVideoElement>(null);
     const partnersRef = useRef<HTMLDivElement>(null);
     const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -230,6 +341,7 @@ export function Hero() {
             // appear immediately without a separate static placeholder phase.
 
             const partnerPills = partnersRef.current!.querySelectorAll('.partner-pill');
+            const audienceEyebrow = partnersRef.current!.querySelector('.audience-eyebrow');
             const videoWord = videoWordRef.current ? [videoWordRef.current] : [];
             const subtextWords = subtextRef.current!.querySelectorAll('.word');
 
@@ -238,13 +350,21 @@ export function Hero() {
             // Chrome lock the <h1> spans as the Largest Contentful Paint element
             // instead of reporting NO_LCP, which cascades into Error! on TBT,
             // Minify, and unused-code audits in Lighthouse / PageSpeed Insights.
-            gsap.set([...partnerPills, ...videoWord, ...subtextWords], {
+            gsap.set([audienceEyebrow, ...partnerPills, ...videoWord, ...subtextWords].filter(Boolean), {
                 opacity: 0,
                 filter: 'blur(12px)',
                 y: 20,
             });
 
             const masterTl = gsap.timeline();
+
+            masterTl.to(audienceEyebrow, {
+                opacity: 1,
+                filter: 'blur(0px)',
+                y: 0,
+                duration: 0.6,
+                ease: 'power3.out',
+            });
 
             masterTl.to(partnerPills, {
                 opacity: 1,
@@ -253,7 +373,7 @@ export function Hero() {
                 duration: 0.8,
                 ease: 'power3.out',
                 stagger: 0.1,
-            });
+            }, '-=0.35');
 
             masterTl.to(videoWord, {
                 opacity: 1,
@@ -306,28 +426,23 @@ export function Hero() {
     }, []);
 
     return (
-        <section className="relative flex flex-col items-center justify-start overflow-hidden bg-[#FAFAFA] pt-32 md:pt-48 pb-20 md:pb-32 text-center">
+        <section className="relative flex flex-col items-center justify-start overflow-x-hidden bg-[#FAFAFA] pt-36 md:pt-48 pb-20 md:pb-32 text-center">
             <div className="container relative z-10 mx-auto px-4 max-w-full">
 
-                {/* --- 1. PARTNER PILLS --- */}
-                <div ref={partnersRef} className="mb-8 hidden md:flex flex-wrap items-center justify-center gap-3">
-                    <div className="partner-pill flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[11px] tracking-[0.15em] text-[#121212]/70" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
-                        <div className="relative h-4 w-4">
-                            <Image src="/Elementor-Logo-Symbol-Red (1).svg" alt="Elementor" fill sizes="16px" className="object-contain" />
-                        </div>
-                        <span>Elementor Agency Partner</span>
-                    </div>
-                    <div className="partner-pill flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[11px] tracking-[0.15em] text-[#121212]/70" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
-                        <div className="relative h-4 w-4">
-                            <Image src="/shopify_glyph.svg" alt="Shopify" fill sizes="16px" className="object-contain" />
-                        </div>
-                        <span>Shopify Partner</span>
-                    </div>
-                    <div className="partner-pill flex items-center gap-2.5 rounded-xl border border-[#1a1512]/[0.06] bg-white/80 px-4 py-2 font-mono uppercase text-[11px] tracking-[0.15em] text-[#121212]/70" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
-                        <div className="relative h-4 w-4">
-                            <Image src="/CUBE_2D_LIGHT.svg" alt="Cursor" fill sizes="16px" className="object-contain" />
-                        </div>
-                        <span>Cursor Experts</span>
+                {/* --- 1. AUDIENCE PILLS --- */}
+                <div ref={partnersRef} className="mb-8 hidden md:flex flex-col items-center gap-3">
+                    <span className="audience-eyebrow font-mono text-[10px] uppercase tracking-[0.18em] text-[#1a1512]/35">
+                        partnering with
+                    </span>
+                    <div className="flex flex-wrap items-center justify-center gap-3">
+                        {AUDIENCE_PILLS.map(({ label, icon }) => (
+                            <AudienceGlassPill key={label}>
+                                <BitmapIcon grid={icon} />
+                                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-[#1a1512]/65">
+                                    {label}
+                                </span>
+                            </AudienceGlassPill>
+                        ))}
                     </div>
                 </div>
 
@@ -345,17 +460,17 @@ export function Hero() {
                  * the same: on desktop the video sits between "Fast Builds"
                  * and "Real Results" via sm:order-2, on mobile they stack.
                  */}
-                <div className="mb-[clamp(1rem,2vw,1.5rem)] px-4 w-full overflow-hidden">
+                <div className="mb-[clamp(1rem,2vw,1.5rem)] w-full overflow-x-hidden px-4 pt-1">
                     <h1
                         ref={headlineRef}
                         className="flex w-full flex-col sm:flex-row sm:flex-nowrap items-center justify-center gap-0 sm:gap-[1.5vw] text-[#1a1512] tracking-tighter"
                         style={{ fontFamily: "Nohemi, sans-serif", fontWeight: 300 }}
                     >
-                        <span className="w-full text-center sm:w-auto text-[clamp(3.5rem,13vw,7.5rem)] sm:text-[clamp(2.5rem,5.5vw,8rem)] leading-[0.9] sm:whitespace-nowrap">
-                            Fast Builds
+                        <span className="w-full text-center sm:w-auto text-[clamp(3.15rem,11.5vw,6.75rem)] sm:text-[clamp(2.25rem,4.9vw,7.25rem)] leading-[1.05] sm:leading-[0.9] sm:whitespace-nowrap">
+                            Portfolio Growth
                         </span>
-                        <span className="w-full text-center sm:w-auto text-[clamp(3.5rem,13vw,7.5rem)] sm:text-[clamp(2.5rem,5.5vw,8rem)] leading-[0.9] sm:whitespace-nowrap sm:order-3">
-                            Real Results
+                        <span className="w-full text-center sm:w-auto text-[clamp(3.15rem,11.5vw,6.75rem)] sm:text-[clamp(2.25rem,4.9vw,7.25rem)] leading-[1.05] sm:leading-[0.9] sm:whitespace-nowrap sm:order-3">
+                            Shipped in Weeks
                         </span>
                         <span
                             ref={videoWordRef}
@@ -385,18 +500,18 @@ export function Hero() {
                 </div>
 
                 {/* --- 3. SUBTEXT --- */}
-                <div className="mx-auto mb-12 max-w-3xl">
+                <div className="mx-auto mb-12 max-w-5xl">
                     <p
                         ref={subtextRef}
-                        className="font-mono font-medium text-[16px] sm:text-[18px] leading-loose text-gray-600"
+                        className="mx-auto w-full max-w-[900px] font-mono font-medium text-[16px] sm:text-[18px] leading-loose text-gray-600"
                     >
-                        {splitIntoWords('We cover your core digital touchpoints with')}{' '}
+                        {splitIntoWords("We cover your entire portfolio's core digital touchpoints with")}{' '}
                         <span className="word inline-flex items-center justify-center rounded-lg bg-gray-100 px-3 py-1 text-sm font-medium text-gray-900 align-middle mx-1">
                             web design and development
                         </span>
                         <span className="word inline-block">,</span>{' '}
                         <span className="word inline-flex items-center justify-center rounded-lg bg-gray-100 px-3 py-1 text-sm font-medium text-gray-900 align-middle mx-1">
-                            Software development
+                            software development
                         </span>
                         <span className="word inline-block">,</span>{' '}
                         <span className="word inline-flex items-center justify-center rounded-lg bg-gray-100 px-3 py-1 text-sm font-medium text-gray-900 align-middle mx-1">
@@ -417,7 +532,12 @@ export function Hero() {
 
                 {/* --- 5. CTA BUTTON --- */}
                 <div className="relative z-30 -mt-[200px] md:-mt-[220px] flex flex-col items-center pb-8 md:pb-12">
-                    <AnimatedCTAButton />
+                    <AnimatedCTAButton
+                        buttonText="FREE WEBSITE AUDIT"
+                        onClick={auditModal ? () => auditModal.openAuditModal() : undefined}
+                        href="/contact"
+                        ariaLabel="Request a free website and SEO audit"
+                    />
                     <div className="mt-4 flex items-center gap-2">
                         <span className="relative flex h-2.5 w-2.5">
                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff5501] opacity-40" />

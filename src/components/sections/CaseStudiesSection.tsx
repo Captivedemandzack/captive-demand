@@ -36,6 +36,10 @@ type CaseStudy = {
   stats: Stat[];
   image: string;
   slug?: string;
+  href?: string;
+  /** `muted` applies grayscale for light SVG/wordmarks; `brand` keeps full-color logos readable. */
+  clientLogoVariant?: 'muted' | 'brand';
+  service?: string;
 };
 
 // Case Study Card Component
@@ -71,26 +75,35 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
 
         {/* Left Side - Content */}
         <div className="bg-[#e8e8e8] p-8 md:p-12 flex flex-col justify-between order-2 lg:order-1">
-          {/* Top Row - Logo and Year */}
-          <div className="flex items-start justify-between mb-8">
+          {/* Top Row - Logo and service/year */}
+          <div className="mb-8 flex items-start justify-between gap-4">
             {study.clientLogo ? (
-              <div className="h-8 relative">
+              <div className="relative h-8 shrink-0">
                 <Image
                   src={study.clientLogo}
                   alt={study.client}
                   width={120}
                   height={32}
-                  className="h-8 w-auto object-contain opacity-60"
-                  style={{ filter: 'grayscale(100%) brightness(0.4)' }}
+                  className={
+                    study.clientLogoVariant === 'brand'
+                      ? 'h-8 w-auto object-contain'
+                      : 'h-8 w-auto object-contain opacity-60'
+                  }
+                  style={
+                    study.clientLogoVariant === 'brand'
+                      ? undefined
+                      : { filter: 'grayscale(100%) brightness(0.4)' }
+                  }
                 />
               </div>
             ) : (
-              <span className="font-mono text-lg font-bold text-[#1a1512]/60 uppercase tracking-wider">
+              <span className="font-mono text-lg font-bold uppercase tracking-wider text-[#1a1512]/60">
                 {study.client}
               </span>
             )}
-            <span className="font-mono text-sm text-[#1a1512]/40 tracking-wider">
-              /{study.year}
+            <span className="shrink-0 text-right font-mono text-sm uppercase tracking-wide text-[#1a1512]/40">
+              {study.service ? `${study.service} / ` : '/ '}
+              {study.year}
             </span>
           </div>
 
@@ -98,7 +111,7 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
           <div className="flex-1 flex items-center">
             <h3
               className="text-2xl md:text-3xl lg:text-4xl text-[#1a1512] leading-tight"
-              style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 400 }}
+              style={{ fontFamily: 'Nohemi, sans-serif', fontWeight: 300 }}
             >
               {study.headline}
             </h3>
@@ -184,6 +197,9 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
     </motion.div>
   );
 
+  if (study.href) {
+    return <Link href={study.href} className="block">{cardContent}</Link>;
+  }
   if (study.slug) {
     return <Link href={`/work/${study.slug}`} className="block">{cardContent}</Link>;
   }
@@ -194,32 +210,35 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
 const caseStudies: CaseStudy[] = [
   {
     id: 1,
-    client: "Mantality Health",
-    clientLogo: "/imgi_19_mh-logo-header.png.webp",
+    client: "Empower Aesthetics",
+    clientLogo: "/empower-aesthetics-logo-trimmed.png",
+    clientLogoVariant: "brand",
     year: "2026",
-    headline: "A conversion-optimized website that drives engagement and reduces bounce.",
+    service: "Email & lifecycle automation",
+    headline: "We scaled all 11 brands without making them look the same.",
     stats: [
-      { value: "5,646", label: "ORGANIC SESSIONS" },
-      { value: "+22.5%", label: "ENGAGEMENT TIME INCREASE" },
-      { value: "-32.9%", label: "BOUNCE RATE REDUCTION" }
+      { value: "47,151", label: "TOTAL OPENS GENERATED" },
+      { value: "4,269", label: "TOTAL CLICKS GENERATED" },
+      { value: "141", label: "CORE CAMPAIGNS SHIPPED" },
     ],
-    image: "/mantalitycover2.png",
-    slug: "mentality-health",
+    image: "/bcrn.png",
+    href: "/shore-capital-partnership#case-studies",
   },
   {
     id: 2,
-    client: "Farmulated",
-    clientLogo: "/logos/farmulated.png",
-    year: "2025",
-    headline: "Built topical authority from scratch in 6 months.",
+    client: "Agentis Longevity",
+    clientLogo: "/agentis-logo.svg",
+    year: "2026",
+    service: "Website design & development",
+    headline: "A full rebuild, shipped before most agencies scope it.",
     stats: [
-      { value: "50%", label: "INCREASE IN REVENUE" },
-      { value: "9x", label: "ORGANIC TRAFFIC" },
-      { value: "6.6%", label: "CONVERSION RATE" }
+      { value: "1,822", label: "MONTHLY SESSIONS" },
+      { value: "+248%", label: "USER GROWTH" },
+      { value: "3,462", label: "PAGE VIEWS" },
     ],
-    image: "/farmulatedcover2.png",
-    slug: "farmulated",
-  }
+    image: "/agentiscasestudy.png",
+    href: "/shore-capital-partnership#case-studies",
+  },
 ];
 
 // Component
